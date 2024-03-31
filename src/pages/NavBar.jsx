@@ -3,13 +3,14 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Login from './Login';
 
-export default function Main() {
+export default function NavBar() {
     return (
-        <div>
+        <>
             <Navbar bg="white" data-bs-theme="light" fixed="top" style={{ fontSize: '20px' }}>
                 <Container >
-                    <Nav >
+                    <Nav>
                         <NavDropdown title="הסעות" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/1.1">הסעות בזמן אמת</NavDropdown.Item>
                             <NavDropdown.Item href="#action/1.2">קווי הסעה </NavDropdown.Item>
@@ -21,11 +22,12 @@ export default function Main() {
                         </NavDropdown>
                         <Nav.Link href="#pricing">מלווים</Nav.Link>
                         <Nav.Link href="#pricing">דוחות</Nav.Link>
-                        
+
                     </Nav>
                     <Navbar.Brand href="#home"><img src="../src/images/clearlogo.png" alt="#" width={250} height={75} /></Navbar.Brand>
                 </Container>
             </Navbar>
-        </div>
+            
+        </>
     )
 }

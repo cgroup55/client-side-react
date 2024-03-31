@@ -2,8 +2,21 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  font-family: 'Fredoka',sans-serif;
 
+}
+
+@font-face {
+  font-family: 'Fredoka';
+  src: url('./fonts/Fredoka-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Fredoka';
+  src: url('./fonts/Fredoka-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
 }
 .logo {
   height: 6em;
