@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '@mui/material/Button';;
+import Button from 'react-bootstrap/Button';;
 import Form from 'react-bootstrap/Form';
 import { styled } from '@mui/material/styles';
 
@@ -46,20 +46,20 @@ export default function Login() {
                 <h3 style={{ textAlign: 'center' }}>ברוכים הבאים!</h3>
                 <br />
                 <Form>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="md-3" controlId="formBasicEmail">
                         <Form.Label>שם משתמש:</Form.Label>
                         <Form.Control type="text" />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="md-3" controlId="formBasicPassword">
                         <Form.Label>סיסמא:</Form.Label>
                         <Form.Control type="password" />
                     </Form.Group>
 
                     <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}>
-                        <BootstrapButton variant="contained" disableRipple>
+                        <Button className='Prbutton' >
                     התחבר
-                        </BootstrapButton>
+                        </Button>
                     </div>
                 </Form>
             </div>
