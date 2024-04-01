@@ -17,10 +17,10 @@ const BootstrapButton = styled(Button)({
     '&:hover': {
         backgroundColor: '#2E4D11',
         borderColor: '#2E4D11',
-        
+
     },
     '&:active': {
-       
+
         backgroundColor: '#2E4D11',
         borderColor: '#2E4D11',
     },
@@ -37,7 +37,7 @@ export default function Login() {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
                 padding: '20px',
                 borderRadius: '8px',
                 boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)'
@@ -57,9 +57,9 @@ export default function Login() {
                     </Form.Group>
 
                     <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}>
-                        <Button className='Prbutton' >
-                    התחבר
-                        </Button>
+                        <BootstrapButton>
+                            התחבר
+                        </BootstrapButton>
                     </div>
                 </Form>
             </div>
