@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 export default function NavBar() {
     return (
         <>
-            <Navbar bg="white" data-bs-theme="light" fixed="top" style={{ fontSize: '20px' ,height:'70px'}}>
+            <Navbar bg="white" data-bs-theme="light" fixed="top" style={{ fontSize: '19px' ,height:'70px'}}>
                 <Container >
                     <Nav style={{position:'relative',right:'10px',top:'2px'}}>
                         <NavDropdown title="הסעות" id="basic-nav-dropdown">
@@ -26,7 +26,7 @@ export default function NavBar() {
 
                     </Nav>
                     <Navbar.Brand href="/homepage"  >
-                        <img style={{position:'absolute',left:'10px',top:'10px',maxHeight:'52px',maxWidth:'100%', height: 'auto', width: 'auto' }} src="../src/images/clearlogo.png" alt="#" />
+                        <img style={{position:'absolute',left:'10px',top:'10px',maxHeight:'52px',maxWidth:'90%'}} src="../src/images/clearlogo.png" alt="#" />
                     </Navbar.Brand>
                 </Container>
             </Navbar>
