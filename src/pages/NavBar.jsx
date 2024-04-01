@@ -9,23 +9,25 @@ import { Link } from 'react-router-dom';
 export default function NavBar() {
     return (
         <>
-            <Navbar bg="white" data-bs-theme="light" fixed="top" style={{ fontSize: '20px' }}>
+            <Navbar bg="white" data-bs-theme="light" fixed="top" style={{ fontSize: '20px' ,height:'70px'}}>
                 <Container >
-                    <Nav>
+                    <Nav style={{position:'relative',right:'10px',top:'2px'}}>
                         <NavDropdown title="הסעות" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/students">הסעות בזמן אמת</NavDropdown.Item>
-                            <NavDropdown.Item href="/">קווי הסעה </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/1.3">חברות הסעה </NavDropdown.Item>
+                            <NavDropdown.Item href="/realtimeLines">הסעות בזמן אמת</NavDropdown.Item>
+                            <NavDropdown.Item href="/lines">קווי הסעה </NavDropdown.Item>
+                            <NavDropdown.Item href="/transportComps">חברות הסעה </NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="תלמידים" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/2.1">נתוני תלמידים</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/2.2">מוסדות לימוד</NavDropdown.Item>
+                            <NavDropdown.Item href="/students">נתוני תלמידים</NavDropdown.Item>
+                            <NavDropdown.Item href="/schools">מוסדות לימוד</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link href="#pricing">מלווים</Nav.Link>
-                        <Nav.Link href="#pricing">דוחות</Nav.Link>
+                        <Nav.Link href="/escorts">מלווים</Nav.Link>
+                        <Nav.Link href="/reports">דוחות</Nav.Link>
 
                     </Nav>
-                    <Navbar.Brand href="#home"><img className='w-25' src="../src/images/clearlogo.png" alt="#"  /></Navbar.Brand>
+                    <Navbar.Brand href="/homepage"  >
+                        <img style={{position:'absolute',left:'10px',top:'10px',maxHeight:'52px',maxWidth:'100%', height: 'auto', width: 'auto' }} src="../src/images/clearlogo.png" alt="#" />
+                    </Navbar.Brand>
                 </Container>
             </Navbar>
 

@@ -9,20 +9,35 @@ import { Helmet } from 'react-helmet-async';
 import './App.css'
 import NavBar from './pages/NavBar'
 import Login from './pages/Login';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes,useLocation } from 'react-router-dom';
 import Students from './pages/Students';
+import HomePage from './pages/HomePage';
+import RealTimeLines from './pages/RealTimeLines';
+import Escorts from './pages/Escorts';
+import Reports from './pages/Reports';
+import Schools from './pages/Schools';
+import TransportationCompanies from './pages/TransportationCompanies';
+import Lines from './pages/Lines';
 
 function App() {
+
   return (
     <>
       <BrowserRouter>
 
-        {(location.pathname!="/")?<NavBar/>:null}
+        {(location.pathname != "/") ? <NavBar/> : null}
         <Routes>
-        <Route path="/" element={<Login/>}/>
-        <Route path="/students" element={<Students/>}/>
+          <Route path='/' element={<Login />} />
+          <Route path="/homepage" element={<HomePage />} />
+          <Route path='/realtimeLines' element={<RealTimeLines/>} />
+          <Route path='/lines' element={ <Lines/>} />
+          <Route path='/transportComps' element={ <TransportationCompanies/>} />
+          <Route path='/students' element={<Students />} />
+          <Route path='/schools' element={ <Schools/>} />
+          <Route path='/escorts' element={<Escorts/> } />
+          <Route path='/reports' element={<Reports/> } />
         </Routes>
-       
+
       </BrowserRouter>
     </>
   )

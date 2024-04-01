@@ -2,6 +2,7 @@ import React from 'react'
 import Button from 'react-bootstrap/Button';;
 import Form from 'react-bootstrap/Form';
 import { styled } from '@mui/material/styles';
+import { Link, redirect, useHref, useLocation, useNavigate } from 'react-router-dom';
 
 
 const BootstrapButton = styled(Button)({
@@ -28,7 +29,21 @@ const BootstrapButton = styled(Button)({
         boxShadow: '0 0 0 0.2rem rgba(46,77,17,.5)',
     },
 });
+
+
+
+
+
 export default function Login() {
+    const navigate=useNavigate();
+    const redirectTo = () => {
+        //need to add check if user exists+take user login info
+        navigate('/homepage');
+       
+    }
+
+
+
     return (
         <>
 
@@ -57,7 +72,7 @@ export default function Login() {
                     </Form.Group>
 
                     <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}>
-                        <BootstrapButton>
+                        <BootstrapButton onClick={redirectTo}>
                             התחבר
                         </BootstrapButton>
                     </div>
