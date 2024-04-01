@@ -9,28 +9,34 @@ import { Link } from 'react-router-dom';
 export default function NavBar() {
     return (
         <>
-            <Navbar bg="white" data-bs-theme="light" fixed="top" style={{ fontSize: '19px' ,height:'70px'}}>
-                <Container >
-                    <Nav style={{position:'relative',right:'10px',top:'2px'}}>
-                        <NavDropdown title="הסעות" id="basic-nav-dropdown">
+           
+
+            <Navbar expand="sm" fixed="top" style={{backgroundColor:'white',height:'70px',fontSize:'20px',position:"absolute"}}>
+            <Container>
+           
+                <Navbar.Toggle aria-controls="navbarScroll" />
+                <Navbar.Collapse >
+                
+                    <Nav  navbarScroll style={{backgroundColor:"white",width:'100%',position:'relative',top:'15px'}}>
+                    <NavDropdown title="הסעות">
                             <NavDropdown.Item href="/realtimeLines">הסעות בזמן אמת</NavDropdown.Item>
                             <NavDropdown.Item href="/lines">קווי הסעה </NavDropdown.Item>
                             <NavDropdown.Item href="/transportComps">חברות הסעה </NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title="תלמידים" id="basic-nav-dropdown">
+                        <NavDropdown title="תלמידים" >
                             <NavDropdown.Item href="/students">נתוני תלמידים</NavDropdown.Item>
                             <NavDropdown.Item href="/schools">מוסדות לימוד</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link href="/escorts">מלווים</Nav.Link>
                         <Nav.Link href="/reports">דוחות</Nav.Link>
-
                     </Nav>
-                    <Navbar.Brand href="/homepage"  >
-                        <img style={{position:'absolute',left:'10px',top:'10px',maxHeight:'52px',maxWidth:'90%'}} src="../src/images/clearlogo.png" alt="#" />
+                    
+                </Navbar.Collapse>
+                <Navbar.Brand href="/homepage"  >
+                        <img style={{ position: 'absolute', left: '10px', top: '10px', maxHeight: '52px', maxWidth: '100%' }} src="../src/images/clearlogo.png" alt="#" />
                     </Navbar.Brand>
-                </Container>
-            </Navbar>
-
+            </Container>
+        </Navbar>
         </>
     )
 }
