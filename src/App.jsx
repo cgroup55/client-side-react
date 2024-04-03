@@ -4,8 +4,8 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
 
-import './App.css'
-import NavBar from './pages/NavBar'
+import '../src/styling/App.css';
+import NavBar from './pages/NavBar';
 import Login from './pages/Login';
 import { BrowserRouter, Route, Routes,useLocation } from 'react-router-dom';
 import Students from './pages/Students';

@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import DataTable from 'react-data-table-component'
-
+import '../styling/Table.css';
+import { Typography } from '@mui/material';
 export default function Table() {
 
+  
     const columns = [
-    	{
+        {
             name: "ID",
             selector: (row) => row.personID,
-            sortable:true,
+            sortable: true,
         },
         {
             name: "Full Name",
@@ -21,7 +23,7 @@ export default function Table() {
             name: "eyeColor",
             selector: (row) => row.eyeColor,
         },
-        
+
     ];
 
 
@@ -30,7 +32,7 @@ export default function Table() {
             personID: 1,
             fullName: "Kate Shein",
             height: "1.79m",
-            eyeColor: "blue",
+            eyeColor: "blueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         },
         {
             personID: 2,
@@ -42,7 +44,7 @@ export default function Table() {
             personID: 3,
             fullName: "Emily Johnson",
             height: "1.67m",
-            eyeColor: "green",
+            eyeColor: "greeeeeeeeeeeeeeeeeeeeeeeeen fcfcccccccccccccc",
         },
         {
             personID: 4,
@@ -117,27 +119,31 @@ export default function Table() {
             eyeColor: "blue",
         },
     ];
-    
-const [records,setRecords]=useState(rows);
-const handleFilter=(event)=>{
-    const newRows=rows.filter(row=>{
-        return row.fullName.toLowerCase().includes(event.target.value.toLowerCase())
-    })
-    setRecords(newRows)
-}
-  return (
-    <div className='container mt-5'>
-        <div className='text-end'><input type="text" onChange={handleFilter} /></div>
-        <DataTable
-        columns={columns}
-        data={records}
-        pagination
-        fixedHeader
-        highlightOnHover
-        
 
+    const [records, setRecords] = useState(rows);
+    const handleFilter = (event) => {
+        const searchValue = event.target.value.toLowerCase();
+        const filteredRows = rows.filter(row => {
+            return columns.some(column => {
+                const value = column.selector(row).toString().toLowerCase();
+                return value.includes(searchValue);
+            });
+        });
+        setRecords(filteredRows);
+    };
+    return (
+        <div className='container mt-5'>
+       
+            <div className='text-start'><input type="text" placeholder='חיפוש חופשי' onChange={handleFilter} style={{marginBottom:'10px',padding:'5px'}}/></div>
 
-        />
-    </div>
-  )
+            <DataTable
+                columns={columns}
+                data={records}
+                pagination
+                fixedHeader
+                highlightOnHover
+                className="custom-table"
+            />
+        </div>
+    )
 }
