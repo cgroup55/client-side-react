@@ -7,4 +7,17 @@ span.sc-bZHSRq.sc-kMzELR.czCoqD.iOgnCO{
 .sc-iKOmoZ.hVPalX.rdt_Pagination  {
     justify-content: center;
 }
+.sc-dmyCSP.mHisf.rdt_TableHeadRow{
+    background-color: #4B8443;
+    color:white;
 
+}
+.custom-table .rdt_TableRow:nth-child(even) {
+    background-color: #ffffff; /* Light color */
+   
+}
+
+.custom-table .rdt_TableRow:nth-child(odd) {
+    background-color: #E4FDE1; /* Dark color */
+    
+}
