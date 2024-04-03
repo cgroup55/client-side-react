@@ -6,9 +6,7 @@ export default function HomePage() {
   return (
   <>
     {(location.pathname != "/") ? <NavBar/> : null}
-    <>
-    HomePage
-    </>
+    <div>HomePage</div>
   </>
   )
 }
