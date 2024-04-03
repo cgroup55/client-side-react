@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import DataTable from 'react-data-table-component'
 
 export default function Table() {
@@ -118,15 +118,23 @@ export default function Table() {
         },
     ];
     
-
+const [records,setRecords]=useState(rows);
+const handleFilter=(event)=>{
+    const newRows=rows.filter(row=>{
+        return row.fullName.toLowerCase().includes(event.target.value.toLowerCase())
+    })
+    setRecords(newRows)
+}
   return (
     <div className='container mt-5'>
+        <div className='text-end'><input type="text" onChange={handleFilter} /></div>
         <DataTable
         columns={columns}
-        data={rows}
+        data={records}
         pagination
         fixedHeader
-
+        highlightOnHover
+        
 
 
         />
