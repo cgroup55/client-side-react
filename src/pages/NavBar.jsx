@@ -17,7 +17,7 @@ export default function NavBar() {
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse >
                 
-                    <Nav  navbarScroll style={{backgroundColor:"white",width:'100%',position:'relative',top:'10px'}}>
+                    <Nav  navbarScroll style={{backgroundColor:"white",width:'100%',position:'relative'}}>
                     <NavDropdown title="הסעות">
                             <NavDropdown.Item href="/realtimeLines">הסעות בזמן אמת</NavDropdown.Item>
                             <NavDropdown.Item href="/lines">קווי הסעה </NavDropdown.Item>
