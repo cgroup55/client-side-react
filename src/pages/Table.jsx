@@ -4,7 +4,11 @@ import '../styling/Table.css';
 import { Typography } from '@mui/material';
 export default function Table() {
 
-  
+    //change number in pagination options
+    $(document).ready(function () {
+        $('.kUwhdZ option[value="10"]').text('7').val('7');
+    });
+
     const columns = [
         {
             name: "ID",
@@ -133,8 +137,11 @@ export default function Table() {
     };
     return (
         <div className='container mt-5'>
-       
-            <div className='text-start'><input type="text" placeholder='חיפוש חופשי' onChange={handleFilter} style={{marginBottom:'10px',padding:'5px'}}/></div>
+
+            <div className='text-start'>
+                <input type="text" placeholder='חיפוש חופשי' onChange={handleFilter}
+                style={{ marginBottom: '10px', padding: '5px', borderRadius: '0.5rem',borderColor:'lightgrey'}}/>
+            </div>
 
             <DataTable
                 columns={columns}
@@ -143,6 +150,7 @@ export default function Table() {
                 fixedHeader
                 highlightOnHover
                 className="custom-table"
+                paginationPerPage={7}
             />
         </div>
     )
