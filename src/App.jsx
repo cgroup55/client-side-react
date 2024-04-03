@@ -19,10 +19,12 @@ import Schools from './pages/Schools';
 import TransportationCompanies from './pages/TransportationCompanies';
 import Lines from './pages/Lines';
 
+
 function App() {
 
   return (
     <>
+    
       <BrowserRouter>
 
         {(location.pathname != "/") ? <NavBar/> : null}
