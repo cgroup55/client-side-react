@@ -32,8 +32,9 @@ const Schoolrows = [
 ];
 
   return (
-    <>
+    <div className='container mt-5' >
+    <h3 className="bold" style={{textAlign:'center'}}>מוסדות לימוד</h3>
     <Table columns={Schoolcolumns} rows={Schoolrows}/>
-    </>
+    </div>
   )
 }

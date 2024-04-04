@@ -122,7 +122,8 @@ const StudentRows = [
 ];
 
   return (
-    <>
+    <div className='container mt-5' >
+    <h3 className="bold" style={{textAlign:'center'}}>נתוני תלמידים</h3>
       <Table rows={StudentRows} columns={StudentCols}/>
       <div className='text-center'
         style={{
@@ -130,6 +131,6 @@ const StudentRows = [
         }}>
         <Button>הוספת תלמיד חדש</Button>
       </div>
-    </>
+    </div>
   )
 }

@@ -23,7 +23,7 @@ export default function Table({rows,columns}) {
         setRecords(filteredRows);
     };
     return (
-        <div className='container mt-5'>
+        <div className='container '>
             <div className='text-start'>
                 <input type="text" placeholder='חיפוש חופשי' onChange={handleFilter}
                     style={{ marginBottom: '10px', padding: '5px', borderRadius: '0.5rem', borderColor: 'lightgrey' }} />
