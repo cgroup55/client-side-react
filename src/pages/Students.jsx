@@ -33,7 +33,7 @@ const StudentRows = [
         personID: 1,
         fullName: "Kate Shein",
         height: "1.79m",
-        eyeColor: "blueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        eyeColor: "blueeeeeeeeeeeeeeeee",
     },
     {
         personID: 2,
@@ -126,11 +126,8 @@ const StudentRows = [
     <h3 className="bold" style={{textAlign:'center'}}>נתוני תלמידים</h3>
       <Table rows={StudentRows} columns={StudentCols}/>
       <div className='text-center'
-        style={{
-          padding: '20px'
-        }}>
-        <Button>הוספת תלמיד חדש</Button>
-      </div>
+        style={{padding: '20px'}}>
+        <Button>הוסף תלמיד חדש</Button></div>
     </div>
   )
 }

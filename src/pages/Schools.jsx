@@ -1,5 +1,6 @@
 import React from 'react'
 import Table from '../components/Table'
+import { Button } from 'react-bootstrap'
 
 export default function Schools() {
   const Schoolcolumns = [
@@ -35,6 +36,9 @@ const Schoolrows = [
     <div className='container mt-5' >
     <h3 className="bold" style={{textAlign:'center'}}>מוסדות לימוד</h3>
     <Table columns={Schoolcolumns} rows={Schoolrows}/>
+    <div className='text-center'
+        style={{padding: '20px'}}>
+        <Button>הוסף מוסד לימודים חדש</Button></div>
     </div>
   )
 }
