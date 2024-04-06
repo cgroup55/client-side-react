@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
-import { CiEdit } from "react-icons/ci";
 import '../styling/Table.css';
 
 
@@ -45,7 +44,7 @@ export default function Table({ rows, columns, handleView, handleEdit, handleDel
     return (
         <div className='container '>
             <div className='text-start'>
-                <input type="text" placeholder='חיפוש חופשי' onChange={handleFilter}
+                <input type="text" placeholder='חפש' onChange={handleFilter}
                     style={{ marginBottom: '10px', padding: '5px', borderRadius: '0.5rem', borderColor: 'lightgrey' }} />
             </div>
 

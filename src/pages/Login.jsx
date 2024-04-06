@@ -35,10 +35,10 @@ const BootstrapButton = styled(Button)({
 
 
 export default function Login() {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const redirectTo = () => {
         //need to add check if user exists+take user login info***
-        navigate('/homepage');       
+        navigate('/homepage');
     }
 
 
