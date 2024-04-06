@@ -124,7 +124,7 @@ const StudentRows = [
   return (
     <div className='container mt-5' >
     <h3 className="bold" style={{textAlign:'center'}}>נתוני תלמידים</h3>
-      {/* <Table rows={StudentRows} columns={StudentCols}/> */}
+      <Table rows={StudentRows} columns={StudentCols}/>
       <div className='text-center'
         style={{padding: '20px'}}>
         <Button>הוסף תלמיד חדש</Button></div>

@@ -1,7 +1,6 @@
 import React from 'react'
 import Table from '../components/Table'
 import { Button } from 'react-bootstrap'
-import TableWithActions from '../components/TableWithActions';
 
 export default function Schools() {
   const Schoolcolumns = [
@@ -33,27 +32,10 @@ const Schoolrows = [
     },
 ];
 
-const handleView = (row) => {
-  console.log('View:', row);
-  // Add your view logic here
-};
-
-const handleEdit = (row) => {
-  console.log('Edit:', row);
-  // Add your edit logic here
-};
-
-const handleDelete = (row) => {
-  console.log('Delete:', row);
-  // Add your delete logic here
-};
-
- // Use the HOC to enhance the Table component
- const EnhancedTable = TableWithActions(Table,['view', 'edit', 'delete']);
   return (
     <div className='container mt-5' >
     <h3 className="bold" style={{textAlign:'center'}}>מוסדות לימוד</h3>
-    <EnhancedTable columns={Schoolcolumns} rows={Schoolrows}/>
+    <Table columns={Schoolcolumns} rows={Schoolrows}/>
     <div className='text-center'
         style={{padding: '20px'}}>
         <Button>הוסף מוסד לימודים חדש</Button></div>
