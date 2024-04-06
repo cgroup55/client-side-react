@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DataTable from 'react-data-table-component'
 import '../styling/Table.css';
+// import TableWithActions from './TableWithActions';
 
 
 export default function Table({ rows, columns }) {
@@ -22,7 +23,10 @@ export default function Table({ rows, columns }) {
         });
         setRecords(filteredRows);
     };
-    
+
+    // Use the HOC to enhance the Table component
+    const EnhancedTable = TableWithActions(Table, ['view', 'edit', 'delete'], handleView, handleEdit, handleDelete);
+
     return (
         <div className='container '>
             <div className='text-start'>
@@ -40,7 +44,7 @@ export default function Table({ rows, columns }) {
                 paginationPerPage={7}
                 style={{ borderRadius: '0.5rem' }}
             />
-
+            {/* <EnhancedTable columns={columns} data={records} /> */}
         </div>
     )
 }
