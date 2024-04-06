@@ -21,3 +21,19 @@ span.sc-bZHSRq.sc-kMzELR.czCoqD.iOgnCO{
     background-color: #E4FDE1; /* Dark color */
     
 }
+
+.iconsBtn{
+    border: none;
+    background: none;
+    padding: '5px';
+}
+
+.viewIcon{
+    color:#6c942f;
+}
+.editIcon{
+    color:#5b723b;
+}
+.deleteIcon{
+    color:#3d551a;
+}

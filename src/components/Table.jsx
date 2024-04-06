@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import DataTable from 'react-data-table-component'
+import DataTable from 'react-data-table-component';
+import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import { CiEdit } from "react-icons/ci";
 import '../styling/Table.css';
 
 
-export default function Table({ rows, columns }) {
+export default function Table({ rows, columns, handleView, handleEdit, handleDelete}) {
 
     //change number in pagination options
     $(document).ready(function () {
@@ -22,6 +24,23 @@ export default function Table({ rows, columns }) {
         });
         setRecords(filteredRows);
     };
+
+    //renders buttons for view, edit, and delete actions for each row.
+    const actionsCell = (row) => (
+        <div style={{ display: 'flex' }}>
+            <button className='iconsBtn viewIcon' onClick={() => handleView(row)} ><FaEye /></button>
+            <button className='iconsBtn editIcon' onClick={() => handleEdit(row)}><FaEdit /></button>
+            <button className='iconsBtn deleteIcon' onClick={() => handleDelete(row)}><FaTrash /></button>
+        </div>
+    );
+
+   //adding the buttons by adding a column of actions
+    const updatedColumns = [...columns, {
+        name: 'פעולות',
+        selector: null,
+        cell: actionsCell,
+        ignoreRowClick: true
+    }];
     
     return (
         <div className='container '>
@@ -31,7 +50,7 @@ export default function Table({ rows, columns }) {
             </div>
 
             <DataTable
-                columns={columns}
+                columns={updatedColumns}
                 data={records}
                 pagination
                 fixedHeader
