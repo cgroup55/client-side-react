@@ -37,16 +37,14 @@ const BootstrapButton = styled(Button)({
 export default function Login() {
     const navigate=useNavigate();
     const redirectTo = () => {
-        //need to add check if user exists+take user login info
-        navigate('/homepage');
-       
+        //need to add check if user exists+take user login info***
+        navigate('/homepage');       
     }
 
 
 
     return (
         <>
-
             <div style={{
                 position: 'absolute',
                 top: '50%',

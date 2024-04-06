@@ -3,14 +3,14 @@ import DataTable from 'react-data-table-component'
 import '../styling/Table.css';
 
 
-export default function Table({rows,columns}) {
+export default function Table({ rows, columns }) {
 
     //change number in pagination options
     $(document).ready(function () {
         $('.kUwhdZ option[value="10"]').text('7').val('7');
     });
-  
 
+    //search in all the table data
     const [records, setRecords] = useState(rows);
     const handleFilter = (event) => {
         const searchValue = event.target.value.toLowerCase();
@@ -22,6 +22,7 @@ export default function Table({rows,columns}) {
         });
         setRecords(filteredRows);
     };
+    
     return (
         <div className='container '>
             <div className='text-start'>
@@ -39,7 +40,7 @@ export default function Table({rows,columns}) {
                 paginationPerPage={7}
                 style={{ borderRadius: '0.5rem' }}
             />
-            
+
         </div>
     )
 }

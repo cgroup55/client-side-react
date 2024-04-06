@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import React from 'react'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
 
 import '../src/styling/App.css';
-import NavBar from './pages/NavBar';
+
+import NavBar from './components/NavBar';
 import Login from './pages/Login';
-import { BrowserRouter, Route, Routes,useLocation } from 'react-router-dom';
 import Students from './pages/Students';
 import HomePage from './pages/HomePage';
 import RealTimeLines from './pages/RealTimeLines';
