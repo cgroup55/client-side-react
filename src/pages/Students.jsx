@@ -2,9 +2,15 @@ import React from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
-
+import {useNavigate } from 'react-router-dom';
 export default function Students() {
+  
+  const navigate = useNavigate();
 
+  const addStudent = () => {
+    console.log("hi");
+    navigate('/studentform');
+  }
     //data thats relevant for students comp's table
 
     const StudentCols = [
@@ -138,13 +144,15 @@ export default function Students() {
         // Add your delete logic here
     };
 
+ 
+
     return (
         <div className='container mt-5' >
             <h3 className="bold" style={{ textAlign: 'center' }}>נתוני תלמידים</h3>
             <Table rows={StudentRows} columns={StudentCols} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
             <div className='text-center'
                 style={{ padding: '20px' }}>
-                <Button>הוסף תלמיד חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+                <Button onClick={addStudent} >הוסף תלמיד חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
         </div>
     )
 }

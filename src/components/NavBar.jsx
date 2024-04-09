@@ -7,7 +7,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 export default function NavBar() {
     return (
         <>
-            <Navbar expand="sm" fixed="top" style={{ backgroundColor: 'white', height: '70px', fontSize: '20px', position: "absolute"}}>
+            <Navbar sticky='top' expand="sm" fixed="top" style={{ backgroundColor: 'white', height: '70px', fontSize: '20px', position: "absolute"}}>
                 <Container>
 
                     <Navbar.Toggle aria-controls="navbarScroll" />

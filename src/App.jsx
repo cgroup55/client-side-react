@@ -17,6 +17,8 @@ import Reports from './pages/Reports';
 import Schools from './pages/Schools';
 import TransportationCompanies from './pages/TransportationCompanies';
 import Lines from './pages/Lines';
+import StudentForm from './pages/StudentForm.jsx';
+
 
 
 function App() {
@@ -37,6 +39,7 @@ function App() {
           <Route path='/schools' element={ <Schools/>} />
           <Route path='/escorts' element={<Escorts/> } />
           <Route path='/reports' element={<Reports/> } />
+          <Route path='/studentform' element={<StudentForm/> } />
         </Routes>
 
       </BrowserRouter>

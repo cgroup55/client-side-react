@@ -1,0 +1,56 @@
+label{
+    margin-left: 10px;
+}
+input,select{
+    border-radius:0.5rem ;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-color: 'lightgray' 
+}
+
+.label-input ,select{
+    display: block;
+    align-items: right;
+    flex-direction:column;
+
+  }
+  select{
+    border-width:  1.9px; ;
+  }
+  .label-input label {
+    display: block;
+    margin-right: 10px;
+  }
+  
+  .label-input input,select {
+    display: block;
+    flex-grow: 1;
+    width:inherit;
+  }
+  .checkbox-row {
+    display: flex;
+    align-items: right;
+}
+input[type="checkbox"] {
+  margin-left: auto;
+  transform: scale(1.9); /* Adjust the scale factor as needed */
+}
+
+.form-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.55); /* Adjust the alpha value for transparency */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.form-container .row {
+  margin-bottom: 20px;
+}
+
+.form-container .label-input h4 {
+  margin-bottom: 10px;
+}
+
