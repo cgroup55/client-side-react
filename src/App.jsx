@@ -19,6 +19,10 @@ import TransportationCompanies from './pages/TransportationCompanies';
 import Lines from './pages/Lines';
 import StudentForm from './forms/StudentForm.jsx';
 import AddStudentForm from './forms/AddStudentForm.jsx';
+import AddSchoolForm from './forms/AddSchoolForm.jsx';
+import AddLineForm from './forms/AddLineForm.jsx';
+import AddEscortForm from './forms/AddEscortForm.jsx';
+import AddCompanyForm from './forms/AddCompanyForm.jsx';
 
 
 
@@ -43,6 +47,10 @@ function App() {
           <Route path='/reports' element={<Reports/> } />
           <Route path='/studentform' element={<StudentForm/> } />
           <Route path='/AddStudentForm' element={<AddStudentForm/> } />
+          <Route path='/AddSchoolForm' element={<AddSchoolForm/> } />
+          <Route path='/AddLineForm' element={<AddLineForm/> } />
+          <Route path='/AddEscortForm' element={<AddEscortForm/> } />
+          <Route path='/AddCompanyForm' element={<AddCompanyForm/> } />
         </Routes>
 
       </BrowserRouter>
