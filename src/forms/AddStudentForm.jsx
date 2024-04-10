@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
-import axios from 'axios';
+import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
 
 
 export default function AddStudentForm() {
@@ -19,65 +19,28 @@ export default function AddStudentForm() {
     const [streets, setStreets] = useState([]);
     const [selectedCity, setSelectedCity] = useState('');
     const [filteredCities, setFilteredCities] = useState([]);
-     
+    
+    //render the cities on-load
     useEffect(() => {
-        populateDataList(cities_resource_id, city_name_key, setCities);
+        fetchCities().then(cities => setCities(cities));
     }, []);
 
-    const populateDataList = (resource_id, field_name, setter) => {
-        axios.get(api_url, {
-            params: { resource_id },
-            responseType: "json"
-        })
-            .then((response) => {
-                const records = response?.data?.result?.records || [];
-                const dataList = records.map(record => record[field_name].trim());
-                const sortedCities = dataList.sort((a, b) => a.localeCompare(b)); // Sort streets alphabetically
-                setter(sortedCities);
-            })
-            .catch((error) => {
-                console.log("Couldn't fetch data for", field_name, error);
-            });
-    };
-    const handleCityChange = (event) => {
-        const selectedCity = event.target.value;
-        setSelectedCity(selectedCity);
-        populateStreets(selectedCity);
-        
-    };
-
-    const handleCityInputChange = (event) => {
+    //filterout cities that dont match the search
+    const handleInputChange = (event) => {
         const inputValue = event.target.value;
         const filteredCities = cities.filter(city =>
             city.toLowerCase().startsWith(inputValue.toLowerCase())
         );
         setFilteredCities(filteredCities);
+        fetchStreetsByCity(inputValue).then(streets => setStreets(streets));
     };
 
-    const populateStreets = (city) => {
-        axios.get(api_url, {
-          params: {
-            resource_id: streets_resource_id,
-            q: JSON.stringify({ [city_name_key]: city }),
-            limit: 32000
-          },
-          responseType: "json"
-        })
-        .then((response) => {
-          const records = response?.data?.result?.records || [];
-          const streetList = records.map(record => record[street_name_key].trim());
-          const sortedStreets = streetList.sort((a, b) => a.localeCompare(b)); // Sort streets alphabetically
-          setStreets(sortedStreets);
-        })
-        .catch((error) => {
-          console.log("Couldn't fetch streets for", city, error);
-        });
-    }
     //show social worker on condition
     const handleStuKindChange = (e) => {
         setstuKind(e.target.value);
     };
 
+    //add a div that allows to add a parent
     const showAddParent = () => {
         setaddParent(true);
         console.log(addParent);
@@ -154,8 +117,8 @@ export default function AddStudentForm() {
                         list="cities-data" 
                         id="city-choice" 
                         name="city-choice" 
-                        onChange={handleCityChange} 
-                        onInput={handleCityInputChange} 
+                        onChange={handleInputChange } 
+                        onInput={handleInputChange } 
                     />
                     <datalist id="cities-data">
                         {filteredCities.map((city, index) => (
