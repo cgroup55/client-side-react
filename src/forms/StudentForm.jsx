@@ -3,7 +3,12 @@ import "../styling/Form.css";
 import { FaCheck } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
 
+
 export default function StudentForm() {
+
+
+   
+
     return (
 
         <div className='container mt-5 form-container'>
