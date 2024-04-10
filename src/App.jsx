@@ -17,7 +17,7 @@ import Reports from './pages/Reports';
 import Schools from './pages/Schools';
 import TransportationCompanies from './pages/TransportationCompanies';
 import Lines from './pages/Lines';
-import StudentForm from './pages/StudentForm.jsx';
+import StudentForm from './forms/StudentForm.jsx';
 
 
 

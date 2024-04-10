@@ -8,11 +8,11 @@ import { FaAlignJustify } from 'react-icons/fa6'
 export default function StudentForm() {
     return (
 
-        <div className='container mt-5 m-20 form-container'>
+        <div className='container mt-5 form-container'>
 
-            <div className='row' style={{}}>
+            <div className='row' style={{paddingRight:'50px'}}>
                 <h2 style={{textAlign:'center'}}>הוספת תלמיד</h2>
-                <div className='col sm-6 label-input col-form-label-sm' style={{ width: '300px',paddingRight:'50px'}}>
+                <div className='col sm-6 label-input col-form-label-sm' style={{ width: '300px'}}>
                     <h4 >פרטי תלמיד</h4>
 
                     <label htmlFor="dateofbirth">תאריך לידה</label>
