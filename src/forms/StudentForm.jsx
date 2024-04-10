@@ -1,17 +1,15 @@
-import React from 'react'
-import "../styling/Form.css"
-import { FaCheck, FaPlus } from 'react-icons/fa'
+import React from 'react';
+import "../styling/Form.css";
+import { FaCheck } from 'react-icons/fa';
+import { Button } from 'react-bootstrap';
 
-
-import { Button } from 'react-bootstrap'
-import { FaAlignJustify } from 'react-icons/fa6'
 export default function StudentForm() {
     return (
 
         <div className='container mt-5 form-container'>
 
             <div className='row' style={{paddingRight:'50px'}}>
-                <h2 style={{textAlign:'center'}}>הוספת תלמיד</h2>
+                <h2>צפייה ועריכת פרטי תלמיד</h2>
                 <div className='col sm-6 label-input col-form-label-sm' style={{ width: '300px'}}>
                     <h4 >פרטי תלמיד</h4>
 
@@ -69,7 +67,7 @@ export default function StudentForm() {
                     <input id="stu_parent1cell" name='stu_parent1cell' idtype="text" />
 
                     <label htmlFor="stu_parent1adress">כתובת הורה א</label>
-                    <input id="stu_parent1adress" name='stu_parent1adress' idtype="text" />
+                    <input id="stu_parent1adress" name='stu_parent1adress' idtype="text"/>
 
                     <label htmlFor="stu_parent2name">שם הורה ב</label>
                     <input id="stu_parent2name" name="stu_parent2name" type="text" />
@@ -78,7 +76,7 @@ export default function StudentForm() {
                     <input id="stu_parent2cell" name='stu_parent2cell' idtype="text" />
 
                     <label htmlFor="stu_parent2adress">כתובת הורה ב</label>
-                    <input id="stu_parent2adress" name='stu_parent2adress' idtype="text" />
+                    <input id="stu_parent2adress" name='stu_parent2adress' idtype="text"/>
 
                     <label htmlFor="stu_socialworker">עובד סוציאלי</label>
                     <input id="stu_socialworker" name='stu_socialworker' idtype="text" />

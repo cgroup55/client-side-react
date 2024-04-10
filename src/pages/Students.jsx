@@ -9,7 +9,7 @@ export default function Students() {
 
   const addStudent = () => {
     console.log("hi");
-    navigate('/studentform');
+    navigate('/AddStudentForm');
   }
     //data thats relevant for students comp's table
 
@@ -131,12 +131,12 @@ export default function Students() {
     //3 functions that handle viewing, editing and deleting a row
     const handleView = (row) => {
         console.log('View:', row);
-        // Add your view logic here
+        navigate('/studentform', {state: 'view'});
     };
 
     const handleEdit = (row) => {
         console.log('Edit:', row);
-        // Add your edit logic here
+        navigate('/studentform', {state: 'edit'});
     };
 
     const handleDelete = (row) => {

@@ -38,8 +38,9 @@
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.btn:active,
-.btn:active:hover {
+
+.btn-primary:active,
+.btn-primary:active:hover {
   background-color: #4B8443 !important;
 }
 

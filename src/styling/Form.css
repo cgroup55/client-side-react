@@ -22,19 +22,11 @@ input,select{
     margin-right: 10px;
   }
   
-  .label-input input,select {
+  .label-input input,select, .socialDiv, .secParDiv {
     display: block;
     flex-grow: 1;
     width:inherit;
   }
-  .checkbox-row {
-    display: flex;
-    align-items: right;
-}
-input[type="checkbox"] {
-  margin-left: auto;
-  transform: scale(1.9); /* Adjust the scale factor as needed */
-}
 
 .form-container {
   width: 90%;

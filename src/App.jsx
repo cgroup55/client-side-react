@@ -18,6 +18,8 @@ import Schools from './pages/Schools';
 import TransportationCompanies from './pages/TransportationCompanies';
 import Lines from './pages/Lines';
 import StudentForm from './forms/StudentForm.jsx';
+import AddStudentForm from './forms/AddStudentForm.jsx';
+
 
 
 
@@ -40,6 +42,7 @@ function App() {
           <Route path='/escorts' element={<Escorts/> } />
           <Route path='/reports' element={<Reports/> } />
           <Route path='/studentform' element={<StudentForm/> } />
+          <Route path='/AddStudentForm' element={<AddStudentForm/> } />
         </Routes>
 
       </BrowserRouter>
