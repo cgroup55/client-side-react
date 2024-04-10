@@ -2,8 +2,16 @@ import React from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
+import {useNavigate } from 'react-router-dom';
 
 export default function Schools() {
+
+    const navigate = useNavigate();
+
+    const addSchool = () => {
+      navigate('/AddSchoolForm');
+    }
+
     const Schoolcolumns = [
         {
             name: "ID",
@@ -55,7 +63,7 @@ export default function Schools() {
             <Table columns={Schoolcolumns} rows={Schoolrows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
             <div className='text-center'
                 style={{ padding: '20px' }}>
-                <Button>הוסף מוסד לימודים <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+                <Button onClick={addSchool}>הוסף מוסד לימודים <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
         </div>
     )
 }

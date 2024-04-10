@@ -2,7 +2,18 @@ import React from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
+import {useNavigate } from 'react-router-dom';
 
+
+
+export default function Escorts() {
+
+  const navigate = useNavigate();
+
+  const addEscort = () => {
+    navigate('/AddEscortForm');
+  }
+  
 
 //3 functions that handle viewing, editing and deleting a row
 const handleView = (row) => {
@@ -21,14 +32,13 @@ const handleDelete = (row) => {
 };
 
 
-export default function Escorts() {
   return (
     <div className='container mt-5' >
       <h3 className="bold" style={{ textAlign: 'center' }}>נתוני מלווים</h3>
       <Table columns={""} rows={""} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
       <div className='text-center'
         style={{ padding: '20px' }}>
-        <Button>הוסף מלווה חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+        <Button onClick={addEscort}>הוסף מלווה חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
     </div>
   )
 }

@@ -3,12 +3,12 @@ import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import {useNavigate } from 'react-router-dom';
+
 export default function Students() {
   
   const navigate = useNavigate();
 
   const addStudent = () => {
-    console.log("hi");
     navigate('/AddStudentForm');
   }
     //data thats relevant for students comp's table

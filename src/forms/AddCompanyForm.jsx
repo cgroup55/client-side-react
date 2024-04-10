@@ -6,9 +6,9 @@ import { Button } from 'react-bootstrap';
 export default function AddCompanyForm() {
   return (
     <div className='container mt-5 form-container'>
-
-    <div className='row' style={{ paddingRight: '50px' }}>
-    </div>
+      <div className='row' style={{ paddingRight: '50px' }}>
+        <h2>הוספת חברת הסעה</h2>
+      </div>
     </div>
   )
 }
