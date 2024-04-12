@@ -3,9 +3,11 @@ import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
 import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function AddStudentForm() {
+
+    const navigate = useNavigate();
 
     //State for student type (רווחה, פנימיה, רגיל)
     const [stuKind, setstuKind] = useState("");
@@ -57,6 +59,16 @@ export default function AddStudentForm() {
         event.target.disabled = true;
     }
 
+    //Save new student
+    const SaveNewStu = () => {
+        if (true) {
+            //logic to check validity of new stu
+            navigate('/students');
+        }
+        else {
+            //הודעה על כשלון
+        }
+    }
 
     return (
 
@@ -89,7 +101,7 @@ export default function AddStudentForm() {
 
                 </div>
                 <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
-                <h5>פרטי לקות</h5>
+                    <h5>פרטי לקות</h5>
                     <label htmlFor="stu_dateofplacementcom">תאריך ועדת השמה</label>
                     <input id="stu_dateofplacementcom" name="stu_dateofplacementcom" type="date" />
 
@@ -156,7 +168,7 @@ export default function AddStudentForm() {
                     <label htmlFor="stu_parent1homeNum">מספר בית</label>
                     <input id="stu_parent1homeNum" name='stu_parent1homeNum' idtype="text" />
                     <br />
-                    <button type='button' className='btn btn-light' onClick={showAddContact}> הוסף איש קשר
+                    <button type='button' className='btn btn-light' onClick={showAddContact} style={{ border: '2px solid black' }} > הוסף איש קשר
                         <FaPlus style={{ paddingBottom: '2px', paddingRight: '4px' }} />
                     </button>
 
@@ -192,14 +204,14 @@ export default function AddStudentForm() {
                             ))}
                         </select>
 
-                        <label htmlFor="stu_parent2homeNum">מספר בית</label>
+                        <label htmlFor="stu_parent2homeNum" >מספר בית</label>
                         <input id="stu_parent2homeNum" name='stu_parent2homeNum' idtype="text" />
                     </div>
                 )}
 
             </div>
 
-            <div className='text-center' style={{ paddingTop: '5px' }}><Button>שמור <FaCheck style={{ paddingBottom: '2px' }} /> </Button></div>
+            <div className='text-center' style={{ paddingTop: '5px' }}><Button onClick={SaveNewStu}>שמור <FaCheck style={{ paddingBottom: '2px' }} /> </Button></div>
         </div>
     )
 }

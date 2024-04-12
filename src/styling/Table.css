@@ -10,8 +10,12 @@ span.sc-bZHSRq.sc-kMzELR.czCoqD.iOgnCO{
 .sc-dmyCSP.mHisf.rdt_TableHeadRow{
     background-color: #4B8443;
     color:white;
-
 }
+
+select.sc-cyZbeP.kUwhdZ {
+    padding-right: 10px;
+}
+
 .custom-table .rdt_TableRow:nth-child(even) {
     background-color: #ffffff; /* Light color */
    
