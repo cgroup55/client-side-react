@@ -24,6 +24,7 @@ input,select{
     display: block;
     flex-grow: 1;
     width:inherit;
+    border-color: black;
   }
 
 .form-container {

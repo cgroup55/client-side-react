@@ -7,44 +7,59 @@ import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
 
 export default function AddStudentForm() {
 
+    //State for student type (רווחה, פנימיה, רגיל)
     const [stuKind, setstuKind] = useState("");
-    const [addParent, setaddParent] = useState(false);
+    // State for toggling the additional contact section
+    const [addContact, setaddContact] = useState(false);
+    //States for handling the addresses
     const [cities, setCities] = useState([]);
-    const [streets, setStreets] = useState([]);
-    const [selectedCity, setSelectedCity] = useState('');
-    const [filteredCities, setFilteredCities] = useState([]);
-    
-    //render the cities on-load
+    const [filteredCities1, setFilteredCities1] = useState([]);
+    const [filteredCities2, setFilteredCities2] = useState([]);
+    const [selectedCity1, setSelectedCity1] = useState("");
+    const [selectedCity2, setSelectedCity2] = useState("");
+    const [streets1, setStreets1] = useState([]);
+    const [streets2, setStreets2] = useState([]);
+    const [selectedStreet1, setSelectedStreet1] = useState("");
+    const [selectedStreet2, setSelectedStreet2] = useState("");
+
+    //Render the cities on-load
     useEffect(() => {
         fetchCities().then(cities => setCities(cities));
     }, []);
 
-    //filterout cities that dont match the search
-    const handleInputChange = (event) => {
+
+    //Handle city input change for both contacts
+    const handleCityInputChange = (event, setFilteredCities, setSelectedCity, setStreets) => {
         const inputValue = event.target.value;
         const filteredCities = cities.filter(city =>
             city.toLowerCase().startsWith(inputValue.toLowerCase())
         );
         setFilteredCities(filteredCities);
+        setSelectedCity(inputValue);
+        setStreets([]);
         fetchStreetsByCity(inputValue).then(streets => setStreets(streets));
     };
 
-    //show social worker on condition
+    //Handle street input change for both contacts
+    const handleStreetInputChange = (event, setSelectedStreet) => {
+        setSelectedStreet(event.target.value);
+    };
+
+
+    //show social worker section on condition
     const handleStuKindChange = (e) => {
         setstuKind(e.target.value);
     };
 
-    //add a div that allows to add a parent
-    const showAddParent = () => {
-        setaddParent(true);
-        console.log(addParent);
+    //Toggle the additional parent section
+    const showAddContact = () => {
+        setaddContact(true);
     }
 
 
     return (
 
         <div className='container mt-5 form-container'>
-
             <div className='row' style={{ paddingRight: '50px' }}>
                 <h2>הוספת תלמיד</h2>
                 <div className='col sm-12 label-input col-form-label-sm' >
@@ -96,7 +111,7 @@ export default function AddStudentForm() {
                 </div>
 
                 <div className='col sm-12 label-input col-form-label-sm' >
-                    <h4 >אנשי קשר</h4>
+                    <h4 >פרטי הורה</h4>
 
                     <label htmlFor="stu_parent1name">שם הורה</label>
                     <input id="stu_parent1name" name="stu_parent1name" type="text" />
@@ -104,67 +119,74 @@ export default function AddStudentForm() {
                     <label htmlFor="stu_parent1cell">נייד הורה</label>
                     <input id="stu_parent1cell" name='stu_parent1cell' idtype="text" />
 
-                    <label htmlFor="stu_parent1adress" style={{ fontWeight: 'bold' }}>כתובת הורה</label>
-
                     <label htmlFor="stu_parent1city">עיר</label>
-                    <input 
-                        list="cities-data" 
-                        id="city-choice" 
-                        name="city-choice" 
-                        onChange={handleInputChange } 
-                        onInput={handleInputChange } 
+                    <input
+                        list="cities-data1"
+                        id="city-choice1"
+                        name="city-choice1"
+                        onChange={(e) => handleCityInputChange(e, setFilteredCities1, setSelectedCity1, setStreets1)}
+                        onInput={(e) => handleCityInputChange(e, setFilteredCities1, setSelectedCity1, setStreets1)}
                     />
-                    <datalist id="cities-data">
-                        {filteredCities.map((city, index) => (
+                    <datalist id="cities-data1">
+                        {filteredCities1.map((city, index) => (
                             <option key={index} value={city} />
                         ))}
                     </datalist>
 
-                    <label htmlFor="street-choice">רחוב</label>
-                    <select id="stu_parent1street">
-                        {streets.map((street, index) => (
+                    <label htmlFor="stu_parent1street">רחוב</label>
+                    <select id="stu_parent1street" value={selectedStreet1} onChange={(e) => handleStreetInputChange(e, setSelectedStreet1)}>
+                        {streets1.map((street, index) => (
                             <option key={index} value={street}>{street}</option>
                         ))}
                     </select>
 
                     <label htmlFor="stu_parent1homeNum">מספר בית</label>
                     <input id="stu_parent1homeNum" name='stu_parent1homeNum' idtype="text" />
-
-                    <button type='button' className='btn btn-light' onClick={showAddParent}> הוסף איש קשר
+                    <br />
+                    <button type='button' className='btn btn-light' onClick={showAddContact}> הוסף איש קשר
                         <FaPlus style={{ paddingBottom: '2px', paddingRight: '4px' }} />
                     </button>
-                    <br />
-                    <br />
 
-                    {addParent && (
-                        <div className='secParDiv' >
+                </div>
+
+                {addContact && (
+                    <div className='col label-input col-form-label-sm '>
+                        <h4 >איש קשר נוסף</h4>
                             <label htmlFor="stu_parent2name">שם איש קשר</label>
                             <input id="stu_parent2name" name="stu_parent2name" type="text" />
 
                             <label htmlFor="stu_parent2cell">נייד איש קשר</label>
                             <input id="stu_parent2cell" name='stu_parent2cell' idtype="text" />
 
-                            <label htmlFor="stu_parent2adress" style={{ fontWeight: 'bold' }}>כתובת איש קשר</label>
-                            <label htmlFor="stu_parent2street">רחוב</label>
-                            <input id="stu_parent2street" name='stu_parent2street' idtype="text" />
-
                             <label htmlFor="stu_parent2city">עיר</label>
-                            <input id="stu_parent2city" name='stu_parent2city' idtype="text" />
+                            <input
+                                list="cities-data2"
+                                id="city-choice2"
+                                name="city-choice2"
+                                onChange={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
+                                onInput={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
+                            />
+                            <datalist id="cities-data2">
+                                {filteredCities2.map((city, index) => (
+                                    <option key={index} value={city} />
+                                ))}
+                            </datalist>
 
+                            <label htmlFor="stu_parent2street">רחוב</label>
+                            <select id="stu_parent2street" value={selectedStreet2} onChange={(e) => handleStreetInputChange(e, setSelectedStreet2)}>
+                                {streets2.map((street, index) => (
+                                    <option key={index} value={street}>{street}</option>
+                                ))}
+                            </select>
+                        
                             <label htmlFor="stu_parent2homeNum">מספר בית</label>
                             <input id="stu_parent2homeNum" name='stu_parent2homeNum' idtype="text" />
+                    </div>
+                )}
 
-                        </div>
-                    )}
-
-
-                </div>
-                <div className='text-center' style={{ paddingTop: '5px' }}><Button>שמור <FaCheck style={{ paddingBottom: '2px' }} /> </Button></div>
-
-                <div className='col sm-12 label-input col-form-label-sm'>
-
-                </div>
             </div>
+
+            <div className='text-center' style={{ paddingTop: '5px' }}><Button>שמור <FaCheck style={{ paddingBottom: '2px' }} /> </Button></div>
         </div>
     )
 }
