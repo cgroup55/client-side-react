@@ -3,14 +3,14 @@ input,select{
     border-radius:0.5rem ;
     margin-bottom: 10px;
     padding: 5px;
-    
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .label-input ,select{
     display: block;
     align-items: right;
     flex-direction:column;
-
   }
   select{
     border-width:  1.9px; ;
@@ -23,7 +23,6 @@ input,select{
   .label-input input,select, .socialDiv, .secParDiv {
     display: block;
     flex-grow: 1;
-    width:inherit;
     border-color: black;
   }
 

@@ -54,6 +54,7 @@ export default function AddStudentForm() {
     //Toggle the additional parent section
     const showAddContact = () => {
         setaddContact(true);
+        event.target.disabled = true;
     }
 
 
@@ -62,8 +63,17 @@ export default function AddStudentForm() {
         <div className='container mt-5 form-container'>
             <div className='row' style={{ paddingRight: '50px' }}>
                 <h2>הוספת תלמיד</h2>
-                <div className='col sm-12 label-input col-form-label-sm' >
-                    <h4 >פרטי תלמיד</h4>
+                <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
+                    <h5>תלמיד</h5>
+
+                    <label htmlFor="stu_firstName">שם פרטי</label>
+                    <input id="stu_firstName" name='stu_firstName' idtype="text" />
+
+                    <label htmlFor="stu_lastName">שם משפחה</label>
+                    <input id="stu_lastName" name='stu_lastName' idtype="text" />
+
+                    <label htmlFor="stu_id">תעודת זהות</label>
+                    <input id="stu_id" name='stu_id' idtype="text" />
 
                     <label htmlFor="stu_dateofbirth">תאריך לידה</label>
                     <input id="stu_dateofbirth" name="stu_dateofbirth" type="date" />
@@ -71,14 +81,17 @@ export default function AddStudentForm() {
                     <label htmlFor="stu_grade">כיתה</label>
                     <input id="stu_grade" name="stu_grade" type="text" />
 
-                    <label htmlFor="stu_dateofplacementcom">תאריך ועדת השמה</label>
-                    <input id="stu_dateofplacementcom" name="stu_dateofplacementcom" type="date" />
-
                     <label htmlFor="stu_school">מוסד לימודי</label>
                     <select defaultValue={0} id="stu_school">
                         <option >בחר...</option>
                         <option >...</option>
                     </select>
+
+                </div>
+                <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
+                <h5>פרטי לקות</h5>
+                    <label htmlFor="stu_dateofplacementcom">תאריך ועדת השמה</label>
+                    <input id="stu_dateofplacementcom" name="stu_dateofplacementcom" type="date" />
 
                     <label htmlFor="stu_studentkind">סיווג תלמיד</label>
                     <select defaultValue={0} id="stu_studentkind" onChange={handleStuKindChange}>
@@ -110,8 +123,8 @@ export default function AddStudentForm() {
                     <input id="stu_comments" name='stu_comments' idtype="text" />
                 </div>
 
-                <div className='col sm-12 label-input col-form-label-sm' >
-                    <h4 >פרטי הורה</h4>
+                <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
+                    <h5>הורה</h5>
 
                     <label htmlFor="stu_parent1name">שם הורה</label>
                     <input id="stu_parent1name" name="stu_parent1name" type="text" />
@@ -150,37 +163,37 @@ export default function AddStudentForm() {
                 </div>
 
                 {addContact && (
-                    <div className='col label-input col-form-label-sm '>
-                        <h4 >איש קשר נוסף</h4>
-                            <label htmlFor="stu_parent2name">שם איש קשר</label>
-                            <input id="stu_parent2name" name="stu_parent2name" type="text" />
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
+                        <h5>איש קשר</h5>
+                        <label htmlFor="stu_parent2name">שם איש קשר</label>
+                        <input id="stu_parent2name" name="stu_parent2name" type="text" />
 
-                            <label htmlFor="stu_parent2cell">נייד איש קשר</label>
-                            <input id="stu_parent2cell" name='stu_parent2cell' idtype="text" />
+                        <label htmlFor="stu_parent2cell">נייד איש קשר</label>
+                        <input id="stu_parent2cell" name='stu_parent2cell' idtype="text" />
 
-                            <label htmlFor="stu_parent2city">עיר</label>
-                            <input
-                                list="cities-data2"
-                                id="city-choice2"
-                                name="city-choice2"
-                                onChange={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
-                                onInput={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
-                            />
-                            <datalist id="cities-data2">
-                                {filteredCities2.map((city, index) => (
-                                    <option key={index} value={city} />
-                                ))}
-                            </datalist>
+                        <label htmlFor="stu_parent2city">עיר</label>
+                        <input
+                            list="cities-data2"
+                            id="city-choice2"
+                            name="city-choice2"
+                            onChange={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
+                            onInput={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
+                        />
+                        <datalist id="cities-data2">
+                            {filteredCities2.map((city, index) => (
+                                <option key={index} value={city} />
+                            ))}
+                        </datalist>
 
-                            <label htmlFor="stu_parent2street">רחוב</label>
-                            <select id="stu_parent2street" value={selectedStreet2} onChange={(e) => handleStreetInputChange(e, setSelectedStreet2)}>
-                                {streets2.map((street, index) => (
-                                    <option key={index} value={street}>{street}</option>
-                                ))}
-                            </select>
-                        
-                            <label htmlFor="stu_parent2homeNum">מספר בית</label>
-                            <input id="stu_parent2homeNum" name='stu_parent2homeNum' idtype="text" />
+                        <label htmlFor="stu_parent2street">רחוב</label>
+                        <select id="stu_parent2street" value={selectedStreet2} onChange={(e) => handleStreetInputChange(e, setSelectedStreet2)}>
+                            {streets2.map((street, index) => (
+                                <option key={index} value={street}>{street}</option>
+                            ))}
+                        </select>
+
+                        <label htmlFor="stu_parent2homeNum">מספר בית</label>
+                        <input id="stu_parent2homeNum" name='stu_parent2homeNum' idtype="text" />
                     </div>
                 )}
 
