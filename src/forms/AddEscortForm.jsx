@@ -1,7 +1,7 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
 
@@ -13,6 +13,17 @@ export default function AddEscortForm() {
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
+
+  //   const [escort, setEscort] = useState({
+  //     esc_firstName: '',
+  //     esc_lastName: '',
+  //     esc_id: '',
+  //     esc_dateofbirth: '',
+  //     esc_cell: '',
+  //     esc_city: '',
+  //     esc_street: '',
+  //     esc_homeNum: ''
+  // });
 
   //render the cities on-load
   useEffect(() => {
@@ -43,51 +54,63 @@ export default function AddEscortForm() {
     <div className='container mt-5 form-container'>
       <div className='row' >
         <h2>הוספת מלווה</h2>
-        <div className='col escortsform label-input col-form-label-sm'>
-          <label htmlFor="esc_firstName">שם פרטי</label>
-          <input id="esc_firstName" name='esc_firstName' idtype="text" />
+        <Form className='col escortsform label-input col-form-label-sm'>
+          <Form.Group controlId="esc_firstName">
+            <Form.Label>שם פרטי</Form.Label>
+            <Form.Control type="text" name="esc_firstName" />
+          </Form.Group>
 
-          <label htmlFor="esc_lastName">שם משפחה</label>
-          <input id="esc_lastName" name='esc_lastName' idtype="text" />
+          <Form.Group controlId="esc_lastName">
+            <Form.Label>שם משפחה</Form.Label>
+            <Form.Control type="text" name="esc_lastName" />
+          </Form.Group>
 
-          <label htmlFor="esc_id">תעודת זהות</label>
-          <input id="esc_id" name='esc_id' idtype="text" />
+          <Form.Group controlId="esc_id">
+            <Form.Label>תעודת זהות</Form.Label>
+            <Form.Control type="text" name="esc_id" />
+          </Form.Group>
 
-          <label htmlFor="esc_dateofbirth">תאריך לידה</label>
-          <input id="esc_dateofbirth" name="esc_dateofbirth" type="date" />
+          <Form.Group controlId="esc_dateofbirth">
+            <Form.Label>תאריך לידה</Form.Label>
+            <Form.Control type="date" name="esc_dateofbirth" />
+          </Form.Group>
 
-          <label htmlFor="esc_cell">נייד</label>
-          <input id="esc_cell" name='esc_cell' idtype="text" />
+          <Form.Group controlId="esc_cell">
+            <Form.Label>נייד</Form.Label>
+            <Form.Control type="text" name="esc_cell" />
+          </Form.Group>
 
-          <label htmlFor="esc_city">עיר</label>
-          <input
-            list="cities-data"
-            id="esc_city"
-            name="esc_city"
-            onChange={handleInputChange}
-            onInput={handleInputChange}
-          />
-          <datalist id="cities-data">
-            {filteredCities.map((city, index) => (
-              <option key={index} value={city} />
-            ))}
-          </datalist>
+          <Form.Group controlId="esc_city">
+            <Form.Label>עיר</Form.Label>
+            <Form.Control list="cities-data" name="esc_city"
+           onChange={handleInputChange}
+           onInput={handleInputChange} />
+            <datalist id="cities-data">
+              {filteredCities.map((city, index) => (
+                <option key={index} value={city} />
+              ))}
+            </datalist>
+          </Form.Group>
 
-          <label htmlFor="esc_street">רחוב</label>
-          <select id="esc_street">
+          <Form.Group controlId="esc_street">
+            <Form.Label>רחוב</Form.Label>
+            <Form.Control as="select" name="esc_street" >
             {streets.map((street, index) => (
               <option key={index} value={street}>{street}</option>
             ))}
-          </select>
+            </Form.Control>
+          </Form.Group>
 
-
-          <label htmlFor="esc_homeNum">מספר בית</label>
-          <input id="esc_homeNum" name='esc_homeNum' idtype="text" />
-
-        </div>
+          <Form.Group controlId="esc_homeNum">
+            <Form.Label>מספר בית</Form.Label>
+            <Form.Control type="text" name="esc_homeNum" />
+          </Form.Group>
+        </Form>
       </div>
 
-      <div className='text-center' style={{ paddingTop: '5px' }}><Button onClick={SaveNewEscort}>שמור <FaCheck style={{ paddingBottom: '2px' }} /> </Button></div>
+      <div className='text-center' style={{ paddingTop: '5px' }}>
+        <Button onClick={SaveNewEscort}>שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
+      </div>
     </div>
-  )
+  );
 }
