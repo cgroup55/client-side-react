@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
 import { useNavigate } from 'react-router-dom';
 
@@ -59,8 +59,12 @@ export default function AddStudentForm() {
         event.target.disabled = true;
     }
 
-    //Save new student
-    const SaveNewStu = () => {
+
+    // Function to handle form submission
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Validate form here
+        // If valid, save new student
         if (true) {
             //logic to check validity of new stu
             navigate('/students');
@@ -74,144 +78,185 @@ export default function AddStudentForm() {
 
         <div className='container mt-5 form-container'>
             <div className='row' style={{ paddingRight: '50px' }}>
-                <h2>הוספת תלמיד</h2>
-                <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
-                    <h5>תלמיד</h5>
+                <Form onSubmit={handleSubmit}>
+                    <h2>הוספת תלמיד</h2>
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
+                        <h5>תלמיד</h5>
 
-                    <label htmlFor="stu_firstName">שם פרטי</label>
-                    <input id="stu_firstName" name='stu_firstName' idtype="text" />
+                        <Form.Group controlId="stu_firstName">
+                            <Form.Label>שם פרטי</Form.Label>
+                            <Form.Control type="text" name="stu_firstName" required />
+                        </Form.Group>
 
-                    <label htmlFor="stu_lastName">שם משפחה</label>
-                    <input id="stu_lastName" name='stu_lastName' idtype="text" />
+                        <Form.Group controlId="stu_lastName">
+                            <Form.Label>שם משפחה</Form.Label>
+                            <Form.Control type="text" name="stu_lastName" />
+                        </Form.Group>
 
-                    <label htmlFor="stu_id">תעודת זהות</label>
-                    <input id="stu_id" name='stu_id' idtype="text" />
+                        <Form.Group controlId="stu_id">
+                            <Form.Label>תעודת זהות</Form.Label>
+                            <Form.Control type="text" name="stu_id" />
+                        </Form.Group>
 
-                    <label htmlFor="stu_dateofbirth">תאריך לידה</label>
-                    <input id="stu_dateofbirth" name="stu_dateofbirth" type="date" />
+                        <Form.Group controlId="stu_dateofbirth">
+                            <Form.Label>תאריך לידה</Form.Label>
+                            <Form.Control type="date" name="stu_dateofbirth" />
+                        </Form.Group>
 
-                    <label htmlFor="stu_grade">כיתה</label>
-                    <input id="stu_grade" name="stu_grade" type="text" />
+                        <Form.Group controlId="stu_grade">
+                            <Form.Label>כיתה</Form.Label>
+                            <Form.Control type="text" name="stu_grade" />
+                        </Form.Group>
 
-                    <label htmlFor="stu_school">מוסד לימודי</label>
-                    <select defaultValue={0} id="stu_school">
-                        <option >בחר...</option>
-                        <option >...</option>
-                    </select>
+                        <Form.Group controlId="stu_school">
+                            <Form.Label>מוסד לימודי</Form.Label>
+                            <Form.Control as="select" defaultValue={0}>
+                                <option>בחר...</option>
+                                <option>...</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </div>
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
+                        <h5>פרטי לקות</h5>
+                        <Form.Group controlId="stu_dateofplacementcom">
+                            <Form.Label>תאריך ועדת השמה</Form.Label>
+                            <Form.Control type="date" />
+                        </Form.Group>
 
-                </div>
-                <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
-                    <h5>פרטי לקות</h5>
-                    <label htmlFor="stu_dateofplacementcom">תאריך ועדת השמה</label>
-                    <input id="stu_dateofplacementcom" name="stu_dateofplacementcom" type="date" />
+                        <Form.Group controlId="stu_studentkind">
+                            <Form.Label>סיווג תלמיד</Form.Label>
+                            <Form.Control as="select" defaultValue={0} onChange={handleStuKindChange}>
+                                <option value={0}>בחר...</option>
+                                <option value={"רווחה"}>רווחה</option>
+                                <option value={"פנימיה"}>פנימיה</option>
+                                <option value={"רגיל"}>רגיל</option>
+                            </Form.Control>
+                        </Form.Group>
 
-                    <label htmlFor="stu_studentkind">סיווג תלמיד</label>
-                    <select defaultValue={0} id="stu_studentkind" onChange={handleStuKindChange}>
-                        <option value={0}>בחר...</option>
-                        <option value={"רווחה"}>רווחה</option>
-                        <option value={"פנימיה"}>פנימיה</option>
-                        <option value={"רגיל"}>רגיל</option>
-                    </select>
+                        {stuKind === "רווחה" && (
+                            <div className='socialDiv' >
+                                <Form.Group controlId="stu_socialworker">
+                                    <Form.Label>עובד סוציאלי</Form.Label>
+                                    <Form.Control type="text" />
+                                </Form.Group>
 
-                    {stuKind === "רווחה" && (
-                        <div className='socialDiv' >
-                            <label htmlFor="stu_socialworker">עובד סוציאלי</label>
-                            <input id="stu_socialworker" name='stu_socialworker' idtype="text" />
+                                <Form.Group controlId="stu_socialworkercell">
+                                    <Form.Label>נייד עובד סוציאלי</Form.Label>
+                                    <Form.Control type="text" />
+                                </Form.Group>
+                            </div>
+                        )}
 
-                            <label htmlFor="stu_socialworkercell">נייד עובד סוציאלי</label>
-                            <input id="stu_socialworkercell" name='stu_socialworkercell' idtype="text" />
+                        <Form.Group controlId="stu_disabilitiykind">
+                            <Form.Label>סוג לקות</Form.Label>
+                            <Form.Control as="select" defaultValue={0}>
+                                <option value={0}>בחר...</option>
+                                <option value={1}>אוטיזם</option>
+                                <option value={2}>פיגור שכלי</option>
+                                <option value={3}>נכות פיזית</option>
+                            </Form.Control>
+                        </Form.Group>
+
+                        <Form.Group controlId="stu_comments">
+                            <Form.Label>הערות</Form.Label>
+                            <Form.Control type="text" />
+                        </Form.Group>
+
+                    </div>
+
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
+                        <h5>הורה</h5>
+                        <Form.Group controlId="stu_parent1name">
+                            <Form.Label>שם הורה</Form.Label>
+                            <Form.Control type="text" />
+                        </Form.Group>
+
+                        <Form.Group controlId="stu_parent1cell">
+                            <Form.Label>נייד הורה</Form.Label>
+                            <Form.Control type="text" />
+                        </Form.Group>
+
+                        <Form.Group controlId="stu_parent1city">
+                            <Form.Label>עיר</Form.Label>
+                            <Form.Control
+                                list="cities-data1"
+                                onChange={(e) => handleCityInputChange(e, setFilteredCities1, setSelectedCity1, setStreets1)}
+                                onInput={(e) => handleCityInputChange(e, setFilteredCities1, setSelectedCity1, setStreets1)}
+                            />
+                            <datalist id="cities-data1">
+                                {filteredCities1.map((city, index) => (
+                                    <option key={index} value={city} />
+                                ))}
+                            </datalist>
+                        </Form.Group>
+
+                        <Form.Group controlId="stu_parent1street">
+                            <Form.Label>רחוב</Form.Label>
+                            <Form.Control as="select" value={selectedStreet1} onChange={(e) => handleStreetInputChange(e, setSelectedStreet1)}>
+                                {streets1.map((street, index) => (
+                                    <option key={index} value={street}>{street}</option>
+                                ))}
+                            </Form.Control>
+                        </Form.Group>
+
+                        <Form.Group controlId="stu_parent1homeNum">
+                            <Form.Label>מספר בית</Form.Label>
+                            <Form.Control type="text" />
+                        </Form.Group>
+<br />
+                        <Button type='button' className='btn btn-light' onClick={showAddContact} disabled={addContact} style={{ border: '2px solid black' }}> הוסף איש קשר
+                            <FaPlus style={{ paddingBottom: '2px', paddingRight: '4px' }} />
+                        </Button>
+
+
+                    </div>
+
+                    {addContact && (
+                        <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
+                            <h5>איש קשר</h5>
+                            <Form.Group controlId="stu_parent2name">
+                                <Form.Label>שם איש קשר</Form.Label>
+                                <Form.Control type="text" />
+                            </Form.Group>
+
+                            <Form.Group controlId="stu_parent2cell">
+                                <Form.Label>נייד איש קשר</Form.Label>
+                                <Form.Control type="text" />
+                            </Form.Group>
+
+                            <Form.Group controlId="stu_parent2city">
+                                <Form.Label>עיר</Form.Label>
+                                <Form.Control
+                                    list="cities-data2"
+                                    onChange={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
+                                    onInput={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
+                                />
+                                <datalist id="cities-data2">
+                                    {filteredCities2.map((city, index) => (
+                                        <option key={index} value={city} />
+                                    ))}
+                                </datalist>
+                            </Form.Group>
+
+                            <Form.Group controlId="stu_parent2street">
+                                <Form.Label>רחוב</Form.Label>
+                                <Form.Control as="select" value={selectedStreet2} onChange={(e) => handleStreetInputChange(e, setSelectedStreet2)}>
+                                    {streets2.map((street, index) => (
+                                        <option key={index} value={street}>{street}</option>
+                                    ))}
+                                </Form.Control>
+                            </Form.Group>
+
+                            <Form.Group controlId="stu_parent2homeNum">
+                                <Form.Label>מספר בית</Form.Label>
+                                <Form.Control type="text" />
+                            </Form.Group>
                         </div>
                     )}
-
-                    <label htmlFor="stu_disabilitiykind">סוג לקות</label>
-                    <select defaultValue={0} id="stu_disabilitiykind" >
-                        <option value={0}>בחר...</option>
-                        <option value={1}>אוטיזם</option>
-                        <option value={2}>פיגור שכלי</option>
-                        <option value={3}>נכות פיזית</option>
-                    </select>
-
-                    <label htmlFor="stu_comments">הערות</label>
-                    <input id="stu_comments" name='stu_comments' idtype="text" />
-                </div>
-
-                <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
-                    <h5>הורה</h5>
-
-                    <label htmlFor="stu_parent1name">שם הורה</label>
-                    <input id="stu_parent1name" name="stu_parent1name" type="text" />
-
-                    <label htmlFor="stu_parent1cell">נייד הורה</label>
-                    <input id="stu_parent1cell" name='stu_parent1cell' idtype="text" />
-
-                    <label htmlFor="stu_parent1city">עיר</label>
-                    <input
-                        list="cities-data1"
-                        id="city-choice1"
-                        name="city-choice1"
-                        onChange={(e) => handleCityInputChange(e, setFilteredCities1, setSelectedCity1, setStreets1)}
-                        onInput={(e) => handleCityInputChange(e, setFilteredCities1, setSelectedCity1, setStreets1)}
-                    />
-                    <datalist id="cities-data1">
-                        {filteredCities1.map((city, index) => (
-                            <option key={index} value={city} />
-                        ))}
-                    </datalist>
-
-                    <label htmlFor="stu_parent1street">רחוב</label>
-                    <select id="stu_parent1street" value={selectedStreet1} onChange={(e) => handleStreetInputChange(e, setSelectedStreet1)}>
-                        {streets1.map((street, index) => (
-                            <option key={index} value={street}>{street}</option>
-                        ))}
-                    </select>
-
-                    <label htmlFor="stu_parent1homeNum">מספר בית</label>
-                    <input id="stu_parent1homeNum" name='stu_parent1homeNum' idtype="text" />
-                    <br />
-                    <button type='button' className='btn btn-light' onClick={showAddContact} style={{ border: '2px solid black' }} > הוסף איש קשר
-                        <FaPlus style={{ paddingBottom: '2px', paddingRight: '4px' }} />
-                    </button>
-
-                </div>
-
-                {addContact && (
-                    <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
-                        <h5>איש קשר</h5>
-                        <label htmlFor="stu_parent2name">שם איש קשר</label>
-                        <input id="stu_parent2name" name="stu_parent2name" type="text" />
-
-                        <label htmlFor="stu_parent2cell">נייד איש קשר</label>
-                        <input id="stu_parent2cell" name='stu_parent2cell' idtype="text" />
-
-                        <label htmlFor="stu_parent2city">עיר</label>
-                        <input
-                            list="cities-data2"
-                            id="city-choice2"
-                            name="city-choice2"
-                            onChange={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
-                            onInput={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
-                        />
-                        <datalist id="cities-data2">
-                            {filteredCities2.map((city, index) => (
-                                <option key={index} value={city} />
-                            ))}
-                        </datalist>
-
-                        <label htmlFor="stu_parent2street">רחוב</label>
-                        <select id="stu_parent2street" value={selectedStreet2} onChange={(e) => handleStreetInputChange(e, setSelectedStreet2)}>
-                            {streets2.map((street, index) => (
-                                <option key={index} value={street}>{street}</option>
-                            ))}
-                        </select>
-
-                        <label htmlFor="stu_parent2homeNum" >מספר בית</label>
-                        <input id="stu_parent2homeNum" name='stu_parent2homeNum' idtype="text" />
-                    </div>
-                )}
-
+                    <br /> 
+                    <Button type="submit">שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
+                </Form>
             </div>
-
-            <div className='text-center' style={{ paddingTop: '5px' }}><Button onClick={SaveNewStu}>שמור <FaCheck style={{ paddingBottom: '2px' }} /> </Button></div>
         </div>
     )
 }
