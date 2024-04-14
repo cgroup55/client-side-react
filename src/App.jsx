@@ -49,6 +49,7 @@ function App() {
           <Route path='/AddStudentForm' element={<AddStudentForm/> } />
           <Route path='/AddSchoolForm' element={<AddSchoolForm/> } />
           <Route path='/AddLineForm' element={<AddLineForm/> } />
+          <Route />
           <Route path='/AddEscortForm' element={<AddEscortForm/> } />
           <Route path='/AddCompanyForm' element={<AddCompanyForm/> } />
         </Routes>

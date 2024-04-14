@@ -16,7 +16,8 @@
     }
 };
 
-//validation for digits only
+//validation for digits only     
+//input?? or e.target.value? הקלט צריך להשתנות?
 export const ValidPositiveNumber = (input) => {
     const regex = /^\d+$/;
     return regex.test(input);
