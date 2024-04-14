@@ -7,16 +7,19 @@ select {
   box-sizing: border-box;
 }
 
-.label-input,
+
+Form.Control,
 select {
   display: block;
   align-items: right;
   flex-direction: column;
 }
 
+
+.label-input > .form-control,
 select {
   border-width: 1.9px;
-  ;
+  
 }
 
 .label-input label {
@@ -25,7 +28,7 @@ select {
 }
 
 .label-input input,
-select,
+.formSelect,
 .socialDiv,
 .secParDiv {
   display: block;

@@ -5,14 +5,13 @@ import { Button, Form } from 'react-bootstrap';
 import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
 import { useNavigate } from 'react-router-dom';
 
+
+
 export default function AddStudentForm() {
 
     const navigate = useNavigate();
-
     //State for student type (רווחה, פנימיה, רגיל)
     const [stuKind, setstuKind] = useState("");
-    // State for toggling the additional contact section
-    const [addContact, setaddContact] = useState(false);
     //States for handling the addresses
     const [cities, setCities] = useState([]);
     const [filteredCities1, setFilteredCities1] = useState([]);
@@ -53,13 +52,6 @@ export default function AddStudentForm() {
         setstuKind(e.target.value);
     };
 
-    //Toggle the additional parent section
-    const showAddContact = () => {
-        setaddContact(true);
-        event.target.disabled = true;
-    }
-
-
     // Function to handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -77,8 +69,8 @@ export default function AddStudentForm() {
     return (
 
         <div className='container mt-5 form-container'>
-            <div className='row' style={{ paddingRight: '50px' }}>
-                <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
+                <div className='row'>
                     <h2>הוספת תלמיד</h2>
                     <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
                         <h5>תלמיד</h5>
@@ -110,7 +102,7 @@ export default function AddStudentForm() {
 
                         <Form.Group controlId="stu_school">
                             <Form.Label>מוסד לימודי</Form.Label>
-                            <Form.Control as="select" defaultValue={0}>
+                            <Form.Control  className="formSelect" as="select" defaultValue={0}>
                                 <option>בחר...</option>
                                 <option>...</option>
                             </Form.Control>
@@ -125,7 +117,7 @@ export default function AddStudentForm() {
 
                         <Form.Group controlId="stu_studentkind">
                             <Form.Label>סיווג תלמיד</Form.Label>
-                            <Form.Control as="select" defaultValue={0} onChange={handleStuKindChange}>
+                            <Form.Control as="select" className="formSelect" defaultValue={0} onChange={handleStuKindChange}>
                                 <option value={0}>בחר...</option>
                                 <option value={"רווחה"}>רווחה</option>
                                 <option value={"פנימיה"}>פנימיה</option>
@@ -149,7 +141,7 @@ export default function AddStudentForm() {
 
                         <Form.Group controlId="stu_disabilitiykind">
                             <Form.Label>סוג לקות</Form.Label>
-                            <Form.Control as="select" defaultValue={0}>
+                            <Form.Control className="formSelect" as="select" defaultValue={0}>
                                 <option value={0}>בחר...</option>
                                 <option value={1}>אוטיזם</option>
                                 <option value={2}>פיגור שכלי</option>
@@ -192,7 +184,7 @@ export default function AddStudentForm() {
 
                         <Form.Group controlId="stu_parent1street">
                             <Form.Label>רחוב</Form.Label>
-                            <Form.Control as="select" value={selectedStreet1} onChange={(e) => handleStreetInputChange(e, setSelectedStreet1)}>
+                            <Form.Control as="select" className="formSelect" value={selectedStreet1} onChange={(e) => handleStreetInputChange(e, setSelectedStreet1)}>
                                 {streets1.map((street, index) => (
                                     <option key={index} value={street}>{street}</option>
                                 ))}
@@ -203,60 +195,55 @@ export default function AddStudentForm() {
                             <Form.Label>מספר בית</Form.Label>
                             <Form.Control type="text" />
                         </Form.Group>
-<br />
-                        <Button type='button' className='btn btn-light' onClick={showAddContact} disabled={addContact} style={{ border: '2px solid black' }}> הוסף איש קשר
-                            <FaPlus style={{ paddingBottom: '2px', paddingRight: '4px' }} />
-                        </Button>
-
-
+                        <br />
                     </div>
 
-                    {addContact && (
-                        <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
-                            <h5>איש קשר</h5>
-                            <Form.Group controlId="stu_parent2name">
-                                <Form.Label>שם איש קשר</Form.Label>
-                                <Form.Control type="text" />
-                            </Form.Group>
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
+                        <h5>איש קשר</h5>
+                        <Form.Group controlId="stu_parent2name">
+                            <Form.Label>שם איש קשר</Form.Label>
+                            <Form.Control type="text" />
+                        </Form.Group>
 
-                            <Form.Group controlId="stu_parent2cell">
-                                <Form.Label>נייד איש קשר</Form.Label>
-                                <Form.Control type="text" />
-                            </Form.Group>
+                        <Form.Group controlId="stu_parent2cell">
+                            <Form.Label>נייד איש קשר</Form.Label>
+                            <Form.Control type="text" />
+                        </Form.Group>
 
-                            <Form.Group controlId="stu_parent2city">
-                                <Form.Label>עיר</Form.Label>
-                                <Form.Control
-                                    list="cities-data2"
-                                    onChange={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
-                                    onInput={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
-                                />
-                                <datalist id="cities-data2">
-                                    {filteredCities2.map((city, index) => (
-                                        <option key={index} value={city} />
-                                    ))}
-                                </datalist>
-                            </Form.Group>
+                        <Form.Group controlId="stu_parent2city">
+                            <Form.Label>עיר</Form.Label>
+                            <Form.Control
+                                list="cities-data2"
+                                onChange={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
+                                onInput={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
+                            />
+                            <datalist id="cities-data2">
+                                {filteredCities2.map((city, index) => (
+                                    <option key={index} value={city} />
+                                ))}
+                            </datalist>
+                        </Form.Group>
 
-                            <Form.Group controlId="stu_parent2street">
-                                <Form.Label>רחוב</Form.Label>
-                                <Form.Control as="select" value={selectedStreet2} onChange={(e) => handleStreetInputChange(e, setSelectedStreet2)}>
-                                    {streets2.map((street, index) => (
-                                        <option key={index} value={street}>{street}</option>
-                                    ))}
-                                </Form.Control>
-                            </Form.Group>
+                        <Form.Group controlId="stu_parent2street">
+                            <Form.Label>רחוב</Form.Label>
+                            <Form.Control as="select" className="formSelect" value={selectedStreet2} onChange={(e) => handleStreetInputChange(e, setSelectedStreet2)}>
+                                {streets2.map((street, index) => (
+                                    <option key={index} value={street}>{street}</option>
+                                ))}
+                            </Form.Control>
+                        </Form.Group>
 
-                            <Form.Group controlId="stu_parent2homeNum">
-                                <Form.Label>מספר בית</Form.Label>
-                                <Form.Control type="text" />
-                            </Form.Group>
-                        </div>
-                    )}
-                    <br /> 
-                    <Button type="submit">שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
-                </Form>
-            </div>
+                        <Form.Group controlId="stu_parent2homeNum">
+                            <Form.Label>מספר בית</Form.Label>
+                            <Form.Control type="text" />
+                        </Form.Group>
+                    </div>
+
+                    <br />
+                    <Button className="submitBtn" type="submit" style={{width:'25%',minWidth:'100px',margin: '0 auto'}}>שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
+
+                </div>
+            </Form>
         </div>
     )
 }

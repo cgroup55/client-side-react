@@ -94,7 +94,7 @@ export default function AddEscortForm() {
 
           <Form.Group controlId="esc_street">
             <Form.Label>רחוב</Form.Label>
-            <Form.Control as="select" name="esc_street" >
+            <Form.Control className='formSelect' as="select" name="esc_street" >
             {streets.map((street, index) => (
               <option key={index} value={street}>{street}</option>
             ))}
