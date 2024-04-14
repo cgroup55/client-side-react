@@ -54,7 +54,7 @@ export default function AddEscortForm() {
     <div className='container mt-5 form-container'>
       <div className='row' >
         <h2>הוספת מלווה</h2>
-        <Form className='col escortsform label-input col-form-label-sm'>
+        <Form className='col-9 escortsform label-input col-form-label-sm' style={{margin: '0 auto'}}>
           <Form.Group controlId="esc_firstName">
             <Form.Label>שם פרטי</Form.Label>
             <Form.Control type="text" name="esc_firstName" />
