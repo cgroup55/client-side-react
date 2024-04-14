@@ -4,7 +4,7 @@ import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth } from '../tools/validations';
+import { ValidPositiveNumber, validateCityNstreet, ValidateId, validateHebrewletters, validateDateOfBirth } from '../tools/validations';
 
 export default function AddEscortForm() {
 
@@ -49,6 +49,7 @@ export default function AddEscortForm() {
     );
     setFilteredCities(filteredCities);
     fetchStreetsByCity(inputValue).then(streets => setStreets(streets));
+    setEscort({ ...escort, esc_city: inputValue });
   };
 
   //Save new escort
@@ -64,23 +65,30 @@ export default function AddEscortForm() {
     }
   };
 
-  let valid = true;
+
 
   const validateForm = () => {
     console.log('errors before-', errors);
-  
-    console.log(escort);
-    setErrors({ ...errors, esc_firstName: validateHebrewletters(escort.esc_firstName) });
-    // esc_firstName: validateHebrewletters(escort.esc_firstName),
-    // esc_lastName: validateHebrewletters(escort.esc_lastName),
-    // esc_id: ValidateId(escort.esc_id),
-    // esc_dateofbirth: validateDateOfBirth(escort.esc_dateofbirth),
-    // esc_cell: validateHebrewletters(escort.esc_cell),
-    // esc_city: validateHebrewletters(escort.esc_city),
-    // esc_street: validateHebrewletters(escort.esc_street),
-    // esc_homeNum: ValidPositiveNumber(escort.esc_homeNum)
 
-    console.log('errors-', errors);
+    let valid = true;
+    let newErrors = {};
+
+    console.log(escort);
+    newErrors.esc_firstName = validateHebrewletters(escort.esc_firstName);
+    newErrors.esc_lastName = validateHebrewletters(escort.esc_lastName);
+    newErrors.esc_id = ValidateId(escort.esc_id);
+    newErrors.esc_dateofbirth = validateDateOfBirth(escort.esc_dateofbirth);
+
+
+    newErrors.esc_city = validateCityNstreet(escort.esc_city);
+    newErrors.esc_street = validateCityNstreet(escort.esc_street);
+
+
+    // esc_cell: validateHebrewletters(escort.esc_cell),
+
+    // esc_homeNum: ValidPositiveNumber(escort.esc_homeNum)
+    setErrors(newErrors);
+    console.log('errors after-', errors);
     Object.values(errors).forEach(error => {
       if (error) {
         valid = false;
@@ -100,7 +108,7 @@ export default function AddEscortForm() {
               value={escort.esc_firstName}
               onChange={(e) => setEscort({ ...escort, esc_firstName: e.target.value })}
               isInvalid={!!errors.esc_firstName}
-            //required
+              required
             />
             <Form.Control.Feedback type="invalid">
               {errors.esc_firstName}
@@ -109,17 +117,41 @@ export default function AddEscortForm() {
 
           <Form.Group controlId="esc_lastName">
             <Form.Label>שם משפחה</Form.Label>
-            <Form.Control type="text" name="esc_lastName" />
+            <Form.Control type="text" name="esc_lastName"
+              value={escort.esc_lastName}
+              onChange={(e) => setEscort({ ...escort, esc_lastName: e.target.value })}
+              isInvalid={!!errors.esc_lastName}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.esc_lastName}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="esc_id">
             <Form.Label>תעודת זהות</Form.Label>
-            <Form.Control type="text" name="esc_id" />
+            <Form.Control type="text" name="esc_id"
+              value={escort.esc_id}
+              onChange={(e) => setEscort({ ...escort, esc_id: e.target.value })}
+              isInvalid={!!errors.esc_id}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.esc_id}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="esc_dateofbirth">
             <Form.Label>תאריך לידה</Form.Label>
-            <Form.Control type="date" name="esc_dateofbirth" />
+            <Form.Control type="date" name="esc_dateofbirth"
+              value={escort.esc_dateofbirth}
+              onChange={(e) => setEscort({ ...escort, esc_dateofbirth: e.target.value })}
+              isInvalid={!!errors.esc_dateofbirth}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.esc_dateofbirth}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="esc_cell">
@@ -130,22 +162,39 @@ export default function AddEscortForm() {
           <Form.Group controlId="esc_city">
             <Form.Label>עיר</Form.Label>
             <Form.Control list="cities-data" name="esc_city"
+              value={escort.esc_city}
               onChange={handleInputChange}
-              onInput={handleInputChange} />
+              onInput={handleInputChange}
+              isInvalid={!!errors.esc_city}
+              required
+            />
+
             <datalist id="cities-data">
               {filteredCities.map((city, index) => (
                 <option key={index} value={city} />
               ))}
             </datalist>
+
+            <Form.Control.Feedback type="invalid">
+              {errors.esc_city}
+            </Form.Control.Feedback>
+
           </Form.Group>
 
           <Form.Group controlId="esc_street">
             <Form.Label>רחוב</Form.Label>
-            <Form.Control className='formSelect' as="select" name="esc_street" >
+            <Form.Control className='formSelect' as="select" name="esc_street"
+              value={escort.esc_street}
+              onChange={(e) => setEscort({ ...escort, esc_street: e.target.value })}
+              isInvalid={!!errors.esc_street}
+              required >
               {streets.map((street, index) => (
                 <option key={index} value={street}>{street}</option>
               ))}
             </Form.Control>
+            <Form.Control.Feedback type="invalid">
+              {errors.esc_street}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="esc_homeNum">
