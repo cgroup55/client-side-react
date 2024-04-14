@@ -132,11 +132,13 @@ export default function Escorts() {
   //3 functions that handle viewing, editing and deleting a row
   const handleView = (row) => {
     console.log('View:', row);
+    navigate('/studentform', {state: 'view'});
     // Add your view logic here
   };
 
   const handleEdit = (row) => {
     console.log('Edit:', row);
+    navigate('/escortform', {state: 'edit'});
     // Add your edit logic here
   };
 
