@@ -58,8 +58,6 @@ export default function AddEscortForm() {
           <Form.Group controlId="esc_firstName">
             <Form.Label>שם פרטי</Form.Label>
             <Form.Control type="text" name="esc_firstName" 
-            onChange={(e)=>{console.log("ok")}} 
-            onBlur={(e)=>{console.log("ok")}}
             
             />
           </Form.Group>
