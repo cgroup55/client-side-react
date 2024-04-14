@@ -53,7 +53,7 @@ export default function AddEscortForm() {
 
   //Save new escort
   const SaveNewEscort = () => {
-    const isValid = validateForm();
+    let isValid = validateForm();
     console.log('isValid:', isValid);
     if (isValid) {
       //logic to check validity of new escort
@@ -67,25 +67,26 @@ export default function AddEscortForm() {
   let valid = true;
 
   const validateForm = () => {
-    console.log('errors before-',errors);
-    let fNameVal = validateHebrewletters(escort.esc_firstName);
-      setErrors({...errors, esc_firstName:fNameVal }),
-      // esc_firstName: validateHebrewletters(escort.esc_firstName),
-      // esc_lastName: validateHebrewletters(escort.esc_lastName),
-      // esc_id: ValidateId(escort.esc_id),
-      // esc_dateofbirth: validateDateOfBirth(escort.esc_dateofbirth),
-      // esc_cell: validateHebrewletters(escort.esc_cell),
-      // esc_city: validateHebrewletters(escort.esc_city),
-      // esc_street: validateHebrewletters(escort.esc_street),
-      // esc_homeNum: ValidPositiveNumber(escort.esc_homeNum)
+    console.log('errors before-', errors);
+  
+    console.log(escort);
+    setErrors({ ...errors, esc_firstName: validateHebrewletters(escort.esc_firstName) });
+    // esc_firstName: validateHebrewletters(escort.esc_firstName),
+    // esc_lastName: validateHebrewletters(escort.esc_lastName),
+    // esc_id: ValidateId(escort.esc_id),
+    // esc_dateofbirth: validateDateOfBirth(escort.esc_dateofbirth),
+    // esc_cell: validateHebrewletters(escort.esc_cell),
+    // esc_city: validateHebrewletters(escort.esc_city),
+    // esc_street: validateHebrewletters(escort.esc_street),
+    // esc_homeNum: ValidPositiveNumber(escort.esc_homeNum)
 
-    console.log('errors-',errors);
+    console.log('errors-', errors);
     Object.values(errors).forEach(error => {
       if (error) {
         valid = false;
       }
     });
-    return valid;
+    return false;
   };
 
   return (
@@ -99,7 +100,7 @@ export default function AddEscortForm() {
               value={escort.esc_firstName}
               onChange={(e) => setEscort({ ...escort, esc_firstName: e.target.value })}
               isInvalid={!!errors.esc_firstName}
-              required
+            //required
             />
             <Form.Control.Feedback type="invalid">
               {errors.esc_firstName}

@@ -2,8 +2,7 @@
  
  //validation for Hebrew letters only
  export const validateHebrewletters = (input) => {
-    console.log('הגיע לולידציה', input);
-    return false;
+    return true;//TRUE זה לא תקין
     // const text = input;
     // const regex = /^[א-ת\s]+$/;
     // if (!regex.test(text)) {
