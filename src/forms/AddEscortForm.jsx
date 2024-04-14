@@ -4,7 +4,7 @@ import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, validateCityNstreet, ValidateId, validateHebrewletters, validateDateOfBirth } from '../tools/validations';
+import { ValidPositiveNumber, validateCityNstreet, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum } from '../tools/validations';
 
 export default function AddEscortForm() {
 
@@ -68,27 +68,21 @@ export default function AddEscortForm() {
 
 
   const validateForm = () => {
-    console.log('errors before-', errors);
-
     let valid = true;
     let newErrors = {};
-
-    console.log(escort);
+    console.log('escort=',escort);
     newErrors.esc_firstName = validateHebrewletters(escort.esc_firstName);
     newErrors.esc_lastName = validateHebrewletters(escort.esc_lastName);
     newErrors.esc_id = ValidateId(escort.esc_id);
     newErrors.esc_dateofbirth = validateDateOfBirth(escort.esc_dateofbirth);
-
-
+    newErrors.esc_cell = ValidCellPhoneNum(escort.esc_cell);
     newErrors.esc_city = validateCityNstreet(escort.esc_city);
     newErrors.esc_street = validateCityNstreet(escort.esc_street);
-
-
-    // esc_cell: validateHebrewletters(escort.esc_cell),
-
-    // esc_homeNum: ValidPositiveNumber(escort.esc_homeNum)
+    newErrors.esc_homeNum = ValidPositiveNumber(escort.esc_homeNum);
+    
+    //need to check the following code *********
     setErrors(newErrors);
-    console.log('errors after-', errors);
+    console.log('errors after=', errors);
     Object.values(errors).forEach(error => {
       if (error) {
         valid = false;
@@ -156,7 +150,15 @@ export default function AddEscortForm() {
 
           <Form.Group controlId="esc_cell">
             <Form.Label>נייד</Form.Label>
-            <Form.Control type="text" name="esc_cell" />
+            <Form.Control type="text" name="esc_cell" 
+             value={escort.esc_cell}
+             onChange={(e) => setEscort({ ...escort, esc_cell: e.target.value })}
+             isInvalid={!!errors.esc_cell}
+             required
+           />
+            <Form.Control.Feedback type="invalid">
+              {errors.esc_cell}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="esc_city">
@@ -199,7 +201,15 @@ export default function AddEscortForm() {
 
           <Form.Group controlId="esc_homeNum">
             <Form.Label>מספר בית</Form.Label>
-            <Form.Control type="text" name="esc_homeNum" />
+            <Form.Control type="text" name="esc_homeNum"
+              value={escort.esc_homeNum}
+              onChange={(e) => setEscort({ ...escort, esc_homeNum: e.target.value })}
+              isInvalid={!!errors.esc_homeNum}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.esc_homeNum}
+            </Form.Control.Feedback>
           </Form.Group>
         </Form>
       </div>

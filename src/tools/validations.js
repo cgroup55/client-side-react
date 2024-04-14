@@ -56,6 +56,34 @@ export const ValidPositiveNumber = (input) => {
     }
 };
 
+//validation for cellphone- 9 digits only
+export const ValidCellPhoneNum = (input) => {
+    if (input == '') {
+        return 'זהו שדה חובה';
+    }
+    const num = input;
+    const reg = /^0\d{9}$/;
+    if (!reg.test(num)) {
+        return 'נייד חייב להכיל 10 ספרות';
+    } else {
+        return '';
+    }
+};
+
+//validation for cellphone- 9 or 10 digits only
+export const ValidCellOrHomePhoneNum = (input) => {
+    if (input == '') {
+        return 'זהו שדה חובה';
+    }
+    const num = input;
+    const reg = /^0\d{8,9}$/;
+    if (!reg.test(num)) {
+        return 'טלפון חייב להכיל 9-10 ספרות';
+    } else {
+        return '';
+    }
+};
+
 //validation for date of birth
 export const validateDateOfBirth = (input) => {
     let d = input;
