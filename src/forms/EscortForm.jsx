@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "../styling/Form.css";
-import { FaCheck, FaPlus } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
