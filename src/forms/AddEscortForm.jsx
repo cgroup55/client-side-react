@@ -57,7 +57,11 @@ export default function AddEscortForm() {
         <Form className='col-9 escortsform label-input col-form-label-sm' style={{margin: '0 auto'}}>
           <Form.Group controlId="esc_firstName">
             <Form.Label>שם פרטי</Form.Label>
-            <Form.Control type="text" name="esc_firstName" />
+            <Form.Control type="text" name="esc_firstName" 
+            onChange={(e)=>} 
+            onBlur={}
+            
+            />
           </Form.Group>
 
           <Form.Group controlId="esc_lastName">
