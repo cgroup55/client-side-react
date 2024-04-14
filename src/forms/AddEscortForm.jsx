@@ -82,7 +82,7 @@ export default function AddEscortForm() {
     //need to check the following code *********
     setErrors(newErrors);
     console.log('errors after=', errors);
-    Object.values(errors).forEach(error => {
+    Object.values(newErrors).forEach(error => {
       if (error) {
         valid = false;
       }
