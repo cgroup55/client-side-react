@@ -52,19 +52,18 @@ export default function AddEscortForm() {
     setEscort({ ...escort, esc_city: inputValue });
   };
 
-  //Save new escort
-  const SaveNewEscort = () => {
+  //form subbmision
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
     console.log('isValid:', isValid);
     if (isValid) {
-      //logic to check validity of new escort
+      // Logic to check validity of new escort
       navigate('/escorts');
-    }
-    else {
-      //הודעה על כשלון
+    } else {
+      // Show error message
     }
   };
-
 
 
   const validateForm = () => {
@@ -95,7 +94,7 @@ export default function AddEscortForm() {
     <div className='container mt-5 form-container'>
       <div className='row' >
         <h2>הוספת מלווה</h2>
-        <Form className='col-9 escortsform label-input col-form-label-sm' style={{ margin: '0 auto' }}>
+        <Form className='col-9 escortsform label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
           <Form.Group controlId="esc_firstName">
             <Form.Label>שם פרטי</Form.Label>
             <Form.Control type="text" name="esc_firstName"
@@ -211,12 +210,13 @@ export default function AddEscortForm() {
               {errors.esc_homeNum}
             </Form.Control.Feedback>
           </Form.Group>
-        </Form>
+          <div className='text-center' style={{ paddingTop: '20px' }}>
+        <Button  type="submit" >שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
+      </div>
+        </Form>        
       </div>
 
-      <div className='text-center' style={{ paddingTop: '5px' }}>
-        <Button onClick={SaveNewEscort}>שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
-      </div>
+      
     </div>
   );
 }

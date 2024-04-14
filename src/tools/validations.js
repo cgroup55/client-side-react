@@ -2,9 +2,6 @@
 
 //validation for Hebrew letters only
 export const validateHebrewletters = (input) => {
-    if (input == '') {
-        return 'זהו שדה חובה';
-    }
     const text = input;
     const regex = /^[א-ת\s]+$/;
     if (!regex.test(text)) {
@@ -16,9 +13,6 @@ export const validateHebrewletters = (input) => {
 
 //validation for street and city
 export const validateCityNstreet = (input) => {
-    if (input == '') {
-        return 'זהו שדה חובה';
-    }
     const text = input;
     const regex = /^[א-ת\s()\-.'"/]+$/u;
     if (!regex.test(text)) {
@@ -30,9 +24,6 @@ export const validateCityNstreet = (input) => {
 
 //validation for ID (9 digits only)
 export const ValidateId = (input) => {
-    if (input == '') {
-        return 'זהו שדה חובה';
-    }
     const id = input;
     const reg = /^\d{9}$/;
     if (!reg.test(id)) {
@@ -44,9 +35,6 @@ export const ValidateId = (input) => {
 
 //validation for digits only
 export const ValidPositiveNumber = (input) => {
-    if (input == '') {
-        return 'זהו שדה חובה';
-    }
     const num = input;
     const reg = /^\d+$/;
     if (!reg.test(num)) {
@@ -58,9 +46,6 @@ export const ValidPositiveNumber = (input) => {
 
 //validation for cellphone- 9 digits only
 export const ValidCellPhoneNum = (input) => {
-    if (input == '') {
-        return 'זהו שדה חובה';
-    }
     const num = input;
     const reg = /^0\d{9}$/;
     if (!reg.test(num)) {
@@ -72,9 +57,6 @@ export const ValidCellPhoneNum = (input) => {
 
 //validation for cellphone- 9 or 10 digits only
 export const ValidCellOrHomePhoneNum = (input) => {
-    if (input == '') {
-        return 'זהו שדה חובה';
-    }
     const num = input;
     const reg = /^0\d{8,9}$/;
     if (!reg.test(num)) {
@@ -87,9 +69,6 @@ export const ValidCellOrHomePhoneNum = (input) => {
 //validation for date of birth
 export const validateDateOfBirth = (input) => {
     let d = input;
-    if (d == '') {
-        return 'זהו שדה חובה';
-    }
     const birthDate = new Date(d)
     const today = new Date();
     if (birthDate > today) {
