@@ -11,7 +11,7 @@ export default function Escorts() {
   const navigate = useNavigate();
 
   const addEscort = () => {
-    navigate('/AddEscortForm');
+    navigate('/EscortForm');
   }
   
 

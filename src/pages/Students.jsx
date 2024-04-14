@@ -9,7 +9,7 @@ export default function Students() {
   const navigate = useNavigate();
 
   const addStudent = () => {
-    navigate('/AddStudentForm');
+    navigate('/StudentForm', {state: {}});
   }
     //data thats relevant for students comp's table
 
@@ -131,12 +131,12 @@ export default function Students() {
     //3 functions that handle viewing, editing and deleting a row
     const handleView = (row) => {
         console.log('View:', row);
-        navigate('/studentform', {state: 'view'});
+        // navigate('/studentform', {state: 'view'});
     };
 
     const handleEdit = (row) => {
         console.log('Edit:', row);
-        navigate('/studentform', {state: 'edit'});
+        // navigate('/studentform', {state: 'edit'});
     };
 
     const handleDelete = (row) => {

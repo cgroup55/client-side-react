@@ -10,7 +10,7 @@ export default function Lines() {
   const navigate = useNavigate();
 
   const addLine = () => {
-    navigate('/AddLineForm');
+    navigate('/LineForm');
   }
   
 //3 functions that handle viewing, editing and deleting a row

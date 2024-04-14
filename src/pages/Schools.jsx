@@ -9,7 +9,7 @@ export default function Schools() {
     const navigate = useNavigate();
 
     const addSchool = () => {
-      navigate('/AddSchoolForm');
+      navigate('/SchoolForm');
     }
 
     const Schoolcolumns = [

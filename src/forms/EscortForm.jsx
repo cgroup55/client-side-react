@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
 import { ValidPositiveNumber, validateCityNstreet, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum } from '../tools/validations';
 
-export default function AddEscortForm() {
+export default function EscortForm() {
 
   const navigate = useNavigate();
 

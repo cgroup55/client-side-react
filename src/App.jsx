@@ -17,11 +17,11 @@ import Reports from './pages/Reports';
 import Schools from './pages/Schools';
 import TransportationCompanies from './pages/TransportationCompanies';
 import Lines from './pages/Lines';
-import AddStudentForm from './forms/AddStudentForm.jsx';
-import AddSchoolForm from './forms/AddSchoolForm.jsx';
-import AddLineForm from './forms/AddLineForm.jsx';
-import AddEscortForm from './forms/AddEscortForm.jsx';
-import AddCompanyForm from './forms/AddCompanyForm.jsx';
+import StudentForm from './forms/StudentForm.jsx';
+import SchoolForm from './forms/SchoolForm.jsx';
+import LineForm from './forms/LineForm.jsx';
+import EscortForm from './forms/EscortForm.jsx';
+import CompanyForm from './forms/CompanyForm.jsx';
 
 
 
@@ -45,11 +45,11 @@ function App() {
           <Route path='/escorts' element={<Escorts/> } />
           <Route path='/reports' element={<Reports/> } />
         
-          <Route path='/AddStudentForm' element={<AddStudentForm/> } />
-          <Route path='/AddSchoolForm' element={<AddSchoolForm/> } />
-          <Route path='/AddLineForm' element={<AddLineForm/> } />
-          <Route path='/AddEscortForm' element={<AddEscortForm/> } />
-          <Route path='/AddCompanyForm' element={<AddCompanyForm/> } />
+          <Route path='/StudentForm' element={<StudentForm/> } />
+          <Route path='/SchoolForm' element={<SchoolForm/> } />
+          <Route path='/LineForm' element={<LineForm/> } />
+          <Route path='/EscortForm' element={<EscortForm/> } />
+          <Route path='/CompanyForm' element={<CompanyForm/> } />
         </Routes>
 
       </BrowserRouter>

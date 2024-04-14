@@ -9,7 +9,7 @@ export default function TransportationCompanies() {
   const navigate = useNavigate();
 
   const addCompany = () => { 
-    navigate('/AddCompanyForm');
+    navigate('/CompanyForm');
   }
   
   //3 functions that handle viewing, editing and deleting a row

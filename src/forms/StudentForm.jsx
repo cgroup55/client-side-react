@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-export default function AddStudentForm() {
+export default function StudentForm() {
 
     const navigate = useNavigate();
     //State for student type (רווחה, פנימיה, רגיל)
@@ -102,7 +102,7 @@ export default function AddStudentForm() {
 
                         <Form.Group controlId="stu_school">
                             <Form.Label>מוסד לימודי</Form.Label>
-                            <Form.Control  className="formSelect" as="select" defaultValue={0}>
+                            <Form.Control className="formSelect" as="select" defaultValue={0}>
                                 <option>בחר...</option>
                                 <option>...</option>
                             </Form.Control>
@@ -239,9 +239,11 @@ export default function AddStudentForm() {
                         </Form.Group>
                     </div>
 
-                    <br />
-                    <Button className="submitBtn" type="submit" style={{width:'25%',minWidth:'100px',margin: '0 auto'}}>שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
-
+                    <div className='row'>
+                        <div className='col-12 text-center'>
+                            <Button className="submitBtn" type="submit" style={{ width: '25%', minWidth: '100px' }}>שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
+                        </div>
+                    </div>
                 </div>
             </Form>
         </div>
