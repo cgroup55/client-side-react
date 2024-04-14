@@ -131,12 +131,12 @@ export default function Students() {
     //3 functions that handle viewing, editing and deleting a row
     const handleView = (row) => {
         console.log('View:', row);
-        navigate('/studentform', {state: 'view'});
+        navigate('/', {state: 'view'});
     };
 
     const handleEdit = (row) => {
         console.log('Edit:', row);
-        navigate('/studentform', {state: 'edit'});
+        navigate('/', {state: 'edit'});
     };
 
     const handleDelete = (row) => {
