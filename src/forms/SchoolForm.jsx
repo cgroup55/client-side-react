@@ -17,7 +17,6 @@ export default function SchoolForm() {
   const [filteredCities, setFilteredCities] = useState([]);
 
   const [school, setSchool] = useState({ });
-
   const [errors, setErrors] = useState({ });
 
   //render the cities on-load
@@ -39,6 +38,7 @@ export default function SchoolForm() {
   //form subbmision
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission
+
     let isValid = validateForm();
     console.log('isValid:', isValid);
     if (isValid) {
@@ -70,7 +70,7 @@ export default function SchoolForm() {
         valid = false;
       }
     });
-    return false;
+    return valid;
   };
 
   return (

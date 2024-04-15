@@ -85,3 +85,12 @@ export const validateDateOfBirth = (input) => {
         return 'תאריך לידה שגוי';
     }
 };
+
+export const validateEmail = (input) => {
+
+    let email=input;
+    const reg=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (!reg.test(num)) {
+        return " מייל לא תקין "
+    }
+}

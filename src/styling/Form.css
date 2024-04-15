@@ -30,7 +30,8 @@ select {
 .label-input input,
 .formSelect,
 .socialDiv,
-.secParDiv {
+.secParDiv,
+.custom-select {
   display: block;
   flex-grow: 1;
   border-color: black;
@@ -53,4 +54,24 @@ select {
 
 .form-container .label-input h4 {
   margin-bottom: 10px;
+}
+
+.select-container {
+  position: relative;
+}
+
+.custom-select {
+  padding-right: 30px; 
+  -webkit-appearance: none; /* Hide the default browser arrow */
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url(''); /* Remove any default background image */
+
+}
+
+.select-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px; /* Adjust the right position as needed */
+  transform: translateY(-50%);
 }

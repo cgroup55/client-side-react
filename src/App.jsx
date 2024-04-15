@@ -44,7 +44,6 @@ function App() {
           <Route path='/schools' element={ <Schools/>} />
           <Route path='/escorts' element={<Escorts/> } />
           <Route path='/reports' element={<Reports/> } />
-        
           <Route path='/StudentForm' element={<StudentForm/> } />
           <Route path='/SchoolForm' element={<SchoolForm/> } />
           <Route path='/LineForm' element={<LineForm/> } />
