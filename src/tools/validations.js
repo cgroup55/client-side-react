@@ -3,18 +3,21 @@
 //validation for Hebrew letters only
 export const validateHebrewletters = (input) => {
     const text = input;
-    const regex = /^[א-ת\s]+$/;
+    const regex =/^[\sא-ת!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/;
+    console.log("reg",regex.test(text));
     if (!regex.test(text)) {
-        return 'ניתן להזין אותיות בעברית בלבד';
+        return 'ניתן להזין אותיות בעברית, רווחים, ותווים מיוחדים בלבד';
     } else {
         return '';
     }
 };
 
+
+
 //validation for street and city
 export const validateCityNstreet = (input) => {
     const text = input;
-    const regex = /^[א-ת\s()\-.'"/]+$/u;
+    const regex = /^[\sא-ת!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/;
     if (!regex.test(text)) {
         return 'ניתן להזין כתובת בעברית בלבד';
     } else {
@@ -90,7 +93,10 @@ export const validateEmail = (input) => {
 
     let email=input;
     const reg=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    if (!reg.test(num)) {
-        return " מייל לא תקין "
+    if (!reg.test(email)) {
+        return " מייל לא תקין ";
+    }
+    else{
+        return "";
     }
 }

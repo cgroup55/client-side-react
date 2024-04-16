@@ -184,6 +184,7 @@ export default function EscortForm() {
 
           <Form.Group controlId="esc_street">
             <Form.Label>רחוב</Form.Label>
+            <div className="select-container">
             <Form.Control className='formSelect' as="select" name="esc_street"
               value={escort.esc_street}
               onChange={(e) => setEscort({ ...escort, esc_street: e.target.value })}
@@ -193,6 +194,7 @@ export default function EscortForm() {
                 <option key={index} value={street}>{street}</option>
               ))}
             </Form.Control>
+            </div>
             <Form.Control.Feedback type="invalid">
               {errors.esc_street}
             </Form.Control.Feedback>

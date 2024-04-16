@@ -43,7 +43,7 @@ export default function SchoolForm() {
     console.log('isValid:', isValid);
     if (isValid) {
       // Logic to check validity of new school
-      navigate('/schools');
+      navigate('/schools',school);
     } else {
       // Show error message
     }

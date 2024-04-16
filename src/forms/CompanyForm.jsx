@@ -1,10 +1,10 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, validateCityNstreet, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum } from '../tools/validations';
+import { ValidPositiveNumber, validateCityNstreet, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId } from '../tools/validations';
 import { BsChevronDown } from 'react-icons/bs'; // Import the arrow down icon from react-icons
 
 export default function CompanyForm() {
@@ -21,16 +21,13 @@ export default function CompanyForm() {
 
 
 
-  const handleArrowClick = () => {
-    console.log("arrow");
-    selectRef.focus(); // Focus on the select input to open the list
-  };
+
 
   //render the cities on-load
   useEffect(() => {
     fetchCities().then(cities => setCities(cities));
   }, []);
-  
+
 
   //filterout cities that dont match the search
   const handleInputChange = (event) => {
@@ -51,8 +48,8 @@ export default function CompanyForm() {
     let isValid = validateForm();
     console.log('isValid:', isValid);
     if (isValid) {
-      // Logic to check validity of new escort
-      navigate('/transportComps');
+      // Logic to check validity of new company
+      navigate('/transportComps',company);
     } else {
       // Show error message
     }
@@ -62,9 +59,15 @@ export default function CompanyForm() {
     let valid = true;
     let newErrors = {};
     console.log('company=', company);
-    //newErrors.esc_firstName = validateHebrewletters(escort.esc_firstName);
 
-
+    newErrors.company_code = ValidPositiveNumber(company.company_code);
+    newErrors.company_name = validateHebrewletters(company.company_name);
+    newErrors.company_email = validateEmail(company.company_email);
+    newErrors.company_phone = ValidCellOrHomePhoneNum(company.company_phone);
+    newErrors.manager_phone = ValidCellOrHomePhoneNum(company.manager_phone);
+    newErrors.company_city = validateCityNstreet(company.company_city);
+    newErrors.company_street = validateCityNstreet(company.company_street);
+    newErrors.company_homeNum = ValidPositiveNumber(company.company_homeNum);
     //need to check the following code *********
     setErrors(newErrors);
     console.log('errors after=', errors);
@@ -73,10 +76,10 @@ export default function CompanyForm() {
         valid = false;
       }
     });
-    return false;
+    return valid;
   };
 
-//continue comments+ send obj
+  //continue comments+ send obj
   return (
     <div className='container mt-5 form-container'>
       <div className='row' style={{ paddingRight: '50px' }}>
@@ -95,14 +98,11 @@ export default function CompanyForm() {
             </Form.Control.Feedback>
           </Form.Group>
 
-
-
-
           <Form.Group controlId="company_name">
             <Form.Label>שם חברה</Form.Label>
             <Form.Control type="text" name="company_name"
               value={company.company_name}
-              onChange={(e) => setCompany({ ...company, principal_name: e.target.value })}
+              onChange={(e) => setCompany({ ...company, company_name: e.target.value })}
               isInvalid={!!errors.company_name}
               required
             />
@@ -127,7 +127,7 @@ export default function CompanyForm() {
 
           <Form.Group controlId="company_phone">
             <Form.Label>טלפון חברה</Form.Label>
-          
+
             <Form.Control type="text" name="company_phone"
               value={company.company_phone}
               onChange={(e) => setCompany({ ...company, company_phone: e.target.value })}
@@ -144,19 +144,19 @@ export default function CompanyForm() {
             <Form.Control type="text" name="manager_name"
               value={company.manager_name}
               onChange={(e) => setCompany({ ...company, manager_name: e.target.value })}
-              isInvalid={!!errors.company_name}
+              isInvalid={!!errors.manager_name}
               required
             />
             <Form.Control.Feedback type="invalid">
-              {errors.company_name}
+              {errors.manager_name}
             </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="manager_phone">
-            <Form.Label>טלפון חברה</Form.Label>
+            <Form.Label>טלפון מנהל</Form.Label>
             <Form.Control type="text" name="manager_phone"
-              value={company.company_phone}
-              onChange={(e) => setCompany({ ...company, manager_phonemanager_phone: e.target.value })}
+              value={company.manager_phone}
+              onChange={(e) => setCompany({ ...company, manager_phone: e.target.value })}
               isInvalid={!!errors.manager_phone}
               required
             />
@@ -164,6 +164,16 @@ export default function CompanyForm() {
               {errors.manager_phone}
             </Form.Control.Feedback>
           </Form.Group>
+
+          <Form.Group controlId="company_comments">
+            <Form.Label>הערות</Form.Label>
+            <Form.Control type="text" name="company_comments"
+              value={company.company_comments}
+              onChange={(e) => setCompany({ ...company, company_comments: e.target.value })}
+            />
+
+          </Form.Group>
+
 
           <Form.Group controlId="company_city">
             <Form.Label>עיר</Form.Label>
@@ -189,24 +199,20 @@ export default function CompanyForm() {
 
           <Form.Group controlId="company_street">
             <Form.Label>רחוב</Form.Label>
-            <div className="select-container">
-              <Form.Control
-                as="select"
-                name="company_street"
-                value={company.company_street}
-                onChange={(e) => setCompany({ ...company, company_street: e.target.value })}
-                isInvalid={!!errors.company_street}
-                required
-                className="custom-select"
-                ref={selectRef}//keep trying
+            <Form.Control
+              as="select"
+              name="company_street"
+              value={company.company_street}
+              onChange={(e) => setCompany({ ...company, company_street: e.target.value })}
+              isInvalid={!!errors.company_street}
+              required
+              className="formSelect"
+            >
+              {streets.map((street, index) => (
+                <option key={index} value={street}>{street}</option>
+              ))}
+            </Form.Control>
 
-              >
-                {streets.map((street, index) => (
-                  <option key={index} value={street}>{street}</option>
-                ))}
-              </Form.Control>
-              <BsChevronDown className="select-icon" onClick={handleArrowClick} /> {/* Arrow down icon */}
-            </div>
             <Form.Control.Feedback type="invalid">
               {errors.company_street}
             </Form.Control.Feedback>
@@ -224,8 +230,6 @@ export default function CompanyForm() {
               {errors.company_homeNum}
             </Form.Control.Feedback>
           </Form.Group>
-
-
 
           <div className='text-center' style={{ paddingTop: '20px' }}>
             <Button type="submit" >שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>

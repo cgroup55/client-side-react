@@ -56,22 +56,16 @@ select {
   margin-bottom: 10px;
 }
 
-.select-container {
-  position: relative;
+/* Style to move the arrow to the left side */
+.custom-select::-ms-expand {
+  display: none; /* Hides the default arrow on IE/Edge */
 }
 
-.custom-select {
-  padding-right: 30px; 
-  -webkit-appearance: none; /* Hide the default browser arrow */
-  -moz-appearance: none;
+.formSelect {
   appearance: none;
-  background-image: url(''); /* Remove any default background image */
-
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M11.707 4.293a1 1 0 0 0-1.414 0L6 8.586 1.707 4.293a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l5-5a1 1 0 0 0 0-1.414z" fill="currentColor"/></svg>'); /* Add a custom arrow icon */
+  background-repeat: no-repeat;
+  background-position: left; 
 }
 
-.select-icon {
-  position: absolute;
-  top: 50%;
-  left: 10px; /* Adjust the right position as needed */
-  transform: translateY(-50%);
-}
+
