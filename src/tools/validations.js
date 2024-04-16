@@ -12,7 +12,12 @@ export const validateHebrewletters = (input) => {
     }
 };
 
-
+export const Validateselect=(input)=>{
+    if (input!='-1'){
+        return 'חובה לבחור אחת מהאפשרויות';
+    }
+    else return '';
+}
 
 //validation for street and city
 export const validateCityNstreet = (input) => {

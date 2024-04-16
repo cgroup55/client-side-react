@@ -82,7 +82,7 @@ export default function CompanyForm() {
   //continue comments+ send obj
   return (
     <div className='container mt-5 form-container'>
-      <div className='row' style={{ paddingRight: '50px' }}>
+      <div className='row'>
         <h2>הוספת חברת הסעה</h2>
         <Form className='col-9 label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
           <Form.Group controlId="company_code">

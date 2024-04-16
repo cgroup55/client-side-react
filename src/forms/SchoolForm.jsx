@@ -76,7 +76,7 @@ export default function SchoolForm() {
   return (
 
     <div className='container mt-5 form-container'>
-      <div className='row' style={{ paddingRight: '50px' }}>
+      <div className='row'>
         <h2>הוספת מוסד לימודים</h2>
         <Form className='col-9 schoolsform label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
           <Form.Group controlId="school_name">
