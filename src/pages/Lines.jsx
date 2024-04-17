@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import {useNavigate } from 'react-router-dom';
+import MyModal from '../components/MyModal';
 
 
 export default function Lines() {
 
   const navigate = useNavigate();
-
+  const [showModal, setShowModal] = useState(false);
+  const [rowData, setRowData] = useState(null);
+  const [colData,setColData]=useState()
   const addLine = () => {
    
     let newLine={
@@ -29,15 +32,14 @@ export default function Lines() {
 
   const Linecolumns = [
     {
-        name: "ID",
+        name: "תז",
         selector: (row) => row.personID,
         sortable: true,
     },
     {
-        name: "Full Name",
+        name: "שם מלא",
         selector: (row) => row.fullName,
     },
-
 
 ];
 
@@ -57,8 +59,10 @@ const Linerows = [
   
 //3 functions that handle viewing, editing and deleting a row
 const handleView = (row) => {
-  console.log('View:', row);
-  // Add your view logic here
+  
+  setColData();
+  setRowData(row);
+  setShowModal(true);
 };
 
 const handleEdit = (row) => {
@@ -83,7 +87,6 @@ const handleDelete = (row) => {
 };
 
 
-
   return (
     <div className='container mt-5' >
       <h3 className="bold" style={{ textAlign: 'center' }}>קווי הסעה</h3>
@@ -91,6 +94,7 @@ const handleDelete = (row) => {
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addLine}>הוסף קו חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+      <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={Linecolumns} />
     </div>
   )
 }

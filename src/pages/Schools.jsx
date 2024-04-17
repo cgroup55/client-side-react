@@ -3,10 +3,13 @@ import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
+import MyModal from '../components/MyModal';
 
 export default function Schools() {
 
     const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [rowData, setRowData] = useState(null);
 
     const addSchool = () => {
         let newSchool = {
@@ -100,8 +103,8 @@ export default function Schools() {
 
     //3 functions that handle viewing, editing and deleting a row
     const handleView = (row) => {
-        console.log('View:', row);
-        // Add your view logic here
+      setRowData(row);
+      setShowModal(true);
     };
 
     const handleEdit = (row) => {
@@ -135,6 +138,8 @@ export default function Schools() {
             <div className='text-center'
                 style={{ padding: '20px' }}>
                 <Button onClick={addSchool}>הוסף מוסד לימודים <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+                <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} columnNames={Schoolcolumns} />
+
         </div>
     )
 }
