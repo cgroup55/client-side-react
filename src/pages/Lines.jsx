@@ -71,7 +71,6 @@ const handleEdit = (row) => {
     escort_incharge:"בני בוי",
     school_of_line:"טשרני",
     station_definition:"origin",
-   
     origin_arrivaltime_minutes:"17",
     origin_arrivaltime_hours:"18"
   }

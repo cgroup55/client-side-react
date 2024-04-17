@@ -1,26 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, } from 'react';
 import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateCity, validateStreet } from '../tools/cities&streets';
 import { ValidPositiveNumber, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId } from '../tools/validations';
-import { BsChevronDown } from 'react-icons/bs'; // Import the arrow down icon from react-icons
 
 export default function CompanyForm() {
 
   const navigate = useNavigate();
-  const selectRef = useRef(null);
+  const { state } = useLocation();
+  let originCompany = state;
 
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
 
-  const [company, setCompany] = useState({});
+  const [company, setCompany] = useState({...originCompany});
   const [errors, setErrors] = useState({});
-
-
-
 
 
   //render the cities on-load
@@ -28,6 +25,11 @@ export default function CompanyForm() {
     fetchCities().then(cities => setCities(cities));
   }, []);
 
+  useEffect(() => {
+    if (originCompany.company_city != '') {
+      fetchStreetsByCity(originCompany.company_city).then(streets => setStreets(streets));
+    }
+  }, []);
 
   //filterout cities that dont match the search
   const handleInputChange = (event) => {
@@ -41,15 +43,13 @@ export default function CompanyForm() {
   };
 
 
-
-
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
     console.log('isValid:', isValid);
     if (isValid) {
       // Logic to check validity of new company
-      navigate('/transportComps',company);
+      navigate('/transportComps', company);
     } else {
       // Show error message
     }
@@ -65,8 +65,8 @@ export default function CompanyForm() {
     newErrors.company_email = validateEmail(company.company_email);
     newErrors.company_phone = ValidCellOrHomePhoneNum(company.company_phone);
     newErrors.manager_phone = ValidCellOrHomePhoneNum(company.manager_phone);
-    newErrors.company_city = validateCity(company.company_city,cities,cities);
-    newErrors.company_street = validateStreet(company.company_street,streets);
+    newErrors.company_city = validateCity(company.company_city, cities, cities);
+    newErrors.company_street = validateStreet(company.company_street, streets);
     newErrors.company_homeNum = ValidPositiveNumber(company.company_homeNum);
     //need to check the following code *********
     setErrors(newErrors);
