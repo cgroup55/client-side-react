@@ -9,7 +9,7 @@ export default function Schools() {
     const navigate = useNavigate();
 
     const addSchool = () => {
-        let currentSchool = {
+        let newSchool = {
             school_code: '',
             school_name: '',
             school_city: '',
@@ -22,7 +22,7 @@ export default function Schools() {
             school_contactName: '',
             school_contactCell: ''
         };
-        navigate('/SchoolForm', { state: currentSchool });
+        navigate('/SchoolForm', { state: newSchool });
     }
 
     const Schoolcolumns = [
@@ -68,7 +68,9 @@ export default function Schools() {
             schoolSecretaryPhone: '097755669',
             schoolSecretaryMail: 'ell2@gmail.com',
             schoolContactName: 'מתנאל כהן',
-            schoolContactCell: '0527896633'
+            schoolContactCell: '0527896633',
+            principal_name: 'ff',
+            principal_cell: '0528889955'
         },
         {
             schoolCode: 7,
@@ -77,7 +79,9 @@ export default function Schools() {
             schoolSecretaryPhone: '097755663',
             schoolSecretaryMail: 'ell2@gmail.com',
             schoolContactName: 'שיראל עזריהו',
-            schoolContactCell: '0527896622'
+            schoolContactCell: '0527896622',
+            principal_name: 'ff',
+            principal_cell: '0528889955'
         },
         {
             schoolCode: 80,
@@ -86,7 +90,9 @@ export default function Schools() {
             schoolSecretaryPhone: '097777663',
             schoolSecretaryMail: 'bbbl2@gmail.com',
             schoolContactName: 'שני אהרונסון',
-            schoolContactCell: '0527896644'
+            schoolContactCell: '0527896644',
+            principal_name: 'ff',
+            principal_cell: '0528889955'
         },
     ];
 
@@ -101,20 +107,20 @@ export default function Schools() {
     const handleEdit = (row) => {
         console.log('Edit:', row);
         // Add your edit logic here לזכור לפצל את הכתובת לפי פסיק
-        let newSchool = {
-            school_code: '123',
-            school_name: 'abc',
+        let currentSchool = {
+            school_code: row.schoolCode,
+            school_name: row.schoolName,
             school_city: 'כפר סבא',
             school_street: 'הגפן',
             school_homeNum: '55',
-            principal_name: 'אהרון',
-            principal_cell: '',
-            secretar_cell: '097658899',
-            secretar_mail: '',
-            school_contactName: '',
-            school_contactCell: ''
+            principal_name: principal_name,
+            principal_cell: principal_cell,
+            secretar_cell: row.schoolSecretaryPhone,
+            secretar_mail: row.schoolSecretaryMail,
+            school_contactName: row.schoolContactName,
+            school_contactCell: row.schoolContactCell
         };
-        navigate('/SchoolForm', { state: newSchool });
+        navigate('/SchoolForm', { state: currentSchool });
     };
 
     const handleDelete = (row) => {
