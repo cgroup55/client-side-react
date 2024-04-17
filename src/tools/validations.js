@@ -3,8 +3,7 @@
 //validation for Hebrew letters only
 export const validateHebrewletters = (input) => {
     const text = input;
-    const regex =/^[\sא-ת!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/;
-    console.log("reg",regex.test(text));
+    const regex =/^[\sא-ת!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/;    
     if (!regex.test(text)) {
         return 'ניתן להזין אותיות בעברית, רווחים, ותווים מיוחדים בלבד';
     } else {
@@ -41,9 +40,12 @@ export const ValidateId = (input) => {
     }
 };
 
-//validation for digits only
+//validation for digits only- positive number
 export const ValidPositiveNumber = (input) => {
     const num = input;
+    if (num<0) {
+        return 'לא ניתן להזין מספר שלילי';
+    }
     const reg = /^\d+$/;
     if (!reg.test(num)) {
         return 'ניתן להזין ספרות בלבד';

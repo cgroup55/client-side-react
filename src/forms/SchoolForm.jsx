@@ -4,20 +4,32 @@ import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, validateCityNstreet, validateHebrewletters, ValidCellPhoneNum , ValidCellOrHomePhoneNum} from '../tools/validations';
+import { ValidPositiveNumber, validateCityNstreet, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail } from '../tools/validations';
 
 
 export default function SchoolForm() {
 
-  
+
   const navigate = useNavigate();
 
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
 
-  const [school, setSchool] = useState({ });
-  const [errors, setErrors] = useState({ });
+  const [school, setSchool] = useState({
+    school_code: '',
+    school_name: '',
+    school_city: '',
+    school_street: '',
+    school_homeNum: '',
+    principal_name: '',
+    principal_cell: '',
+    secretar_cell: '',
+    secretar_mail: '',
+    school_contactName: '',
+    school_contactCell: ''
+  });
+  const [errors, setErrors] = useState({});
 
   //render the cities on-load
   useEffect(() => {
@@ -38,33 +50,44 @@ export default function SchoolForm() {
   //form subbmision
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission
-
     let isValid = validateForm();
     console.log('isValid:', isValid);
     if (isValid) {
-      // Logic to check validity of new school
-      navigate('/schools',school);
+      // Logic to inser new school
+      navigate('/schools', school);
     } else {
       // Show error message
     }
   };
 
-
+  //Validation for all inputs
   const validateForm = () => {
     let valid = true;
     let newErrors = {};
-    console.log('school=',school);
+    console.log('school=', school);
+    newErrors.school_code = ValidPositiveNumber(school.school_code);
     newErrors.school_name = validateHebrewletters(school.school_name);
-    newErrors.principal_name = validateHebrewletters(school.principal_name);
-    newErrors.principal_cell = ValidCellPhoneNum(school.principal_cell);
     newErrors.school_city = validateCityNstreet(school.school_city);
     newErrors.school_street = validateCityNstreet(school.school_street);
     newErrors.school_homeNum = ValidPositiveNumber(school.school_homeNum);
     newErrors.secretar_cell = ValidCellOrHomePhoneNum(school.secretar_cell);
-    
-    //need to check the following code *********
+    if (school.principal_name != '') {
+      newErrors.principal_name = validateHebrewletters(school.principal_name);
+    }
+    if (school.principal_cell != '') {
+      newErrors.principal_cell = ValidCellPhoneNum(school.principal_cell);
+    }
+    if (school.secretar_mail != '') {
+      newErrors.secretar_mail = validateEmail(school.secretar_mail);
+    }
+    if (school.school_contactName != '') {
+      newErrors.school_contactName = validateHebrewletters(school.school_contactName);
+    }
+    if (school.school_contactCell != '') {
+      newErrors.school_contactCell = ValidCellPhoneNum(school.school_contactCell);
+    }
     setErrors(newErrors);
-    console.log('errors after=', errors);
+   //validity check before submition
     Object.values(newErrors).forEach(error => {
       if (error) {
         valid = false;
@@ -79,6 +102,20 @@ export default function SchoolForm() {
       <div className='row'>
         <h2>הוספת מוסד לימודים</h2>
         <Form className='col-9 schoolsform label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
+
+          <Form.Group controlId="school_code">
+            <Form.Label>סמל מוסד</Form.Label>
+            <Form.Control type="number" name="school_code"
+              value={school.school_code}
+              onChange={(e) => setSchool({ ...school, school_code: e.target.value })}
+              isInvalid={!!errors.school_code}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.school_code}
+            </Form.Control.Feedback>
+          </Form.Group>
+
           <Form.Group controlId="school_name">
             <Form.Label>שם מוסד לימודי</Form.Label>
             <Form.Control type="text" name="school_name"
@@ -149,7 +186,6 @@ export default function SchoolForm() {
               value={school.principal_name}
               onChange={(e) => setSchool({ ...school, principal_name: e.target.value })}
               isInvalid={!!errors.principal_name}
-              required
             />
             <Form.Control.Feedback type="invalid">
               {errors.principal_name}
@@ -159,12 +195,11 @@ export default function SchoolForm() {
 
           <Form.Group controlId="principal_cell">
             <Form.Label>נייד מנהל</Form.Label>
-            <Form.Control type="text" name="principal_cell" 
-             value={school.principal_cell}
-             onChange={(e) => setSchool({ ...school, principal_cell: e.target.value })}
-             isInvalid={!!errors.principal_cell}
-             required
-           />
+            <Form.Control type="text" name="principal_cell"
+              value={school.principal_cell}
+              onChange={(e) => setSchool({ ...school, principal_cell: e.target.value })}
+              isInvalid={!!errors.principal_cell}
+            />
             <Form.Control.Feedback type="invalid">
               {errors.principal_cell}
             </Form.Control.Feedback>
@@ -172,24 +207,60 @@ export default function SchoolForm() {
 
           <Form.Group controlId="secretar_cell">
             <Form.Label>טלפון מזכירות</Form.Label>
-            <Form.Control type="text" name="secretar_cell" 
-             value={school.secretar_cell}
-             onChange={(e) => setSchool({ ...school, secretar_cell: e.target.value })}
-             isInvalid={!!errors.secretar_cell}
-             required
-           />
+            <Form.Control type="text" name="secretar_cell"
+              value={school.secretar_cell}
+              onChange={(e) => setSchool({ ...school, secretar_cell: e.target.value })}
+              isInvalid={!!errors.secretar_cell}
+              required
+            />
             <Form.Control.Feedback type="invalid">
               {errors.secretar_cell}
             </Form.Control.Feedback>
           </Form.Group>
 
+          <Form.Group controlId="secretar_mail">
+            <Form.Label>מייל מזכירות</Form.Label>
+            <Form.Control type="text" name="secretar_mail"
+              value={school.secretar_mail}
+              onChange={(e) => setSchool({ ...school, secretar_mail: e.target.value })}
+              isInvalid={!!errors.secretar_mail}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.secretar_mail}
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group controlId="school_contactName">
+            <Form.Label>שם איש קשר נוסף</Form.Label>
+            <Form.Control type="text" name="school_contactName"
+              value={school.school_contactName}
+              onChange={(e) => setSchool({ ...school, school_contactName: e.target.value })}
+              isInvalid={!!errors.school_contactName}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.school_contactName}
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group controlId="school_contactCell">
+            <Form.Label>נייד מנהל</Form.Label>
+            <Form.Control type="text" name="school_contactCell"
+              value={school.school_contactCell}
+              onChange={(e) => setSchool({ ...school, school_contactCell: e.target.value })}
+              isInvalid={!!errors.school_contactCell}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.school_contactCell}
+            </Form.Control.Feedback>
+          </Form.Group>
+
           <div className='text-center' style={{ paddingTop: '20px' }}>
-        <Button  type="submit" >שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
-      </div>
-        </Form>        
+            <Button type="submit" >שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
+          </div>
+        </Form>
       </div>
 
-      
+
     </div>
   );
 }
