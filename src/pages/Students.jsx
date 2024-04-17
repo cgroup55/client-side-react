@@ -15,7 +15,7 @@ export default function Students() {
 
     const StudentCols = [
         {
-            name: "ID",
+            name: "עברית",
             selector: (row) => row.personID,
             sortable: true,
         },
