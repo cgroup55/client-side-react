@@ -9,7 +9,7 @@ export default function Schools() {
     const navigate = useNavigate();
 
     const addSchool = () => {
-        let newSchool = {
+        let currentSchool = {
             school_code: '',
             school_name: '',
             school_city: '',
@@ -22,34 +22,71 @@ export default function Schools() {
             school_contactName: '',
             school_contactCell: ''
         };
-        navigate('/SchoolForm', { state: newSchool });
+        navigate('/SchoolForm', { state: currentSchool });
     }
 
     const Schoolcolumns = [
         {
-            name: "ID",
-            selector: (row) => row.personID,
+            name: "סמל מוסד",
+            selector: (row) => row.schoolCode,
             sortable: true,
         },
         {
-            name: "Full Name",
-            selector: (row) => row.fullName,
+            name: "שם מוסד",
+            selector: (row) => row.schoolName,
+            sortable: true,
         },
-
-
+        {
+            name: "כתובת",
+            selector: (row) => row.schoolAddress,
+            sortable: true,
+        },
+        {
+            name: "טל מזכירות",
+            selector: (row) => row.schoolSecretaryPhone,
+        },
+        {
+            name: "מייל מזכירות",
+            selector: (row) => row.schoolSecretaryMail,
+        },
+        {
+            name: "איש קשר",
+            selector: (row) => row.schoolContactName,
+        },
+        {
+            name: "נייד איש קשר",
+            selector: (row) => row.schoolContactCell,
+        },
     ];
 
     const Schoolrows = [
 
         {
-            personID: 14,
-            fullName: "Ethan Lee",
-
+            schoolCode: 14,
+            schoolName: "אברהמסון",
+            schoolAddress: "לשרשר כתובת מלאה",
+            schoolSecretaryPhone: '097755669',
+            schoolSecretaryMail: 'ell2@gmail.com',
+            schoolContactName: 'מתנאל כהן',
+            schoolContactCell: '0527896633'
         },
         {
-            personID: 15,
-            fullName: "Isabella Thompson",
-
+            schoolCode: 7,
+            schoolName: "אהרוני",
+            schoolAddress: "לשרשר כתובת מלאה",
+            schoolSecretaryPhone: '097755663',
+            schoolSecretaryMail: 'ell2@gmail.com',
+            schoolContactName: 'שיראל עזריהו',
+            schoolContactCell: '0527896622'
+        },
+        {
+            schoolCode: 80,
+            schoolName: "השרונים",
+            schoolAddress: "לשרשר כתובת מלאה",
+            schoolSecretaryPhone: '097777663',
+            schoolSecretaryMail: 'bbbl2@gmail.com',
+            schoolContactName: 'שני אהרונסון',
+            schoolContactCell: '0527896644'
         },
     ];
 
@@ -63,7 +100,7 @@ export default function Schools() {
 
     const handleEdit = (row) => {
         console.log('Edit:', row);
-        // Add your edit logic here
+        // Add your edit logic here לזכור לפצל את הכתובת לפי פסיק
         let newSchool = {
             school_code: '123',
             school_name: 'abc',

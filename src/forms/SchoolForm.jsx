@@ -240,7 +240,7 @@ export default function SchoolForm() {
           </Form.Group>
 
           <Form.Group controlId="school_contactCell">
-            <Form.Label>נייד מנהל</Form.Label>
+            <Form.Label>נייד איש קשר</Form.Label>
             <Form.Control type="text" name="school_contactCell"
               value={school.school_contactCell}
               onChange={(e) => setSchool({ ...school, school_contactCell: e.target.value })}
