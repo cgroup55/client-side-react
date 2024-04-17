@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ValidPositiveNumber, isRadioButtonChecked, validateCityNstreet, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId, Validateselect } from '../tools/validations';
 
 export default function LineForm() {
@@ -10,9 +10,10 @@ export default function LineForm() {
   const navigate = useNavigate();
   const today = new Date().toLocaleDateString('en-GB');
 
+  const { state } = useLocation();
+  let originLine=state;
 
-
-  const [line, setLine] = useState({ definition_date: today });
+  const [line, setLine] = useState({ ...originLine,definition_date: today });
   const [errors, setErrors] = useState({});
 
   const schools = [{ schoolname: "טשרני", schoolcity: "נתניה", schoolstreet: "הגרא", schoolHomenum: "3" }, { schoolname: "אורט", schoolcity: "חדרה", schoolstreet: "הרצל", schoolHomenum: "5" }];//need to fetch from database
@@ -264,8 +265,6 @@ export default function LineForm() {
                     <option key={i} value={String(i).padStart(2, '0')}>{String(i).padStart(2, '0')}</option>
                   ))}
                 </Form.Control>
-
-
               </div>
               
             </Form.Group>
