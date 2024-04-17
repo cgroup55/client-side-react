@@ -41,7 +41,7 @@ export default function Schools() {
         },
         {
             name: "כתובת",
-            selector: (row) => row.schoolAddress,
+            selector: (row) => row.schoolStreet+' '+ row.schoolHomeNum+', '+row.schoolCity,
             sortable: true,
         },
         {
@@ -63,42 +63,47 @@ export default function Schools() {
     ];
 
     const Schoolrows = [
-
+        //GET
         {
             schoolCode: 14,
             schoolName: "אברהמסון",
-            schoolAddress: "לשרשר כתובת מלאה",
+            schoolStreet: 'ברנר',
+            schoolHomeNum: 5,
+            schoolCity: 'כפר סבא',
             schoolSecretaryPhone: '097755669',
             schoolSecretaryMail: 'ell2@gmail.com',
             schoolContactName: 'מתנאל כהן',
             schoolContactCell: '0527896633',
-            principal_name: 'ff',
+            principal_name: 'שרון מימון',
             principal_cell: '0528889955'
         },
         {
             schoolCode: 7,
             schoolName: "אהרוני",
-            schoolAddress: "לשרשר כתובת מלאה",
+            schoolStreet: 'ויצמן',
+            schoolHomeNum: 8,
+            schoolCity: 'כפר סבא',
             schoolSecretaryPhone: '097755663',
-            schoolSecretaryMail: 'ell2@gmail.com',
+            schoolSecretaryMail: '',
             schoolContactName: 'שיראל עזריהו',
             schoolContactCell: '0527896622',
-            principal_name: 'ff',
-            principal_cell: '0528889955'
+            principal_name: 'שלמה אלבז',
+            principal_cell: ''
         },
         {
             schoolCode: 80,
             schoolName: "השרונים",
-            schoolAddress: "לשרשר כתובת מלאה",
+            schoolStreet: 'הנביאים',
+            schoolHomeNum: 85,
+            schoolCity: 'כפר סבא',
             schoolSecretaryPhone: '097777663',
             schoolSecretaryMail: 'bbbl2@gmail.com',
             schoolContactName: 'שני אהרונסון',
             schoolContactCell: '0527896644',
-            principal_name: 'ff',
+            principal_name: '',
             principal_cell: '0528889955'
         },
     ];
-
 
 
     //3 functions that handle viewing, editing and deleting a row
@@ -109,15 +114,15 @@ export default function Schools() {
 
     const handleEdit = (row) => {
         console.log('Edit:', row);
-        // Add your edit logic here לזכור לפצל את הכתובת לפי פסיק
+        // Add your edit logic here לזכור לפצל את הכתובת לפי פסיק      
         let currentSchool = {
             school_code: row.schoolCode,
             school_name: row.schoolName,
-            school_city: 'כפר סבא',
-            school_street: 'הגפן',
-            school_homeNum: '55',
-            principal_name: principal_name,
-            principal_cell: principal_cell,
+            school_city: row.schoolCity,
+            school_street: row.schoolStreet,
+            school_homeNum: row.schoolHomeNum,
+            principal_name: row.principal_name,
+            principal_cell: row.principal_cell,
             secretar_cell: row.schoolSecretaryPhone,
             secretar_mail: row.schoolSecretaryMail,
             school_contactName: row.schoolContactName,
