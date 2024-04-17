@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "../styling/Form.css";
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
 import { ValidPositiveNumber, validateCityNstreet, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail } from '../tools/validations';
 
@@ -11,29 +11,25 @@ export default function SchoolForm() {
 
 
   const navigate = useNavigate();
+  const { state } = useLocation();
+  let originSchool = state;
 
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
 
-  const [school, setSchool] = useState({
-    school_code: '',
-    school_name: '',
-    school_city: '',
-    school_street: '',
-    school_homeNum: '',
-    principal_name: '',
-    principal_cell: '',
-    secretar_cell: '',
-    secretar_mail: '',
-    school_contactName: '',
-    school_contactCell: ''
-  });
+  const [school, setSchool] = useState({ ...originSchool });
   const [errors, setErrors] = useState({});
 
   //render the cities on-load
   useEffect(() => {
     fetchCities().then(cities => setCities(cities));
+  }, []);
+
+  useEffect(() => {
+    if (originSchool.school_city != '') {
+      fetchStreetsByCity(originSchool.school_city).then(streets => setStreets(streets));
+    }
   }, []);
 
   //filterout cities that dont match the search
@@ -87,7 +83,7 @@ export default function SchoolForm() {
       newErrors.school_contactCell = ValidCellPhoneNum(school.school_contactCell);
     }
     setErrors(newErrors);
-   //validity check before submition
+    //validity check before submition
     Object.values(newErrors).forEach(error => {
       if (error) {
         valid = false;
@@ -96,6 +92,7 @@ export default function SchoolForm() {
     return valid;
   };
 
+  console.log('school state=', school);
   return (
 
     <div className='container mt-5 form-container'>

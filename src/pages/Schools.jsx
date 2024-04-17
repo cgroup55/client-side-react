@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Schools() {
 
     const navigate = useNavigate();
 
     const addSchool = () => {
-      navigate('/SchoolForm');
+        let newSchool = {
+            school_code: '',
+            school_name: '',
+            school_city: '',
+            school_street: '',
+            school_homeNum: '',
+            principal_name: '',
+            principal_cell: '',
+            secretar_cell: '',
+            secretar_mail: '',
+            school_contactName: '',
+            school_contactCell: ''
+        };
+        navigate('/SchoolForm', { state: newSchool });
     }
 
     const Schoolcolumns = [
@@ -41,6 +54,7 @@ export default function Schools() {
     ];
 
 
+
     //3 functions that handle viewing, editing and deleting a row
     const handleView = (row) => {
         console.log('View:', row);
@@ -50,6 +64,20 @@ export default function Schools() {
     const handleEdit = (row) => {
         console.log('Edit:', row);
         // Add your edit logic here
+        let newSchool = {
+            school_code: '123',
+            school_name: 'abc',
+            school_city: 'כפר סבא',
+            school_street: 'הגפן',
+            school_homeNum: '55',
+            principal_name: 'אהרון',
+            principal_cell: '',
+            secretar_cell: '097658899',
+            secretar_mail: '',
+            school_contactName: '',
+            school_contactCell: ''
+        };
+        navigate('/SchoolForm', { state: newSchool });
     };
 
     const handleDelete = (row) => {
