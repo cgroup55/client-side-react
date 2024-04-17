@@ -212,6 +212,7 @@ export default function LineForm() {
 
               <Form.Label>עיר</Form.Label>
               <Form.Control type='text' name="line_city"
+                readOnly
                 value={line.line_city}//add from school fields
               />
             </Form.Group>
@@ -219,6 +220,7 @@ export default function LineForm() {
             <Form.Group controlId="line_street">
               <Form.Label>רחוב</Form.Label>
               <Form.Control type='text' name="line_street"
+                readOnly
                 value={line.line_street}
               />
 
@@ -229,7 +231,7 @@ export default function LineForm() {
               <Form.Label>מספר</Form.Label>
               <Form.Control type="text" name="line_Homenumber"
                 value={line.line_Homenumber}
-
+                readOnly
               />
 
             </Form.Group>
