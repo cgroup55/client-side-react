@@ -46,4 +46,24 @@ export const fetchStreetsByCity = (city) => {
             console.error("Couldn't fetch streets for", city, error);
             return [];
         });
+
+};
+//validation for street and city
+export const validateCity = (input,cities) => {
+
+    let chosencity = input;
+    if (!cities.includes(chosencity)) {
+        return 'יש לבחור ערך מהרשימה';
+    } else {
+        return '';
+    }
+};
+export const validateStreet = (input,streets) => {
+
+    let chosenstreet = input;
+    if (!streets.includes(chosenstreet)) {
+        return 'יש לבחור ערך מהרשימה';
+    } else {
+        return '';
+    }
 };

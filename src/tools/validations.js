@@ -18,16 +18,7 @@ export const Validateselect=(input)=>{
     else return '';
 }
 
-//validation for street and city
-export const validateCityNstreet = (input) => {
-    const text = input;
-    const regex = /^[\sא-ת!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/;
-    if (!regex.test(text)) {
-        return 'ניתן להזין כתובת בעברית בלבד';
-    } else {
-        return '';
-    }
-};
+
 
 //validation for ID (9 digits only)
 export const ValidateId = (input) => {

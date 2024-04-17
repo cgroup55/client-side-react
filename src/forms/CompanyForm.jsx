@@ -3,8 +3,8 @@ import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, validateCityNstreet, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId } from '../tools/validations';
+import { fetchCities, fetchStreetsByCity, validateCity, validateStreet } from '../tools/cities&streets';
+import { ValidPositiveNumber, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId } from '../tools/validations';
 import { BsChevronDown } from 'react-icons/bs'; // Import the arrow down icon from react-icons
 
 export default function CompanyForm() {
@@ -65,8 +65,8 @@ export default function CompanyForm() {
     newErrors.company_email = validateEmail(company.company_email);
     newErrors.company_phone = ValidCellOrHomePhoneNum(company.company_phone);
     newErrors.manager_phone = ValidCellOrHomePhoneNum(company.manager_phone);
-    newErrors.company_city = validateCityNstreet(company.company_city);
-    newErrors.company_street = validateCityNstreet(company.company_street);
+    newErrors.company_city = validateCity(company.company_city,cities,cities);
+    newErrors.company_street = validateStreet(company.company_street,streets);
     newErrors.company_homeNum = ValidPositiveNumber(company.company_homeNum);
     //need to check the following code *********
     setErrors(newErrors);

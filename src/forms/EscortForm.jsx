@@ -3,8 +3,8 @@ import "../styling/Form.css";
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, validateCityNstreet, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum } from '../tools/validations';
+import { fetchCities, fetchStreetsByCity, validateStreet } from '../tools/cities&streets';
+import { ValidPositiveNumber,ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum } from '../tools/validations';
 
 export default function EscortForm() {
 
@@ -75,8 +75,8 @@ export default function EscortForm() {
     newErrors.esc_id = ValidateId(escort.esc_id);
     newErrors.esc_dateofbirth = validateDateOfBirth(escort.esc_dateofbirth);
     newErrors.esc_cell = ValidCellPhoneNum(escort.esc_cell);
-    newErrors.esc_city = validateCityNstreet(escort.esc_city);
-    newErrors.esc_street = validateCityNstreet(escort.esc_street);
+    newErrors.esc_city = validateCity(escort.esc_city,cities);
+    newErrors.esc_street = validateStreet(escort.esc_street,streets);
     newErrors.esc_homeNum = ValidPositiveNumber(escort.esc_homeNum);
     
     //need to check the following code *********

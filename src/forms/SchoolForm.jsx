@@ -3,8 +3,8 @@ import "../styling/Form.css";
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, validateCityNstreet, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail } from '../tools/validations';
+import { fetchCities, fetchStreetsByCity, validateCity, validateStreet } from '../tools/cities&streets';
+import { ValidPositiveNumber, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail } from '../tools/validations';
 
 
 export default function SchoolForm() {
@@ -63,8 +63,8 @@ export default function SchoolForm() {
     console.log('school=', school);
     newErrors.school_code = ValidPositiveNumber(school.school_code);
     newErrors.school_name = validateHebrewletters(school.school_name);
-    newErrors.school_city = validateCityNstreet(school.school_city);
-    newErrors.school_street = validateCityNstreet(school.school_street);
+    newErrors.school_city = validateCity(school.school_city,cities);
+    newErrors.school_street = validateStreet(school.school_street,streets);
     newErrors.school_homeNum = ValidPositiveNumber(school.school_homeNum);
     newErrors.secretar_cell = ValidCellOrHomePhoneNum(school.secretar_cell);
     if (school.principal_name != '') {
