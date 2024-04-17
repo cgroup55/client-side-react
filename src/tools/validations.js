@@ -12,7 +12,7 @@ export const validateHebrewletters = (input) => {
 };
 
 export const Validateselect=(input)=>{
-    if (input!='-1'){
+    if (input=='-1'){
         return 'חובה לבחור אחת מהאפשרויות';
     }
     else return '';
@@ -107,3 +107,11 @@ export const validateEmail = (input) => {
         return "";
     }
 }
+
+export const isRadioButtonChecked = (input) => {
+    if(input==''||input==undefined)
+    {
+        return "חובה לבחור באחת מהאפשרויות";
+    }
+    else return "";
+  };

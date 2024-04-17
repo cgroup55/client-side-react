@@ -3,40 +3,20 @@ import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, validateCityNstreet, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId } from '../tools/validations';
+import { ValidPositiveNumber, isRadioButtonChecked, validateCityNstreet, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId, Validateselect } from '../tools/validations';
 
 export default function LineForm() {
 
   const navigate = useNavigate();
   const today = new Date().toLocaleDateString('en-GB');
 
-  const [cities, setCities] = useState([]);
-  const [streets, setStreets] = useState([]);
-  const [filteredCities, setFilteredCities] = useState([]);
+
 
   const [line, setLine] = useState({ definition_date: today });
   const [errors, setErrors] = useState({});
 
-  const schools = ["אורט", "טשרני"];//need to fetch from database
+  const schools = [{ schoolname: "טשרני", schoolcity: "נתניה", schoolstreet: "הגרא", schoolHomenum: "3" }, { schoolname: "אורט", schoolcity: "חדרה", schoolstreet: "הרצל", schoolHomenum: "5" }];//need to fetch from database
   const escorts = ["אבי לוי", "בני בוי"];//need to fetch from database
-  //render the cities on-load
-  useEffect(() => {
-    fetchCities().then(cities => setCities(cities));
-  }, []);
-
-
-  //filterout cities that dont match the search
-  const handleInputChange = (event) => {
-    const inputValue = event.target.value;
-    const filteredCities = cities.filter(city =>
-      city.toLowerCase().startsWith(inputValue.toLowerCase())
-    );
-    setFilteredCities(filteredCities);
-    fetchStreetsByCity(inputValue).then(streets => setStreets(streets));
-    setLine({ ...line, line_city: inputValue });
-  };
-
 
 
 
@@ -57,11 +37,11 @@ export default function LineForm() {
     let newErrors = {};
     console.log('line=', line);
 
-    newErrors.line_code=ValidPositiveNumber(line.line_code);
-    newErrors.line_car=Validateselect(line.line.car);
-    newErrors.number_of_seats=ValidPositiveNumber(line.number_of_seats);
-    
-    newErrors.line_school=Validateselect(line.school_of_line);
+    newErrors.line_code = ValidPositiveNumber(line.line_code);
+    newErrors.line_car = Validateselect(line.line_car);
+    newErrors.number_of_seats = ValidPositiveNumber(line.number_of_seats);
+    newErrors.school_of_line = Validateselect(line.school_of_line);
+    newErrors.station_definition = isRadioButtonChecked(line.station_definition);
 
 
 
@@ -75,6 +55,19 @@ export default function LineForm() {
     return valid;
   };
 
+  useEffect(() => {
+    const chosenSchool = schools.find(school => school.schoolname === line.school_of_line);
+    console.log(chosenSchool);
+    if (chosenSchool) {
+      setLine(prevLine => ({
+        ...prevLine,
+        line_city: chosenSchool.schoolcity,
+        line_street: chosenSchool.schoolstreet,
+        line_Homenumber: chosenSchool.schoolHomenum
+      }));
+    }
+  }, [line.school_of_line]);
+
   //continue comments+ send obj
   return (
     <div className='container mt-5 form-container'>
@@ -82,7 +75,7 @@ export default function LineForm() {
       <Form style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
         <div className='row'>
           <div className='col-12 col-sm-6 label-input col-form-label-sm'>
-          <h5>פרטי קו</h5>
+            <h5>פרטי קו</h5>
 
             <Form.Group controlId="line_code">
               <Form.Label>קוד קו</Form.Label>
@@ -111,7 +104,7 @@ export default function LineForm() {
               <Form.Control
                 as="select"
                 name="line_car"
-                value={line.line_car}
+                value={line.line_car} // This should be line_car
                 onChange={(e) => setLine({ ...line, line_car: e.target.value })}
                 isInvalid={!!errors.line_car}
                 required
@@ -121,9 +114,7 @@ export default function LineForm() {
                 <option value={"bus"}>אוטובוס</option>
                 <option value={"minibus"}>מיניבוס</option>
                 <option value={"cab"}>מונית</option>
-
               </Form.Control>
-
               <Form.Control.Feedback type="invalid">
                 {errors.line_car}
               </Form.Control.Feedback>
@@ -147,7 +138,7 @@ export default function LineForm() {
               <Form.Control
                 as="select"
                 name="escort_incharge"
-                value={line.line_car}
+                value={line.escort_incharge}
                 onChange={(e) => setLine({ ...line, escort_incharge: e.target.value })}
                 isInvalid={!!errors.escort_incharge}
                 required
@@ -170,7 +161,7 @@ export default function LineForm() {
               <Form.Control
                 as="select"
                 name="school_of_line"
-                value={line.line_car}
+                value={line.school_of_line} // This should be school_of_line
                 onChange={(e) => setLine({ ...line, school_of_line: e.target.value })}
                 isInvalid={!!errors.school_of_line}
                 required
@@ -178,72 +169,72 @@ export default function LineForm() {
               >
                 <option value={"-1"}></option>
                 {schools.map((school, index) => (
-                  <option key={index} value={school}>
-                    {school}
+                  <option key={index} value={school.schoolname}>
+                    {school.schoolname}
                   </option>
                 ))}
               </Form.Control>
               <Form.Control.Feedback type="invalid">
-                {errors.line_car}
+                {errors.school_of_line}
               </Form.Control.Feedback>
             </Form.Group>
-
           </div>
           <div className='col-12 col-sm-6 label-input col-form-label-sm'>
-          <h5>תחנת מוצא</h5>
-            <Form.Group controlId="origin_city">
-              
+            <h5>הגדרת תחנה</h5>
+            <Form.Group controlId="station_definition">
+             
+              <Form.Check
+                type="radio"
+                id="radio-origin"
+                label="מוצא"
+                name="stationDefinition"
+                checked={line.station_definition === "origin"} // Assuming station_definition is a property in the line state
+                onChange={(e) => setLine({ ...line, station_definition: "origin" })}
+                isInvalid={!!errors.station_definition}
+              />
+              <Form.Check
+                type="radio"
+                id="radio-destination"
+                label="יעד"
+                name="stationDefinition"
+                checked={line.station_definition === "destination"} // Assuming station_definition is a property in the line state
+                onChange={(e) => setLine({ ...line, station_definition: "destination" })}
+                isInvalid={!!errors.station_definition}
+              />
+
+              <Form.Control.Feedback type="invalid">
+                {errors.station_definition}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group controlId="line_city">
+
               <Form.Label>עיר</Form.Label>
-              <Form.Control list="cities-data" name="origin_city"
-                value={line.origin_city}
-                onChange={handleInputChange}
-                onInput={handleInputChange}
-                isInvalid={!!errors.origin_city}
-                required
+              <Form.Control type='text' name="line_city"
+                value={line.line_city}//add from school fields
               />
-
-              <datalist id="cities-data">
-                {filteredCities.map((city, index) => (
-                  <option key={index} value={city} />
-                ))}
-              </datalist>
-
-              <Form.Control.Feedback type="invalid">
-                {errors.origin_city}
-              </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group controlId="origin_street">
+            <Form.Group controlId="line_street">
               <Form.Label>רחוב</Form.Label>
-              <Form.Control className='formSelect' as="select" name="origin_street"
-                value={line.origin_street}
-                onChange={(e) => setLine({ ...line, origin_street: e.target.value })}
-                isInvalid={!!errors.origin_street}
-                required >
-                {streets.map((street, index) => (
-                  <option key={index} value={street}>{street}</option>
-                ))}
-              </Form.Control>
-              <Form.Control.Feedback type="invalid">
-                {errors.origin_street}
-              </Form.Control.Feedback>
+              <Form.Control type='text' name="line_street"
+                value={line.line_street}
+              />
+
+
             </Form.Group>
 
-            <Form.Group controlId="origin_homeNum">
+            <Form.Group controlId="line_Homenumber">
               <Form.Label>מספר</Form.Label>
-              <Form.Control type="text" name="origin_homeNum"
-                value={line.origin_homeNum}
-                onChange={(e) => setLine({ ...line, origin_homeNum: e.target.value })}
-                isInvalid={!!errors.origin_homeNum}
-                required
+              <Form.Control type="text" name="line_Homenumber"
+                value={line.line_Homenumber}
+
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.origin_homeNum}
-              </Form.Control.Feedback>
+
             </Form.Group>
 
             <Form.Group controlId="origin_arrivaltime">
-              <Form.Label>שעת יציאה</Form.Label>
+              <Form.Label>הגדרת שעת יציאה/הגעה</Form.Label>
               <Form.Control type="text" name="origin_arrivaltime"
                 value={line.origin_arrivaltime}
                 onChange={(e) => setLine({ ...line, origin_arrivaltime: e.target.value })}
@@ -255,70 +246,7 @@ export default function LineForm() {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <h5 style={{ marginTop: "15px" }}>תחנת יעד</h5>
-            <Form.Group controlId="destination_city">
 
-              <Form.Label>עיר</Form.Label>
-              <Form.Control list="cities-data" name="destination_city"
-                value={line.destination_city}
-                onChange={handleInputChange}
-                onInput={handleInputChange}
-                isInvalid={!!errors.destination_city}
-                required
-              />
-
-              <datalist id="cities-data">
-                {filteredCities.map((city, index) => (
-                  <option key={index} value={city} />
-                ))}
-              </datalist>
-
-              <Form.Control.Feedback type="invalid">
-                {errors.destination_city}
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group controlId="destination_street">
-              <Form.Label>רחוב</Form.Label>
-              <Form.Control className='formSelect' as="select" name="destination_street"
-                value={line.origin_street}
-                onChange={(e) => setLine({ ...line, destination_street: e.target.value })}
-                isInvalid={!!errors.destination_street}
-                required >
-                {streets.map((street, index) => (
-                  <option key={index} value={street}>{street}</option>
-                ))}
-              </Form.Control>
-              <Form.Control.Feedback type="invalid">
-                {errors.destination_street}
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group controlId="destination_homeNum">
-              <Form.Label>מספר</Form.Label>
-              <Form.Control type="text" name="destination_homeNum"
-                value={line.destination_homeNum}
-                onChange={(e) => setLine({ ...line, destination_homeNum: e.target.value })}
-                isInvalid={!!errors.destination_homeNum}
-                required
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.destination_homeNum}
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group controlId="destination_arrivaltime">
-              <Form.Label>שעת הגעה</Form.Label>
-              <Form.Control type="text" name="destination_arrivaltime"
-                value={line.destination_arrivaltime}
-                onChange={(e) => setLine({ ...line, destination_arrivaltime: e.target.value })}
-                isInvalid={!!errors.destination_arrivaltime}
-                required
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.destination_arrivaltime}
-              </Form.Control.Feedback>
-            </Form.Group>
           </div>
           <div className='text-center' style={{ paddingTop: '20px' }}>
             <Button type="submit" >שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
