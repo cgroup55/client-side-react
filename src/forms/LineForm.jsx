@@ -26,6 +26,7 @@ export default function LineForm() {
     console.log('isValid:', isValid);
     if (isValid) {
       // Logic to check validity of new line
+      console.log(line);
       navigate('/Lines', line);
     } else {
       // Show error message
@@ -35,7 +36,6 @@ export default function LineForm() {
   const validateForm = () => {
     let valid = true;
     let newErrors = {};
-    console.log('line=', line);
 
     newErrors.line_code = ValidPositiveNumber(line.line_code);
     newErrors.line_car = Validateselect(line.line_car);
@@ -182,7 +182,7 @@ export default function LineForm() {
           <div className='col-12 col-sm-6 label-input col-form-label-sm'>
             <h5>הגדרת תחנה</h5>
             <Form.Group controlId="station_definition">
-             
+
               <Form.Check
                 type="radio"
                 id="radio-origin"
@@ -235,16 +235,41 @@ export default function LineForm() {
 
             <Form.Group controlId="origin_arrivaltime">
               <Form.Label>הגדרת שעת יציאה/הגעה</Form.Label>
-              <Form.Control type="text" name="origin_arrivaltime"
-                value={line.origin_arrivaltime}
-                onChange={(e) => setLine({ ...line, origin_arrivaltime: e.target.value })}
-                isInvalid={!!errors.origin_arrivaltime}
-                required
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.destination_arrivaltime}
-              </Form.Control.Feedback>
+              <div className="d-flex">
+
+                <Form.Control
+                  as="select"
+                  className="ml-2"
+                  value={line.origin_arrivaltime_minutes}
+                  onChange={(e) => setLine({ ...line, origin_arrivaltime_minutes: e.target.value })}
+                  isInvalid={!!errors.origin_arrivaltime}
+                  required
+                >
+                  {/* Render minute options */}
+                  {Array.from({ length: 60 }, (_, i) => (
+                    <option key={i} value={String(i).padStart(2, '0')}>{String(i).padStart(2, '0')}</option>
+                  ))}
+                </Form.Control>
+                <span>:</span>
+                <Form.Control
+                  as="select"
+                  className="mr-2"
+                  value={line.origin_arrivaltime_hours}
+                  onChange={(e) => setLine({ ...line, origin_arrivaltime_hours: e.target.value })}
+                  isInvalid={!!errors.origin_arrivaltime_hours}
+                  required
+                >
+                  {/* Render hour options */}
+                  {Array.from({ length: 24 }, (_, i) => (
+                    <option key={i} value={String(i).padStart(2, '0')}>{String(i).padStart(2, '0')}</option>
+                  ))}
+                </Form.Control>
+
+
+              </div>
+              
             </Form.Group>
+
 
 
           </div>
