@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import {useNavigate ,useLocation} from 'react-router-dom';
+import MyModal from '../components/MyModal';
+
 
 export default function TransportationCompanies() {
 
   const navigate = useNavigate();
-
+  const [showModal, setShowModal] = useState(false);
+  const [rowData, setRowData] = useState(null);
+  const [colData, setColData] = useState(null);
 
   const Companycolumns = [
     {
         name: "ID",
-        selector: (row) => row.personID,
+        selector: (row) => row.company_code,
         sortable: true,
     },
     {
         name: "Full Name",
-        selector: (row) => row.fullName,
+        selector: (row) => row.company_name,
     },
 
 
@@ -26,16 +30,47 @@ export default function TransportationCompanies() {
 const Companyrows = [
 
     {
-        personID: 14,
-        fullName: "Ethan Lee",
+      company_code:"1",
+      company_name:"אא' הסעים",
+      company_email:"bararad@gmail.com",
+      company_phone:"0549506905",
+      manager_name:"בר ארד",
+      manager_phone:"0547896541",
+      company_comments:"גבגב",
+      company_city:"תל אביב",
+      company_street:"אבן גבירול",
+      company_homeNum:"3"
 
     },
     {
-        personID: 15,
-        fullName: "Isabella Thompson",
+      company_code:"1",
+      company_name:"בב' הסעות",
+      company_email:"bararad@gmail.com",
+      company_phone:"0549506905",
+      manager_name:"בר ארד",
+      manager_phone:"0547896541",
+      company_comments:"גבגב",
+      company_city:"תל אביב",
+      company_street:"אבן גבירול",
+      company_homeNum:"3"
 
     },
 ];
+
+const ColumnNamesByIdentifier =
+{
+  company_code:"קוד קו",
+  company_name:"שם חברה",
+  company_email:"מייל חברה",
+  company_phone:"טלפון חברה",
+  manager_name:"שם מנהל",
+  manager_phone:"טלפון מנהל",
+  company_comments:"הערות",
+  company_city:"עיר",
+  company_street:"רחוב",
+  company_homeNum:"מספר"
+}
+
   const addCompany = () => { 
     let newCompany={
       company_code:"",
@@ -54,8 +89,9 @@ const Companyrows = [
   
   //3 functions that handle viewing, editing and deleting a row
   const handleView = (row) => {
-    console.log('View:', row);
-    // Add your view logic here
+    setColData(ColumnNamesByIdentifier);
+    setRowData(row);
+    setShowModal(true);
   };
   
   const handleEdit = (row) => {
@@ -92,6 +128,7 @@ const Companyrows = [
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addCompany}>הוסף חברת הסעה <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+        <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"חברת הסעה"} />
     </div>
   )
 }

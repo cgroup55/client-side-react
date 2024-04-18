@@ -93,7 +93,6 @@ export default function Lines() {
   //3 functions that handle viewing, editing and deleting a row
   const handleView = (row) => {
     setColData(ColumnNamesByIdentifier);
-    console.log(colData);
     setRowData(row);
     setShowModal(true);
   };
