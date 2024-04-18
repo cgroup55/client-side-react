@@ -10,7 +10,7 @@ export default function Schools() {
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
-    const [colData,setColData]=useState(null);
+    const [colData, setColData] = useState(null);
 
     const addSchool = () => {
         let newSchool = {
@@ -32,40 +32,33 @@ export default function Schools() {
     const Schoolcolumns = [
         {
             name: "סמל מוסד",
-            identifier:"schoolCode",
             selector: (row) => row.schoolCode,
             sortable: true,
         },
         {
             name: "שם מוסד",
-            identifier:"schoolName",
             selector: (row) => row.schoolName,
             sortable: true,
         },
         {
             name: "כתובת",
-            identifier:["schoolStreet","schoolHomeNum","schoolCity"],
-            selector: (row) => row.schoolStreet+' '+ row.schoolHomeNum+', '+row.schoolCity,
+            selector: (row) => row.schoolStreet + ' ' + row.schoolHomeNum + ', ' + row.schoolCity,
             sortable: true,
         },
         {
             name: "טל מזכירות",
-            identifier:"schoolSecretaryPhone",
             selector: (row) => row.schoolSecretaryPhone,
         },
         {
             name: "מייל מזכירות",
-            identifier:"schoolSecretaryMail",
             selector: (row) => row.schoolSecretaryMail,
         },
         {
             name: "איש קשר",
-            identifier:"schoolContactName",
             selector: (row) => row.schoolContactName,
         },
         {
             name: "נייד איש קשר",
-            identifier:"schoolContactCell",
             selector: (row) => row.schoolContactCell,
         },
     ];
@@ -113,11 +106,26 @@ export default function Schools() {
         },
     ];
 
+    const ColumnNamesByIdentifier =
+    {
+        schoolCode: 'קוד מוסד',
+        schoolName: 'שם מוסד',
+        schoolCity: 'עיר',
+        schoolStreet: 'רחוב',
+        schoolHomeNum: 'מספר',
+        principal_name: 'שם מנהל',
+        principal_cell: 'טלפון מנהל',
+        schoolSecretaryPhone: 'טלפון מזכירות',
+        schoolSecretaryMail: 'מייל מזכירות',
+        schoolContactName: 'שם איש קשר',
+        schoolContactCell: 'טלפון איש קשר'
+    }
 
     //3 functions that handle viewing, editing and deleting a row
     const handleView = (row) => {
-      setRowData(row);
-      setShowModal(true);
+        setColData(ColumnNamesByIdentifier);
+        setRowData(row);
+        setShowModal(true);
     };
 
     const handleEdit = (row) => {
@@ -151,7 +159,7 @@ export default function Schools() {
             <div className='text-center'
                 style={{ padding: '20px' }}>
                 <Button onClick={addSchool}>הוסף מוסד לימודים <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
-                <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} columnNames={Schoolcolumns} />
+            <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} />
 
         </div>
     )

@@ -13,10 +13,11 @@ export default function LineForm() {
 
   const { state } = useLocation();
   let originLine=state;
-
+  let giventime=originLine.time_of_line.split(':')
+  console.log(giventime);
   const [line, setLine] = useState({ ...originLine,definition_date: today });
   const [errors, setErrors] = useState({});
-  const [time, setTime] = useState({});
+  const [time, setTime] = useState({hours:giventime[0],minutes:giventime[1]});
   const schools = [{ schoolname: "טשרני", schoolcity: "נתניה", schoolstreet: "הגרא", schoolHomenum: "3" }, { schoolname: "אורט", schoolcity: "חדרה", schoolstreet: "הרצל", schoolHomenum: "5" }];//need to fetch from database
   const escorts = ["אבי לוי", "בני בוי"];//need to fetch from database
 

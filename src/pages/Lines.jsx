@@ -77,7 +77,7 @@ export default function Lines() {
   const ColumnNamesByIdentifier =
   {
     line_code: "קוד קו",
-    line_car: "bus",
+    line_car: "סוג רכב",
     number_of_seats: "מספר כסאות",
     escort_incharge: "מלווה אחראי",
     school_of_line: "ביס של קו",
@@ -102,13 +102,13 @@ export default function Lines() {
     console.log('Edit:', row);
     // Add your edit logic here
     let currentLine = {
-      line_code: "1",
-      line_car: "bus",
-      number_of_seats: "3",
-      escort_incharge: "בני בוי",
-      school_of_line: "טשרני",
-      station_definition: "origin",
-      time_of_line:"18:17"
+      line_code: row.line_code,
+      line_car: row.line_car,
+      number_of_seats: row.number_of_seats,
+      escort_incharge: row.escort_incharge,
+      school_of_line: row.school_of_line,
+      station_definition: row.station_definition,
+      time_of_line:row.time_of_line
     }
     navigate('/LineForm', { state: currentLine });
   };
