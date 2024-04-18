@@ -11,7 +11,9 @@ export default function Lines() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [rowData, setRowData] = useState(null);
-  const [colData,setColData]=useState()
+  const [colData,setColData]=useState(null);
+
+
   const addLine = () => {
    
     let newLine={
@@ -33,11 +35,13 @@ export default function Lines() {
   const Linecolumns = [
     {
         name: "תז",
+        identifier:"personID",
         selector: (row) => row.personID,
         sortable: true,
     },
     {
         name: "שם מלא",
+        identifier:"fullName",
         selector: (row) => row.fullName,
     },
 
@@ -56,14 +60,23 @@ const Linerows = [
 
     },
 ];
-  
+const getColumnNamesByIdentifier = (columns) => {
+  return columns.reduce((acc, column) => {
+    acc[column.identifier] = column.name;
+    return acc;
+  }, {});
+};
+
+
+
 //3 functions that handle viewing, editing and deleting a row
 const handleView = (row) => {
   
-  setColData();
+  setColData(getColumnNamesByIdentifier(Linecolumns));
   setRowData(row);
   setShowModal(true);
 };
+
 
 const handleEdit = (row) => {
   console.log('Edit:', row);
@@ -94,7 +107,7 @@ const handleDelete = (row) => {
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addLine}>הוסף קו חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
-      <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={Linecolumns} />
+      <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} />
     </div>
   )
 }
