@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap';
-export default function MyModal({ show, handleClose, rowData, colData }) {
+export default function MyModal({ show, handleClose, rowData, colData ,pageName}) {
    
-console.log(rowData);
+console.log(colData);
     return (
         
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>צפייה בנתונים</Modal.Title>
+          <Modal.Title>צפייה בנתוני {pageName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {rowData && (

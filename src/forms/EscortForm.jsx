@@ -49,7 +49,7 @@ export default function EscortForm() {
     console.log('isValid:', isValid);
     if (isValid) {
       // Logic to check validity of new escort
-      navigate('/escorts');
+      navigate('/escorts',escort);
     } else {
       // Show error message
     }

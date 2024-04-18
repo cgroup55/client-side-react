@@ -74,7 +74,7 @@ export default function Lines() {
   ];
 
   //define the hebrew names of each field
-  const getColumnNamesByIdentifier =
+  const ColumnNamesByIdentifier =
   {
     line_code: "קוד קו",
     line_car: "bus",
@@ -92,7 +92,7 @@ export default function Lines() {
 
   //3 functions that handle viewing, editing and deleting a row
   const handleView = (row) => {
-    setColData(getColumnNamesByIdentifier);
+    setColData(ColumnNamesByIdentifier);
     console.log(colData);
     setRowData(row);
     setShowModal(true);
@@ -127,7 +127,7 @@ export default function Lines() {
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addLine}>הוסף קו חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
-      <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} />
+      <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"קו"} />
     </div>
   )
 }
