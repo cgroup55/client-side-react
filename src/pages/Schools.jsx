@@ -10,6 +10,7 @@ export default function Schools() {
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
+    const [colData,setColData]=useState(null);
 
     const addSchool = () => {
         let newSchool = {
@@ -31,33 +32,40 @@ export default function Schools() {
     const Schoolcolumns = [
         {
             name: "סמל מוסד",
+            identifier:"schoolCode",
             selector: (row) => row.schoolCode,
             sortable: true,
         },
         {
             name: "שם מוסד",
+            identifier:"schoolName",
             selector: (row) => row.schoolName,
             sortable: true,
         },
         {
             name: "כתובת",
+            identifier:["schoolStreet","schoolHomeNum","schoolCity"],
             selector: (row) => row.schoolStreet+' '+ row.schoolHomeNum+', '+row.schoolCity,
             sortable: true,
         },
         {
             name: "טל מזכירות",
+            identifier:"schoolSecretaryPhone",
             selector: (row) => row.schoolSecretaryPhone,
         },
         {
             name: "מייל מזכירות",
+            identifier:"schoolSecretaryMail",
             selector: (row) => row.schoolSecretaryMail,
         },
         {
             name: "איש קשר",
+            identifier:"schoolContactName",
             selector: (row) => row.schoolContactName,
         },
         {
             name: "נייד איש קשר",
+            identifier:"schoolContactCell",
             selector: (row) => row.schoolContactCell,
         },
     ];

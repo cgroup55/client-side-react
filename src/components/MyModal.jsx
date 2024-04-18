@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap';
 export default function MyModal({ show, handleClose, rowData, colData }) {
    
-
+console.log(rowData);
     return (
         
       <Modal show={show} onHide={handleClose}>

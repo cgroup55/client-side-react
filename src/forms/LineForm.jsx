@@ -4,6 +4,7 @@ import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ValidPositiveNumber, isRadioButtonChecked, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId, Validateselect } from '../tools/validations';
+import { Timeline } from '@mui/icons-material';
 
 export default function LineForm() {
 
@@ -15,7 +16,7 @@ export default function LineForm() {
 
   const [line, setLine] = useState({ ...originLine,definition_date: today });
   const [errors, setErrors] = useState({});
-
+  const [time, setTime] = useState({});
   const schools = [{ schoolname: "טשרני", schoolcity: "נתניה", schoolstreet: "הגרא", schoolHomenum: "3" }, { schoolname: "אורט", schoolcity: "חדרה", schoolstreet: "הרצל", schoolHomenum: "5" }];//need to fetch from database
   const escorts = ["אבי לוי", "בני בוי"];//need to fetch from database
 
@@ -27,7 +28,12 @@ export default function LineForm() {
     console.log('isValid:', isValid);
     if (isValid) {
       // Logic to check validity of new line
-      console.log(line);
+
+      let timeLine=time.hours+":"+time.minutes;
+      console.log("time befor insert",timeLine);
+      setLine({...line,time_of_line:timeLine});
+      console.log("withtime",line);
+
       navigate('/Lines', line);
     } else {
       // Show error message
@@ -43,8 +49,6 @@ export default function LineForm() {
     newErrors.number_of_seats = ValidPositiveNumber(line.number_of_seats);
     newErrors.school_of_line = Validateselect(line.school_of_line);
     newErrors.station_definition = isRadioButtonChecked(line.station_definition);
-
-
 
     setErrors(newErrors);
     console.log('errors after=', errors);
@@ -98,7 +102,7 @@ export default function LineForm() {
                 readOnly
               />
 
-            </Form.Group>
+            </Form.Group>0
 
             <Form.Group controlId="line_car">
               <Form.Label>סוג רכב</Form.Label>
@@ -162,7 +166,7 @@ export default function LineForm() {
               <Form.Control
                 as="select"
                 name="school_of_line"
-                value={line.school_of_line} // This should be school_of_line
+                value={line.school_of_line} 
                 onChange={(e) => setLine({ ...line, school_of_line: e.target.value })}
                 isInvalid={!!errors.school_of_line}
                 required
@@ -189,7 +193,7 @@ export default function LineForm() {
                 id="radio-origin"
                 label="מוצא"
                 name="stationDefinition"
-                checked={line.station_definition === "origin"} // Assuming station_definition is a property in the line state
+                checked={line.station_definition === "origin"} 
                 onChange={(e) => setLine({ ...line, station_definition: "origin" })}
                 isInvalid={!!errors.station_definition}
               />
@@ -198,7 +202,7 @@ export default function LineForm() {
                 id="radio-destination"
                 label="יעד"
                 name="stationDefinition"
-                checked={line.station_definition === "destination"} // Assuming station_definition is a property in the line state
+                checked={line.station_definition === "destination"}
                 onChange={(e) => setLine({ ...line, station_definition: "destination" })}
                 isInvalid={!!errors.station_definition}
               />
@@ -236,16 +240,15 @@ export default function LineForm() {
 
             </Form.Group>
 
-            <Form.Group controlId="origin_arrivaltime">
+            <Form.Group controlId="time_definition">
               <Form.Label>הגדרת שעת יציאה/הגעה</Form.Label>
               <div className="d-flex">
 
                 <Form.Control
                   as="select"
                   className="ml-2"
-                  value={line.origin_arrivaltime_minutes}
-                  onChange={(e) => setLine({ ...line, origin_arrivaltime_minutes: e.target.value })}
-                  isInvalid={!!errors.origin_arrivaltime}
+                  value={time.minutes}
+                  onChange={(e) => setTime({ ...time, minutes: e.target.value })}
                   required
                 >
                   {/* Render minute options */}
@@ -257,9 +260,8 @@ export default function LineForm() {
                 <Form.Control
                   as="select"
                   className="mr-2"
-                  value={line.origin_arrivaltime_hours}
-                  onChange={(e) => setLine({ ...line, origin_arrivaltime_hours: e.target.value })}
-                  isInvalid={!!errors.origin_arrivaltime_hours}
+                  value={time.hours}
+                  onChange={(e) => setTime({ ...time, hours: e.target.value })}
                   required
                 >
                   {/* Render hour options */}

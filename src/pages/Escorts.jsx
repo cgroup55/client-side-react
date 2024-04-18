@@ -26,11 +26,13 @@ export default function Escorts() {
   const escortColumns = [
     {
       name: "שם מלא",
+      identifier:"fullname",
       selector: (row) => row.fullName,
       sortable: true,
     },
     {
       name: "תעודת זהות",
+      
       selector: (row) => row.id,
     },
     {

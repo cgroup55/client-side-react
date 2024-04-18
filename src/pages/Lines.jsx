@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
 
 
@@ -11,93 +11,113 @@ export default function Lines() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [rowData, setRowData] = useState(null);
-  const [colData,setColData]=useState(null);
+  const [colData, setColData] = useState(null);
 
 
   const addLine = () => {
-   
-    let newLine={
-      line_code:"",
-      line_car:"",
-      number_of_seats:"",
-      escort_incharge:"",
-      school_of_line:"",
-      station_definition:"",
-      line_city:"",
-      line_street:"",
-      line_Homenumber:"",
-      origin_arrivaltime_minutes:"",
-      origin_arrivaltime_hours:""
+
+    let newLine = {
+      line_code: "",
+      line_car: "",
+      number_of_seats: "",
+      escort_incharge: "",
+      school_of_line: "",
+      station_definition: "",
+      line_city: "",
+      line_street: "",
+      line_Homenumber: "",
+      time_of_line: ""
     }
-    navigate('/LineForm',{ state: newLine });
+    navigate('/LineForm', { state: newLine });
   }
 
   const Linecolumns = [
     {
-        name: "תז",
-        identifier:"personID",
-        selector: (row) => row.personID,
-        sortable: true,
+      name: "קוד קו",
+      selector: (row) => row.line_code,
+      sortable: true,
     },
     {
-        name: "שם מלא",
-        identifier:"fullName",
-        selector: (row) => row.fullName,
+      name: "סוג רכב",
+      selector: (row) => row.line_car,
     },
 
-];
+  ];
 
-const Linerows = [
+  const Linerows = [
 
     {
-        personID: 14,
-        fullName: "Ethan Lee",
-
+      line_code: 1,
+      line_car: "bus",
+      number_of_seats: 3,
+      escort_incharge: "בני בוי",
+      school_of_line: "טשרני",
+      station_definition: "origin",
+      time_of_line:"19:17",
+      line_city: "נתניה",
+      line_street: "שד' בנימין",
+      line_Homenumber: "3",
     },
     {
-        personID: 15,
-        fullName: "Isabella Thompson",
+      line_code: "2",
+      line_car: "cab",
+      number_of_seats: "3",
+      escort_incharge: "בני בוי",
+      school_of_line: "טשרני",
+      station_definition: "origin",
+      time_of_line:"20:21",
+      line_city: "כפר סבא",
+      line_street: "עליה",
+      line_Homenumber: "8",
 
     },
-];
-const getColumnNamesByIdentifier = (columns) => {
-  return columns.reduce((acc, column) => {
-    acc[column.identifier] = column.name;
-    return acc;
-  }, {});
-};
+  ];
 
-
-
-//3 functions that handle viewing, editing and deleting a row
-const handleView = (row) => {
-  
-  setColData(getColumnNamesByIdentifier(Linecolumns));
-  setRowData(row);
-  setShowModal(true);
-};
-
-
-const handleEdit = (row) => {
-  console.log('Edit:', row);
-  // Add your edit logic here
-  let currentLine={
-    line_code:"1",
-    line_car:"bus",
-    number_of_seats:"3",
-    escort_incharge:"בני בוי",
-    school_of_line:"טשרני",
-    station_definition:"origin",
-    origin_arrivaltime_minutes:"17",
-    origin_arrivaltime_hours:"18"
+  //define the hebrew names of each field
+  const getColumnNamesByIdentifier =
+  {
+    line_code: "קוד קו",
+    line_car: "bus",
+    number_of_seats: "מספר כסאות",
+    escort_incharge: "מלווה אחראי",
+    school_of_line: "ביס של קו",
+    station_definition: "ייעוד תחנה",
+    line_city: "עיר",
+    line_street: "רחוב",
+    line_Homenumber: "מספר",
+    time_of_line: "שעת התחנה"
   }
-  navigate('/LineForm',{ state: currentLine });
-};
 
-const handleDelete = (row) => {
-  console.log('Delete:', row);
-  // Add your delete logic here
-};
+
+
+  //3 functions that handle viewing, editing and deleting a row
+  const handleView = (row) => {
+    setColData(getColumnNamesByIdentifier);
+    console.log(colData);
+    setRowData(row);
+    setShowModal(true);
+  };
+
+
+  const handleEdit = (row) => {
+    console.log('Edit:', row);
+    // Add your edit logic here
+    let currentLine = {
+      line_code: "1",
+      line_car: "bus",
+      number_of_seats: "3",
+      escort_incharge: "בני בוי",
+      school_of_line: "טשרני",
+      station_definition: "origin",
+      time_of_line:"18:17"
+    }
+    navigate('/LineForm', { state: currentLine });
+  };
+
+  const handleDelete = (row) => {
+    console.log('Delete:', row);
+    // Add your delete logic here
+  };
 
 
   return (
