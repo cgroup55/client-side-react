@@ -159,7 +159,7 @@ export default function Schools() {
             <div className='text-center'
                 style={{ padding: '20px' }}>
                 <Button onClick={addSchool}>הוסף מוסד לימודים <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
-            <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} />
+            <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"מוסד לימודי"}/>
 
         </div>
     )
