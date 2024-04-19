@@ -7,49 +7,50 @@ import MyModal from '../components/MyModal';
 
 
 const apiUrl1 = 'https://localhost:7039/api/Educational';
+//add bar's url
 export default function Schools() {
 
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);
-    const [Schoolrows, sctSchoolrows] = useState([]);
+    //const [schoolRows, setSchoolRows] = useState([]);
 
 
-    useEffect(() => {
-        try {
-            fetch(apiUrl1, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json; charset= UTF-8',
-                    'Accept': 'application/json; charset= UTF-8',
-                }
-            })
-                .then(res => {
-                    //debugger
-                    //כל המידע שחוזר מהשרת
-                    console.log('res= ', res);
-                    console.log('res.status= ', res.status);
-                    //ok = true/ false
-                    console.log('res.ok= ', res.ok);
-                    if (res.ok) {
-                        return res.json();
-                    }
-                    throw new Error('Network response was not ok.');
-                })
+    // useEffect(() => {
+    //     try {
+    //         fetch(apiUrl1, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/json; charset= UTF-8',
+    //                 'Accept': 'application/json; charset= UTF-8',
+    //             }
+    //         })            
+    //             .then(res => {
+    //                 //debugger
+    //                 //כל המידע שחוזר מהשרת                    
+    //                 console.log('res= ', res);
+    //                 console.log('res.status= ', res.status);
+    //                 //ok = true/ false
+    //                 console.log('res.ok= ', res.ok);
+    //                 if (res.ok) {
+    //                     return res.json();
+    //                 }
+    //                 throw new Error('Network response was not ok.');
+    //             })
 
-                .then(result => {
-                    console.log('result= ', result);
-                    sctSchoolrows(result);
-                })
-                .catch(error => {
-                    console.error('Error during fetch:', error);
-                });
-        }
-        catch (error) {
-            console.log('err get= ', error);
-        }
-    }, []);
+    //             .then(result => {
+    //                 console.log('result= ', result);
+    //                 setSchoolRows(result);
+    //             })
+    //             .catch(error => {
+    //                 console.error('Error during fetch:', error);
+    //             });
+    //     }
+    //     catch (error) {
+    //         console.log('err get= ', error);
+    //     }
+    // }, []);
 
     const addSchool = () => {
         let newSchool = {
@@ -101,25 +102,25 @@ export default function Schools() {
             selector: (row) => row.contactPhone,
         },
     ];
-    
-     console.log('schoolsFromSer=', Schoolrows);
-    //const Schoolrows = 
-    // [
-    //     //GET        
-    //     {
-    //         institutionId: 14,
-    //         name: "אברהמסון",
-    //         street: 'ברנר',
-    //         houseNumber: 5,
-    //         city: 'כפר סבא',
-    //         secretariatPhone: '097755669',
-    //         secretariatMail: 'ell2@gmail.com',
-    //         anotherContact: 'מתנאל כהן',
-    //         contactPhone: '0527896633',
-    //         principal: 'שרון מימון',
-    //         principalCellphone: '0528889955'
-    //     },
-    // ];
+
+    //console.log('schoolRows=', schoolRows);
+    const schoolRows =
+        [
+            //     //GET        
+            {
+                institutionId: 14,
+                name: "אברהמסון",
+                street: 'ברנר',
+                houseNumber: 5,
+                city: 'כפר סבא',
+                secretariatPhone: '097755669',
+                secretariatMail: 'ell2@gmail.com',
+                anotherContact: 'מתנאל כהן',
+                contactPhone: '0527896633',
+                principal: 'שרון מימון',
+                principalCellphone: '0528889955'
+            },
+        ];
 
     const ColumnNamesByIdentifier =
     {
@@ -170,7 +171,8 @@ export default function Schools() {
     return (
         <div className='container mt-5' >
             <h3 className="bold" style={{ textAlign: 'center' }}>מוסדות לימוד</h3>
-            <Table columns={Schoolcolumns} rows={Schoolrows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
+            {schoolRows && (
+                <Table columns={Schoolcolumns} rows={schoolRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />)}
             <div className='text-center'
                 style={{ padding: '20px' }}>
                 <Button onClick={addSchool}>הוסף מוסד לימודים <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
