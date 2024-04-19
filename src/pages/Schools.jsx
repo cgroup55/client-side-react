@@ -13,6 +13,7 @@ export default function Schools() {
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);
+    const [Schoolrows, sctSchoolrows] = useState([]);
 
 
     useEffect(() => {
@@ -39,6 +40,7 @@ export default function Schools() {
 
                 .then(result => {
                     console.log('result= ', result);
+                    sctSchoolrows(result);
                 })
                 .catch(error => {
                     console.error('Error during fetch:', error);
@@ -48,7 +50,6 @@ export default function Schools() {
             console.log('err get= ', error);
         }
     }, []);
-
 
     const addSchool = () => {
         let newSchool = {
@@ -70,67 +71,69 @@ export default function Schools() {
     const Schoolcolumns = [
         {
             name: "סמל מוסד",
-            selector: (row) => row.schoolCode,
+            selector: (row) => row.institutionId,
             sortable: true,
         },
         {
             name: "שם מוסד",
-            selector: (row) => row.schoolName,
+            selector: (row) => row.name,
             sortable: true,
         },
         {
             name: "כתובת",
-            selector: (row) => row.schoolStreet + ' ' + row.schoolHomeNum + ', ' + row.schoolCity,
+            selector: (row) => row.street + ' ' + row.houseNumber + ', ' + row.city,
             sortable: true,
         },
         {
             name: "טל מזכירות",
-            selector: (row) => row.schoolSecretaryPhone,
+            selector: (row) => row.secretariatPhone,
         },
         {
             name: "מייל מזכירות",
-            selector: (row) => row.schoolSecretaryMail,
+            selector: (row) => row.secretariatMail,
         },
         {
             name: "איש קשר",
-            selector: (row) => row.schoolContactName,
+            selector: (row) => row.anotherContact,
         },
         {
             name: "נייד איש קשר",
-            selector: (row) => row.schoolContactCell,
+            selector: (row) => row.contactPhone,
         },
     ];
-
-    const Schoolrows = [
-        //GET
-        {
-            schoolCode: 14,
-            schoolName: "אברהמסון",
-            schoolStreet: 'ברנר',
-            schoolHomeNum: 5,
-            schoolCity: 'כפר סבא',
-            schoolSecretaryPhone: '097755669',
-            schoolSecretaryMail: 'ell2@gmail.com',
-            schoolContactName: 'מתנאל כהן',
-            schoolContactCell: '0527896633',
-            principal_name: 'שרון מימון',
-            principal_cell: '0528889955'
-        },
-    ];
+    
+     console.log('schoolsFromSer=', Schoolrows);
+    //const Schoolrows = 
+    // [
+    //     //GET        
+    //     {
+    //         institutionId: 14,
+    //         name: "אברהמסון",
+    //         street: 'ברנר',
+    //         houseNumber: 5,
+    //         city: 'כפר סבא',
+    //         secretariatPhone: '097755669',
+    //         secretariatMail: 'ell2@gmail.com',
+    //         anotherContact: 'מתנאל כהן',
+    //         contactPhone: '0527896633',
+    //         principal: 'שרון מימון',
+    //         principalCellphone: '0528889955'
+    //     },
+    // ];
 
     const ColumnNamesByIdentifier =
     {
-        schoolCode: 'קוד מוסד',
-        schoolName: 'שם מוסד',
-        schoolCity: 'עיר',
-        schoolStreet: 'רחוב',
-        schoolHomeNum: 'מספר',
+        institutionId: 'קוד מוסד',
+        name: 'שם מוסד',
+        city: 'עיר',
+        street: 'רחוב',
+        houseNumber: 'מספר',
         principal_name: 'שם מנהל',
         principal_cell: 'טלפון מנהל',
-        schoolSecretaryPhone: 'טלפון מזכירות',
-        schoolSecretaryMail: 'מייל מזכירות',
-        schoolContactName: 'שם איש קשר',
-        schoolContactCell: 'טלפון איש קשר'
+        secretariatPhone: 'טלפון מזכירות',
+        secretariatMail: 'מייל מזכירות',
+        anotherContact: 'שם איש קשר',
+        contactPhone: 'טלפון איש קשר'
     }
 
     //3 functions that handle viewing, editing and deleting a row
@@ -144,17 +147,17 @@ export default function Schools() {
         console.log('Edit:', row);
         // Add your edit logic here לזכור לפצל את הכתובת לפי פסיק      
         let currentSchool = {
-            school_code: row.schoolCode,
-            school_name: row.schoolName,
-            school_city: row.schoolCity,
-            school_street: row.schoolStreet,
-            school_homeNum: row.schoolHomeNum,
-            principal_name: row.principal_name,
-            principal_cell: row.principal_cell,
-            secretar_cell: row.schoolSecretaryPhone,
-            secretar_mail: row.schoolSecretaryMail,
-            school_contactName: row.schoolContactName,
-            school_contactCell: row.schoolContactCell
+            school_code: row.institutionId,
+            school_name: row.name,
+            school_city: row.city,
+            school_street: row.street,
+            school_homeNum: row.houseNumber,
+            principal_name: row.principal,
+            principal_cell: row.principalCellphone,
+            secretar_cell: row.secretariatPhone,
+            secretar_mail: row.secretariatMail,
+            school_contactName: row.anotherContact,
+            school_contactCell: row.contactPhone
         };
         navigate('/SchoolForm', { state: currentSchool });
     };
@@ -172,7 +175,6 @@ export default function Schools() {
                 style={{ padding: '20px' }}>
                 <Button onClick={addSchool}>הוסף מוסד לימודים <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
             <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"מוסד לימודי"} />
-
         </div>
     )
 }
