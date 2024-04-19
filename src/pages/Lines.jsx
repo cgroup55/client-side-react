@@ -57,6 +57,7 @@ export default function Lines() {
       line_city: "נתניה",
       line_street: "שד' בנימין",
       line_Homenumber: "3",
+      definition_date:"12.04.2021"
     },
     {
       line_code: "2",
@@ -85,13 +86,15 @@ export default function Lines() {
     line_city: "עיר",
     line_street: "רחוב",
     line_Homenumber: "מספר",
-    time_of_line: "שעת התחנה"
+    time_of_line: "שעת התחנה",
+    definition_date:"תאריך הגדרת קו"
   }
 
 
 
   //3 functions that handle viewing, editing and deleting a row
   const handleView = (row) => {
+    console.log("cols",ColumnNamesByIdentifier);
     setColData(ColumnNamesByIdentifier);
     setRowData(row);
     setShowModal(true);
@@ -104,11 +107,14 @@ export default function Lines() {
     let currentLine = {
       line_code: row.line_code,
       line_car: row.line_car,
+      definition_date:row.definition_date,
       number_of_seats: row.number_of_seats,
       escort_incharge: row.escort_incharge,
       school_of_line: row.school_of_line,
       station_definition: row.station_definition,
-      time_of_line:row.time_of_line
+      time_of_line:row.time_of_line,
+      line_city:row.line_city,
+      line_street:row.line_street,
     }
     navigate('/LineForm', { state: currentLine });
   };
