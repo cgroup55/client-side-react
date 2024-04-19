@@ -5,12 +5,50 @@ import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
 
+
+const apiUrl1 = 'https://localhost:7039/api/Educational';
 export default function Schools() {
 
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);
+
+
+    useEffect(() => {
+        try {
+            fetch(apiUrl1, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json; charset= UTF-8',
+                    'Accept': 'application/json; charset= UTF-8',
+                }
+            })
+                .then(res => {
+                    //debugger
+                    //כל המידע שחוזר מהשרת
+                    console.log('res= ', res);
+                    console.log('res.status= ', res.status);
+                    //ok = true/ false
+                    console.log('res.ok= ', res.ok);
+                    if (res.ok) {
+                        return res.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+
+                .then(result => {
+                    console.log('result= ', result);
+                })
+                .catch(error => {
+                    console.error('Error during fetch:', error);
+                });
+        }
+        catch (error) {
+            console.log('err get= ', error);
+        }
+    }, []);
+
 
     const addSchool = () => {
         let newSchool = {
@@ -78,32 +116,6 @@ export default function Schools() {
             principal_name: 'שרון מימון',
             principal_cell: '0528889955'
         },
-        {
-            schoolCode: 7,
-            schoolName: "אהרוני",
-            schoolStreet: 'ויצמן',
-            schoolHomeNum: 8,
-            schoolCity: 'כפר סבא',
-            schoolSecretaryPhone: '097755663',
-            schoolSecretaryMail: '',
-            schoolContactName: 'שיראל עזריהו',
-            schoolContactCell: '0527896622',
-            principal_name: 'שלמה אלבז',
-            principal_cell: ''
-        },
-        {
-            schoolCode: 80,
-            schoolName: "השרונים",
-            schoolStreet: 'הנביאים',
-            schoolHomeNum: 85,
-            schoolCity: 'כפר סבא',
-            schoolSecretaryPhone: '097777663',
-            schoolSecretaryMail: 'bbbl2@gmail.com',
-            schoolContactName: 'שני אהרונסון',
-            schoolContactCell: '0527896644',
-            principal_name: '',
-            principal_cell: '0528889955'
-        },
     ];
 
     const ColumnNamesByIdentifier =
@@ -159,7 +171,7 @@ export default function Schools() {
             <div className='text-center'
                 style={{ padding: '20px' }}>
                 <Button onClick={addSchool}>הוסף מוסד לימודים <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
-            <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"מוסד לימודי"}/>
+            <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"מוסד לימודי"} />
 
         </div>
     )
