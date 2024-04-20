@@ -77,7 +77,7 @@ export default function Escorts() {
       esc_fullName: 14,
       esc_id: "אברהמסון",
       esc_dateofbirth: "12/04/1998",
-      esc_cell: '',
+      esc_cell: '0527458888',
       esc_city: 'כפר סבא',
       esc_street: 'ברנר',
       esc_homeNum: 5
@@ -95,18 +95,20 @@ export default function Escorts() {
     esc_homeNum: 'מספר'
 
   }
-  //3 functions that handle viewing, editing and deleting a row
+
+  //modal view for specific row
   const handleView = (row) => {
     setColData(ColumnNamesByIdentifier);
     setRowData(row);
     setShowModal(true);
   };
 
+  //edit mode- pass obj with relevante data
   const handleEdit = (row) => {
     console.log('Edit:', row);
-    // handle format of date
-    let dateParts=(row.esc_dateofbirth).split('/');
-    let fixedDate=dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+    //fix date format 
+    let dateParts = (row.esc_dateofbirth).split('/');
+    let fixedDate = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
 
     let currentEscort = {
       esc_fullName: row.esc_fullName,

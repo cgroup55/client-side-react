@@ -129,24 +129,24 @@ export default function Schools() {
         city: 'עיר',
         street: 'רחוב',
         houseNumber: 'מספר',
-        principal_name: 'שם מנהל',
-        principal_cell: 'טלפון מנהל',
         secretariatPhone: 'טלפון מזכירות',
         secretariatMail: 'מייל מזכירות',
         anotherContact: 'שם איש קשר',
-        contactPhone: 'טלפון איש קשר'
+        contactPhone: 'נייד איש קשר',
+        principal: 'שם המנהל',
+        principalCellphone: 'נייד מנהל',
     }
 
-    //3 functions that handle viewing, editing and deleting a row
+    //modal view for specific row
     const handleView = (row) => {
         setColData(ColumnNamesByIdentifier);
         setRowData(row);
         setShowModal(true);
     };
 
+    //edit mode- pass obj with relevante data
     const handleEdit = (row) => {
         console.log('Edit:', row);
-        // Add your edit logic here לזכור לפצל את הכתובת לפי פסיק      
         let currentSchool = {
             school_code: row.institutionId,
             school_name: row.name,
@@ -163,6 +163,7 @@ export default function Schools() {
         navigate('/SchoolForm', { state: currentSchool });
     };
 
+    //delete ?
     const handleDelete = (row) => {
         console.log('Delete:', row);
         // Add your delete logic here

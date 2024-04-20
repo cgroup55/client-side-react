@@ -3,7 +3,7 @@ import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ValidPositiveNumber, isRadioButtonChecked, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId, Validateselect } from '../tools/validations';
+import { ValidPositiveNumber, isRadioButtonChecked, validateHebrewletters, Validateselect } from '../tools/validations';
 import { Timeline } from '@mui/icons-material';
 
 export default function LineForm() {
@@ -12,12 +12,14 @@ export default function LineForm() {
   const today = new Date().toLocaleDateString('en-GB');
 
   const { state } = useLocation();
-  let originLine=state;
-  let giventime=originLine.time_of_line.split(':')
+  let originLine = state;
+  let giventime = originLine.time_of_line.split(':')
   console.log(giventime);
-  const [line, setLine] = useState({ ...originLine,definition_date: today });
+  const [line, setLine] = useState({ ...originLine, definition_date: today });
   const [errors, setErrors] = useState({});
-  const [time, setTime] = useState({hours:giventime[0],minutes:giventime[1]});
+  const [time, setTime] = useState({ hours: giventime[0], minutes: giventime[1] });
+
+  //צריך לחבר לנתונים שיגיעו מהDB
   const schools = [{ schoolname: "טשרני", schoolcity: "נתניה", schoolstreet: "הגרא", schoolHomenum: "3" }, { schoolname: "אורט", schoolcity: "חדרה", schoolstreet: "הרצל", schoolHomenum: "5" }];//need to fetch from database
   const escorts = ["אבי לוי", "בני בוי"];//need to fetch from database
 
@@ -30,10 +32,10 @@ export default function LineForm() {
     if (isValid) {
       // Logic to check validity of new line
 
-      let timeLine=time.hours+":"+time.minutes;
-      console.log("time befor insert",timeLine);
-      setLine({...line,time_of_line:timeLine});
-      console.log("withtime",line);
+      let timeLine = time.hours + ":" + time.minutes;
+      console.log("time befor insert", timeLine);
+      setLine({ ...line, time_of_line: timeLine });
+      console.log("withtime", line);
 
       navigate('/Lines', line);
     } else {
@@ -103,7 +105,7 @@ export default function LineForm() {
                 readOnly
               />
 
-            </Form.Group>0
+            </Form.Group>
 
             <Form.Group controlId="line_car">
               <Form.Label>סוג רכב</Form.Label>
@@ -139,6 +141,7 @@ export default function LineForm() {
               </Form.Control.Feedback>
             </Form.Group>
 
+            מהDB צריך להיות  ***
             <Form.Group controlId="escort_incharge">
               <Form.Label>מלווה אחראי </Form.Label>
               <Form.Control
@@ -162,12 +165,13 @@ export default function LineForm() {
               </Form.Control.Feedback>
             </Form.Group>
 
+            מהDB צריך להיות  ***
             <Form.Group controlId="school_of_line">
               <Form.Label>מוסד לימודים </Form.Label>
               <Form.Control
                 as="select"
                 name="school_of_line"
-                value={line.school_of_line} 
+                value={line.school_of_line}
                 onChange={(e) => setLine({ ...line, school_of_line: e.target.value })}
                 isInvalid={!!errors.school_of_line}
                 required
@@ -194,7 +198,7 @@ export default function LineForm() {
                 id="radio-origin"
                 label="מוצא"
                 name="stationDefinition"
-                checked={line.station_definition === "origin"} 
+                checked={line.station_definition === "origin"}
                 onChange={(e) => setLine({ ...line, station_definition: "origin" })}
                 isInvalid={!!errors.station_definition}
               />
@@ -271,7 +275,7 @@ export default function LineForm() {
                   ))}
                 </Form.Control>
               </div>
-              
+
             </Form.Group>
 
 

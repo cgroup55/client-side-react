@@ -41,6 +41,23 @@ export default function Lines() {
       name: "סוג רכב",
       selector: (row) => row.line_car,
     },
+    {
+      name: "מקומות ישיבה",
+      selector: (row) => row.number_of_seats,
+    },
+    {
+      name: "מוסד לימודי",
+      selector: (row) => row.school_of_line,
+    },
+    {
+      name: "איסוף/פיזור",
+      selector: (row) => row.station_definition,
+      sortable: true,
+    },
+    {
+      name: "מלווה",
+      selector: (row) => row.escort_incharge,
+    },
 
   ];
 
@@ -48,25 +65,25 @@ export default function Lines() {
 
     {
       line_code: 1,
-      line_car: "bus",
+      line_car: "אוטובוס",
       number_of_seats: 3,
-      escort_incharge: "בני בוי",
+      escort_incharge: "בנימין בן בוי",
       school_of_line: "טשרני",
-      station_definition: "origin",
-      time_of_line:"19:17",
+      station_definition: "מוצא",
+      time_of_line: "19:17",
       line_city: "נתניה",
       line_street: "שד' בנימין",
       line_Homenumber: "3",
-      definition_date:"12.04.2021"
+      definition_date: "12.04.2021"
     },
     {
       line_code: "2",
-      line_car: "cab",
-      number_of_seats: "3",
+      line_car: "מיניבוס",
+      number_of_seats: "5",
       escort_incharge: "בני בוי",
       school_of_line: "טשרני",
-      station_definition: "origin",
-      time_of_line:"20:21",
+      station_definition: "יעד",
+      time_of_line: "20:21",
       line_city: "כפר סבא",
       line_street: "עליה",
       line_Homenumber: "8",
@@ -87,34 +104,33 @@ export default function Lines() {
     line_street: "רחוב",
     line_Homenumber: "מספר",
     time_of_line: "שעת התחנה",
-    definition_date:"תאריך הגדרת קו"
+    definition_date: "תאריך הגדרת קו"
   }
 
 
 
-  //3 functions that handle viewing, editing and deleting a row
+  //modal view for specific row
   const handleView = (row) => {
-    console.log("cols",ColumnNamesByIdentifier);
+    console.log("cols", ColumnNamesByIdentifier);
     setColData(ColumnNamesByIdentifier);
     setRowData(row);
     setShowModal(true);
   };
 
-
+  //edit mode- pass obj with relevante data
   const handleEdit = (row) => {
     console.log('Edit:', row);
-    // Add your edit logic here
     let currentLine = {
       line_code: row.line_code,
       line_car: row.line_car,
-      definition_date:row.definition_date,
+      definition_date: row.definition_date,
       number_of_seats: row.number_of_seats,
       escort_incharge: row.escort_incharge,
       school_of_line: row.school_of_line,
       station_definition: row.station_definition,
-      time_of_line:row.time_of_line,
-      line_city:row.line_city,
-      line_street:row.line_street,
+      time_of_line: row.time_of_line,
+      line_city: row.line_city,
+      line_street: row.line_street,
     }
     navigate('/LineForm', { state: currentLine });
   };

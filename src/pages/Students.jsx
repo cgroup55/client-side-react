@@ -2,15 +2,15 @@ import React from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Students() {
-  
-  const navigate = useNavigate();
 
-  const addStudent = () => {
-    navigate('/StudentForm', {state: {}});
-  }
+    const navigate = useNavigate();
+
+    const addStudent = () => {
+        navigate('/StudentForm', { state: {} });
+    }
     //data thats relevant for students comp's table
 
     const StudentCols = [
@@ -128,12 +128,13 @@ export default function Students() {
         },
     ];
 
-    //3 functions that handle viewing, editing and deleting a row
+    //modal view for specific row
     const handleView = (row) => {
         console.log('View:', row);
         // navigate('/studentform', {state: 'view'});
     };
 
+    //edit mode- pass obj with relevante data
     const handleEdit = (row) => {
         console.log('Edit:', row);
         // navigate('/studentform', {state: 'edit'});
@@ -144,7 +145,7 @@ export default function Students() {
         // Add your delete logic here
     };
 
- 
+
 
     return (
         <div className='container mt-5' >

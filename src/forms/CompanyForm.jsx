@@ -65,11 +65,12 @@ export default function CompanyForm() {
     newErrors.company_name = validateHebrewletters(company.company_name);
     newErrors.company_email = validateEmail(company.company_email);
     newErrors.company_phone = ValidCellOrHomePhoneNum(company.company_phone);
+    newErrors.manager_name = validateHebrewletters (company.manager_name);
     newErrors.manager_phone = ValidCellOrHomePhoneNum(company.manager_phone);
     newErrors.company_city = validateCity(company.company_city, cities, cities);
     newErrors.company_street = validateStreet(company.company_street, streets);
     newErrors.company_homeNum = ValidPositiveNumber(company.company_homeNum);
-    //need to check the following code *********
+   
     setErrors(newErrors);
     console.log('errors after=', errors);
     Object.values(newErrors).forEach(error => {
@@ -87,7 +88,7 @@ export default function CompanyForm() {
         <h2>הוספת חברת הסעה</h2>
         <Form className='col-9 label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
           <Form.Group controlId="company_code">
-            <Form.Label>קוד חברה</Form.Label>
+            <Form.Label>ח"פ חברה</Form.Label>
             <Form.Control type="text" name="company_code"
               value={company.company_code}
               onChange={(e) => setCompany({ ...company, company_code: e.target.value })}

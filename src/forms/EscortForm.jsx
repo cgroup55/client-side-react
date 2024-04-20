@@ -59,7 +59,6 @@ export default function EscortForm() {
   const validateForm = () => {
     let valid = true;
     let newErrors = {};
-    console.log('escort=', escort);
     newErrors.esc_fullName = validateHebrewletters(escort.esc_fullName);
     newErrors.esc_id = ValidateId(escort.esc_id);
     newErrors.esc_dateofbirth = validateDateOfBirth(escort.esc_dateofbirth);
