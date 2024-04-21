@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useLocation, useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
-import {fixDate} from '../tools/validations.js';
+import { fixDate } from '../tools/validations.js';
+import { EscortContext } from '../contexts/escortContext.jsx';
 
 
 export default function Escorts() {
+  //מאפשר שימוש בפונקציות/סטייטים שיש בפרוביידר
+  //const { stam } = useContext(EscortContext);
+  //stam();
+  //escorts list from context
+ // const { escortsList } = useContext(EscortContext);
 
   const navigate = useNavigate();
 
@@ -17,6 +23,7 @@ export default function Escorts() {
   const [showModal, setShowModal] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
+
 
 
   const addEscort = () => {
@@ -87,8 +94,8 @@ export default function Escorts() {
       esc_street: 'ברנר',
       esc_homeNum: 5
     },
-    
-    
+
+
   ];
 
   const updatedEscortRows = addedEscort ? [...escortRows, addedEscort] : escortRows;
@@ -116,7 +123,7 @@ export default function Escorts() {
   const handleEdit = (row) => {
     console.log('Edit:', row);
     //fix date format 
-    
+
 
     let currentEscort = {
       esc_fullName: row.esc_fullName,
@@ -127,7 +134,7 @@ export default function Escorts() {
       esc_street: row.esc_street,
       esc_homeNum: row.esc_homeNum,
     };
-    console.log("currentEscort",currentEscort);
+    console.log("currentEscort", currentEscort);
     navigate('/EscortForm', { state: currentEscort });
   };
 
@@ -141,6 +148,7 @@ export default function Escorts() {
     <div className='container mt-5' >
       <h3 className="bold" style={{ textAlign: 'center' }}>נתוני מלווים</h3>
       <Table columns={escortColumns} rows={updatedEscortRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
+      {/* escortsList להחליף בrows*/}
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addEscort}>הוסף מלווה חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>

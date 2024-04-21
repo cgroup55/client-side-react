@@ -22,8 +22,8 @@ export default function Schools() {
     //         fetch(apiUrl1, {
     //             method: 'GET',
     //             headers: {
-    //                 'Content-Type': 'application/json; charset= UTF-8',
-    //                 'Accept': 'application/json; charset= UTF-8',
+    //                 'Content-Type': 'application/json; ',
+    //                 'Accept': 'application/json;',
     //             }
     //         })            
     //             .then(res => {

@@ -91,6 +91,7 @@ export default function LineForm() {
                 value={line.line_code}
                 onChange={(e) => setLine({ ...line, line_code: e.target.value })}
                 isInvalid={!!errors.line_code}
+                readOnly = {line.line_code!=''}
                 required
               />
               <Form.Control.Feedback type="invalid">
