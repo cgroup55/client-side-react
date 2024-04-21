@@ -64,8 +64,8 @@ export default function CompanyForm() {
     newErrors.company_code = ValidPositiveNumber(company.company_code);
     newErrors.company_name = validateHebrewletters(company.company_name);
     newErrors.company_email = validateEmail(company.company_email);
-    newErrors.company_phone = ValidCellOrHomePhoneNum(company.company_phone);    
-    if (company.manager_name != "") {      
+    newErrors.company_phone = ValidCellOrHomePhoneNum(company.company_phone);
+    if (company.manager_name != "") {
       newErrors.manager_name = validateHebrewletters(company.manager_name);
     }
     if (company.manager_phone != "") {
@@ -214,6 +214,7 @@ export default function CompanyForm() {
               required
               className="formSelect"
             >
+              {<option value={-1}>בחר רחוב</option>}
               {streets.map((street, index) => (
                 <option key={index} value={street}>{street}</option>
               ))}

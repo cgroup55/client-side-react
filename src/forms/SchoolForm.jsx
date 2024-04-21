@@ -156,6 +156,7 @@ export default function SchoolForm() {
               onChange={(e) => setSchool({ ...school, school_street: e.target.value })}
               isInvalid={!!errors.school_street}
               required >
+              {<option value={-1}>בחר רחוב</option>}
               {streets.map((street, index) => (
                 <option key={index} value={street}>{street}</option>
               ))}

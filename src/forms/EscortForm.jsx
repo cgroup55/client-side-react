@@ -176,6 +176,7 @@ export default function EscortForm() {
                 onChange={(e) => setEscort({ ...escort, esc_street: e.target.value })}
                 isInvalid={!!errors.esc_street}
                 required >
+                {<option value={-1}>בחר רחוב</option>}
                 {streets.map((street, index) => (
                   <option key={index} value={street}>{street}</option>
                 ))}
