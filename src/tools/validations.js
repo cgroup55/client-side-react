@@ -3,7 +3,7 @@
 //validation for Hebrew letters only
 export const validateHebrewletters = (input) => {
     const text = input;
-    const regex =/^[\sא-ת!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/;    
+    const regex = /^[\sא-ת!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/;
     if (!regex.test(text)) {
         return 'ניתן להזין אותיות בעברית, רווחים, ותווים מיוחדים בלבד';
     } else {
@@ -11,8 +11,8 @@ export const validateHebrewletters = (input) => {
     }
 };
 
-export const Validateselect=(input)=>{
-    if (input=='-1'){
+export const Validateselect = (input) => {
+    if (input == '-1') {
         return 'חובה לבחור אחת מהאפשרויות';
     }
     else return '';
@@ -34,7 +34,7 @@ export const ValidateId = (input) => {
 //validation for digits only- positive number
 export const ValidPositiveNumber = (input) => {
     const num = input;
-    if (num<0) {
+    if (num < 0) {
         return 'לא ניתן להזין מספר שלילי';
     }
     const reg = /^\d+$/;
@@ -89,20 +89,38 @@ export const validateDateOfBirth = (input) => {
 
 export const validateEmail = (input) => {
 
-    let email=input;
-    const reg=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    let email = input;
+    const reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!reg.test(email)) {
         return " מייל לא תקין ";
     }
-    else{
+    else {
         return "";
     }
 }
 
 export const isRadioButtonChecked = (input) => {
-    if(input==''||input==undefined)
-    {
+    if (input == '' || input == undefined) {
         return "חובה לבחור באחת מהאפשרויות";
     }
     else return "";
-  };
+};
+
+export const fixDate = (input) => {
+
+    let date = input;
+    let delim="-";
+    console.log("date before",date);
+    let dateParts = (input).split(/[/-]/);
+    console.log("dateParts",dateParts);
+    
+    if (dateParts[0].length==4) {
+        delim="/";
+    }
+    let fixedDate=dateParts[2]+delim+dateParts[1]+delim+dateParts[0];
+    console.log("date after",fixedDate);
+
+    return fixedDate;
+
+} 
+
