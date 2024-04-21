@@ -1,26 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
+import MyModal from '../components/MyModal';
 
 export default function Students() {
 
     const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [rowData, setRowData] = useState(null);
+    const [colData, setColData] = useState(null);
 
     const addStudent = () => {
-        navigate('/StudentForm', { state: {} });
+        let newStudent = {
+            stu_fullName: '',
+            stu_id: '',
+            stu_dateofbirth: '',
+            stu_grade: '',
+            stu_school: '',
+
+
+        }
+        navigate('/StudentForm', { state: newStudent });
     }
-    //data thats relevant for students comp's table
+
 
     const StudentCols = [
         {
-            name: "עברית",
+            name: "תז",
             selector: (row) => row.personID,
             sortable: true,
         },
         {
-            name: "Full Name",
+            name: "שם מלא",
             selector: (row) => row.fullName,
         },
         {
@@ -128,16 +141,25 @@ export default function Students() {
         },
     ];
 
+    const ColumnNamesByIdentifier =
+    {
+
+    }
+
     //modal view for specific row
     const handleView = (row) => {
-        console.log('View:', row);
-        // navigate('/studentform', {state: 'view'});
+        setColData(ColumnNamesByIdentifier);
+        setRowData(row);
+        setShowModal(true);
     };
 
     //edit mode- pass obj with relevante data
     const handleEdit = (row) => {
         console.log('Edit:', row);
-        // navigate('/studentform', {state: 'edit'});
+        let currentStudent = {
+
+        };
+        navigate('/studentform', { state: currentStudent });
     };
 
     const handleDelete = (row) => {
@@ -154,6 +176,7 @@ export default function Students() {
             <div className='text-center'
                 style={{ padding: '20px' }}>
                 <Button onClick={addStudent} >הוסף תלמיד חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+            <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"תלמיד"} />
         </div>
     )
 }
