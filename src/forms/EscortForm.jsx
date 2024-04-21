@@ -4,20 +4,17 @@ import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum } from '../tools/validations';
+import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, fixDate } from '../tools/validations';
 
 export default function EscortForm() {
 
   const navigate = useNavigate();
   const { state } = useLocation();
   let originEscort = state;
-
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
-
   const [escort, setEscort] = useState({ ...originEscort });
-
   const [errors, setErrors] = useState({});
 
   //render the cities on-load
@@ -46,10 +43,22 @@ export default function EscortForm() {
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
-    console.log('isValid:', isValid);
+
     if (isValid) {
       // Logic to check validity of new escort
-      navigate('/escorts',escort);
+      let escortToSend = {
+        esc_fullName: escort.esc_fullName,
+        esc_id: escort.esc_id,
+        esc_dateofbirth: fixDate(escort.esc_dateofbirth),
+        esc_cell: escort.esc_cell,
+        esc_city: escort.esc_city,
+        esc_street: escort.esc_street,
+        esc_homeNum: escort.esc_homeNum,
+      };
+      
+      navigate('/escorts',{state:escortToSend});
+
+      
     } else {
       // Show error message
     }
@@ -75,6 +84,7 @@ export default function EscortForm() {
         valid = false;
       }
     });
+    
     return valid;
   };
 

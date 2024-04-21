@@ -2,17 +2,22 @@ import React, { useState, useEffect } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
+import {fixDate} from '../tools/validations.js';
 
 
 export default function Escorts() {
 
   const navigate = useNavigate();
 
+  const { state } = useLocation();
+  let addedEscort = state;
+
   const [showModal, setShowModal] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
+
 
   const addEscort = () => {
     let newEscort = {
@@ -82,7 +87,11 @@ export default function Escorts() {
       esc_street: 'ברנר',
       esc_homeNum: 5
     },
+    
+    
   ];
+
+  const updatedEscortRows = addedEscort ? [...escortRows, addedEscort] : escortRows;
 
   const ColumnNamesByIdentifier = {
 
@@ -107,18 +116,18 @@ export default function Escorts() {
   const handleEdit = (row) => {
     console.log('Edit:', row);
     //fix date format 
-    let dateParts = (row.esc_dateofbirth).split('/');
-    let fixedDate = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
+    
 
     let currentEscort = {
       esc_fullName: row.esc_fullName,
       esc_id: row.esc_id,
-      esc_dateofbirth: fixedDate,
+      esc_dateofbirth: fixDate(row.esc_dateofbirth),
       esc_cell: row.esc_cell,
       esc_city: row.esc_city,
       esc_street: row.esc_street,
       esc_homeNum: row.esc_homeNum,
     };
+    console.log("currentEscort",currentEscort);
     navigate('/EscortForm', { state: currentEscort });
   };
 
@@ -131,7 +140,7 @@ export default function Escorts() {
   return (
     <div className='container mt-5' >
       <h3 className="bold" style={{ textAlign: 'center' }}>נתוני מלווים</h3>
-      <Table columns={escortColumns} rows={escortRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
+      <Table columns={escortColumns} rows={updatedEscortRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addEscort}>הוסף מלווה חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
