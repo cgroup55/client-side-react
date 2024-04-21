@@ -92,8 +92,7 @@ export default function StudentForm() {
         // newErrors.stu_city = validateCity(stuort.stu_city, cities);
         //newErrors.stu_street = validateStreet(stuort.stu_street, streets);
         //  newErrors.stu_homeNum = ValidPositiveNumber(stuort.stu_homeNum);
-
-        //need to check the following code *********
+        
         setErrors(newErrors);
         console.log('errors after=', errors);
         Object.values(newErrors).forEach(error => {
@@ -133,6 +132,7 @@ export default function StudentForm() {
                                 value={student.stu_id}
                                 onChange={(e) => setStudent({ ...student, stu_id: e.target.value })}
                                 isInvalid={!!errors.stu_id}
+                                readOnly = {student.stu_id!=''}
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
@@ -243,6 +243,7 @@ export default function StudentForm() {
 
                     <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
                         <h5>הורה</h5>
+                        {/* readOnly = {student.stu_id!=''} */}
                         <Form.Group controlId="stu_parent1name">
                             <Form.Label>שם הורה</Form.Label>
                             <Form.Control type="text" />
