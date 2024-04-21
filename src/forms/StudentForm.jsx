@@ -26,7 +26,7 @@ export default function StudentForm() {
 
     const [student, setStudent] = useState({ ...originStudent });
     const [errors, setErrors] = useState({});
-
+    //להוסיף כפתור
 
     //צריך לחבר לנתונים שיגיעו מהDB
     const schools = [{ schoolname: "טשרני" }, { schoolname: "אורט" }];
@@ -86,6 +86,9 @@ export default function StudentForm() {
         }
         newErrors.stu_school = Validateselect(line.stu_school);
         newErrors.stu_disability = Validateselect(line.stu_disability);
+
+        //stu_parentName, stu_contaceName  
+        //stu_parentCell, stu_contactCell
 
 
         //newErrors.stu_cell = ValidCellPhoneNum(stuort.stu_cell);
@@ -262,7 +265,7 @@ export default function StudentForm() {
                             <Form.Control type="text" name="stu_parentCell"
                                 value={student.stu_parentCell}
                                 onChange={(e) => setStudent({ ...student, stu_parentCell: e.target.value })}
-                                isInvalid={!!errors.stu_parentCell}                                
+                                isInvalid={!!errors.stu_parentCell}
                                 //readOnly
                                 required
                             />
@@ -303,14 +306,28 @@ export default function StudentForm() {
 
                     <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
                         <h5>איש קשר</h5>
-                        <Form.Group controlId="stu_parent2name">
+                        <Form.Group controlId="stu_contaceName">
                             <Form.Label>שם איש קשר</Form.Label>
-                            <Form.Control type="text" />
+                            <Form.Control type="text" name="stu_contaceName"
+                                value={student.stu_contaceName}
+                                onChange={(e) => setStudent({ ...student, stu_contaceName: e.target.value })}
+                                isInvalid={!!errors.stu_contaceName}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_contaceName}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
-                        <Form.Group controlId="stu_parent2cell">
-                            <Form.Label>נייד איש קשר</Form.Label>
-                            <Form.Control type="text" />
+                        <Form.Group controlId="stu_contactCell">
+                            <Form.Label>נייד</Form.Label>
+                            <Form.Control type="text" name="stu_contactCell"
+                                value={student.stu_contactCell}
+                                onChange={(e) => setStudent({ ...student, stu_contactCell: e.target.value })}
+                                isInvalid={!!errors.stu_contactCell}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_contactCell}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="stu_parent2city">
