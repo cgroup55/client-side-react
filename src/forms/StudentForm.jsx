@@ -151,7 +151,7 @@ export default function StudentForm() {
 
                         <Form.Group controlId="stu_comments">
                             <Form.Label>הערות</Form.Label>
-                            <Form.Control type="text" />
+                            <Form.Control className='comment' as="textarea" rows={1} />
                         </Form.Group>
 
                     </div>

@@ -169,7 +169,7 @@ export default function CompanyForm() {
 
           <Form.Group controlId="company_comments">
             <Form.Label>הערות</Form.Label>
-            <Form.Control type="text" name="company_comments"
+            <Form.Control className='comment' as="textarea" rows={1} name="company_comments"
               value={company.company_comments}
               onChange={(e) => setCompany({ ...company, company_comments: e.target.value })}
             />

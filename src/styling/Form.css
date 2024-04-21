@@ -31,7 +31,8 @@ select {
 .formSelect,
 .socialDiv,
 .secParDiv,
-.custom-select {
+.custom-select,
+.comment {
   display: block;
   flex-grow: 1;
   border-color: black;
