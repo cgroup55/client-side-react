@@ -17,7 +17,7 @@ export default function Lines() {
   const [colData, setColData] = useState(null);
 
 
-  const addLine = () => {
+  const addNewLine = () => {
 
     let newLine = {
       line_code: "",
@@ -152,7 +152,7 @@ export default function Lines() {
       <Table columns={Linecolumns} rows={updatedLineRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
       <div className='text-center'
         style={{ padding: '20px' }}>
-        <Button onClick={addLine}>הוסף קו חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+        <Button onClick={addNewLine}>הוסף קו חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
       <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"קו"} />
     </div>
   )

@@ -12,7 +12,7 @@ export default function Students() {
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);
 
-    const addStudent = () => {
+    const addNewStudent = () => {
         let newStudent = {
             stu_fullName: '',
             stu_id: '',
@@ -175,7 +175,7 @@ export default function Students() {
             <Table rows={StudentRows} columns={StudentCols} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
             <div className='text-center'
                 style={{ padding: '20px' }}>
-                <Button onClick={addStudent} >הוסף תלמיד חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+                <Button onClick={addNewStudent} >הוסף תלמיד חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
             <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"תלמיד"} />
         </div>
     )

@@ -52,7 +52,7 @@ export default function Schools() {
     //     }
     // }, []);
 
-    const addSchool = () => {
+    const addNewSchool = () => {
         let newSchool = {
             school_code: '',
             school_name: '',
@@ -176,7 +176,7 @@ export default function Schools() {
                 <Table columns={Schoolcolumns} rows={schoolRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />)}
             <div className='text-center'
                 style={{ padding: '20px' }}>
-                <Button onClick={addSchool}>הוסף מוסד לימודים <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+                <Button onClick={addNewSchool}>הוסף מוסד לימודים <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
             <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"מוסד לימודי"} />
         </div>
     )

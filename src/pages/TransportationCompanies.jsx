@@ -87,7 +87,7 @@ export default function TransportationCompanies() {
     company_comments: "הערות"
   }
 
-  const addCompany = () => {
+  const addNewCompany = () => {
     let newCompany = {
       company_code: "",
       company_name: "",
@@ -143,7 +143,7 @@ export default function TransportationCompanies() {
       <Table columns={Companycolumns} rows={Companyrows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
       <div className='text-center'
         style={{ padding: '20px' }}>
-        <Button onClick={addCompany}>הוסף חברת הסעה <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+        <Button onClick={addNewCompany}>הוסף חברת הסעה <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
       <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"חברת הסעה"} />
     </div>
   )

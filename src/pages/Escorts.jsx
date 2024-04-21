@@ -26,7 +26,7 @@ export default function Escorts() {
 
 
 
-  const addEscort = () => {
+  const addNewEscort = () => {
     let newEscort = {
       esc_fullName: '',
       esc_id: '',
@@ -151,7 +151,7 @@ export default function Escorts() {
       {/* escortsList להחליף בrows*/}
       <div className='text-center'
         style={{ padding: '20px' }}>
-        <Button onClick={addEscort}>הוסף מלווה חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+        <Button onClick={addNewEscort}>הוסף מלווה חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
       <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"מלווה"} />
     </div>
   )
