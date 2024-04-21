@@ -4,7 +4,6 @@ import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ValidPositiveNumber, isRadioButtonChecked, validateHebrewletters, Validateselect } from '../tools/validations';
-import { Timeline } from '@mui/icons-material';
 
 export default function LineForm() {
 
@@ -33,11 +32,7 @@ export default function LineForm() {
       // Logic to check validity of new line
 
       let timeLine = time.hours + ":" + time.minutes;
-      console.log("time befor insert", timeLine);
-      setLine({ ...line, time_of_line: timeLine });
-      console.log("withtime", line);
-
-      navigate('/Lines', line);
+      navigate('/Lines', {state:{...line,time_of_line: timeLine}});
     } else {
       // Show error message
     }
