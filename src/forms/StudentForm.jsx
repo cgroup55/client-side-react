@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import "../styling/Form.css";
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
-import { fetchCities, fetchStreetsByCity } from '../tools/cities&streets';
-import { useNavigate } from 'react-router-dom';
-
+import { useLocation, useNavigate } from 'react-router-dom';
+import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
+import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect } from '../tools/validations';
 
 
 export default function StudentForm() {
 
     const navigate = useNavigate();
-    //State for student type (רווחה, פנימיה, רגיל)
-    const [stuKind, setstuKind] = useState("");
+    const { state } = useLocation();
+    let originStudent = state;
+
     //States for handling the addresses
     const [cities, setCities] = useState([]);
     const [filteredCities1, setFilteredCities1] = useState([]);
@@ -23,11 +24,24 @@ export default function StudentForm() {
     const [selectedStreet1, setSelectedStreet1] = useState("");
     const [selectedStreet2, setSelectedStreet2] = useState("");
 
+    const [student, setStudent] = useState({ ...originStudent });
+    const [errors, setErrors] = useState({});
+
+
+    //צריך לחבר לנתונים שיגיעו מהDB
+    const schools = [{ schoolname: "טשרני" }, { schoolname: "אורט" }];
+    const disabilities = [{ disabname: "אוטיזם" }, { disabname: "פיגור" }];
+
     //Render the cities on-load
     useEffect(() => {
         fetchCities().then(cities => setCities(cities));
     }, []);
-
+    //כנראה נצטרך להוסיף ולהתאים ל2 השדות
+    // useEffect(() => {
+    //     if (originstuort.stu_city != '') {
+    //       fetchStreetsByCity(originstuort.stu_city).then(streets => setStreets(streets));
+    //     }
+    //   }, []);
 
     //Handle city input change for both contacts
     const handleCityInputChange = (event, setFilteredCities, setSelectedCity, setStreets) => {
@@ -47,24 +61,49 @@ export default function StudentForm() {
     };
 
 
-    //show social worker section on condition
-    const handleStuKindChange = (e) => {
-        setstuKind(e.target.value);
-    };
 
-    // Function to handle form submission
+    //Function to handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Validate form here
-        // If valid, save new student
-        if (true) {
-            //logic to check validity of new stu
-            navigate('/students');
+        let isValid = validateForm();
+        console.log('isValid:', isValid);
+        if (isValid) {
+            // Logic to check validity of new stuort
+            navigate('/stuorts', stuort);
+        } else {
+            // Show error message
         }
-        else {
-            //הודעה על כשלון
+    };
+
+    const validateForm = () => {
+        let valid = true;
+        let newErrors = {};
+        newErrors.stu_fullName = validateHebrewletters(stuort.stu_fullName);
+        newErrors.stu_id = ValidateId(stuort.stu_id);
+        newErrors.stu_dateofbirth = validateDateOfBirth(stuort.stu_dateofbirth);
+        if (student.stu_grade != '') {
+            newErrors.stu_grade = validateHebrewletters(stuort.stu_grade);
         }
-    }
+        newErrors.stu_school = Validateselect(line.stu_school);
+        newErrors.stu_disability = Validateselect(line.stu_disability);
+
+
+        //newErrors.stu_cell = ValidCellPhoneNum(stuort.stu_cell);
+        // newErrors.stu_city = validateCity(stuort.stu_city, cities);
+        //newErrors.stu_street = validateStreet(stuort.stu_street, streets);
+        //  newErrors.stu_homeNum = ValidPositiveNumber(stuort.stu_homeNum);
+
+        //need to check the following code *********
+        setErrors(newErrors);
+        console.log('errors after=', errors);
+        Object.values(newErrors).forEach(error => {
+            if (error) {
+                valid = false;
+            }
+        });
+        return valid;
+    };
+
 
     return (
 
@@ -75,84 +114,130 @@ export default function StudentForm() {
                     <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
                         <h5>תלמיד</h5>
 
-                        <Form.Group controlId="stu_firstName">
-                            <Form.Label>שם פרטי</Form.Label>
-                            <Form.Control type="text" name="stu_firstName" required />
-                        </Form.Group>
-
-                        <Form.Group controlId="stu_lastName">
-                            <Form.Label>שם משפחה</Form.Label>
-                            <Form.Control type="text" name="stu_lastName" />
+                        <Form.Group controlId="stu_fullName">
+                            <Form.Label>שם מלא</Form.Label>
+                            <Form.Control type="text" name="stu_fullName"
+                                value={student.stu_fullName}
+                                onChange={(e) => setStudent({ ...student, stu_fullName: e.target.value })}
+                                isInvalid={!!errors.stu_fullName}
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_fullName}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="stu_id">
                             <Form.Label>תעודת זהות</Form.Label>
-                            <Form.Control type="text" name="stu_id" />
+                            <Form.Control type="text" name="stu_id"
+                                value={student.stu_id}
+                                onChange={(e) => setStudent({ ...student, stu_id: e.target.value })}
+                                isInvalid={!!errors.stu_id}
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_id}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="stu_dateofbirth">
                             <Form.Label>תאריך לידה</Form.Label>
-                            <Form.Control type="date" name="stu_dateofbirth" />
+                            <Form.Control type="date" name="stu_dateofbirth"
+                                value={student.stu_dateofbirth}
+                                onChange={(e) => setStudent({ ...student, stu_dateofbirth: e.target.value })}
+                                isInvalid={!!errors.stu_dateofbirth}
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_dateofbirth}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="stu_grade">
                             <Form.Label>כיתה</Form.Label>
-                            <Form.Control type="text" name="stu_grade" />
+                            <Form.Control type="text" name="stu_grade"
+                                value={student.stu_grade}
+                                onChange={(e) => setStudent({ ...student, stu_grade: e.target.value })}
+                                isInvalid={!!errors.stu_grade}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_grade}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
+                        מהDB צריך להיות  ***
                         <Form.Group controlId="stu_school">
-                            <Form.Label>מוסד לימודי</Form.Label>
-                            <Form.Control className="formSelect" as="select" defaultValue={0}>
-                                <option>בחר...</option>
-                                <option>...</option>
+                            <Form.Label>מוסד לימודים </Form.Label>
+                            <Form.Control
+                                as="select"
+                                name="stu_school"
+                                value={student.stu_school}
+                                onChange={(e) => setStudent({ ...student, stu_school: e.target.value })}
+                                isInvalid={!!errors.stu_school}
+                                required
+                                className="formSelect"
+                            >
+                                <option value={"-1"}></option>
+                                {schools.map((school, index) => (
+                                    <option key={index} value={school.schoolname}>
+                                        {school.schoolname}
+                                    </option>
+                                ))}
                             </Form.Control>
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_school}
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </div>
+
                     <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
                         <h5>פרטי לקות</h5>
-                        <Form.Group controlId="stu_dateofplacementcom">
+
+                        <Form.Group controlId="stu_dateOfPlacement">
                             <Form.Label>תאריך ועדת השמה</Form.Label>
-                            <Form.Control type="date" />
+                            <Form.Control type="date" name="stu_dateOfPlacement"
+                                value={student.stu_dateOfPlacement}
+                                onChange={(e) => setStudent({ ...student, stu_dateOfPlacement: e.target.value })}
+                                isInvalid={!!errors.stu_dateOfPlacement}
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_dateOfPlacement}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
-                        <Form.Group controlId="stu_studentkind">
-                            <Form.Label>סיווג תלמיד</Form.Label>
-                            <Form.Control as="select" className="formSelect" defaultValue={0} onChange={handleStuKindChange}>
-                                <option value={0}>בחר...</option>
-                                <option value={"רווחה"}>רווחה</option>
-                                <option value={"פנימיה"}>פנימיה</option>
-                                <option value={"רגיל"}>רגיל</option>
-                            </Form.Control>
-                        </Form.Group>
-
-                        {stuKind === "רווחה" && (
-                            <div className='socialDiv' >
-                                <Form.Group controlId="stu_socialworker">
-                                    <Form.Label>עובד סוציאלי</Form.Label>
-                                    <Form.Control type="text" />
-                                </Form.Group>
-
-                                <Form.Group controlId="stu_socialworkercell">
-                                    <Form.Label>נייד עובד סוציאלי</Form.Label>
-                                    <Form.Control type="text" />
-                                </Form.Group>
-                            </div>
-                        )}
-
-                        <Form.Group controlId="stu_disabilitiykind">
+                        מהDB צריך להיות  ***
+                        <Form.Group controlId="stu_disability">
                             <Form.Label>סוג לקות</Form.Label>
-                            <Form.Control className="formSelect" as="select" defaultValue={0}>
-                                <option value={0}>בחר...</option>
-                                <option value={1}>אוטיזם</option>
-                                <option value={2}>פיגור שכלי</option>
-                                <option value={3}>נכות פיזית</option>
+                            <Form.Control
+                                as="select"
+                                name="stu_disability"
+                                value={student.stu_disability}
+                                onChange={(e) => setStudent({ ...student, stu_disability: e.target.value })}
+                                isInvalid={!!errors.stu_disability}
+                                required
+                                className="formSelect"
+                            >
+                                <option value={"-1"}></option>
+                                {disabilities.map((disab, index) => (
+                                    <option key={index} value={disab.disabname}>
+                                        {disab.disabname}
+                                    </option>
+                                ))}
                             </Form.Control>
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_disability}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="stu_comments">
                             <Form.Label>הערות</Form.Label>
-                            <Form.Control className='comment' as="textarea" rows={1} />
+                            <Form.Control className='comment' as="textarea" rows={2} name="stu_comments"
+                                value={student.stu_comments}
+                                onChange={(e) => setStudent({ ...student, stu_comments: e.target.value })}
+                            />
                         </Form.Group>
+
 
                     </div>
 
