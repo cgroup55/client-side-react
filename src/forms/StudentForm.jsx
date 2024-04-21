@@ -92,7 +92,7 @@ export default function StudentForm() {
         // newErrors.stu_city = validateCity(stuort.stu_city, cities);
         //newErrors.stu_street = validateStreet(stuort.stu_street, streets);
         //  newErrors.stu_homeNum = ValidPositiveNumber(stuort.stu_homeNum);
-        
+
         setErrors(newErrors);
         console.log('errors after=', errors);
         Object.values(newErrors).forEach(error => {
@@ -132,7 +132,7 @@ export default function StudentForm() {
                                 value={student.stu_id}
                                 onChange={(e) => setStudent({ ...student, stu_id: e.target.value })}
                                 isInvalid={!!errors.stu_id}
-                                readOnly = {student.stu_id!=''}
+                                //readOnly
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
@@ -244,14 +244,31 @@ export default function StudentForm() {
                     <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
                         <h5>הורה</h5>
                         {/* readOnly = {student.stu_id!=''} */}
-                        <Form.Group controlId="stu_parent1name">
+                        <Form.Group controlId="stu_parentName">
                             <Form.Label>שם הורה</Form.Label>
-                            <Form.Control type="text" />
+                            <Form.Control type="text" name="stu_parentName"
+                                value={student.stu_parentName}
+                                onChange={(e) => setStudent({ ...student, stu_parentName: e.target.value })}
+                                isInvalid={!!errors.stu_parentName}
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_parentName}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
-                        <Form.Group controlId="stu_parent1cell">
+                        <Form.Group controlId="stu_parentCell">
                             <Form.Label>נייד הורה</Form.Label>
-                            <Form.Control type="text" />
+                            <Form.Control type="text" name="stu_parentCell"
+                                value={student.stu_parentCell}
+                                onChange={(e) => setStudent({ ...student, stu_parentCell: e.target.value })}
+                                isInvalid={!!errors.stu_parentCell}                                
+                                //readOnly
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_parentCell}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="stu_parent1city">

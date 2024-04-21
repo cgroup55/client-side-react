@@ -98,7 +98,7 @@ export default function CompanyForm() {
               value={company.company_code}
               onChange={(e) => setCompany({ ...company, company_code: e.target.value })}
               isInvalid={!!errors.company_code}
-              readOnly={company.company_code != ''}
+              //readOnly
               required
             />
             <Form.Control.Feedback type="invalid">

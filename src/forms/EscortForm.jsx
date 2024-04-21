@@ -113,7 +113,7 @@ export default function EscortForm() {
               onChange={(e) => setEscort({ ...escort, esc_id: e.target.value })}
               isInvalid={!!errors.esc_id}
               required
-              readOnly = {escort.esc_id!=''}
+              //readOnly 
             />
             <Form.Control.Feedback type="invalid">
               {errors.esc_id}
