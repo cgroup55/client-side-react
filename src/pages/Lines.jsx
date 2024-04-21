@@ -78,7 +78,10 @@ export default function Lines() {
       line_city: "נתניה",
       line_street: "שד' בנימין",
       line_Homenumber: "3",
-      definition_date: "12/04/2021"
+      definition_date: "12/04/2021",
+      transportaion_company:"אא הסעים",
+      line_comments:"הערההההההה"
+
     },
     {
       line_code: "2",
@@ -110,7 +113,9 @@ export default function Lines() {
     line_street: "רחוב",
     line_Homenumber: "מספר",
     time_of_line: "שעת התחנה",
-    definition_date: "תאריך הגדרת קו"
+    definition_date: "תאריך הגדרת קו",
+    transportaion_company:"חברת הסעה",
+    line_comments:"הערות"
   }
 
 

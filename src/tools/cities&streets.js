@@ -60,6 +60,8 @@ export const validateCity = (input,cities) => {
 export const validateStreet = (input,streets) => {
 
     let chosenstreet = input;
+    console.log(chosenstreet);
+    console.log(streets);
     if (!streets.includes(chosenstreet)) {
         return 'יש לבחור ערך מהרשימה';
     } else {

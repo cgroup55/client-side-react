@@ -32,7 +32,7 @@ export default function LineForm() {
       // Logic to check validity of new line
 
       let timeLine = time.hours + ":" + time.minutes;
-      navigate('/Lines', {state:{...line,time_of_line: timeLine}});
+      navigate('/Lines', { state: { ...line, time_of_line: timeLine } });
     } else {
       // Show error message
     }
@@ -86,7 +86,7 @@ export default function LineForm() {
                 value={line.line_code}
                 onChange={(e) => setLine({ ...line, line_code: e.target.value })}
                 isInvalid={!!errors.line_code}
-                //readOnly 
+                readOnly = {line.line_code!=''}
                 required
               />
               <Form.Control.Feedback type="invalid">
@@ -103,6 +103,27 @@ export default function LineForm() {
 
             </Form.Group>
 
+            <Form.Group controlId="transportaion_company">
+              <Form.Label>חברת הסעה</Form.Label>
+              <Form.Control
+                as="select"
+                name="transportaion_company"
+                value={line.transportaion_company}
+                onChange={(e) => setLine({ ...line, transportaion_company: e.target.value })}
+                isInvalid={!!errors.line_car}
+                required
+                className="formSelect"
+              >
+                <option value={"-1"}>בחר חברת הסעה</option>
+                <option value={"1"}>אא הסעים</option>
+                <option value={"2"}>בב הסעות</option>
+                <option value={"3"}>א אוטובוס</option>
+              </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {errors.transportaion_company}
+              </Form.Control.Feedback>
+            </Form.Group>
+
             <Form.Group controlId="line_car">
               <Form.Label>סוג רכב</Form.Label>
               <Form.Control
@@ -114,7 +135,7 @@ export default function LineForm() {
                 required
                 className="formSelect"
               >
-                <option value={"-1"}></option>
+                <option value={"-1"}>בחר סוג רכב</option>
                 <option value={"bus"}>אוטובוס</option>
                 <option value={"minibus"}>מיניבוס</option>
                 <option value={"cab"}>מונית</option>
@@ -149,7 +170,7 @@ export default function LineForm() {
                 required
                 className="formSelect"
               >
-                <option value={"-1"}></option>
+                <option value={"-1"}>בחר מלווה</option>
                 {escorts.map((escort, index) => (
                   <option key={index} value={escort}>
                     {escort}
@@ -173,7 +194,7 @@ export default function LineForm() {
                 required
                 className="formSelect"
               >
-                <option value={"-1"}></option>
+                <option value={"-1"}>בחר מוסד</option>
                 {schools.map((school, index) => (
                   <option key={index} value={school.schoolname}>
                     {school.schoolname}
@@ -243,14 +264,15 @@ export default function LineForm() {
 
             <Form.Group controlId="time_definition">
               <Form.Label>הגדרת שעת יציאה/הגעה</Form.Label>
-              <div className="d-flex">
+              <div className="d-flex" style={{ justifyContent: 'center' }}>
 
                 <Form.Control
                   as="select"
-                  className="ml-2"
+                  className="ml-2 comment"
                   value={time.minutes}
                   onChange={(e) => setTime({ ...time, minutes: e.target.value })}
                   required
+                  style={{ maxWidth: 'fit-content' }}
                 >
                   {/* Render minute options */}
                   {Array.from({ length: 60 }, (_, i) => (
@@ -260,10 +282,11 @@ export default function LineForm() {
                 <span>:</span>
                 <Form.Control
                   as="select"
-                  className="mr-2"
+                  className="mr-2 comment"
                   value={time.hours}
                   onChange={(e) => setTime({ ...time, hours: e.target.value })}
                   required
+                  style={{ maxWidth: 'fit-content' }}
                 >
                   {/* Render hour options */}
                   {Array.from({ length: 24 }, (_, i) => (
@@ -274,6 +297,13 @@ export default function LineForm() {
 
             </Form.Group>
 
+            <Form.Group controlId="line_comments">
+              <Form.Label>הערות</Form.Label>
+              <Form.Control className='comment' as="textarea" rows={2} name="line_comments"
+                value={line.line_comments}
+                onChange={(e) => setLine({ ...line, line_comments: e.target.value })}
+              />
+            </Form.Group>
 
 
           </div>
