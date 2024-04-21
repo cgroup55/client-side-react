@@ -121,12 +121,13 @@ export default function Escorts() {
     let currentEscort = {
       esc_fullName: row.esc_fullName,
       esc_id: row.esc_id,
-      esc_dateofbirth: row.esc_dateofbirth,
+      esc_dateofbirth: fixDate(row.esc_dateofbirth),
       esc_cell: row.esc_cell,
       esc_city: row.esc_city,
       esc_street: row.esc_street,
       esc_homeNum: row.esc_homeNum,
     };
+    console.log("currentEscort",currentEscort);
     navigate('/EscortForm', { state: currentEscort });
   };
 

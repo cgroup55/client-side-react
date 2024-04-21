@@ -46,10 +46,17 @@ export default function EscortForm() {
 
     if (isValid) {
       // Logic to check validity of new escort
-      let fixedDate=fixDate(esc_dateofbirth.value);
-      setEscort({...escort,esc_dateofbirth:fixedDate});
-      console.log(escort);
-      navigate('/escorts',{state:escort});
+      let escortToSend = {
+        esc_fullName: escort.esc_fullName,
+        esc_id: escort.esc_id,
+        esc_dateofbirth: fixDate(escort.esc_dateofbirth),
+        esc_cell: escort.esc_cell,
+        esc_city: escort.esc_city,
+        esc_street: escort.esc_street,
+        esc_homeNum: escort.esc_homeNum,
+      };
+      
+      navigate('/escorts',{state:escortToSend});
 
       
     } else {
