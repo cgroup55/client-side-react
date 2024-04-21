@@ -53,10 +53,10 @@ export default function TransportationCompanies() {
       company_phone: "0549506905",
       manager_name: "בר ארד",
       manager_phone: "0547896541",
-      company_city: "תל אביב",
+      company_city: "תל אביב - יפו",
       company_street: "אבן גבירול",
       company_homeNum: "3",
-      company_comments: "נסה לכתוב הערה ממש ארוכה ולראות האם רואים הכל כולל הכלללללל 13243546",
+      company_comments: "נסה לכתוב הערה ממש ארוכה ולראות האם רואים הכל כולל הכלללללל ",
 
     },
     {
@@ -66,7 +66,7 @@ export default function TransportationCompanies() {
       company_phone: "0549506905",
       manager_name: "בר ארד",
       manager_phone: "0547896541",
-      company_city: "תל אביב",
+      company_city: "תל אביב - יפו",
       company_street: "אבן גבירול",
       company_homeNum: "3",
       company_comments: "גבגב"

@@ -106,6 +106,7 @@ export default function SchoolForm() {
               value={school.school_code}
               onChange={(e) => setSchool({ ...school, school_code: e.target.value })}
               isInvalid={!!errors.school_code}
+              readOnly = {school.school_code!=''}
               required
             />
             <Form.Control.Feedback type="invalid">

@@ -2,7 +2,7 @@ import React, { useState, useEffect, } from 'react';
 import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateCity, validateStreet } from '../tools/cities&streets';
 import { ValidPositiveNumber, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId } from '../tools/validations';
 
@@ -11,13 +11,13 @@ export default function CompanyForm() {
   const navigate = useNavigate();
   const { state } = useLocation();
   let originCompany = state;
- 
+
 
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
 
-  const [company, setCompany] = useState({...originCompany});
+  const [company, setCompany] = useState({ ...originCompany });
   const [errors, setErrors] = useState({});
 
 
@@ -64,13 +64,18 @@ export default function CompanyForm() {
     newErrors.company_code = ValidPositiveNumber(company.company_code);
     newErrors.company_name = validateHebrewletters(company.company_name);
     newErrors.company_email = validateEmail(company.company_email);
-    newErrors.company_phone = ValidCellOrHomePhoneNum(company.company_phone);
-    newErrors.manager_name = validateHebrewletters (company.manager_name);
-    newErrors.manager_phone = ValidCellOrHomePhoneNum(company.manager_phone);
-    newErrors.company_city = validateCity(company.company_city, cities, cities);
+    newErrors.company_phone = ValidCellOrHomePhoneNum(company.company_phone);    
+    if (company.manager_name != "") {      
+      newErrors.manager_name = validateHebrewletters(company.manager_name);
+    }
+    if (company.manager_phone != "") {
+      newErrors.manager_phone = ValidCellOrHomePhoneNum(company.manager_phone);
+    }
+
+    newErrors.company_city = validateCity(company.company_city, cities);
     newErrors.company_street = validateStreet(company.company_street, streets);
     newErrors.company_homeNum = ValidPositiveNumber(company.company_homeNum);
-   
+
     setErrors(newErrors);
     console.log('errors after=', errors);
     Object.values(newErrors).forEach(error => {
@@ -93,6 +98,7 @@ export default function CompanyForm() {
               value={company.company_code}
               onChange={(e) => setCompany({ ...company, company_code: e.target.value })}
               isInvalid={!!errors.company_code}
+              readOnly={company.company_code != ''}
               required
             />
             <Form.Control.Feedback type="invalid">
@@ -147,7 +153,6 @@ export default function CompanyForm() {
               value={company.manager_name}
               onChange={(e) => setCompany({ ...company, manager_name: e.target.value })}
               isInvalid={!!errors.manager_name}
-              required
             />
             <Form.Control.Feedback type="invalid">
               {errors.manager_name}
@@ -160,7 +165,6 @@ export default function CompanyForm() {
               value={company.manager_phone}
               onChange={(e) => setCompany({ ...company, manager_phone: e.target.value })}
               isInvalid={!!errors.manager_phone}
-              required
             />
             <Form.Control.Feedback type="invalid">
               {errors.manager_phone}
