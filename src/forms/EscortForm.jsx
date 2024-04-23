@@ -165,7 +165,6 @@ export default function EscortForm() {
             <Form.Control.Feedback type="invalid">
               {errors.esc_city}
             </Form.Control.Feedback>
-
           </Form.Group>
 
           <Form.Group controlId="esc_street">
