@@ -17,17 +17,6 @@ export default function EscortForm() {
   const [escort, setEscort] = useState({ ...originEscort });
   const [errors, setErrors] = useState({});
 
-  //render the cities on-load
-  useEffect(() => {
-    fetchCities().then(cities => setCities(cities));
-  }, []);
-
-  useEffect(() => {
-    if (originEscort.esc_city != '') {
-      fetchStreetsByCity(originEscort.esc_city).then(streets => setStreets(streets));
-    }
-  }, []);
-
   //filterout cities that dont match the search
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
@@ -45,7 +34,6 @@ export default function EscortForm() {
     let isValid = validateForm();
 
     if (isValid) {
-      // Logic to check validity of new escort
       let escortToSend = {
         esc_fullName: escort.esc_fullName,
         esc_id: escort.esc_id,
@@ -55,10 +43,9 @@ export default function EscortForm() {
         esc_street: escort.esc_street,
         esc_homeNum: escort.esc_homeNum,
       };
-      
-      navigate('/escorts',{state:escortToSend});
 
-      
+      navigate('/escorts', { state: escortToSend });
+
     } else {
       // Show error message
     }
@@ -76,7 +63,6 @@ export default function EscortForm() {
     newErrors.esc_street = validateStreet(escort.esc_street, streets);
     newErrors.esc_homeNum = ValidPositiveNumber(escort.esc_homeNum);
 
-    //need to check the following code *********
     setErrors(newErrors);
     console.log('errors after=', errors);
     Object.values(newErrors).forEach(error => {
@@ -84,9 +70,19 @@ export default function EscortForm() {
         valid = false;
       }
     });
-    
     return valid;
   };
+
+  //render the cities on-load
+  useEffect(() => {
+    fetchCities().then(cities => setCities(cities));
+  }, []);
+
+  useEffect(() => {
+    if (originEscort.esc_city != '') {
+      fetchStreetsByCity(originEscort.esc_city).then(streets => setStreets(streets));
+    }
+  }, []);
 
   return (
     <div className='container mt-5 form-container'>
@@ -113,7 +109,7 @@ export default function EscortForm() {
               onChange={(e) => setEscort({ ...escort, esc_id: e.target.value })}
               isInvalid={!!errors.esc_id}
               required
-              //readOnly 
+            //readOnly 
             />
             <Form.Control.Feedback type="invalid">
               {errors.esc_id}
@@ -175,7 +171,7 @@ export default function EscortForm() {
                 onChange={(e) => setEscort({ ...escort, esc_street: e.target.value })}
                 isInvalid={!!errors.esc_street}
                 required >
-                {<option value={-1}>בחר רחוב</option>}
+                {<option value={-1}></option>}
                 {streets.map((street, index) => (
                   <option key={index} value={street}>{street}</option>
                 ))}

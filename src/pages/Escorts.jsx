@@ -12,6 +12,7 @@ export default function Escorts() {
   //מאפשר שימוש בפונקציות/סטייטים שיש בפרוביידר
   //const { stam } = useContext(EscortContext);
   //stam();
+  
   //escorts list from context
  // const { escortsList } = useContext(EscortContext);
 

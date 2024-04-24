@@ -19,8 +19,30 @@ export default function Students() {
             stu_dateofbirth: '',
             stu_grade: '',
             stu_school: '',
+            stu_dateOfPlacement: '',
+            stu_disability: '',
+            stu_comments: '',
+            stu_parentName: '',
+            stu_parentCell: '',
+            stu_parentCity: '',
+            stu_parentStreet: '',
+            stu_parentHomeNum: '',
 
+            // contacts:
+            //     [{
+            //         parent: {
+            //             stu_parentName: '',
+            //             stu_parentCell: '',
+            //             stu_parentCity: '',
+            //             stu_parentStreet: '',
+            //             stu_parentHomeNum: ''
+            //         }
+            //     },
+            //     {
+            //         contact: {
 
+            //         }
+            //     }],
         }
         navigate('/StudentForm', { state: newStudent });
     }

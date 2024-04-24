@@ -16,42 +16,6 @@ export default function Schools() {
     const [colData, setColData] = useState(null);
     //const [schoolRows, setSchoolRows] = useState([]);
 
-
-    // useEffect(() => {
-    //     try {
-    //         fetch(apiUrl1, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json; ',
-    //                 'Accept': 'application/json;',
-    //             }
-    //         })            
-    //             .then(res => {
-    //                 //debugger
-    //                 //כל המידע שחוזר מהשרת                    
-    //                 console.log('res= ', res);
-    //                 console.log('res.status= ', res.status);
-    //                 //ok = true/ false
-    //                 console.log('res.ok= ', res.ok);
-    //                 if (res.ok) {
-    //                     return res.json();
-    //                 }
-    //                 throw new Error('Network response was not ok.');
-    //             })
-
-    //             .then(result => {
-    //                 console.log('result= ', result);
-    //                 setSchoolRows(result);
-    //             })
-    //             .catch(error => {
-    //                 console.error('Error during fetch:', error);
-    //             });
-    //     }
-    //     catch (error) {
-    //         console.log('err get= ', error);
-    //     }
-    // }, []);
-
     const addNewSchool = () => {
         let newSchool = {
             school_code: '',

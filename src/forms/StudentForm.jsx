@@ -4,7 +4,7 @@ import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect } from '../tools/validations';
+import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect,fixDate } from '../tools/validations';
 
 
 export default function StudentForm() {
@@ -12,6 +12,7 @@ export default function StudentForm() {
     const navigate = useNavigate();
     const { state } = useLocation();
     let originStudent = state;
+//console.log('originStudent=',originStudent);
 
     //States for handling the addresses
     const [cities, setCities] = useState([]);
@@ -21,11 +22,12 @@ export default function StudentForm() {
     const [selectedCity2, setSelectedCity2] = useState("");
     const [streets1, setStreets1] = useState([]);
     const [streets2, setStreets2] = useState([]);
-    const [selectedStreet1, setSelectedStreet1] = useState("");
+    const [selectedStreet1, setSelectedStreet1] = useState(originStudent.stu_parentStreet);
     const [selectedStreet2, setSelectedStreet2] = useState("");
 
     const [student, setStudent] = useState({ ...originStudent });
     const [errors, setErrors] = useState({});
+    //states to handle the contact
     const [addContact, setAddContact] = useState(false);
     const [isAddContactDisabled, setAddContactDisabled] = useState(false);
 
@@ -35,7 +37,7 @@ export default function StudentForm() {
         setAddContactDisabled(true);
     };
 
-    // Function to handle cancel button click
+    //Function to handle cancel button click
     const handleCancel = () => {
         setAddContact(false);
         setAddContactDisabled(false);
@@ -45,14 +47,6 @@ export default function StudentForm() {
     //צריך לחבר לנתונים שיגיעו מהDB
     const schools = [{ schoolname: "טשרני" }, { schoolname: "אורט" }];
     const disabilities = [{ disabname: "אוטיזם" }, { disabname: "פיגור" }];
-
-
-    //כנראה נצטרך להוסיף ולהתאים ל2 השדות
-    // useEffect(() => {
-    //     if (originStudent.stu_city != '') {
-    //       fetchStreetsByCity(originStudent.stu_city).then(streets => setStreets(streets));
-    //     }
-    //   }, []);
 
     //Handle city input change for both contacts
     const handleCityInputChange = (event, setFilteredCities, setSelectedCity, setStreets) => {
@@ -77,9 +71,15 @@ export default function StudentForm() {
         e.preventDefault();
         let isValid = validateForm();
         console.log('isValid:', isValid);
+
         if (isValid) {
-            // Logic to check validity of new student
-            navigate('/students', student);
+            let studentToSend = {
+
+
+                stu_dateofbirth: fixDate(student.stu_dateofbirth),
+            }
+            navigate('/students', { state: studentToSend });
+
         } else {
             // Show error message
         }
@@ -99,18 +99,18 @@ export default function StudentForm() {
         //Parent validation
         newErrors.stu_parentName = validateHebrewletters(student.stu_parentName);
         newErrors.stu_parentCell = ValidCellPhoneNum(student.stu_parentCell);
-        newErrors.stu_parentCity = validateCity(student.stu_parentCity);
-        // newErrors.esc_street = validateStreet(escort.esc_street, streets);
+       // newErrors.stu_parentCity = validateCity(student.stu_parentCity);
+        //newErrors.stu_parentStreet = validateStreet(selectedStreet1, streets);
         newErrors.stu_parentHomeNum = ValidPositiveNumber(student.stu_parentHomeNum);
 
         //Another contact validation
-        if (addContact) {        
+        if (addContact) {
             newErrors.stu_contaceName = validateHebrewletters(student.stu_contaceName);
             newErrors.stu_contactCell = ValidCellPhoneNum(student.stu_contactCell);
-            //newErrors.stu_parentCity = validateCity(student.stu_parentCity);
+           // newErrors.stu_contactCity = validateCity(student.stu_contactCity);
             // newErrors.esc_street = validateStreet(escort.esc_street, streets);
             newErrors.stu_contactHomeNum = ValidPositiveNumber(student.stu_contactHomeNum);
-        }    
+        }
 
         setErrors(newErrors);
         console.log('errors after=', errors);
@@ -126,6 +126,13 @@ export default function StudentForm() {
     useEffect(() => {
         fetchCities().then(cities => setCities(cities));
     }, []);
+
+    //כנראה נצטרך להוסיף ולהתאים ל2 השדות
+    // useEffect(() => {
+    //     if (originStudent.stu_city != '') {
+    //       fetchStreetsByCity(originStudent.stu_city).then(streets => setStreets(streets));
+    //     }
+    //   }, []);
 
     return (
 
@@ -196,7 +203,7 @@ export default function StudentForm() {
                                 name="stu_school"
                                 value={student.stu_school}
                                 onChange={(e) => setStudent({ ...student, stu_school: e.target.value })}
-                                isInvalid={!!errors.stu_school}                                
+                                isInvalid={!!errors.stu_school}
                                 className="formSelect"
                                 required
                             >
@@ -272,6 +279,9 @@ export default function StudentForm() {
                             <Form.Control type="text" name="stu_parentName"
                                 value={student.stu_parentName}
                                 onChange={(e) => setStudent({ ...student, stu_parentName: e.target.value })}
+                                // const updatedContacts= [...student.contacts];
+                                // updatedContacts[1].contact.stu_contactName = e.target.value;
+                                // setStudent({...student, contacts: updatedContacts });
                                 isInvalid={!!errors.stu_parentName}
                                 required
                             />
@@ -320,8 +330,9 @@ export default function StudentForm() {
                                 <Form.Control className="formSelect" as="select" name="stu_parentStreet"
                                     value={selectedStreet1}
                                     onChange={(e) => handleStreetInputChange(e, setSelectedStreet1)}
+                                    isInvalid={!!errors.stu_parentStreet}
                                     required>
-                                    {<option value={-1}>בחר רחוב</option>}
+                                    {<option value={-1}></option>}
                                     {streets1.map((street, index) => (
                                         <option key={index} value={street}>{street}</option>
                                     ))}
@@ -384,41 +395,58 @@ export default function StudentForm() {
                                 </Form.Control.Feedback>
                             </Form.Group>
 
-                            <Form.Group controlId="stu_parent2city">
+                            <Form.Group controlId="stu_contactCity">
                                 <Form.Label>עיר</Form.Label>
                                 <Form.Control
-                                    list="cities-data2"
+                                    list="cities-data2" name='stu_contactCity'
+                                    value={student.stu_contactCity}
                                     onChange={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
                                     onInput={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
+                                    isInvalid={!!errors.stu_contactCity}
+                                    required={addContact}
                                 />
                                 <datalist id="cities-data2">
                                     {filteredCities2.map((city, index) => (
                                         <option key={index} value={city} />
                                     ))}
                                 </datalist>
+
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.stu_contactCity}
+                                </Form.Control.Feedback>
                             </Form.Group>
 
-                            <Form.Group controlId="stu_parent2street">
+                            <Form.Group controlId="stu_contactStreet">
                                 <Form.Label>רחוב</Form.Label>
-                                <Form.Control as="select" className="formSelect" value={selectedStreet2} onChange={(e) => handleStreetInputChange(e, setSelectedStreet2)}>
-                                    {streets2.map((street, index) => (
-                                        <option key={index} value={street}>{street}</option>
-                                    ))}
-                                </Form.Control>
+                                <div className="select-container">
+                                    <Form.Control className="formSelect" as="select" name='stu_contactStreet'
+                                        value={selectedStreet2}
+                                        onChange={(e) => handleStreetInputChange(e, setSelectedStreet2)}
+                                        isInvalid={!!errors.stu_contactStreet}
+                                        required={addContact}>
+                                        {<option value={-1}></option>}
+                                        {streets2.map((street, index) => (
+                                            <option key={index} value={street}>{street}</option>
+                                        ))}
+                                    </Form.Control>
+                                </div>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.stu_contactStreet}
+                                </Form.Control.Feedback>
                             </Form.Group>
 
                             <Form.Group controlId="stu_contactHomeNum">
-                            <Form.Label>מספר בית</Form.Label>
-                            <Form.Control type="text" name="stu_contactHomeNum"
-                                value={student.stu_contactHomeNum}
-                                onChange={(e) => setStudent({ ...student, stu_contactHomeNum: e.target.value })}
-                                isInvalid={!!errors.stu_contactHomeNum}
-                                required={addContact}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.stu_contactHomeNum}
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                                <Form.Label>מספר בית</Form.Label>
+                                <Form.Control type="text" name="stu_contactHomeNum"
+                                    value={student.stu_contactHomeNum}
+                                    onChange={(e) => setStudent({ ...student, stu_contactHomeNum: e.target.value })}
+                                    isInvalid={!!errors.stu_contactHomeNum}
+                                    required={addContact}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.stu_contactHomeNum}
+                                </Form.Control.Feedback>
+                            </Form.Group>
                             <div className='col-12 text-center'>
                                 <Button
                                     onClick={handleCancel}
