@@ -101,8 +101,8 @@ export default function Escorts() {
 
   const updatedEscortRows = addedEscort ? [...escortRows, addedEscort] : escortRows;
 
+   //field names for the model
   const ColumnNamesByIdentifier = {
-
     esc_fullName: "שם מלא",
     esc_id: "תעודת זהות",
     esc_dateofbirth: "תאריך לידה",
@@ -121,11 +121,7 @@ export default function Escorts() {
   };
 
   //edit mode- pass obj with relevante data
-  const handleEdit = (row) => {
-    console.log('Edit:', row);
-    //fix date format 
-
-
+  const handleEdit = (row) => { 
     let currentEscort = {
       esc_fullName: row.esc_fullName,
       esc_id: row.esc_id,
@@ -135,7 +131,7 @@ export default function Escorts() {
       esc_street: row.esc_street,
       esc_homeNum: row.esc_homeNum,
     };
-    console.log("currentEscort", currentEscort);
+    console.log("currentEscort:", currentEscort);
     navigate('/EscortForm', { state: currentEscort });
   };
 

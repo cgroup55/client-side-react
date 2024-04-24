@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
+import { fixDate } from '../tools/validations.js';
 
 export default function Students() {
 
     const navigate = useNavigate();
+
+    const { state } = useLocation();
+    let addedStudent = state;
+
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);
@@ -27,22 +32,11 @@ export default function Students() {
             stu_parentCity: '',
             stu_parentStreet: '',
             stu_parentHomeNum: '',
-
-            // contacts:
-            //     [{
-            //         parent: {
-            //             stu_parentName: '',
-            //             stu_parentCell: '',
-            //             stu_parentCity: '',
-            //             stu_parentStreet: '',
-            //             stu_parentHomeNum: ''
-            //         }
-            //     },
-            //     {
-            //         contact: {
-
-            //         }
-            //     }],
+            stu_contaceName: '',
+            stu_contactCell: '',
+            stu_contactCity: '',
+            stu_contactStreet: '',
+            stu_contactHomeNum: '',
         }
         navigate('/StudentForm', { state: newStudent });
     }
@@ -50,122 +44,74 @@ export default function Students() {
 
     const StudentCols = [
         {
-            name: "תז",
-            selector: (row) => row.personID,
+            name: "שם מלא",
+            selector: (row) => row.stu_fullName,
             sortable: true,
         },
         {
-            name: "שם מלא",
-            selector: (row) => row.fullName,
+            name: "תעודת זהות",
+            selector: (row) => row.stu_id,
         },
         {
-            name: "Height",
-            selector: (row) => row.height,
+            name: "מוסד לימודי",
+            selector: (row) => row.stu_school,
+            sortable: true,
         },
         {
-            name: "eyeColor",
-            selector: (row) => row.eyeColor,
+            name: "לקות",
+            selector: (row) => row.stu_disability,
+            sortable: true,
         },
-
+        {
+            name: "הערות",
+            selector: (row) => row.stu_comments,
+        },
     ];
 
 
     const StudentRows = [
         {
-            personID: 12345689,
-            fullName: "Kate Shein",
-            height: "1.79m",
-            eyeColor: "blueeeeeeeeeeeeeeeee",
+            stu_fullName: 'אבשלום ידידיה',
+            stu_id: "024519875",
+            stu_dateofbirth: '12/01/2011',
+            stu_school: "אורט",
+            stu_disability: "אוטיזם",
+            stu_comments: "בלה בלה בלה בלה 4545"
+
+            // כאן צריכים להיות כל השדות של האובייקט גם אלה שלא בטבלה
         },
         {
-            personID: 2,
-            fullName: "John Smith",
-            height: "1.85m",
-            eyeColor: "brown",
-        },
-        {
-            personID: 3,
-            fullName: "Emily Johnson",
-            height: "1.67m",
-            eyeColor: "greeeeeeeeeeeeeeeeeeeeeeeeen fcfcccccccccccccc",
-        },
-        {
-            personID: 4,
-            fullName: "Michael Davis",
-            height: "1.78m",
-            eyeColor: "hazel",
-        },
-        {
-            personID: 5,
-            fullName: "Sophia Brown",
-            height: "1.72m",
-            eyeColor: "blue",
-        },
-        {
-            personID: 6,
-            fullName: "William Wilson",
-            height: "1.81m",
-            eyeColor: "brown",
-        },
-        {
-            personID: 7,
-            fullName: "Olivia Martinez",
-            height: "1.63m",
-            eyeColor: "green",
-        },
-        {
-            personID: 8,
-            fullName: "James Anderson",
-            height: "1.76m",
-            eyeColor: "hazel",
-        },
-        {
-            personID: 9,
-            fullName: "Emma Garcia",
-            height: "1.69m",
-            eyeColor: "blue",
-        },
-        {
-            personID: 10,
-            fullName: "Benjamin Thomas",
-            height: "1.88m",
-            eyeColor: "brown",
-        },
-        {
-            personID: 11,
-            fullName: "Ava Hernandez",
-            height: "1.65m",
-            eyeColor: "green",
-        },
-        {
-            personID: 12,
-            fullName: "Alexander Rodriguez",
-            height: "1.80m",
-            eyeColor: "hazel",
-        },
-        {
-            personID: 13,
-            fullName: "Mia Lopez",
-            height: "1.70m",
-            eyeColor: "blue",
-        },
-        {
-            personID: 14,
-            fullName: "Ethan Lee",
-            height: "1.83m",
-            eyeColor: "brown",
-        },
-        {
-            personID: 15,
-            fullName: "Isabella Thompson",
-            height: "1.79m",
-            eyeColor: "blue",
+            stu_fullName: 'שלום אהרון',
+            stu_id: "023339833",
+            stu_dateofbirth: '01/01/2020',
+            stu_school: "אורט",
+            stu_disability: "פיגור",
+            stu_comments: "אאא אאא אא אא 3333"
         },
     ];
 
-    const ColumnNamesByIdentifier =
-    {
+    const updatedStudentRows = addedStudent ? [...StudentRows, addedStudent] : StudentRows;
 
+    //field names for the model
+    const ColumnNamesByIdentifier = {
+        stu_fullName: 'שם מלא',
+        stu_id: 'תעודת זהות',
+        stu_dateofbirth: 'תאריך לידה',
+        stu_grade: 'כיתה',
+        stu_school: 'מוסד לימודי',
+        stu_dateOfPlacement: 'תאריך ועדת השמה',
+        stu_disability: 'סוג לקות',
+        stu_comments: 'הערות',
+        stu_parentName: 'שם הורה',
+        stu_parentCell: 'נייד הורה',
+        stu_parentCity: 'עיר',
+        stu_parentStreet: 'רחוב',
+        stu_parentHomeNum: 'מספר',
+        stu_contaceName: 'שם איש קשר',
+        stu_contactCell: 'נייד איש קשר',
+        stu_contactCity: 'עיר',
+        stu_contactStreet: 'רחוב',
+        stu_contactHomeNum: 'מספר',
     }
 
     //modal view for specific row
@@ -177,10 +123,29 @@ export default function Students() {
 
     //edit mode- pass obj with relevante data
     const handleEdit = (row) => {
-        console.log('Edit:', row);
         let currentStudent = {
+            stu_fullName: row.stu_fullName,
+            stu_id: row.stu_id,
+            stu_dateofbirth: fixDate(row.stu_dateofbirth),
+            stu_grade: row.stu_grade,
+            stu_school: row.stu_school,
+            stu_dateOfPlacement: row.stu_dateOfPlacement,
+            stu_disability: row.stu_disability,
+            stu_comments: row.stu_comments,
 
+            stu_parentName: row.stu_parentName,
+            stu_parentCell: row.stu_parentCell,
+            stu_parentCity: row.stu_parentCity,
+            stu_parentStreet: row.stu_parentStreet,
+            stu_parentHomeNum: row.stu_parentHomeNum,
+
+            stu_contaceName: row.stu_contaceName,
+            stu_contactCell: row.stu_contactCell,
+            stu_contactCity: row.stu_contactCity,
+            stu_contactStreet: row.stu_contactStreet,
+            stu_contactHomeNum: row.stu_contactHomeNum,
         };
+        console.log('currentStudent:', currentStudent);
         navigate('/studentform', { state: currentStudent });
     };
 
@@ -194,7 +159,7 @@ export default function Students() {
     return (
         <div className='container mt-5' >
             <h3 className="bold" style={{ textAlign: 'center' }}>נתוני תלמידים</h3>
-            <Table rows={StudentRows} columns={StudentCols} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
+            <Table rows={updatedStudentRows} columns={StudentCols} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
             <div className='text-center'
                 style={{ padding: '20px' }}>
                 <Button onClick={addNewStudent} >הוסף תלמיד חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>

@@ -4,7 +4,7 @@ import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect,fixDate } from '../tools/validations';
+import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect, fixDate } from '../tools/validations';
 
 
 export default function StudentForm() {
@@ -12,18 +12,15 @@ export default function StudentForm() {
     const navigate = useNavigate();
     const { state } = useLocation();
     let originStudent = state;
-//console.log('originStudent=',originStudent);
+    //console.log('originStudent=',originStudent);
 
     //States for handling the addresses
     const [cities, setCities] = useState([]);
-    const [filteredCities1, setFilteredCities1] = useState([]);
-    const [filteredCities2, setFilteredCities2] = useState([]);
-    const [selectedCity1, setSelectedCity1] = useState("");
-    const [selectedCity2, setSelectedCity2] = useState("");
-    const [streets1, setStreets1] = useState([]);
+    const [streets, setStreets] = useState([]);
+    const [filteredCities, setFilteredCities] = useState([]);
+    const [cities2, setCities2] = useState([]);
     const [streets2, setStreets2] = useState([]);
-    const [selectedStreet1, setSelectedStreet1] = useState(originStudent.stu_parentStreet);
-    const [selectedStreet2, setSelectedStreet2] = useState("");
+    const [filteredCities2, setFilteredCities2] = useState([]);
 
     const [student, setStudent] = useState({ ...originStudent });
     const [errors, setErrors] = useState({});
@@ -43,26 +40,29 @@ export default function StudentForm() {
         setAddContactDisabled(false);
     };
 
-
     //צריך לחבר לנתונים שיגיעו מהDB
     const schools = [{ schoolname: "טשרני" }, { schoolname: "אורט" }];
     const disabilities = [{ disabname: "אוטיזם" }, { disabname: "פיגור" }];
 
-    //Handle city input change for both contacts
-    const handleCityInputChange = (event, setFilteredCities, setSelectedCity, setStreets) => {
+    //filterout cities that dont match the search for parent address
+    const handleInputChange = (event) => {
         const inputValue = event.target.value;
         const filteredCities = cities.filter(city =>
             city.toLowerCase().startsWith(inputValue.toLowerCase())
         );
         setFilteredCities(filteredCities);
-        setSelectedCity(inputValue);
-        setStreets([]);
         fetchStreetsByCity(inputValue).then(streets => setStreets(streets));
+        setStudent(prevStudent => ({ ...prevStudent, stu_parentCity: inputValue }));
     };
-
-    //Handle street input change for both contacts
-    const handleStreetInputChange = (event, setSelectedStreet) => {
-        setSelectedStreet(event.target.value);
+    //filterout cities that dont match the search for contact address
+    const handleInputChange2 = (event) => {
+        const inputValue = event.target.value;
+        const filteredCities2 = cities2.filter(city2 =>
+            city2.toLowerCase().startsWith(inputValue.toLowerCase())
+        );
+        setFilteredCities2(filteredCities2);
+        fetchStreetsByCity(inputValue).then(streets2 => setStreets2(streets2));
+        setStudent(prevStudent => ({ ...prevStudent, stu_contactCity: inputValue }));
     };
 
 
@@ -74,9 +74,26 @@ export default function StudentForm() {
 
         if (isValid) {
             let studentToSend = {
-
-
+                stu_fullName: student.stu_fullName,
+                stu_id: student.stu_id,
                 stu_dateofbirth: fixDate(student.stu_dateofbirth),
+                stu_grade: student.stu_grade,
+                stu_school: student.stu_school,
+                stu_dateOfPlacement :student.stu_dateOfPlacement,
+                stu_disability: student.stu_disability,
+                stu_comments:student.stu_comments,
+                
+                stu_parentName: student.stu_parentName,
+                stu_parentCell: student.stu_parentCell,
+                stu_parentCity: student.stu_parentCity,
+                stu_parentStreet: student.stu_parentStreet,
+                stu_parentHomeNum: student.stu_parentHomeNum,
+
+                stu_contaceName: student.stu_contaceName,
+                stu_contactCell: student.stu_contactCell,
+                stu_contactCity: student.stu_contactCity,
+                stu_contactStreet: student.stu_contactStreet,
+                stu_contactHomeNum: student.stu_contactHomeNum,
             }
             navigate('/students', { state: studentToSend });
 
@@ -99,16 +116,16 @@ export default function StudentForm() {
         //Parent validation
         newErrors.stu_parentName = validateHebrewletters(student.stu_parentName);
         newErrors.stu_parentCell = ValidCellPhoneNum(student.stu_parentCell);
-       // newErrors.stu_parentCity = validateCity(student.stu_parentCity);
-        //newErrors.stu_parentStreet = validateStreet(selectedStreet1, streets);
+        // newErrors.stu_parentCity = validateCity(student.stu_parentCity);
+        //newErrors.stu_parentStreet = validateStreet(student.stu_parentStreet, streets);
         newErrors.stu_parentHomeNum = ValidPositiveNumber(student.stu_parentHomeNum);
 
         //Another contact validation
         if (addContact) {
             newErrors.stu_contaceName = validateHebrewletters(student.stu_contaceName);
             newErrors.stu_contactCell = ValidCellPhoneNum(student.stu_contactCell);
-           // newErrors.stu_contactCity = validateCity(student.stu_contactCity);
-            // newErrors.esc_street = validateStreet(escort.esc_street, streets);
+            // newErrors.stu_contactCity = validateCity(student.stu_contactCity);
+            // newErrors.stu_contactStreet = validateStreet(student.stu_contactStreet, streets);
             newErrors.stu_contactHomeNum = ValidPositiveNumber(student.stu_contactHomeNum);
         }
 
@@ -125,14 +142,18 @@ export default function StudentForm() {
     //Render the cities on-load
     useEffect(() => {
         fetchCities().then(cities => setCities(cities));
+        fetchCities().then(cities2 => setCities2(cities2));
     }, []);
 
-    //כנראה נצטרך להוסיף ולהתאים ל2 השדות
-    // useEffect(() => {
-    //     if (originStudent.stu_city != '') {
-    //       fetchStreetsByCity(originStudent.stu_city).then(streets => setStreets(streets));
-    //     }
-    //   }, []);
+    // כנראה נצטרך להוסיף ולהתאים ל2 השדות
+    useEffect(() => {
+        if (originStudent.stu_parentCity != '') {
+            fetchStreetsByCity(originStudent.stu_parentCity).then(streets => setStreets(streets));
+        }
+        if (originStudent.stu_contactCity != '') {
+            fetchStreetsByCity(originStudent.stu_contactCity).then(streets2 => setStreets2(streets2));
+        }
+    }, []);
 
     return (
 
@@ -308,13 +329,13 @@ export default function StudentForm() {
                             <Form.Label>עיר</Form.Label>
                             <Form.Control list="cities-data1" name="stu_parentCity"
                                 value={student.stu_parentCity}
-                                onChange={(e) => handleCityInputChange(e, setFilteredCities1, setSelectedCity1, setStreets1)}
-                                onInput={(e) => handleCityInputChange(e, setFilteredCities1, setSelectedCity1, setStreets1)}
+                                onChange={handleInputChange}
+                                onInput={handleInputChange}
                                 isInvalid={!!errors.stu_parentCity}
                                 required
                             />
                             <datalist id="cities-data1">
-                                {filteredCities1.map((city, index) => (
+                                {filteredCities.map((city, index) => (
                                     <option key={index} value={city} />
                                 ))}
                             </datalist>
@@ -328,12 +349,12 @@ export default function StudentForm() {
                             <Form.Label>רחוב</Form.Label>
                             <div className="select-container">
                                 <Form.Control className="formSelect" as="select" name="stu_parentStreet"
-                                    value={selectedStreet1}
-                                    onChange={(e) => handleStreetInputChange(e, setSelectedStreet1)}
+                                    value={student.stu_parentStreet}
+                                    onChange={(e) => setStudent({ ...student, stu_parentStreet: e.target.value })}
                                     isInvalid={!!errors.stu_parentStreet}
                                     required>
                                     {<option value={-1}></option>}
-                                    {streets1.map((street, index) => (
+                                    {streets.map((street, index) => (
                                         <option key={index} value={street}>{street}</option>
                                     ))}
                                 </Form.Control>
@@ -366,104 +387,106 @@ export default function StudentForm() {
                             </Button>
                         </div>
                     </div>
-                    {addContact && (
-                        <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
-                            <h5>איש קשר</h5>
-                            <Form.Group controlId="stu_contaceName">
-                                <Form.Label>שם איש קשר</Form.Label>
-                                <Form.Control type="text" name="stu_contaceName"
-                                    value={student.stu_contaceName}
-                                    onChange={(e) => setStudent({ ...student, stu_contaceName: e.target.value })}
-                                    isInvalid={!!errors.stu_contaceName}
-                                    required={addContact}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.stu_contaceName}
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                    {
+                        addContact && (
+                            <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
+                                <h5>איש קשר</h5>
+                                <Form.Group controlId="stu_contaceName">
+                                    <Form.Label>שם איש קשר</Form.Label>
+                                    <Form.Control type="text" name="stu_contaceName"
+                                        value={student.stu_contaceName}
+                                        onChange={(e) => setStudent({ ...student, stu_contaceName: e.target.value })}
+                                        isInvalid={!!errors.stu_contaceName}
+                                        required={addContact}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.stu_contaceName}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
 
-                            <Form.Group controlId="stu_contactCell">
-                                <Form.Label>נייד</Form.Label>
-                                <Form.Control type="text" name="stu_contactCell"
-                                    value={student.stu_contactCell}
-                                    onChange={(e) => setStudent({ ...student, stu_contactCell: e.target.value })}
-                                    isInvalid={!!errors.stu_contactCell}
-                                    required={addContact}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.stu_contactCell}
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                                <Form.Group controlId="stu_contactCell">
+                                    <Form.Label>נייד</Form.Label>
+                                    <Form.Control type="text" name="stu_contactCell"
+                                        value={student.stu_contactCell}
+                                        onChange={(e) => setStudent({ ...student, stu_contactCell: e.target.value })}
+                                        isInvalid={!!errors.stu_contactCell}
+                                        required={addContact}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.stu_contactCell}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
 
-                            <Form.Group controlId="stu_contactCity">
-                                <Form.Label>עיר</Form.Label>
-                                <Form.Control
-                                    list="cities-data2" name='stu_contactCity'
-                                    value={student.stu_contactCity}
-                                    onChange={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
-                                    onInput={(e) => handleCityInputChange(e, setFilteredCities2, setSelectedCity2, setStreets2)}
-                                    isInvalid={!!errors.stu_contactCity}
-                                    required={addContact}
-                                />
-                                <datalist id="cities-data2">
-                                    {filteredCities2.map((city, index) => (
-                                        <option key={index} value={city} />
-                                    ))}
-                                </datalist>
-
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.stu_contactCity}
-                                </Form.Control.Feedback>
-                            </Form.Group>
-
-                            <Form.Group controlId="stu_contactStreet">
-                                <Form.Label>רחוב</Form.Label>
-                                <div className="select-container">
-                                    <Form.Control className="formSelect" as="select" name='stu_contactStreet'
-                                        value={selectedStreet2}
-                                        onChange={(e) => handleStreetInputChange(e, setSelectedStreet2)}
-                                        isInvalid={!!errors.stu_contactStreet}
-                                        required={addContact}>
-                                        {<option value={-1}></option>}
-                                        {streets2.map((street, index) => (
-                                            <option key={index} value={street}>{street}</option>
+                                <Form.Group controlId="stu_contactCity">
+                                    <Form.Label>עיר</Form.Label>
+                                    <Form.Control
+                                        list="cities-data2" name='stu_contactCity'
+                                        value={student.stu_contactCity}
+                                        onChange={handleInputChange2}
+                                        onInput={handleInputChange2}
+                                        isInvalid={!!errors.stu_contactCity}
+                                        required={addContact}
+                                    />
+                                    <datalist id="cities-data2">
+                                        {filteredCities2.map((city, index) => (
+                                            <option key={index} value={city} />
                                         ))}
-                                    </Form.Control>
-                                </div>
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.stu_contactStreet}
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                                    </datalist>
 
-                            <Form.Group controlId="stu_contactHomeNum">
-                                <Form.Label>מספר בית</Form.Label>
-                                <Form.Control type="text" name="stu_contactHomeNum"
-                                    value={student.stu_contactHomeNum}
-                                    onChange={(e) => setStudent({ ...student, stu_contactHomeNum: e.target.value })}
-                                    isInvalid={!!errors.stu_contactHomeNum}
-                                    required={addContact}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.stu_contactHomeNum}
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                            <div className='col-12 text-center'>
-                                <Button
-                                    onClick={handleCancel}
-                                    style={{ width: '25%', minWidth: '100px', marginTop: '20px' }}
-                                >
-                                    ביטול
-                                </Button>
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.stu_contactCity}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+
+                                <Form.Group controlId="stu_contactStreet">
+                                    <Form.Label>רחוב</Form.Label>
+                                    <div className="select-container">
+                                        <Form.Control className="formSelect" as="select" name='stu_contactStreet'
+                                            value={student.stu_contactStreet}
+                                            onChange={(e) => setStudent({ ...student, stu_contactStreet: e.target.value })}
+                                            isInvalid={!!errors.stu_contactStreet}
+                                            required={addContact}>
+                                            {<option value={-1}></option>}
+                                            {streets2.map((street, index) => (
+                                                <option key={index} value={street}>{street}</option>
+                                            ))}
+                                        </Form.Control>
+                                    </div>
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.stu_contactStreet}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+
+                                <Form.Group controlId="stu_contactHomeNum">
+                                    <Form.Label>מספר בית</Form.Label>
+                                    <Form.Control type="text" name="stu_contactHomeNum"
+                                        value={student.stu_contactHomeNum}
+                                        onChange={(e) => setStudent({ ...student, stu_contactHomeNum: e.target.value })}
+                                        isInvalid={!!errors.stu_contactHomeNum}
+                                        required={addContact}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.stu_contactHomeNum}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                                <div className='col-12 text-center'>
+                                    <Button
+                                        onClick={handleCancel}
+                                        style={{ width: '25%', minWidth: '100px', marginTop: '20px' }}
+                                    >
+                                        ביטול
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )
+                    }
                     <div className='row'>
                         <div className='col-12 text-center'>
                             <Button className="submitBtn" type="submit" style={{ width: '25%', minWidth: '100px', marginTop: '50px' }}>שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
                         </div>
                     </div>
-                </div>
-            </Form>
-        </div>
+                </div >
+            </Form >
+        </div >
     )
 }
