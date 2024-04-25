@@ -12,7 +12,7 @@ export default function StudentForm() {
     const navigate = useNavigate();
     const { state } = useLocation();
     let originStudent = state;
-    //console.log('originStudent=',originStudent);
+    //console.log('originStudent=', originStudent);
 
     //States for handling the addresses
     const [cities, setCities] = useState([]);
@@ -69,6 +69,7 @@ export default function StudentForm() {
     //Function to handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('stu_school=',student.stu_school);
         let isValid = validateForm();
         console.log('isValid:', isValid);
 
@@ -79,10 +80,10 @@ export default function StudentForm() {
                 stu_dateofbirth: fixDate(student.stu_dateofbirth),
                 stu_grade: student.stu_grade,
                 stu_school: student.stu_school,
-                stu_dateOfPlacement :student.stu_dateOfPlacement,
+                stu_dateOfPlacement: fixDate(student.stu_dateOfPlacement),
                 stu_disability: student.stu_disability,
-                stu_comments:student.stu_comments,
-                
+                stu_comments: student.stu_comments,
+
                 stu_parentName: student.stu_parentName,
                 stu_parentCell: student.stu_parentCell,
                 stu_parentCity: student.stu_parentCity,
@@ -102,13 +103,13 @@ export default function StudentForm() {
         }
     };
 
-    const validateForm = () => {
+    const validateForm = () => {        
         let valid = true;
         let newErrors = {};
         newErrors.stu_fullName = validateHebrewletters(student.stu_fullName);
         newErrors.stu_id = ValidateId(student.stu_id);
         newErrors.stu_dateofbirth = validateDateOfBirth(student.stu_dateofbirth);
-        if (student.stu_grade != '') {
+        if (student.stu_grade != "") {
             newErrors.stu_grade = validateHebrewletters(student.stu_grade);
         }
         newErrors.stu_school = Validateselect(student.stu_school);
@@ -116,16 +117,16 @@ export default function StudentForm() {
         //Parent validation
         newErrors.stu_parentName = validateHebrewletters(student.stu_parentName);
         newErrors.stu_parentCell = ValidCellPhoneNum(student.stu_parentCell);
-        // newErrors.stu_parentCity = validateCity(student.stu_parentCity);
-        //newErrors.stu_parentStreet = validateStreet(student.stu_parentStreet, streets);
+        newErrors.stu_parentCity = validateCity(student.stu_parentCity, cities);
+        newErrors.stu_parentStreet = validateStreet(student.stu_parentStreet, streets);
         newErrors.stu_parentHomeNum = ValidPositiveNumber(student.stu_parentHomeNum);
 
         //Another contact validation
         if (addContact) {
             newErrors.stu_contaceName = validateHebrewletters(student.stu_contaceName);
             newErrors.stu_contactCell = ValidCellPhoneNum(student.stu_contactCell);
-            // newErrors.stu_contactCity = validateCity(student.stu_contactCity);
-            // newErrors.stu_contactStreet = validateStreet(student.stu_contactStreet, streets);
+            newErrors.stu_contactCity = validateCity(student.stu_contactCity, cities2);
+            newErrors.stu_contactStreet = validateStreet(student.stu_contactStreet, streets2);
             newErrors.stu_contactHomeNum = ValidPositiveNumber(student.stu_contactHomeNum);
         }
 
@@ -145,7 +146,7 @@ export default function StudentForm() {
         fetchCities().then(cities2 => setCities2(cities2));
     }, []);
 
-    // כנראה נצטרך להוסיף ולהתאים ל2 השדות
+    //Render the streets in a specific city on-load
     useEffect(() => {
         if (originStudent.stu_parentCity != '') {
             fetchStreetsByCity(originStudent.stu_parentCity).then(streets => setStreets(streets));
@@ -156,8 +157,7 @@ export default function StudentForm() {
     }, []);
 
     return (
-
-        <div className='container mt-5 form-container'>
+        <div className='container mt-5 form-container '>
             <Form onSubmit={handleSubmit}>
                 <div className='row'>
                     <h2>הוספת תלמיד</h2>
@@ -228,7 +228,7 @@ export default function StudentForm() {
                                 className="formSelect"
                                 required
                             >
-                                <option value={"-1"}></option>
+                                <option value={"-1"}> </option>
                                 {schools.map((school, index) => (
                                     <option key={index} value={school.schoolname}>
                                         {school.schoolname}
@@ -300,9 +300,6 @@ export default function StudentForm() {
                             <Form.Control type="text" name="stu_parentName"
                                 value={student.stu_parentName}
                                 onChange={(e) => setStudent({ ...student, stu_parentName: e.target.value })}
-                                // const updatedContacts= [...student.contacts];
-                                // updatedContacts[1].contact.stu_contactName = e.target.value;
-                                // setStudent({...student, contacts: updatedContacts });
                                 isInvalid={!!errors.stu_parentName}
                                 required
                             />

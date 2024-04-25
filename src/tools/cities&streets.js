@@ -49,7 +49,7 @@ export const fetchStreetsByCity = (city) => {
 
 };
 //validation for street and city
-export const validateCity = (input,cities) => {    
+export const validateCity = (input,cities) => {        
     let chosencity = input;    
     if (!cities.includes(chosencity)) {
         return 'יש לבחור ערך מהרשימה';
@@ -57,11 +57,11 @@ export const validateCity = (input,cities) => {
         return '';
     }
 };
-export const validateStreet = (input,streets) => {
-
+export const validateStreet = (input,streets) => {    
     let chosenstreet = input;
     console.log("chosenstreet",chosenstreet);
     console.log("streets",streets);
+    
     if (!streets.includes(chosenstreet)) {
         return 'יש לבחור ערך מהרשימה';
     } else {

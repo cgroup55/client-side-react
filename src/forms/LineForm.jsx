@@ -60,7 +60,6 @@ export default function LineForm() {
 
   useEffect(() => {
     const chosenSchool = schools.find(school => school.schoolname === line.school_of_line);
-    console.log(chosenSchool);
     if (chosenSchool) {
       setLine(prevLine => ({
         ...prevLine,

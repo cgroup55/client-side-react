@@ -73,11 +73,12 @@ export default function EscortForm() {
     return valid;
   };
 
-  //render the cities on-load
+  //Render the cities on-load
   useEffect(() => {
     fetchCities().then(cities => setCities(cities));
   }, []);
 
+   //Render the streets in a specific city on-load
   useEffect(() => {
     if (originEscort.esc_city != '') {
       fetchStreetsByCity(originEscort.esc_city).then(streets => setStreets(streets));

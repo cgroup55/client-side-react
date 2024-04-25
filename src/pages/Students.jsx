@@ -104,12 +104,13 @@ export default function Students() {
             stu_dateofbirth: '01/01/2020',
             stu_grade: '',
             stu_school: "אורט",
+            stu_dateOfPlacement:'01/06/2023', 
             stu_disability: "פיגור",
             stu_comments: "אאא אאא אא אא 3333"
         },
     ];
 
-    //זמני- למחוק
+    //זמני- למחוק ***************************
     const updatedStudentRows = addedStudent ? [...StudentRows, addedStudent] : StudentRows;
 
     //field names for the model

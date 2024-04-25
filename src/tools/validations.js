@@ -12,6 +12,7 @@ export const validateHebrewletters = (input) => {
 };
 
 export const Validateselect = (input) => {
+    console.log('IN Validateselect:', input);
     if (input == '-1') {
         return 'חובה לבחור אחת מהאפשרויות';
     }
