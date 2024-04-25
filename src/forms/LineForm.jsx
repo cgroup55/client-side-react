@@ -194,7 +194,7 @@ export default function LineForm() {
                 required
                 className="formSelect"
               >
-                <option value={"-1"}>בחר מוסד</option>
+                <option value={"-1"}>בחר מוסד לימודים</option>
                 {schools.map((school, index) => (
                   <option key={index} value={school.schoolname}>
                     {school.schoolname}

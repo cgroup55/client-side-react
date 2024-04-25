@@ -214,7 +214,7 @@ export default function CompanyForm() {
               required
               className="formSelect"
             >
-              {<option value={-1}>בחר רחוב</option>}
+              {<option value={-1}></option>}
               {streets.map((street, index) => (
                 <option key={index} value={street}>{street}</option>
               ))}

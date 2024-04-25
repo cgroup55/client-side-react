@@ -144,7 +144,7 @@ export default function TransportationCompanies() {
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addNewCompany}>הוסף חברת הסעה <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
-      <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"חברת הסעה"} />
+      <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"חברת ההסעה"} />
     </div>
   )
 }

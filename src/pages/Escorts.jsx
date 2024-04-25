@@ -99,6 +99,7 @@ export default function Escorts() {
 
   ];
 
+  //זמני- למחוק
   const updatedEscortRows = addedEscort ? [...escortRows, addedEscort] : escortRows;
 
    //field names for the model
@@ -109,8 +110,7 @@ export default function Escorts() {
     esc_cell: 'טלפון נייד',
     esc_city: 'עיר',
     esc_street: 'רחוב',
-    esc_homeNum: 'מספר'
-
+    esc_homeNum: 'מספר',
   }
 
   //modal view for specific row
@@ -149,7 +149,7 @@ export default function Escorts() {
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addNewEscort}>הוסף מלווה חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
-      <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"מלווה"} />
+      <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"המלווה"} />
     </div>
   )
 }

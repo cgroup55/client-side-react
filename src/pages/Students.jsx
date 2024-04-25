@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
@@ -58,6 +58,11 @@ export default function Students() {
             sortable: true,
         },
         {
+            name: "כיתה",
+            selector: (row) => row.stu_grade,
+            sortable: true,
+        },
+        {
             name: "לקות",
             selector: (row) => row.stu_disability,
             sortable: true,
@@ -68,28 +73,43 @@ export default function Students() {
         },
     ];
 
-
+//לכאן תשפך רשימת התלמידים שתתקבל מהשרת 
     const StudentRows = [
         {
             stu_fullName: 'אבשלום ידידיה',
             stu_id: "024519875",
             stu_dateofbirth: '12/01/2011',
+            stu_grade: "ה'",
             stu_school: "אורט",
+            stu_dateOfPlacement:'01/05/2022',            
             stu_disability: "אוטיזם",
-            stu_comments: "בלה בלה בלה בלה 4545"
+            stu_comments: "בלה בלה בלה בלה 4545",
 
+            stu_parentName:'שולה ידידיה',
+            stu_parentCell: '0527465588',
+            stu_parentCity: 'כפר סבא',
+            stu_parentStreet: 'תל חי',
+            stu_parentHomeNum: 20,
+
+            stu_contaceName: 'שימי ידידיה',
+            stu_contactCell: '0527458877',
+            stu_contactCity: 'כפר סבא',
+            stu_contactStreet: 'ויצמן',
+            stu_contactHomeNum: 55,
             // כאן צריכים להיות כל השדות של האובייקט גם אלה שלא בטבלה
         },
         {
             stu_fullName: 'שלום אהרון',
             stu_id: "023339833",
             stu_dateofbirth: '01/01/2020',
+            stu_grade: '',
             stu_school: "אורט",
             stu_disability: "פיגור",
             stu_comments: "אאא אאא אא אא 3333"
         },
     ];
 
+    //זמני- למחוק
     const updatedStudentRows = addedStudent ? [...StudentRows, addedStudent] : StudentRows;
 
     //field names for the model
@@ -129,7 +149,7 @@ export default function Students() {
             stu_dateofbirth: fixDate(row.stu_dateofbirth),
             stu_grade: row.stu_grade,
             stu_school: row.stu_school,
-            stu_dateOfPlacement: row.stu_dateOfPlacement,
+            stu_dateOfPlacement: fixDate(row.stu_dateOfPlacement),
             stu_disability: row.stu_disability,
             stu_comments: row.stu_comments,
 
@@ -162,8 +182,8 @@ export default function Students() {
             <Table rows={updatedStudentRows} columns={StudentCols} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
             <div className='text-center'
                 style={{ padding: '20px' }}>
-                <Button onClick={addNewStudent} >הוסף תלמיד חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
-            <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"תלמיד"} />
+                <Button onClick={addNewStudent} >הוסף תלמיד חדש<FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
+            <MyModal show={showModal} handleClose={() => setShowModal(false)} rowData={rowData} colData={colData} pageName={"התלמיד"} />
         </div>
     )
 }
