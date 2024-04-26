@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../styling/Form.css";
-import { FaCheck, FaPlus } from 'react-icons/fa';
+import { FaCheck, FaPlus  } from 'react-icons/fa';
+import { MdCancel } from "react-icons/md";
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
@@ -12,7 +13,6 @@ export default function StudentForm() {
     const navigate = useNavigate();
     const { state } = useLocation();
     let originStudent = state;
-    //console.log('originStudent=', originStudent);
 
     //States for handling the addresses
     const [cities, setCities] = useState([]);
@@ -159,7 +159,7 @@ export default function StudentForm() {
     return (
         <div className='container mt-5 form-container '>
             <Form onSubmit={handleSubmit}>
-                
+                <Button variant='btn btn-outline-dark' style={{ textAlign: "left" }}  onClick={()=>{navigate('/students')}}><MdCancel/></Button>
                 <div className='row'>
                     <h2>{originStudent.stu_id != "" ? "עריכת" : "הוספת"} תלמיד</h2>
                     <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
@@ -474,6 +474,7 @@ export default function StudentForm() {
                                 </Form.Group>
                                 <div className='col-12 text-center'>
                                     <Button
+                                    variant='btn btn-dark'
                                         onClick={handleCancel}
                                         style={{ width: '25%', minWidth: '100px', marginTop: '20px' }}
                                     >
