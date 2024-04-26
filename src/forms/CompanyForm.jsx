@@ -1,6 +1,6 @@
 import React, { useState, useEffect, } from 'react';
 import "../styling/Form.css";
-import { FaCheck, FaPlus } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateCity, validateStreet } from '../tools/cities&streets';
@@ -11,6 +11,7 @@ export default function CompanyForm() {
   const navigate = useNavigate();
   const { state } = useLocation();
   let originCompany = state;
+ 
 
 
   const [cities, setCities] = useState([]);
@@ -90,17 +91,21 @@ export default function CompanyForm() {
   return (
     <div className='container mt-5 form-container'>
       <div className='row'>
-        <h2>הוספת חברת הסעה</h2>
+        <h2>{originCompany.company_code!=""?"עריכת":"הוספת"} חברת הסעה</h2>
         <Form className='col-9 label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
           <Form.Group controlId="company_code">
             <Form.Label>ח"פ חברה</Form.Label>
-            <Form.Control type="text" name="company_code"
-              value={company.company_code}
-              onChange={(e) => setCompany({ ...company, company_code: e.target.value })}
-              isInvalid={!!errors.company_code}
-              //readOnly
-              required
-            />
+            {originCompany.company_code!="" ?  //  if in edit mode
+            ( <Form.Control type="text" value={company.company_code} readOnly /> // Render as plain text
+            ) : (
+              <Form.Control // Render as input field if not in edit mode
+                type="text"
+                value={company.company_code}
+                onChange={(e) => setCompany({ ...company, company_code: e.target.value })}
+                isInvalid={!!errors.company_code}
+                required
+              />
+            )}
             <Form.Control.Feedback type="invalid">
               {errors.company_code}
             </Form.Control.Feedback>
