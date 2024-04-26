@@ -57,7 +57,11 @@ export const validateCity = (input,cities) => {
         return '';
     }
 };
+<<<<<<< Updated upstream
 export const validateStreet = (input,streets) => {    
+=======
+export const validateStreet = (input,streets) => {
+>>>>>>> Stashed changes
     let chosenstreet = input;
     console.log("chosenstreet",chosenstreet);
     console.log("streets",streets);

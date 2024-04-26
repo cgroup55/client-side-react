@@ -12,8 +12,13 @@ export const validateHebrewletters = (input) => {
 };
 
 export const Validateselect = (input) => {
+<<<<<<< Updated upstream
     console.log('IN Validateselect:', input);
     if (input == '-1') {
+=======
+console.log("input",input);
+    if (input=='' || input=="-1") {
+>>>>>>> Stashed changes
         return 'חובה לבחור אחת מהאפשרויות';
     }
     else return '';

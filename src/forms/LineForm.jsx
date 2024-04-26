@@ -13,7 +13,6 @@ export default function LineForm() {
   const { state } = useLocation();
   let originLine = state;
   let giventime = originLine.time_of_line.split(':')
-  console.log(giventime);
   const [line, setLine] = useState({ ...originLine, definition_date: today });
   const [errors, setErrors] = useState({});
   const [time, setTime] = useState({ hours: giventime[0], minutes: giventime[1] });
@@ -27,7 +26,6 @@ export default function LineForm() {
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
-    console.log('isValid:', isValid);
     if (isValid) {
       // Logic to check validity of new line
 
@@ -43,13 +41,18 @@ export default function LineForm() {
     let newErrors = {};
 
     newErrors.line_code = ValidPositiveNumber(line.line_code);
+    console.log("car");
+
     newErrors.line_car = Validateselect(line.line_car);
     newErrors.number_of_seats = ValidPositiveNumber(line.number_of_seats);
+    console.log("school");
+
     newErrors.school_of_line = Validateselect(line.school_of_line);
     newErrors.station_definition = isRadioButtonChecked(line.station_definition);
-
+    console.log("trans");
+    newErrors.transportaion_company = Validateselect(line.transportaion_company);
     setErrors(newErrors);
-    console.log('errors after=', errors);
+    console.log('errors after=', newErrors);
     Object.values(newErrors).forEach(error => {
       if (error) {
         valid = false;
@@ -103,25 +106,30 @@ export default function LineForm() {
             </Form.Group>
 
             <Form.Group controlId="transportaion_company">
-              <Form.Label>חברת הסעה</Form.Label>
-              <Form.Control
-                as="select"
-                name="transportaion_company"
-                value={line.transportaion_company}
-                onChange={(e) => setLine({ ...line, transportaion_company: e.target.value })}
-                isInvalid={!!errors.line_car}
-                required
-                className="formSelect"
-              >
-                <option value={"-1"}>בחר חברת הסעה</option>
-                <option value={"1"}>אא הסעים</option>
-                <option value={"2"}>בב הסעות</option>
-                <option value={"3"}>א אוטובוס</option>
-              </Form.Control>
-              <Form.Control.Feedback type="invalid">
-                {errors.transportaion_company}
-              </Form.Control.Feedback>
-            </Form.Group>
+  <Form.Label>חברת הסעה</Form.Label>
+  <Form.Control
+    as="select"
+    name="transportaion_company"
+    value={line.transportaion_company}
+    onChange={(e) => {
+      const selectedOptionText = e.target.options[e.target.selectedIndex].text;
+      setLine({ ...line, transportaion_company: selectedOptionText });
+    }}
+    isInvalid={!!errors.transportaion_company}
+    required
+    className="formSelect"
+  >
+    <option value={"-1"}></option>
+    <option value={"אא הסעים"}>אא הסעים</option>
+    <option value={"בב הסעות"}>בב הסעות</option>
+    <option value={"א אוטובוס"}>א אוטובוס</option>
+  </Form.Control>
+  <Form.Control.Feedback type="invalid">
+    {errors.transportaion_company}
+  </Form.Control.Feedback>
+</Form.Group>
+
+
 
             <Form.Group controlId="line_car">
               <Form.Label>סוג רכב</Form.Label>
@@ -129,15 +137,18 @@ export default function LineForm() {
                 as="select"
                 name="line_car"
                 value={line.line_car} // This should be line_car
-                onChange={(e) => setLine({ ...line, line_car: e.target.value })}
+                onChange={(e) => {
+                  const selectedOptionText = e.target.options[e.target.selectedIndex].text;
+                  setLine({ ...line, line_car: selectedOptionText });
+                }}
                 isInvalid={!!errors.line_car}
                 required
                 className="formSelect"
               >
-                <option value={"-1"}>בחר סוג רכב</option>
-                <option value={"bus"}>אוטובוס</option>
-                <option value={"minibus"}>מיניבוס</option>
-                <option value={"cab"}>מונית</option>
+                <option value={"-1"}></option>
+                <option value={"אוטובוס"}>אוטובוס</option>
+                <option value={"מיניבוס"}>מיניבוס</option>
+                <option value={"מונית"}>מונית</option>
               </Form.Control>
               <Form.Control.Feedback type="invalid">
                 {errors.line_car}
@@ -169,7 +180,7 @@ export default function LineForm() {
                 required
                 className="formSelect"
               >
-                <option value={"-1"}>בחר מלווה</option>
+                <option value={"-1"}></option>
                 {escorts.map((escort, index) => (
                   <option key={index} value={escort}>
                     {escort}
@@ -193,7 +204,11 @@ export default function LineForm() {
                 required
                 className="formSelect"
               >
+<<<<<<< Updated upstream
                 <option value={"-1"}>בחר מוסד לימודים</option>
+=======
+                <option value={"-1"}></option>
+>>>>>>> Stashed changes
                 {schools.map((school, index) => (
                   <option key={index} value={school.schoolname}>
                     {school.schoolname}
@@ -248,8 +263,6 @@ export default function LineForm() {
                 readOnly
                 value={line.line_street}
               />
-
-
             </Form.Group>
 
             <Form.Group controlId="line_Homenumber">
