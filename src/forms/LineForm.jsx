@@ -76,7 +76,7 @@ export default function LineForm() {
   //continue comments+ send obj
   return (
     <div className='container mt-5 form-container'>
-      <h2>הוספת קו הסעה</h2>
+      <h2>{originLine.line_code!=""?"עריכת":"הוספת"} קו הסעה</h2>
       <Form style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
         <div className='row'>
           <div className='col-12 col-sm-6 label-input col-form-label-sm'>
@@ -84,13 +84,17 @@ export default function LineForm() {
 
             <Form.Group controlId="line_code">
               <Form.Label>קוד קו</Form.Label>
-              <Form.Control type="text" name="line_code"
-                value={line.line_code}
-                onChange={(e) => setLine({ ...line, line_code: e.target.value })}
-                isInvalid={!!errors.line_code}
-                //readOnly 
-                required
-              />
+              {originLine.line_code != "" ?
+                (<Form.Control type="text" value={line.line_code} readOnly />)
+                :
+                (<Form.Control type="text" name="line_code"
+                  value={line.line_code}
+                  onChange={(e) => setLine({ ...line, line_code: e.target.value })}
+                  isInvalid={!!errors.line_code}
+                  required
+                />)
+              }
+
               <Form.Control.Feedback type="invalid">
                 {errors.line_code}
               </Form.Control.Feedback>
@@ -106,28 +110,28 @@ export default function LineForm() {
             </Form.Group>
 
             <Form.Group controlId="transportaion_company">
-  <Form.Label>חברת הסעה</Form.Label>
-  <Form.Control
-    as="select"
-    name="transportaion_company"
-    value={line.transportaion_company}
-    onChange={(e) => {
-      const selectedOptionText = e.target.options[e.target.selectedIndex].text;
-      setLine({ ...line, transportaion_company: selectedOptionText });
-    }}
-    isInvalid={!!errors.transportaion_company}
-    required
-    className="formSelect"
-  >
-    <option value={"-1"}></option>
-    <option value={"אא הסעים"}>אא הסעים</option>
-    <option value={"בב הסעות"}>בב הסעות</option>
-    <option value={"א אוטובוס"}>א אוטובוס</option>
-  </Form.Control>
-  <Form.Control.Feedback type="invalid">
-    {errors.transportaion_company}
-  </Form.Control.Feedback>
-</Form.Group>
+              <Form.Label>חברת הסעה</Form.Label>
+              <Form.Control
+                as="select"
+                name="transportaion_company"
+                value={line.transportaion_company}
+                onChange={(e) => {
+                  const selectedOptionText = e.target.options[e.target.selectedIndex].text;
+                  setLine({ ...line, transportaion_company: selectedOptionText });
+                }}
+                isInvalid={!!errors.transportaion_company}
+                required
+                className="formSelect"
+              >
+                <option value={"-1"}></option>
+                <option value={"אא הסעים"}>אא הסעים</option>
+                <option value={"בב הסעות"}>בב הסעות</option>
+                <option value={"א אוטובוס"}>א אוטובוס</option>
+              </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {errors.transportaion_company}
+              </Form.Control.Feedback>
+            </Form.Group>
 
 
 

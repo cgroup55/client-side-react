@@ -88,8 +88,28 @@ export default function EscortForm() {
   return (
     <div className='container mt-5 form-container'>
       <div className='row' >
-        <h2>הוספת מלווה</h2>
+        <h2>{originEscort.esc_id!=""?"עריכת":"הוספת"} מלווה</h2>
         <Form className='col-9 escortsform label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
+          
+        <Form.Group controlId="esc_id">
+            <Form.Label>תעודת זהות</Form.Label>
+            {originEscort.esc_id!=""?
+            (<Form.Control type="text" value={escort.esc_id} readOnly
+          
+          />):(
+              <Form.Control type="text" name="esc_id"
+              value={escort.esc_id}
+              onChange={(e) => setEscort({ ...escort, esc_id: e.target.value })}
+              isInvalid={!!errors.esc_id}
+              required
+            />
+            )
+            }
+            <Form.Control.Feedback type="invalid">
+              {errors.esc_id}
+            </Form.Control.Feedback>
+          </Form.Group>
+          
           <Form.Group controlId="esc_fullName">
             <Form.Label>שם מלא</Form.Label>
             <Form.Control type="text" name="esc_fullName"
@@ -103,19 +123,7 @@ export default function EscortForm() {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="esc_id">
-            <Form.Label>תעודת זהות</Form.Label>
-            <Form.Control type="text" name="esc_id"
-              value={escort.esc_id}
-              onChange={(e) => setEscort({ ...escort, esc_id: e.target.value })}
-              isInvalid={!!errors.esc_id}
-              required
-            //readOnly 
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.esc_id}
-            </Form.Control.Feedback>
-          </Form.Group>
+          
 
           <Form.Group controlId="esc_dateofbirth">
             <Form.Label>תאריך לידה</Form.Label>

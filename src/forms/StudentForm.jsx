@@ -69,7 +69,7 @@ export default function StudentForm() {
     //Function to handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('stu_school=',student.stu_school);
+        console.log('stu_school=', student.stu_school);
         let isValid = validateForm();
         console.log('isValid:', isValid);
 
@@ -103,7 +103,7 @@ export default function StudentForm() {
         }
     };
 
-    const validateForm = () => {        
+    const validateForm = () => {
         let valid = true;
         let newErrors = {};
         newErrors.stu_fullName = validateHebrewletters(student.stu_fullName);
@@ -159,10 +159,28 @@ export default function StudentForm() {
     return (
         <div className='container mt-5 form-container '>
             <Form onSubmit={handleSubmit}>
+                
                 <div className='row'>
-                    <h2>הוספת תלמיד</h2>
+                    <h2>{originStudent.stu_id != "" ? "עריכת" : "הוספת"} תלמיד</h2>
                     <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
                         <h5>תלמיד</h5>
+
+                        <Form.Group controlId="stu_id">
+                            <Form.Label>תעודת זהות</Form.Label>
+                            {originStudent.stu_id != "" ?
+                                (<Form.Control type="text" value={student.stu_id} readOnly />)
+                                :
+                                (<Form.Control type="text" name="stu_id"
+                                    value={student.stu_id}
+                                    onChange={(e) => setStudent({ ...student, stu_id: e.target.value })}
+                                    isInvalid={!!errors.stu_id}
+                                    required
+                                />)}
+
+                            <Form.Control.Feedback type="invalid">
+                                {errors.stu_id}
+                            </Form.Control.Feedback>
+                        </Form.Group>
 
                         <Form.Group controlId="stu_fullName">
                             <Form.Label>שם מלא</Form.Label>
@@ -177,19 +195,7 @@ export default function StudentForm() {
                             </Form.Control.Feedback>
                         </Form.Group>
 
-                        <Form.Group controlId="stu_id">
-                            <Form.Label>תעודת זהות</Form.Label>
-                            <Form.Control type="text" name="stu_id"
-                                value={student.stu_id}
-                                onChange={(e) => setStudent({ ...student, stu_id: e.target.value })}
-                                isInvalid={!!errors.stu_id}
-                                //readOnly
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.stu_id}
-                            </Form.Control.Feedback>
-                        </Form.Group>
+
 
                         <Form.Group controlId="stu_dateofbirth">
                             <Form.Label>תאריך לידה</Form.Label>

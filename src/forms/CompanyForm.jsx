@@ -11,8 +11,6 @@ export default function CompanyForm() {
   const navigate = useNavigate();
   const { state } = useLocation();
   let originCompany = state;
- 
-
 
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
@@ -91,6 +89,7 @@ export default function CompanyForm() {
   return (
     <div className='container mt-5 form-container'>
       <div className='row'>
+        
         <h2>{originCompany.company_code!=""?"עריכת":"הוספת"} חברת הסעה</h2>
         <Form className='col-9 label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
           <Form.Group controlId="company_code">

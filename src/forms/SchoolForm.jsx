@@ -63,8 +63,8 @@ export default function SchoolForm() {
     console.log('school=', school);
     newErrors.school_code = ValidPositiveNumber(school.school_code);
     newErrors.school_name = validateHebrewletters(school.school_name);
-    newErrors.school_city = validateCity(school.school_city,cities);
-    newErrors.school_street = validateStreet(school.school_street,streets);
+    newErrors.school_city = validateCity(school.school_city, cities);
+    newErrors.school_street = validateStreet(school.school_street, streets);
     newErrors.school_homeNum = ValidPositiveNumber(school.school_homeNum);
     newErrors.secretar_cell = ValidCellOrHomePhoneNum(school.secretar_cell);
     if (school.principal_name != '') {
@@ -102,13 +102,18 @@ export default function SchoolForm() {
 
           <Form.Group controlId="school_code">
             <Form.Label>סמל מוסד</Form.Label>
-            <Form.Control type="number" name="school_code"
-              value={school.school_code}
-              onChange={(e) => setSchool({ ...school, school_code: e.target.value })}
-              isInvalid={!!errors.school_code}
-              //readOnly 
-              required
-            />
+            {
+              originSchool.school_code != "" ?
+                (
+                  <Form.Control type="text" value={school.school_code} readOnly />
+                ) :
+                < Form.Control type="text" name="school_code"
+                  value={school.school_code}
+                  onChange={(e) => setSchool({ ...school, school_code: e.target.value })}
+                  isInvalid={!!errors.school_code}
+                  required
+                />
+            }
             <Form.Control.Feedback type="invalid">
               {errors.school_code}
             </Form.Control.Feedback>
