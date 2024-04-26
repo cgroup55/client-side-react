@@ -204,11 +204,7 @@ export default function LineForm() {
                 required
                 className="formSelect"
               >
-<<<<<<< Updated upstream
-                <option value={"-1"}>בחר מוסד לימודים</option>
-=======
                 <option value={"-1"}></option>
->>>>>>> Stashed changes
                 {schools.map((school, index) => (
                   <option key={index} value={school.schoolname}>
                     {school.schoolname}
