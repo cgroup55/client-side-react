@@ -5,6 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateCity, validateStreet } from '../tools/cities&streets';
 import { ValidPositiveNumber, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail } from '../tools/validations';
+import { MdCancel } from 'react-icons/md';
 
 
 export default function SchoolForm() {
@@ -97,6 +98,8 @@ export default function SchoolForm() {
 
     <div className='container mt-5 form-container'>
       <div className='row'>
+      <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem" }}  onClick={()=>{navigate('/schools')}}><MdCancel/></Button>
+
         <h2>הוספת מוסד לימודים</h2>
         <Form className='col-9 schoolsform label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
 

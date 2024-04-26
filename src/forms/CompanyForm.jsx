@@ -5,6 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateCity, validateStreet } from '../tools/cities&streets';
 import { ValidPositiveNumber, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId } from '../tools/validations';
+import { MdCancel } from 'react-icons/md';
 
 export default function CompanyForm() {
 
@@ -89,7 +90,8 @@ export default function CompanyForm() {
   return (
     <div className='container mt-5 form-container'>
       <div className='row'>
-        
+      <Button variant='btn btn-outline-dark' style={{maxWidth:"4rem"}}  onClick={()=>{ navigate('/transportComps')}}><MdCancel/></Button>
+
         <h2>{originCompany.company_code!=""?"עריכת":"הוספת"} חברת הסעה</h2>
         <Form className='col-9 label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
           <Form.Group controlId="company_code">

@@ -5,6 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
 import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, fixDate } from '../tools/validations';
+import { MdCancel } from 'react-icons/md';
 
 export default function EscortForm() {
 
@@ -88,6 +89,8 @@ export default function EscortForm() {
   return (
     <div className='container mt-5 form-container'>
       <div className='row' >
+      <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem" }}  onClick={()=>{navigate('/escorts')}}><MdCancel/></Button>
+
         <h2>{originEscort.esc_id!=""?"עריכת":"הוספת"} מלווה</h2>
         <Form className='col-9 escortsform label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
           

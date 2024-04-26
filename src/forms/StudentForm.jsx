@@ -159,8 +159,9 @@ export default function StudentForm() {
     return (
         <div className='container mt-5 form-container '>
             <Form onSubmit={handleSubmit}>
-                <Button variant='btn btn-outline-dark' style={{ textAlign: "left" }}  onClick={()=>{navigate('/students')}}><MdCancel/></Button>
+           
                 <div className='row'>
+                <Button variant='btn btn-outline-dark' style={{maxWidth:"4rem"}}  onClick={()=>{navigate('/students')}}><MdCancel/></Button>
                     <h2>{originStudent.stu_id != "" ? "עריכת" : "הוספת"} תלמיד</h2>
                     <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
                         <h5>תלמיד</h5>
