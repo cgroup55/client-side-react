@@ -71,7 +71,7 @@ export default function Lines() {
       line_code: 1,
       line_car: "אוטובוס",
       number_of_seats: 3,
-      escort_incharge: "בן בוי",
+      escort_incharge: "אבי לוי",
       school_of_line: "טשרני",
       station_definition: "מוצא",
       time_of_line: "19:17",
@@ -79,7 +79,7 @@ export default function Lines() {
       line_street: "שד' בנימין",
       line_Homenumber: "3",
       definition_date: "12/04/2021",
-      transportaion_company:"אא הסעים",
+      transportaion_company:"בב הסעות",
       line_comments:"הערההההההה"
 
     },
@@ -94,7 +94,7 @@ export default function Lines() {
       line_city: "כפר סבא",
       line_street: "עליה",
       line_Homenumber: "8",
-
+      transportaion_company:"אא הסעים",
     },
   ];
 

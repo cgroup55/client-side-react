@@ -3,7 +3,7 @@ import "../styling/Form.css";
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ValidPositiveNumber, isRadioButtonChecked, validateHebrewletters, Validateselect } from '../tools/validations';
+import { ValidPositiveNumber, isRadioButtonChecked, Validateselect } from '../tools/validations';
 import { MdCancel } from 'react-icons/md';
 
 export default function LineForm() {
@@ -80,7 +80,7 @@ export default function LineForm() {
 
       <Form style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
         <div className='row'>
-        <Button variant='btn btn-outline-dark' style={{ alignItems:"left" ,maxWidth:"4rem"}}  onClick={()=>{navigate('/escorts')}}><MdCancel/></Button>
+        <Button variant='btn btn-outline-dark' style={{ alignItems:"left" ,maxWidth:"4rem"}}  onClick={()=>{navigate('/Lines')}}><MdCancel/></Button>
         <h2>{originLine.line_code!=""?"עריכת":"הוספת"} קו הסעה</h2>
           <div className='col-12 col-sm-6 label-input col-form-label-sm'>
             <h5>פרטי קו</h5>

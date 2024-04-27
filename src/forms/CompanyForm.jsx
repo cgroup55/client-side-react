@@ -89,24 +89,29 @@ export default function CompanyForm() {
   //continue comments+ send obj
   return (
     <div className='container mt-5 form-container'>
-      <div className='row'>
-      <Button variant='btn btn-outline-dark' style={{maxWidth:"4rem"}}  onClick={()=>{ navigate('/transportComps')}}><MdCancel/></Button>
 
-        <h2>{originCompany.company_code!=""?"עריכת":"הוספת"} חברת הסעה</h2>
+      <div className='row justify-content-between align-items-center'>
+      <div className='col-auto'>
+          <h2>{originCompany.company_code !== "" ? "עריכת" : "הוספת"} חברת הסעה</h2>
+        </div>
+        <div className='col-auto'>
+          <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem" }} onClick={() => { navigate('/transportComps') }}><MdCancel /></Button>
+        </div>
+       
         <Form className='col-9 label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
           <Form.Group controlId="company_code">
             <Form.Label>ח"פ חברה</Form.Label>
-            {originCompany.company_code!="" ?  //  if in edit mode
-            ( <Form.Control type="text" value={company.company_code} readOnly /> // Render as plain text
-            ) : (
-              <Form.Control // Render as input field if not in edit mode
-                type="text"
-                value={company.company_code}
-                onChange={(e) => setCompany({ ...company, company_code: e.target.value })}
-                isInvalid={!!errors.company_code}
-                required
-              />
-            )}
+            {originCompany.company_code != "" ?  //  if in edit mode
+              (<Form.Control type="text" value={company.company_code} readOnly /> // Render as plain text
+              ) : (
+                <Form.Control // Render as input field if not in edit mode
+                  type="text"
+                  value={company.company_code}
+                  onChange={(e) => setCompany({ ...company, company_code: e.target.value })}
+                  isInvalid={!!errors.company_code}
+                  required
+                />
+              )}
             <Form.Control.Feedback type="invalid">
               {errors.company_code}
             </Form.Control.Feedback>

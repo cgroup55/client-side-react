@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "../styling/Form.css";
-import { FaCheck, FaPlus  } from 'react-icons/fa';
+import { FaCheck, FaPlus } from 'react-icons/fa';
 import { MdCancel } from "react-icons/md";
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -159,9 +159,9 @@ export default function StudentForm() {
     return (
         <div className='container mt-5 form-container '>
             <Form onSubmit={handleSubmit}>
-           
+
                 <div className='row'>
-                <Button variant='btn btn-outline-dark' style={{maxWidth:"4rem"}}  onClick={()=>{navigate('/students')}}><MdCancel/></Button>
+                    <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem" }} onClick={() => { navigate('/students') }}><MdCancel /></Button>
                     <h2>{originStudent.stu_id != "" ? "עריכת" : "הוספת"} תלמיד</h2>
                     <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
                         <h5>תלמיד</h5>
@@ -301,7 +301,6 @@ export default function StudentForm() {
 
                     <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
                         <h5>הורה</h5>
-                        {/* readOnly = {student.stu_id!=''} */}
                         <Form.Group controlId="stu_parentName">
                             <Form.Label>שם הורה</Form.Label>
                             <Form.Control type="text" name="stu_parentName"
@@ -317,13 +316,15 @@ export default function StudentForm() {
 
                         <Form.Group controlId="stu_parentCell">
                             <Form.Label>נייד הורה</Form.Label>
-                            <Form.Control type="text" name="stu_parentCell"
-                                value={student.stu_parentCell}
-                                onChange={(e) => setStudent({ ...student, stu_parentCell: e.target.value })}
-                                isInvalid={!!errors.stu_parentCell}
-                                //readOnly
-                                required
-                            />
+                            {originStudent.stu_parentCell != "" ?
+                                (<Form.Control type="text" value={student.stu_parentCell} readOnly />)
+                                :
+                                (<Form.Control type="text" name="stu_parentCell"
+                                    value={student.stu_parentCell}
+                                    onChange={(e) => setStudent({ ...student, stu_parentCell: e.target.value })}
+                                    isInvalid={!!errors.stu_parentCell}                                    
+                                    required
+                                />)}
                             <Form.Control.Feedback type="invalid">
                                 {errors.stu_parentCell}
                             </Form.Control.Feedback>
@@ -410,12 +411,15 @@ export default function StudentForm() {
 
                                 <Form.Group controlId="stu_contactCell">
                                     <Form.Label>נייד</Form.Label>
-                                    <Form.Control type="text" name="stu_contactCell"
-                                        value={student.stu_contactCell}
-                                        onChange={(e) => setStudent({ ...student, stu_contactCell: e.target.value })}
-                                        isInvalid={!!errors.stu_contactCell}
-                                        required={addContact}
-                                    />
+                                    {originStudent.stu_contactCell != "" ?
+                                        (<Form.Control type="text" value={student.stu_contactCell} readOnly />)
+                                        :
+                                        (<Form.Control type="text" name="stu_contactCell"
+                                                value={student.stu_contactCell}
+                                                onChange={(e) => setStudent({ ...student, stu_contactCell: e.target.value })}
+                                                isInvalid={!!errors.stu_contactCell}
+                                                required={addContact}
+                                            />)}
                                     <Form.Control.Feedback type="invalid">
                                         {errors.stu_contactCell}
                                     </Form.Control.Feedback>
@@ -475,7 +479,7 @@ export default function StudentForm() {
                                 </Form.Group>
                                 <div className='col-12 text-center'>
                                     <Button
-                                    variant='btn btn-dark'
+                                        variant='btn btn-dark'
                                         onClick={handleCancel}
                                         style={{ width: '25%', minWidth: '100px', marginTop: '20px' }}
                                     >
