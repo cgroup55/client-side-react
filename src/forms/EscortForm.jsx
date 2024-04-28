@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "../styling/Form.css";
+import Swal from 'sweetalert2';
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';

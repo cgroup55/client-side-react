@@ -3,8 +3,7 @@ import Button from 'react-bootstrap/Button';;
 import Form from 'react-bootstrap/Form';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2'
-
+import Swal from 'sweetalert2';
 
 const BootstrapButton = styled(Button)({
     boxShadow: 'none',
@@ -19,10 +18,8 @@ const BootstrapButton = styled(Button)({
     '&:hover': {
         backgroundColor: '#2E4D11',
         borderColor: '#2E4D11',
-
     },
     '&:active': {
-
         backgroundColor: '#2E4D11',
         borderColor: '#2E4D11',
     },

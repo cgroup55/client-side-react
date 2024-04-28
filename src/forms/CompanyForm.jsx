@@ -1,5 +1,6 @@
 import React, { useState, useEffect, } from 'react';
 import "../styling/Form.css";
+import Swal from 'sweetalert2';
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -48,9 +49,17 @@ export default function CompanyForm() {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
     console.log('isValid:', isValid);
-    if (isValid) {
-      // Logic to check validity of new company
+    if (isValid) {      
       navigate('/transportComps', company);
+      Swal.fire({
+        icon: "success",
+        title: "הנתונים נשמרו בהצלחה",
+        confirmButtonText: 'סגור',
+        customClass: {
+          confirmButton: 'close-button'
+        }
+       
+      });
     } else {
       // Show error message
     }
