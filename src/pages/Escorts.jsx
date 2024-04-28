@@ -79,7 +79,7 @@ export default function Escorts() {
     },
     {
       esc_fullName: 14,
-      esc_id: "אברהמסון",
+      esc_id: "218675333",
       esc_dateofbirth: "12/04/1998",
       esc_cell: '0527458899',
       esc_city: 'כפר סבא',
@@ -88,7 +88,7 @@ export default function Escorts() {
     },
     {
       esc_fullName: 14,
-      esc_id: "אברהמסון",
+      esc_id: "218678888",
       esc_dateofbirth: "12/04/1998",
       esc_cell: '0527458888',
       esc_city: 'כפר סבא',

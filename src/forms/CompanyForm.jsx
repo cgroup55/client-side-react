@@ -91,13 +91,14 @@ export default function CompanyForm() {
     <div className='container mt-5 form-container'>
 
       <div className='row justify-content-between align-items-center'>
-      <div className='col-auto'>
+      <div className='col-10'>
           <h2>{originCompany.company_code !== "" ? "עריכת" : "הוספת"} חברת הסעה</h2>
         </div>
-        <div className='col-auto'>
-          <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem" }} onClick={() => { navigate('/transportComps') }}><MdCancel /></Button>
+        <div className='col-2' style={{textAlign: 'left'}}>
+          <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px'}} onClick={() => { navigate('/transportComps') }}>
+            <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
         </div>
-       
+        <div className='row'>
         <Form className='col-9 label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
           <Form.Group controlId="company_code">
             <Form.Label>ח"פ חברה</Form.Label>
@@ -254,7 +255,7 @@ export default function CompanyForm() {
           </div>
         </Form>
       </div>
-
+      </div>
     </div>
   )
 }

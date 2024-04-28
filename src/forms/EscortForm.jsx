@@ -79,7 +79,7 @@ export default function EscortForm() {
     fetchCities().then(cities => setCities(cities));
   }, []);
 
-   //Render the streets in a specific city on-load
+  //Render the streets in a specific city on-load
   useEffect(() => {
     if (originEscort.esc_city != '') {
       fetchStreetsByCity(originEscort.esc_city).then(streets => setStreets(streets));
@@ -88,130 +88,138 @@ export default function EscortForm() {
 
   return (
     <div className='container mt-5 form-container'>
-      <div className='row' >
-      <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem" }}  onClick={()=>{navigate('/escorts')}}><MdCancel/></Button>
 
-        <h2>{originEscort.esc_id!=""?"עריכת":"הוספת"} מלווה</h2>
-        <Form className='col-9 escortsform label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
-          
-        <Form.Group controlId="esc_id">
-            <Form.Label>תעודת זהות</Form.Label>
-            {originEscort.esc_id!=""?
-            (<Form.Control type="text" value={escort.esc_id} readOnly
-          
-          />):(
-              <Form.Control type="text" name="esc_id"
-              value={escort.esc_id}
-              onChange={(e) => setEscort({ ...escort, esc_id: e.target.value })}
-              isInvalid={!!errors.esc_id}
-              required
-            />
-            )
-            }
-            <Form.Control.Feedback type="invalid">
-              {errors.esc_id}
-            </Form.Control.Feedback>
-          </Form.Group>
-          
-          <Form.Group controlId="esc_fullName">
-            <Form.Label>שם מלא</Form.Label>
-            <Form.Control type="text" name="esc_fullName"
-              value={escort.esc_fullName}
-              onChange={(e) => setEscort({ ...escort, esc_fullName: e.target.value })}
-              isInvalid={!!errors.esc_fullName}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.esc_fullName}
-            </Form.Control.Feedback>
-          </Form.Group>
+      <div className='row justify-content-between align-items-center'>
+        <div className='col-10'>
+          <h2>{originEscort.esc_id != "" ? "עריכת" : "הוספת"} מלווה</h2>
+        </div>
+        <div className='col-2' style={{textAlign: 'left'}}>
+          <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/escorts') }}>
+            <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
+        </div>
 
-          
+        <div className='row'>
+          <Form className='col-9 escortsform label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
 
-          <Form.Group controlId="esc_dateofbirth">
-            <Form.Label>תאריך לידה</Form.Label>
-            <Form.Control type="date" name="esc_dateofbirth"
-              value={escort.esc_dateofbirth}
-              onChange={(e) => setEscort({ ...escort, esc_dateofbirth: e.target.value })}
-              isInvalid={!!errors.esc_dateofbirth}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.esc_dateofbirth}
-            </Form.Control.Feedback>
-          </Form.Group>
+            <Form.Group controlId="esc_id">
+              <Form.Label>תעודת זהות</Form.Label>
+              {originEscort.esc_id != "" ?
+                (<Form.Control type="text" value={escort.esc_id} readOnly
 
-          <Form.Group controlId="esc_cell">
-            <Form.Label>נייד</Form.Label>
-            <Form.Control type="text" name="esc_cell"
-              value={escort.esc_cell}
-              onChange={(e) => setEscort({ ...escort, esc_cell: e.target.value })}
-              isInvalid={!!errors.esc_cell}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.esc_cell}
-            </Form.Control.Feedback>
-          </Form.Group>
+                />) : (
+                  <Form.Control type="text" name="esc_id"
+                    value={escort.esc_id}
+                    onChange={(e) => setEscort({ ...escort, esc_id: e.target.value })}
+                    isInvalid={!!errors.esc_id}
+                    required
+                  />
+                )
+              }
+              <Form.Control.Feedback type="invalid">
+                {errors.esc_id}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-          <Form.Group controlId="esc_city">
-            <Form.Label>עיר</Form.Label>
-            <Form.Control list="cities-data" name="esc_city"
-              value={escort.esc_city}
-              onChange={handleInputChange}
-              onInput={handleInputChange}
-              isInvalid={!!errors.esc_city}
-              required
-            />
+            <Form.Group controlId="esc_fullName">
+              <Form.Label>שם מלא</Form.Label>
+              <Form.Control type="text" name="esc_fullName"
+                value={escort.esc_fullName}
+                onChange={(e) => setEscort({ ...escort, esc_fullName: e.target.value })}
+                isInvalid={!!errors.esc_fullName}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.esc_fullName}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-            <datalist id="cities-data">
-              {filteredCities.map((city, index) => (
-                <option key={index} value={city} />
-              ))}
-            </datalist>
 
-            <Form.Control.Feedback type="invalid">
-              {errors.esc_city}
-            </Form.Control.Feedback>
-          </Form.Group>
 
-          <Form.Group controlId="esc_street">
-            <Form.Label>רחוב</Form.Label>
-            <div className="select-container">
-              <Form.Control className='formSelect' as="select" name="esc_street"
-                value={escort.esc_street}
-                onChange={(e) => setEscort({ ...escort, esc_street: e.target.value })}
-                isInvalid={!!errors.esc_street}
-                required >
-                {<option value={-1}></option>}
-                {streets.map((street, index) => (
-                  <option key={index} value={street}>{street}</option>
+            <Form.Group controlId="esc_dateofbirth">
+              <Form.Label>תאריך לידה</Form.Label>
+              <Form.Control type="date" name="esc_dateofbirth"
+                value={escort.esc_dateofbirth}
+                onChange={(e) => setEscort({ ...escort, esc_dateofbirth: e.target.value })}
+                isInvalid={!!errors.esc_dateofbirth}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.esc_dateofbirth}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group controlId="esc_cell">
+              <Form.Label>נייד</Form.Label>
+              <Form.Control type="text" name="esc_cell"
+                value={escort.esc_cell}
+                onChange={(e) => setEscort({ ...escort, esc_cell: e.target.value })}
+                isInvalid={!!errors.esc_cell}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.esc_cell}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group controlId="esc_city">
+              <Form.Label>עיר</Form.Label>
+              <Form.Control list="cities-data" name="esc_city"
+                value={escort.esc_city}
+                onChange={handleInputChange}
+                onInput={handleInputChange}
+                isInvalid={!!errors.esc_city}
+                required
+              />
+
+              <datalist id="cities-data">
+                {filteredCities.map((city, index) => (
+                  <option key={index} value={city} />
                 ))}
-              </Form.Control>
+              </datalist>
+
+              <Form.Control.Feedback type="invalid">
+                {errors.esc_city}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group controlId="esc_street">
+              <Form.Label>רחוב</Form.Label>
+              <div className="select-container">
+                <Form.Control className='formSelect' as="select" name="esc_street"
+                  value={escort.esc_street}
+                  onChange={(e) => setEscort({ ...escort, esc_street: e.target.value })}
+                  isInvalid={!!errors.esc_street}
+                  required >
+                  {<option value={-1}></option>}
+                  {streets.map((street, index) => (
+                    <option key={index} value={street}>{street}</option>
+                  ))}
+                </Form.Control>
+              </div>
+              <Form.Control.Feedback type="invalid">
+                {errors.esc_street}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group controlId="esc_homeNum">
+              <Form.Label>מספר בית</Form.Label>
+              <Form.Control type="text" name="esc_homeNum"
+                value={escort.esc_homeNum}
+                onChange={(e) => setEscort({ ...escort, esc_homeNum: e.target.value })}
+                isInvalid={!!errors.esc_homeNum}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.esc_homeNum}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <div className='text-center' style={{ paddingTop: '20px' }}>
+              <Button type="submit" >שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
             </div>
-            <Form.Control.Feedback type="invalid">
-              {errors.esc_street}
-            </Form.Control.Feedback>
-          </Form.Group>
+          </Form>
+        </div>
 
-          <Form.Group controlId="esc_homeNum">
-            <Form.Label>מספר בית</Form.Label>
-            <Form.Control type="text" name="esc_homeNum"
-              value={escort.esc_homeNum}
-              onChange={(e) => setEscort({ ...escort, esc_homeNum: e.target.value })}
-              isInvalid={!!errors.esc_homeNum}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.esc_homeNum}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <div className='text-center' style={{ paddingTop: '20px' }}>
-            <Button type="submit" >שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
-          </div>
-        </Form>
       </div>
-
 
     </div>
   );

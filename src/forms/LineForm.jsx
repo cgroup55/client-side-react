@@ -78,10 +78,18 @@ export default function LineForm() {
   return (
     <div className='container mt-5 form-container'>
 
+      <div className='row justify-content-between align-items-center'>
+        <div className='col-10'>
+          <h2>{originLine.line_code != "" ? "עריכת" : "הוספת"} קו הסעה</h2>
+        </div>
+        <div className='col-2' style={{textAlign: 'left'}}>
+          <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/Lines') }}>
+            <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
+        </div>
+      </div>
+
       <Form style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
         <div className='row'>
-        <Button variant='btn btn-outline-dark' style={{ alignItems:"left" ,maxWidth:"4rem"}}  onClick={()=>{navigate('/Lines')}}><MdCancel/></Button>
-        <h2>{originLine.line_code!=""?"עריכת":"הוספת"} קו הסעה</h2>
           <div className='col-12 col-sm-6 label-input col-form-label-sm'>
             <h5>פרטי קו</h5>
 
@@ -327,8 +335,6 @@ export default function LineForm() {
           </div>
         </div>
       </Form>
-
-
     </div>
   )
 }

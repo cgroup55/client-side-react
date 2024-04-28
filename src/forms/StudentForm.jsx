@@ -158,12 +158,21 @@ export default function StudentForm() {
 
     return (
         <div className='container mt-5 form-container '>
-            <Form onSubmit={handleSubmit}>
 
-                <div className='row'>
-                    <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem" }} onClick={() => { navigate('/students') }}><MdCancel /></Button>
+            <div className='row justify-content-between align-items-center'>
+                <div className='col-10'>
                     <h2>{originStudent.stu_id != "" ? "עריכת" : "הוספת"} תלמיד</h2>
-                    <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
+                </div>
+                <div className='col-2' style={{textAlign: 'left'}}>
+                    <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/students') }}>
+                        <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
+                </div>
+            </div>
+
+            <Form style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
+                <div className='row'>
+
+                    <div className={`col-12 col-sm-6 col-md-4 ${addContact ? 'col-lg-3' : ''} label-input col-form-label-sm`}>
                         <h5>תלמיד</h5>
 
                         <Form.Group controlId="stu_id">
@@ -248,7 +257,7 @@ export default function StudentForm() {
                         </Form.Group>
                     </div>
 
-                    <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
+                    <div className={`col-12 col-sm-6 col-md-4 ${addContact ? 'col-lg-3' : ''} label-input col-form-label-sm`}>
                         <h5>פרטי לקות</h5>
 
                         <Form.Group controlId="stu_dateOfPlacement">
@@ -299,7 +308,7 @@ export default function StudentForm() {
 
                     </div>
 
-                    <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm' >
+                    <div className={`col-12 col-sm-6 col-md-4 ${addContact ? 'col-lg-3' : ''} label-input col-form-label-sm`}>
                         <h5>הורה</h5>
                         <Form.Group controlId="stu_parentName">
                             <Form.Label>שם הורה</Form.Label>
@@ -322,7 +331,7 @@ export default function StudentForm() {
                                 (<Form.Control type="text" name="stu_parentCell"
                                     value={student.stu_parentCell}
                                     onChange={(e) => setStudent({ ...student, stu_parentCell: e.target.value })}
-                                    isInvalid={!!errors.stu_parentCell}                                    
+                                    isInvalid={!!errors.stu_parentCell}
                                     required
                                 />)}
                             <Form.Control.Feedback type="invalid">
@@ -415,11 +424,11 @@ export default function StudentForm() {
                                         (<Form.Control type="text" value={student.stu_contactCell} readOnly />)
                                         :
                                         (<Form.Control type="text" name="stu_contactCell"
-                                                value={student.stu_contactCell}
-                                                onChange={(e) => setStudent({ ...student, stu_contactCell: e.target.value })}
-                                                isInvalid={!!errors.stu_contactCell}
-                                                required={addContact}
-                                            />)}
+                                            value={student.stu_contactCell}
+                                            onChange={(e) => setStudent({ ...student, stu_contactCell: e.target.value })}
+                                            isInvalid={!!errors.stu_contactCell}
+                                            required={addContact}
+                                        />)}
                                     <Form.Control.Feedback type="invalid">
                                         {errors.stu_contactCell}
                                     </Form.Control.Feedback>

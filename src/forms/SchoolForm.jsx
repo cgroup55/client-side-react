@@ -97,12 +97,17 @@ export default function SchoolForm() {
   return (
 
     <div className='container mt-5 form-container'>
-      <div className='row'>
-      <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem" }}  onClick={()=>{navigate('/schools')}}><MdCancel/></Button>
 
-        <h2>הוספת מוסד לימודים</h2>
+      <div className='row justify-content-between align-items-center'>
+        <div className='col-10'>
+          <h2>{originSchool.school_code !== "" ? "עריכת" : "הוספת"} מוסד לימודי</h2>
+        </div>
+        <div className='col-2' style={{textAlign: 'left'}}>
+          <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/schools') }}>
+            <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
+        </div>
+        <div className='row'>
         <Form className='col-9 schoolsform label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
-
           <Form.Group controlId="school_code">
             <Form.Label>סמל מוסד</Form.Label>
             {
@@ -266,7 +271,7 @@ export default function SchoolForm() {
           </div>
         </Form>
       </div>
-
+      </div>
 
     </div>
   );
