@@ -23,6 +23,7 @@ import LineForm from './forms/LineForm.jsx';
 import EscortForm from './forms/EscortForm.jsx';
 import CompanyForm from './forms/CompanyForm.jsx';
 import EscortContextProvider from './contexts/escortContext.jsx';
+import AddStudentToLine from './pages/AddStudentToLine.jsx';
 
 
 
@@ -40,6 +41,7 @@ function App() {
             <Route path="/homepage" element={<HomePage />} />
             <Route path='/realtimelines' element={<RealTimeLines />} />
             <Route path='/lines' element={<Lines />} />
+            <Route path='/AddStudentToLine' element={<AddStudentToLine/>} />
             <Route path='/transportComps' element={<TransportationCompanies />} />
             <Route path='/students' element={<Students />} />
             <Route path='/schools' element={<Schools />} />

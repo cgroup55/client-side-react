@@ -108,7 +108,7 @@ export default function Lines() {
     line_car: "סוג רכב",
     number_of_seats: "מספר כסאות",
     escort_incharge: "מלווה אחראי",
-    school_of_line: "ביס של קו",
+    school_of_line: "מוסד לימודי",
     station_definition: "ייעוד תחנה",
     line_city: "עיר",
     line_street: "רחוב",
@@ -118,8 +118,6 @@ export default function Lines() {
     transportaion_company:"חברת הסעה",
     comments:"הערות"
   }
-
-
 
   //modal view for specific row
   const handleView = (row) => {
@@ -141,6 +139,7 @@ export default function Lines() {
       time_of_line: row.time_of_line,
       line_city: row.line_city,
       line_street: row.line_street,
+      line_Homenumber: row.line_Homenumber,
       transportaion_company:row.transportaion_company,
       comments:row.comments
 
@@ -155,6 +154,7 @@ export default function Lines() {
 
   const handleAdd=(row) => {
     console.log('Add:', row);
+    navigate('/AddStudentToLine',{state:row});
 
   }
 

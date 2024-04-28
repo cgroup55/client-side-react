@@ -28,10 +28,10 @@ export default function Table({ rows, columns, handleView, handleEdit, handleDel
     //renders buttons for view, edit, and delete actions for each row.
     const actionsCell = (row) => (
         <div style={{ display: 'flex',justifyContent:'center'}}>
-            <button className='iconsBtn viewIcon' onClick={() => handleView(row)} ><FaEye /></button>
-            <button className='iconsBtn editIcon' onClick={() => handleEdit(row)}><FaEdit /></button>
-            <button className='iconsBtn deleteIcon' onClick={() => handleDelete(row)}><FaTrash /></button>
-            {handleAdd && (<button className='iconsBtn addIcon' onClick={() => handleDelete(row)}><AiOutlineUsergroupAdd /></button>)}
+            <button className='iconsBtn viewIcon' title='צפייה' onClick={() => handleView(row)} ><FaEye /></button>
+            <button className='iconsBtn editIcon' title='עריכה' onClick={() => handleEdit(row)}><FaEdit /></button>
+            <button className='iconsBtn deleteIcon' title='מחיקה' onClick={() => handleDelete(row)}><FaTrash /></button>
+            {handleAdd && (<button className='iconsBtn addIcon' title='להוספת תלמידים לקו' onClick={() => handleAdd(row)}><AiOutlineUsergroupAdd /></button>)}
         </div>
     );
 
