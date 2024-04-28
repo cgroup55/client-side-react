@@ -42,18 +42,12 @@ export default function LineForm() {
     let newErrors = {};
 
     newErrors.line_code = ValidPositiveNumber(line.line_code);
-    console.log("car");
-
     newErrors.line_car = Validateselect(line.line_car);
     newErrors.number_of_seats = ValidPositiveNumber(line.number_of_seats);
-    console.log("school");
-
     newErrors.school_of_line = Validateselect(line.school_of_line);
     newErrors.station_definition = isRadioButtonChecked(line.station_definition);
-    console.log("trans");
     newErrors.transportaion_company = Validateselect(line.transportaion_company);
     setErrors(newErrors);
-    console.log('errors after=', newErrors);
     Object.values(newErrors).forEach(error => {
       if (error) {
         valid = false;
@@ -190,9 +184,12 @@ export default function LineForm() {
                 as="select"
                 name="escort_incharge"
                 value={line.escort_incharge}
-                onChange={(e) => setLine({ ...line, escort_incharge: e.target.value })}
+                onChange={(e) => {
+                  const selectedIndex = e.target.selectedIndex;
+                  const selectedOptionText = e.target.options[selectedIndex].text;
+                  setLine({ ...line, escort_incharge: selectedOptionText });
+                }}
                 isInvalid={!!errors.escort_incharge}
-                required
                 className="formSelect"
               >
                 <option value={"-1"}></option>
@@ -240,8 +237,8 @@ export default function LineForm() {
                 id="radio-origin"
                 label="מוצא"
                 name="stationDefinition"
-                checked={line.station_definition === "origin"}
-                onChange={(e) => setLine({ ...line, station_definition: "origin" })}
+                checked={line.station_definition === "מוצא"}
+                onChange={(e) => setLine({ ...line, station_definition: "מוצא" })}
                 isInvalid={!!errors.station_definition}
               />
               <Form.Check
@@ -249,8 +246,8 @@ export default function LineForm() {
                 id="radio-destination"
                 label="יעד"
                 name="stationDefinition"
-                checked={line.station_definition === "destination"}
-                onChange={(e) => setLine({ ...line, station_definition: "destination" })}
+                checked={line.station_definition === "יעד"}
+                onChange={(e) => setLine({ ...line, station_definition: "יעד" })}
                 isInvalid={!!errors.station_definition}
               />
 
