@@ -153,10 +153,15 @@ export default function Lines() {
     // Add your delete logic here
   };
 
+  const handleAdd=(row) => {
+    console.log('Add:', row);
+
+  }
+
   return (
     <div className='container mt-5' >
       <h3 className="bold" style={{ textAlign: 'center' }}>קווי הסעה</h3>
-      <Table columns={Linecolumns} rows={updatedLineRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
+      <Table columns={Linecolumns} rows={updatedLineRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} handleAdd={handleAdd}/>
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addNewLine}>הוסף קו חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>

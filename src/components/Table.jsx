@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import '../styling/Table.css';
 
 
-export default function Table({ rows, columns, handleView, handleEdit, handleDelete}) {
+export default function Table({ rows, columns, handleView, handleEdit, handleDelete,handleAdd}) {
 
     //change number in pagination options
     $(document).ready(function () {
@@ -26,10 +27,11 @@ export default function Table({ rows, columns, handleView, handleEdit, handleDel
 
     //renders buttons for view, edit, and delete actions for each row.
     const actionsCell = (row) => (
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex',justifyContent:'center'}}>
             <button className='iconsBtn viewIcon' onClick={() => handleView(row)} ><FaEye /></button>
             <button className='iconsBtn editIcon' onClick={() => handleEdit(row)}><FaEdit /></button>
             <button className='iconsBtn deleteIcon' onClick={() => handleDelete(row)}><FaTrash /></button>
+            {handleAdd && (<button className='iconsBtn addIcon' onClick={() => handleDelete(row)}><AiOutlineUsergroupAdd /></button>)}
         </div>
     );
 
@@ -40,6 +42,7 @@ export default function Table({ rows, columns, handleView, handleEdit, handleDel
         cell: actionsCell,
         ignoreRowClick: true
     }];
+    
     
     return (
         <div className='container '>
