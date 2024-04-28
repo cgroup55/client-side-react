@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';;
 import Form from 'react-bootstrap/Form';
 import { styled } from '@mui/material/styles';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 
 const BootstrapButton = styled(Button)({
@@ -30,15 +31,49 @@ const BootstrapButton = styled(Button)({
     },
 });
 
-
-
-
-
 export default function Login() {
+
+    const [user, setUser] = useState({});
+
+
+
     const navigate = useNavigate();
-    const redirectTo = () => {
-        //need to add check if user exists+take user login info***
+    const redirectTo = (user) => {
+        //POST user to pass on to dbs
+        //check if the user that we got is a listed user
+        //return from fetch
+        //fetch("POST",user....)
+        //return()
+
+        //erase after dbs connection
         navigate('/homepage');
+        if (user == undefined) {
+            Swal.fire({
+                title: "נסה שנית",
+                text: "פרטייך שגויים",
+                icon: "error"
+            });
+        }
+        else 
+        {
+            if (user.role == 0) {
+                //need to add check if user exists+take user login info***
+                Swal.fire({
+                    title: "נכנסת בהצלחה",
+                    text: "שלום משרד!",
+                    icon: "success"
+                });
+                //navigate('/homepage');
+            }
+            else {
+                Swal.fire({
+                    title: "פרטים שגויים",
+                    text: "היכנס לאפליקציה הייעודית",
+                    icon: "error"
+                });
+            }
+
+        }
     }
 
 
@@ -61,12 +96,16 @@ export default function Login() {
                 <Form>
                     <Form.Group className="md-3" controlId="formBasicEmail">
                         <Form.Label>שם משתמש:</Form.Label>
-                        <Form.Control type="text" />
+                        <Form.Control type="text"
+                            onChange={(e) => { setUser({ ...user, userName: e.target.value }) }}
+                        />
                     </Form.Group>
 
                     <Form.Group className="md-3" controlId="formBasicPassword">
                         <Form.Label>סיסמא:</Form.Label>
-                        <Form.Control type="password" />
+                        <Form.Control type="password"
+                            onChange={(e) => { setUser({ ...user, password: e.target.value }) }}
+                        />
                     </Form.Group>
 
                     <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}>
@@ -79,3 +118,4 @@ export default function Login() {
         </>
     )
 }
+

@@ -13,6 +13,7 @@ export default function LineForm() {
 
   const { state } = useLocation();
   let originLine = state;
+  
   let giventime = originLine.time_of_line.split(':')
   const [line, setLine] = useState({ ...originLine, definition_date: today });
   const [errors, setErrors] = useState({});
@@ -31,6 +32,9 @@ export default function LineForm() {
 
     if (isValid) {
       let timeLine = time.hours + ":" + time.minutes;
+
+      console.log("timeLine:", timeLine);
+      
       console.log("time:", time.hours);
       if (time.hours == "00") {
         console.log("inside");
@@ -76,7 +80,7 @@ export default function LineForm() {
     }
   }, [line.school_of_line]);
 
-  //continue comments+ send obj
+
   return (
     <div className='container mt-5 form-container'>
 
@@ -330,11 +334,11 @@ export default function LineForm() {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group controlId="line_comments">
+            <Form.Group controlId="comments">
               <Form.Label>הערות</Form.Label>
-              <Form.Control className='comment' as="textarea" rows={2} name="line_comments"
-                value={line.line_comments}
-                onChange={(e) => setLine({ ...line, line_comments: e.target.value })}
+              <Form.Control className='comment' as="textarea" rows={2} name="comments"
+                value={line.comments}
+                onChange={(e) => setLine({ ...line, comments: e.target.value })}
               />
             </Form.Group>
 

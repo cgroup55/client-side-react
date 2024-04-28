@@ -29,10 +29,10 @@ export default function Lines() {
       line_city: "",
       line_street: "",
       line_Homenumber: "",
-      time_of_line: "",
+      time_of_line: "00:00",
       definition_date:"",
       transportaion_company:"",
-      line_comments:""
+      comments:""
     }
     navigate('/LineForm', { state: newLine });
   }
@@ -82,7 +82,7 @@ export default function Lines() {
       line_Homenumber: "3",
       definition_date: "12/04/2021",
       transportaion_company:"בב הסעות",
-      line_comments:"הערההההההה"
+      comments:"הערההההההה"
 
     },
     {
@@ -101,7 +101,6 @@ export default function Lines() {
   ];
 
   const updatedLineRows = addedLine ? [...Linerows, addedLine] : Linerows;
-  console.log("updatedLineRows",updatedLineRows);
   //define the hebrew names of each field
   const ColumnNamesByIdentifier =
   {
@@ -117,14 +116,13 @@ export default function Lines() {
     time_of_line: "שעת התחנה",
     definition_date: "תאריך הגדרת קו",
     transportaion_company:"חברת הסעה",
-    line_comments:"הערות"
+    comments:"הערות"
   }
 
 
 
   //modal view for specific row
   const handleView = (row) => {
-    console.log("cols", ColumnNamesByIdentifier);
     setColData(ColumnNamesByIdentifier);
     setRowData(row);
     setShowModal(true);
@@ -132,7 +130,6 @@ export default function Lines() {
 
   //edit mode- pass obj with relevante data
   const handleEdit = (row) => {
-    console.log('Edit:', row);
     let currentLine = {
       line_code: row.line_code,
       line_car: row.line_car,
@@ -145,7 +142,7 @@ export default function Lines() {
       line_city: row.line_city,
       line_street: row.line_street,
       transportaion_company:row.transportaion_company,
-      line_comments:row.line_comments
+      comments:row.comments
 
     }
     navigate('/LineForm', { state: currentLine });
