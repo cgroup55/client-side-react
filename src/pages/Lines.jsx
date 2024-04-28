@@ -32,7 +32,7 @@ export default function Lines() {
       time_of_line: "",
       definition_date:"",
       transportaion_company:"",
-      comments:""
+      line_comments:""
     }
     navigate('/LineForm', { state: newLine });
   }
@@ -145,7 +145,7 @@ export default function Lines() {
       line_city: row.line_city,
       line_street: row.line_street,
       transportaion_company:row.transportaion_company,
-      comments:row.comments
+      line_comments:row.line_comments
 
     }
     navigate('/LineForm', { state: currentLine });

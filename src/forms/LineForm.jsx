@@ -16,7 +16,7 @@ export default function LineForm() {
   let giventime = originLine.time_of_line.split(':')
   const [line, setLine] = useState({ ...originLine, definition_date: today });
   const [errors, setErrors] = useState({});
-  const [time, setTime] = useState({ hours: giventime[0], minutes: giventime[1] });
+  const [time, setTime] = useState({ hours: giventime[0], minutes: giventime[1],error:'' });
 
   //צריך לחבר לנתונים שיגיעו מהDB
   const schools = [{ schoolname: "טשרני", schoolcity: "נתניה", schoolstreet: "הגרא", schoolHomenum: "3" }, { schoolname: "אורט", schoolcity: "חדרה", schoolstreet: "הרצל", schoolHomenum: "5" }];//need to fetch from database
@@ -27,10 +27,17 @@ export default function LineForm() {
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
-    if (isValid) {
-      // Logic to check validity of new line
 
+
+    if (isValid) {
       let timeLine = time.hours + ":" + time.minutes;
+      console.log("time:", time.hours);
+      if (time.hours == "00") {
+        console.log("inside");
+        setTime({...time,error:"שעת יציאת הקו לא יכולה להיות 00"});
+        return;
+      }
+      setTime({...time,error:""});
       navigate('/Lines', { state: { ...line, time_of_line: timeLine } });
     } else {
       // Show error message
@@ -47,6 +54,7 @@ export default function LineForm() {
     newErrors.school_of_line = Validateselect(line.school_of_line);
     newErrors.station_definition = isRadioButtonChecked(line.station_definition);
     newErrors.transportaion_company = Validateselect(line.transportaion_company);
+
     setErrors(newErrors);
     Object.values(newErrors).forEach(error => {
       if (error) {
@@ -76,7 +84,7 @@ export default function LineForm() {
         <div className='col-10'>
           <h2>{originLine.line_code != "" ? "עריכת" : "הוספת"} קו הסעה</h2>
         </div>
-        <div className='col-2' style={{textAlign: 'left'}}>
+        <div className='col-2' style={{ textAlign: 'left' }}>
           <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/Lines') }}>
             <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
         </div>
@@ -293,6 +301,7 @@ export default function LineForm() {
                   onChange={(e) => setTime({ ...time, minutes: e.target.value })}
                   required
                   style={{ maxWidth: 'fit-content' }}
+
                 >
                   {/* Render minute options */}
                   {Array.from({ length: 60 }, (_, i) => (
@@ -307,6 +316,7 @@ export default function LineForm() {
                   onChange={(e) => setTime({ ...time, hours: e.target.value })}
                   required
                   style={{ maxWidth: 'fit-content' }}
+                  isInvalid={!!time.error}
                 >
                   {/* Render hour options */}
                   {Array.from({ length: 24 }, (_, i) => (
@@ -315,6 +325,9 @@ export default function LineForm() {
                 </Form.Control>
               </div>
 
+              <Form.Control.Feedback type="invalid">
+                {time.error}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="line_comments">

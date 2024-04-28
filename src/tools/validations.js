@@ -12,8 +12,8 @@ export const validateHebrewletters = (input) => {
 };
 
 export const Validateselect = (input) => {
-console.log("input",input);
-    if (input=='' || input=="-1") {
+    console.log("input", input);
+    if (input == '' || input == "-1") {
         return 'חובה לבחור אחת מהאפשרויות';
     }
     else return '';
@@ -110,18 +110,18 @@ export const isRadioButtonChecked = (input) => {
 export const fixDate = (input) => {
 
     let date = input;
-    let delim="-";
-    console.log("date before",date);
+    let delim = "-";
+    console.log("date before", date);
     let dateParts = (input).split(/[/-]/);
-    console.log("dateParts",dateParts);
-    
-    if (dateParts[0].length==4) {
-        delim="/";
+    console.log("dateParts", dateParts);
+
+    if (dateParts[0].length == 4) {
+        delim = "/";
     }
-    let fixedDate=dateParts[2]+delim+dateParts[1]+delim+dateParts[0];
-    console.log("date after",fixedDate);
+    let fixedDate = dateParts[2] + delim + dateParts[1] + delim + dateParts[0];
+    console.log("date after", fixedDate);
 
     return fixedDate;
 
-} 
+}
 
