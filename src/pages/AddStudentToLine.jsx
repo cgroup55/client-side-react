@@ -8,6 +8,7 @@ export default function AddStudentToLine() {
     let line = state;
 
     const [anotherSchool, setAnotherSchool] = useState('');
+    const [selectedStudents, setSelectedStudents] = useState([]);
 
     //Get 1. stu list 2. school list from DB
     const StudentsList = [
@@ -207,7 +208,7 @@ export default function AddStudentToLine() {
             stu_contactStreet: 'ויצמן',
             stu_contactHomeNum: 55,
         },
-   
+
     ];
 
     const schoolsList = [{ institutionId: 1, name: "טשרני", city: "נתניה", street: "הגרא", houseNumber: "3" },
@@ -221,10 +222,15 @@ export default function AddStudentToLine() {
     };
 
     //Management student assigned to the line
-    const handleStudentSelection = (index) => {
-        //selectedStudent hold all the student obj
-        const selectedStudent = StudentsList[index];
-        console.log("Selected student:", selectedStudent);
+    const handleStudentSelection = (student) => {
+        //tudent hold all the student obj selected
+        console.log("student :", student);
+        const isSelected = selectedStudents.some(selStudent => selStudent.stu_fullName === student.stu_fullName);
+        if (isSelected) {
+            setSelectedStudents(selectedStudents.filter(selStudent => selStudent.stu_fullName !== student.stu_fullName));
+        } else {
+            setSelectedStudents([...selectedStudents, student]);
+        }
     };
 
     //************/
@@ -232,6 +238,7 @@ export default function AddStudentToLine() {
     const filteredStudents = anotherSchool
         ? StudentsList.filter(student => student.stu_school === anotherSchool || student.stu_school === line.school_of_line)
         : StudentsList.filter(student => student.stu_school === line.school_of_line);
+
     // Sort filteredStudents array by 'stu_school' and then by 'stu_fullName'
     const sortedStudents = filteredStudents.sort((a, b) => {
         if (a.stu_school === b.stu_school) {
@@ -246,14 +253,23 @@ export default function AddStudentToLine() {
 
         <div className='container mt-5'>
             <h3 className="bold" style={{ textAlign: 'center' }}> שיבוץ תלמידים לקו הסעה</h3>
+            <br />
             <div className='row'>
-                <div className='line_detailsDiv'>
-                    <h4>פרטי קו:</h4>
+                <div className='col-4 col-sm-12 line_detailsDiv'>
+                    <h4>פרטי קו הסעה</h4>
                     קוד קו: {line.line_code} <br />
                     מלווה: {line.escort_incharge ? (line.escort_incharge) : ("טרם הוגדר מלווה")} <br />
                     חברת הסעה: {line.transportaion_company} <br />
                     מוסד לימודי: {line.school_of_line}<br />
                     כתובת המוסד: {line.line_street + " " + line.line_Homenumber + " , " + line.line_city} <br />
+                </div>
+                <div className='col-8 col-sm-12 assocStu_detailsDiv'>
+                    <h4>תלמידים משויכים לקו</h4>
+                    <ul>
+                        {selectedStudents.map((student, index) => (
+                            <li key={index}>{student.stu_fullName}</li>
+                        ))}
+                    </ul>
                 </div>
             </div>
 
@@ -288,7 +304,7 @@ export default function AddStudentToLine() {
                         <tbody>
                             {sortedStudents.map((student, index) => (
                                 <tr key={index}>
-                                    <td><input type="checkbox" onChange={() => handleStudentSelection(index)} /></td>
+                                    <td><input type="checkbox" onChange={() => handleStudentSelection(student)} /></td>
                                     <td>{student.stu_fullName}</td>
                                     <td>{student.stu_grade}</td>
                                     <td>{student.stu_disability}</td>
@@ -301,8 +317,6 @@ export default function AddStudentToLine() {
                     </table>
                 </div>
             </div>
-
-
 
         </div>
     );
