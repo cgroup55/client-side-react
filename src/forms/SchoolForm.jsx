@@ -29,8 +29,8 @@ export default function SchoolForm() {
   }, []);
 
   useEffect(() => {
-    if (originSchool.school_city != '') {
-      fetchStreetsByCity(originSchool.school_city).then(streets => setStreets(streets));
+    if (originSchool.city != '') {
+      fetchStreetsByCity(originSchool.city).then(streets => setStreets(streets));
     }
   }, []);
 
@@ -42,7 +42,7 @@ export default function SchoolForm() {
     );
     setFilteredCities(filteredCities);
     fetchStreetsByCity(inputValue).then(streets => setStreets(streets));
-    setSchool({ ...school, school_city: inputValue });
+    setSchool({ ...school, city: inputValue });
   };
 
   //form subbmision
@@ -63,26 +63,26 @@ export default function SchoolForm() {
     let valid = true;
     let newErrors = {};
     console.log('school=', school);
-    newErrors.school_code = ValidPositiveNumber(school.school_code);
-    newErrors.school_name = validateHebrewletters(school.school_name);
-    newErrors.school_city = validateCity(school.school_city, cities);
-    newErrors.school_street = validateStreet(school.school_street, streets);
-    newErrors.school_homeNum = ValidPositiveNumber(school.school_homeNum);
-    newErrors.secretar_cell = ValidCellOrHomePhoneNum(school.secretar_cell);
-    if (school.principal_name != '') {
-      newErrors.principal_name = validateHebrewletters(school.principal_name);
+    newErrors.institutionId = ValidPositiveNumber(school.institutionId);
+    newErrors.name = validateHebrewletters(school.name);
+    newErrors.city = validateCity(school.city, cities);
+    newErrors.street = validateStreet(school.street, streets);
+    newErrors.houseNumber = ValidPositiveNumber(school.houseNumber);
+    newErrors.secretariatPhone = ValidCellOrHomePhoneNum(school.secretariatPhone);
+    if (school.principal != '') {
+      newErrors.principal = validateHebrewletters(school.principal);
     }
-    if (school.principal_cell != '') {
-      newErrors.principal_cell = ValidCellPhoneNum(school.principal_cell);
+    if (school.principalCellphone != '') {
+      newErrors.principalCellphone = ValidCellPhoneNum(school.principalCellphone);
     }
-    if (school.secretar_mail != '') {
-      newErrors.secretar_mail = validateEmail(school.secretar_mail);
+    if (school.secretariatMail != '') {
+      newErrors.secretariatMail = validateEmail(school.secretariatMail);
     }
-    if (school.school_contactName != '') {
-      newErrors.school_contactName = validateHebrewletters(school.school_contactName);
+    if (school.anotherContact != '') {
+      newErrors.anotherContact = validateHebrewletters(school.anotherContact);
     }
-    if (school.school_contactCell != '') {
-      newErrors.school_contactCell = ValidCellPhoneNum(school.school_contactCell);
+    if (school.contactPhone != '') {
+      newErrors.contactPhone = ValidCellPhoneNum(school.contactPhone);
     }
     setErrors(newErrors);
     //validity check before submition
@@ -101,7 +101,7 @@ export default function SchoolForm() {
 
       <div className='row justify-content-between align-items-center'>
         <div className='col-10'>
-          <h2>{originSchool.school_code !== "" ? "עריכת" : "הוספת"} מוסד לימודי</h2>
+          <h2>{originSchool.institutionId !== "" ? "עריכת" : "הוספת"} מוסד לימודי</h2>
         </div>
         <div className='col-2' style={{textAlign: 'left'}}>
           <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/schools') }}>
@@ -109,45 +109,45 @@ export default function SchoolForm() {
         </div>
         <div className='row'>
         <Form className='col-9 schoolsform label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
-          <Form.Group controlId="school_code">
+          <Form.Group controlId="institutionId">
             <Form.Label>סמל מוסד</Form.Label>
             {
-              originSchool.school_code != "" ?
+              originSchool.institutionId != "" ?
                 (
-                  <Form.Control type="text" value={school.school_code} readOnly />
+                  <Form.Control type="text" value={school.institutionId} readOnly />
                 ) :
-                < Form.Control type="text" name="school_code"
-                  value={school.school_code}
-                  onChange={(e) => setSchool({ ...school, school_code: e.target.value })}
-                  isInvalid={!!errors.school_code}
+                < Form.Control type="text" name="institutionId"
+                  value={school.institutionId}
+                  onChange={(e) => setSchool({ ...school, institutionId: e.target.value })}
+                  isInvalid={!!errors.institutionId}
                   required
                 />
             }
             <Form.Control.Feedback type="invalid">
-              {errors.school_code}
+              {errors.institutionId}
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="school_name">
+          <Form.Group controlId="name">
             <Form.Label>שם מוסד לימודי</Form.Label>
-            <Form.Control type="text" name="school_name"
-              value={school.school_name}
-              onChange={(e) => setSchool({ ...school, school_name: e.target.value })}
-              isInvalid={!!errors.school_name}
+            <Form.Control type="text" name="name"
+              value={school.name}
+              onChange={(e) => setSchool({ ...school, name: e.target.value })}
+              isInvalid={!!errors.name}
               required
             />
             <Form.Control.Feedback type="invalid">
-              {errors.school_name}
+              {errors.name}
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="school_city">
+          <Form.Group controlId="city">
             <Form.Label>עיר</Form.Label>
-            <Form.Control list="cities-data" name="school_city"
-              value={school.school_city}
+            <Form.Control list="cities-data" name="city"
+              value={school.city}
               onChange={handleInputChange}
               onInput={handleInputChange}
-              isInvalid={!!errors.school_city}
+              isInvalid={!!errors.city}
               required
             />
 
@@ -158,17 +158,17 @@ export default function SchoolForm() {
             </datalist>
 
             <Form.Control.Feedback type="invalid">
-              {errors.school_city}
+              {errors.city}
             </Form.Control.Feedback>
 
           </Form.Group>
 
-          <Form.Group controlId="school_street">
+          <Form.Group controlId="street">
             <Form.Label>רחוב</Form.Label>
-            <Form.Control className='formSelect' as="select" name="school_street"
-              value={school.school_street}
-              onChange={(e) => setSchool({ ...school, school_street: e.target.value })}
-              isInvalid={!!errors.school_street}
+            <Form.Control className='formSelect' as="select" name="street"
+              value={school.street}
+              onChange={(e) => setSchool({ ...school, street: e.target.value })}
+              isInvalid={!!errors.street}
               required >
               {<option value={-1}></option>}
               {streets.map((street, index) => (
@@ -176,94 +176,94 @@ export default function SchoolForm() {
               ))}
             </Form.Control>
             <Form.Control.Feedback type="invalid">
-              {errors.school_street}
+              {errors.street}
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="school_homeNum">
+          <Form.Group controlId="houseNumber">
             <Form.Label>מספר</Form.Label>
-            <Form.Control type="text" name="school_homeNum"
-              value={school.school_homeNum}
-              onChange={(e) => setSchool({ ...school, school_homeNum: e.target.value })}
-              isInvalid={!!errors.school_homeNum}
+            <Form.Control type="text" name="houseNumber"
+              value={school.houseNumber}
+              onChange={(e) => setSchool({ ...school, houseNumber: e.target.value })}
+              isInvalid={!!errors.houseNumber}
               required
             />
             <Form.Control.Feedback type="invalid">
-              {errors.school_homeNum}
+              {errors.houseNumber}
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="principal_name">
+          <Form.Group controlId="principal">
             <Form.Label>שם מנהל</Form.Label>
-            <Form.Control type="text" name="principal_name"
-              value={school.principal_name}
-              onChange={(e) => setSchool({ ...school, principal_name: e.target.value })}
-              isInvalid={!!errors.principal_name}
+            <Form.Control type="text" name="principal"
+              value={school.principal}
+              onChange={(e) => setSchool({ ...school, principal: e.target.value })}
+              isInvalid={!!errors.principal}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.principal_name}
+              {errors.principal}
             </Form.Control.Feedback>
           </Form.Group>
 
 
-          <Form.Group controlId="principal_cell">
+          <Form.Group controlId="principalCellphone">
             <Form.Label>נייד מנהל</Form.Label>
-            <Form.Control type="text" name="principal_cell"
-              value={school.principal_cell}
-              onChange={(e) => setSchool({ ...school, principal_cell: e.target.value })}
-              isInvalid={!!errors.principal_cell}
+            <Form.Control type="text" name="principalCellphone"
+              value={school.principalCellphone}
+              onChange={(e) => setSchool({ ...school, principalCellphone: e.target.value })}
+              isInvalid={!!errors.principalCellphone}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.principal_cell}
+              {errors.principalCellphone}
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="secretar_cell">
+          <Form.Group controlId="secretariatPhone">
             <Form.Label>טלפון מזכירות</Form.Label>
-            <Form.Control type="text" name="secretar_cell"
-              value={school.secretar_cell}
-              onChange={(e) => setSchool({ ...school, secretar_cell: e.target.value })}
-              isInvalid={!!errors.secretar_cell}
+            <Form.Control type="text" name="secretariatPhone"
+              value={school.secretariatPhone}
+              onChange={(e) => setSchool({ ...school, secretariatPhone: e.target.value })}
+              isInvalid={!!errors.secretariatPhone}
               required
             />
             <Form.Control.Feedback type="invalid">
-              {errors.secretar_cell}
+              {errors.secretariatPhone}
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="secretar_mail">
+          <Form.Group controlId="secretariatMail">
             <Form.Label>מייל מזכירות</Form.Label>
-            <Form.Control type="text" name="secretar_mail"
-              value={school.secretar_mail}
-              onChange={(e) => setSchool({ ...school, secretar_mail: e.target.value })}
-              isInvalid={!!errors.secretar_mail}
+            <Form.Control type="text" name="secretariatMail"
+              value={school.secretariatMail}
+              onChange={(e) => setSchool({ ...school, secretariatMail: e.target.value })}
+              isInvalid={!!errors.secretariatMail}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.secretar_mail}
+              {errors.secretariatMail}
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="school_contactName">
+          <Form.Group controlId="anotherContact">
             <Form.Label>שם איש קשר נוסף</Form.Label>
-            <Form.Control type="text" name="school_contactName"
-              value={school.school_contactName}
-              onChange={(e) => setSchool({ ...school, school_contactName: e.target.value })}
-              isInvalid={!!errors.school_contactName}
+            <Form.Control type="text" name="anotherContact"
+              value={school.anotherContact}
+              onChange={(e) => setSchool({ ...school, anotherContact: e.target.value })}
+              isInvalid={!!errors.anotherContact}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.school_contactName}
+              {errors.anotherContact}
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="school_contactCell">
+          <Form.Group controlId="contactPhone">
             <Form.Label>נייד איש קשר</Form.Label>
-            <Form.Control type="text" name="school_contactCell"
-              value={school.school_contactCell}
-              onChange={(e) => setSchool({ ...school, school_contactCell: e.target.value })}
-              isInvalid={!!errors.school_contactCell}
+            <Form.Control type="text" name="contactPhone"
+              value={school.contactPhone}
+              onChange={(e) => setSchool({ ...school, contactPhone: e.target.value })}
+              isInvalid={!!errors.contactPhone}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.school_contactCell}
+              {errors.contactPhone}
             </Form.Control.Feedback>
           </Form.Group>
 

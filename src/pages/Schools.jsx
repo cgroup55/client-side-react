@@ -18,17 +18,17 @@ export default function Schools() {
 
     const addNewSchool = () => {
         let newSchool = {
-            school_code: '',
-            school_name: '',
-            school_city: '',
-            school_street: '',
-            school_homeNum: '',
-            principal_name: '',
-            principal_cell: '',
-            secretar_cell: '',
-            secretar_mail: '',
-            school_contactName: '',
-            school_contactCell: ''
+            institutionId: '',
+            name: '',
+            city: '',
+            street: '',
+            houseNumber: '',
+            principal: '',
+            principalCellphone: '',
+            secretariatPhone: '',
+            secretariatMail: '',
+            anotherContact: '',
+            contactPhone: ''
         };
         navigate('/SchoolForm', { state: newSchool });
     }
@@ -73,7 +73,7 @@ export default function Schools() {
             //     //GET        
             {
                 institutionId: 14,
-                name: "אברהמסון",
+                name: "אורט",
                 street: 'ברנר',
                 houseNumber: 5,
                 city: 'כפר סבא',
@@ -112,17 +112,17 @@ export default function Schools() {
     const handleEdit = (row) => {
         console.log('Edit:', row);
         let currentSchool = {
-            school_code: row.institutionId,
-            school_name: row.name,
-            school_city: row.city,
-            school_street: row.street,
-            school_homeNum: row.houseNumber,
-            principal_name: row.principal,
-            principal_cell: row.principalCellphone,
-            secretar_cell: row.secretariatPhone,
-            secretar_mail: row.secretariatMail,
-            school_contactName: row.anotherContact,
-            school_contactCell: row.contactPhone
+            institutionId: row.institutionId,
+            name: row.name,
+            city: row.city,
+            street: row.street,
+            houseNumber: row.houseNumber,
+            principal: row.principal,
+            principalCellphone: row.principalCellphone,
+            secretariatPhone: row.secretariatPhone,
+            secretariatMail: row.secretariatMail,
+            anotherContact: row.anotherContact,
+            contactPhone: row.contactPhone
         };
         navigate('/SchoolForm', { state: currentSchool });
     };

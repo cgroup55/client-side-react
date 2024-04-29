@@ -21,7 +21,7 @@ export default function LineForm() {
   const [time, setTime] = useState({ hours: giventime[0], minutes: giventime[1],error:'' });
 
   //צריך לחבר לנתונים שיגיעו מהDB
-  const schools = [{ schoolname: "טשרני", schoolcity: "נתניה", schoolstreet: "הגרא", schoolHomenum: "3" }, { schoolname: "אורט", schoolcity: "חדרה", schoolstreet: "הרצל", schoolHomenum: "5" }];//need to fetch from database
+  const schoolsList = [{ name: "טשרני", city: "נתניה", street: "הגרא", houseNumber: "3" }, { name: "אורט", city: "חדרה", street: "הרצל", houseNumber: "5" }];//need to fetch from database
   const escorts = ["אבי לוי", "בני בוי"];//need to fetch from database
 
 
@@ -70,13 +70,13 @@ export default function LineForm() {
   };
 
   useEffect(() => {
-    const chosenSchool = schools.find(school => school.schoolname === line.school_of_line);
+    const chosenSchool = schoolsList.find(school => school.name === line.school_of_line);
     if (chosenSchool) {
       setLine(prevLine => ({
         ...prevLine,
-        line_city: chosenSchool.schoolcity,
-        line_street: chosenSchool.schoolstreet,
-        line_Homenumber: chosenSchool.schoolHomenum
+        line_city: chosenSchool.city,
+        line_street: chosenSchool.street,
+        line_Homenumber: chosenSchool.houseNumber
       }));
     }
   }, [line.school_of_line]);
@@ -230,9 +230,9 @@ export default function LineForm() {
                 className="formSelect"
               >
                 <option value={"-1"}></option>
-                {schools.map((school, index) => (
-                  <option key={index} value={school.schoolname}>
-                    {school.schoolname}
+                {schoolsList.map((school, index) => (
+                  <option key={index} value={school.name}>
+                    {school.name}
                   </option>
                 ))}
               </Form.Control>
