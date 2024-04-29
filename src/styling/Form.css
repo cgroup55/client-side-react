@@ -69,4 +69,7 @@ select {
   background-position: left; 
 }
 
-
+.close-button {
+  background-color: #606e5d !important;
+  color: white;
+}

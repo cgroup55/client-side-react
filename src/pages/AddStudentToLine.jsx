@@ -56,7 +56,7 @@ export default function AddStudentToLine() {
         },
     ];
 
-    const schoolsList =  [{ schoolname: "טשרני", schoolcity: "נתניה", schoolstreet: "הגרא", schoolHomenum: "3" }, { schoolname: "אורט", schoolcity: "חדרה", schoolstreet: "הרצל", schoolHomenum: "5" }];//need to fetch from database
+    const schoolsList =  [{ name: "טשרני", city: "נתניה", street: "הגרא", houseNumber: "3" }, { name: "אורט", city: "חדרה", street: "הרצל", houseNumber: "5" }];//need to fetch from database
  
 
     //צריך לאפשר להוסיף תחנת עצירה נוספת שהיא בית ספר
