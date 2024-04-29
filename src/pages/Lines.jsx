@@ -126,7 +126,7 @@ export default function Lines() {
     setShowModal(true);
   };
 
-  //edit mode- pass obj with relevante data
+  //edit mode- pass line obj with relevante data
   const handleEdit = (row) => {
     let currentLine = {
       line_code: row.line_code,
@@ -152,6 +152,7 @@ export default function Lines() {
     // Add your delete logic here
   };
 
+  //dd students- pass line obj with relevante data
   const handleAdd=(row) => {
     console.log('Add:', row);
     navigate('/AddStudentToLine',{state:row});
