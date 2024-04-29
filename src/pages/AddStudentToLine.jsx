@@ -12,6 +12,70 @@ export default function AddStudentToLine() {
     //Get 1. stu list 2. school list from DB
     const StudentsList = [
         {
+            stu_fullName: 'שושי שרון',
+            stu_id: "024519875",
+            stu_dateofbirth: '12/01/2011',
+            stu_grade: "ט'",
+            stu_school: "טשרני",
+            stu_dateOfPlacement: '01/05/2022',
+            stu_disability: "פיגור",
+            stu_comments: "בשש ש545",
+
+            stu_parentName: 'שולה שרון',
+            stu_parentCell: '0527465588',
+            stu_parentCity: 'כפר סבא',
+            stu_parentStreet: 'הנביאים',
+            stu_parentHomeNum: 9,
+        },
+        {
+            stu_fullName: 'שלום אולי',
+            stu_id: "024519875",
+            stu_dateofbirth: '12/01/2011',
+            stu_grade: "ט'",
+            stu_school: "טשרני",
+            stu_dateOfPlacement: '01/05/2022',
+            stu_disability: "פיגור",
+            stu_comments: "בשש ש545",
+
+            stu_parentName: 'שולה שרון',
+            stu_parentCell: '0527465588',
+            stu_parentCity: 'כפר סבא',
+            stu_parentStreet: 'הנביאים',
+            stu_parentHomeNum: 9,
+        },
+        {
+            stu_fullName: 'בני גברא',
+            stu_id: "024519875",
+            stu_dateofbirth: '12/01/2011',
+            stu_grade: "ט'",
+            stu_school: "טשרני",
+            stu_dateOfPlacement: '01/05/2022',
+            stu_disability: "פיגור",
+            stu_comments: "בשש ש545",
+
+            stu_parentName: 'שולה שרון',
+            stu_parentCell: '0527465588',
+            stu_parentCity: 'כפר סבא',
+            stu_parentStreet: 'הנביאים',
+            stu_parentHomeNum: 9,
+        },
+        {
+            stu_fullName: 'מיכאל לוי',
+            stu_id: "024519875",
+            stu_dateofbirth: '12/01/2011',
+            stu_grade: "ט'",
+            stu_school: "טשרני",
+            stu_dateOfPlacement: '01/05/2022',
+            stu_disability: "פיגור",
+            stu_comments: "בשש ש545",
+
+            stu_parentName: 'שולה שרון',
+            stu_parentCell: '0527465588',
+            stu_parentCity: 'כפר סבא',
+            stu_parentStreet: 'הנביאים',
+            stu_parentHomeNum: 9,
+        },
+        {
             stu_fullName: 'אבשלום ידידיה',
             stu_id: "024519875",
             stu_dateofbirth: '12/01/2011',
@@ -100,7 +164,7 @@ export default function AddStudentToLine() {
             stu_contactHomeNum: 55,
         },
         {
-            stu_fullName: 'אבשלום ידידיה',
+            stu_fullName: 'שירה יהלום',
             stu_id: "024519875",
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ה'",
@@ -143,70 +207,7 @@ export default function AddStudentToLine() {
             stu_contactStreet: 'ויצמן',
             stu_contactHomeNum: 55,
         },
-        {
-            stu_fullName: 'שי שרון',
-            stu_id: "024519875",
-            stu_dateofbirth: '12/01/2011',
-            stu_grade: "ט'",
-            stu_school: "טשרני",
-            stu_dateOfPlacement: '01/05/2022',
-            stu_disability: "פיגור",
-            stu_comments: "בשש ש545",
-
-            stu_parentName: 'שולה שרון',
-            stu_parentCell: '0527465588',
-            stu_parentCity: 'כפר סבא',
-            stu_parentStreet: 'הנביאים',
-            stu_parentHomeNum: 9,
-        },
-        {
-            stu_fullName: 'שי שרון',
-            stu_id: "024519875",
-            stu_dateofbirth: '12/01/2011',
-            stu_grade: "ט'",
-            stu_school: "טשרני",
-            stu_dateOfPlacement: '01/05/2022',
-            stu_disability: "פיגור",
-            stu_comments: "בשש ש545",
-
-            stu_parentName: 'שולה שרון',
-            stu_parentCell: '0527465588',
-            stu_parentCity: 'כפר סבא',
-            stu_parentStreet: 'הנביאים',
-            stu_parentHomeNum: 9,
-        },
-        {
-            stu_fullName: 'שי שרון',
-            stu_id: "024519875",
-            stu_dateofbirth: '12/01/2011',
-            stu_grade: "ט'",
-            stu_school: "טשרני",
-            stu_dateOfPlacement: '01/05/2022',
-            stu_disability: "פיגור",
-            stu_comments: "בשש ש545",
-
-            stu_parentName: 'שולה שרון',
-            stu_parentCell: '0527465588',
-            stu_parentCity: 'כפר סבא',
-            stu_parentStreet: 'הנביאים',
-            stu_parentHomeNum: 9,
-        },
-        {
-            stu_fullName: 'שי שרון',
-            stu_id: "024519875",
-            stu_dateofbirth: '12/01/2011',
-            stu_grade: "ט'",
-            stu_school: "טשרני",
-            stu_dateOfPlacement: '01/05/2022',
-            stu_disability: "פיגור",
-            stu_comments: "בשש ש545",
-
-            stu_parentName: 'שולה שרון',
-            stu_parentCell: '0527465588',
-            stu_parentCity: 'כפר סבא',
-            stu_parentStreet: 'הנביאים',
-            stu_parentHomeNum: 9,
-        },
+   
     ];
 
     const schoolsList = [{ institutionId: 1, name: "טשרני", city: "נתניה", street: "הגרא", houseNumber: "3" },
@@ -229,9 +230,15 @@ export default function AddStudentToLine() {
     //************/
     //לשים לב שכרגע זה לפי *שם* בית ספר- זמני וצריך להתאים לשדות שיהיו לקו (-קוד בצפר)??  
     const filteredStudents = anotherSchool
-    ? StudentsList.filter(student => student.stu_school === anotherSchool || student.stu_school === line.school_of_line)
-    : StudentsList.filter(student => student.stu_school === line.school_of_line);
-
+        ? StudentsList.filter(student => student.stu_school === anotherSchool || student.stu_school === line.school_of_line)
+        : StudentsList.filter(student => student.stu_school === line.school_of_line);
+    // Sort filteredStudents array by 'stu_school' and then by 'stu_fullName'
+    const sortedStudents = filteredStudents.sort((a, b) => {
+        if (a.stu_school === b.stu_school) {
+            return a.stu_fullName.localeCompare(b.stu_fullName);
+        }
+        return a.stu_school.localeCompare(b.stu_school);
+    });
 
     //צריך לאפשר להוסיף תחנת עצירה נוספת שהיא כתובת בית ספר
     //if anotherSchool - then set its address to the station before last one / or the second one based on 'מוצא'/,יעד'
@@ -251,20 +258,20 @@ export default function AddStudentToLine() {
             </div>
 
             <div className='row school_detailsDiv' style={{ marginTop: '18px' }}>
-                <label htmlFor="schoolsSelect" style={{fontWeight:'bold'}}>בחר מוסד לימודים נוסף</label>
-                    <select id="schoolsSelect" className="form-select" onChange={(e) => handleSchoolSelection(e.target.value)}>
-                        <option value="">בחר</option>
-                        {schoolsList.map((school) => (
-                            <option key={school.institutionId} value={school.name}>
-                                {school.name}
-                            </option>
-                        ))}
-                    </select>
+                <label htmlFor="schoolsSelect" style={{ fontWeight: 'bold' }}>בחר מוסד לימודים נוסף</label>
+                <select id="schoolsSelect" className="form-select" onChange={(e) => handleSchoolSelection(e.target.value)}>
+                    <option value="">בחר</option>
+                    {schoolsList.map((school) => (
+                        <option key={school.institutionId} value={school.name}>
+                            {school.name}
+                        </option>
+                    ))}
+                </select>
 
-                </div>
+            </div>
 
             <div className='row students_detailsDiv' style={{ marginTop: '18px' }}>
-                <h4>תלמידים המשוייכים למוסדות הלימוד</h4>
+                <h4>תלמידים לשיוך לקו</h4>
                 <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
                     <table className="table">
                         <thead>
@@ -279,7 +286,7 @@ export default function AddStudentToLine() {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredStudents.map((student, index) => (
+                            {sortedStudents.map((student, index) => (
                                 <tr key={index}>
                                     <td><input type="checkbox" onChange={() => handleStudentSelection(index)} /></td>
                                     <td>{student.stu_fullName}</td>
@@ -298,5 +305,5 @@ export default function AddStudentToLine() {
 
 
         </div>
-    )
+    );
 }
