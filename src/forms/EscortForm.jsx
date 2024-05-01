@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import "../styling/Form.css";
 import Swal from 'sweetalert2';
 import { FaCheck } from 'react-icons/fa';
@@ -7,17 +7,21 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
 import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, fixDateForView, fixDateForForm} from '../tools/validations';
 import { MdCancel } from 'react-icons/md';
+import { EscortContext } from '../contexts/escortContext';
 
 export default function EscortForm() {
 
   const navigate = useNavigate();
   const { state } = useLocation();
+  const {addEscort} = useContext(EscortContext);
+
   let originEscort = state;
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
   const [escort, setEscort] = useState({ ...originEscort });
   const [errors, setErrors] = useState({});
+
 
   //filterout cities that dont match the search
   const handleInputChange = (event) => {
@@ -31,7 +35,7 @@ export default function EscortForm() {
   };
 
   //form subbmision
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
 
@@ -39,14 +43,19 @@ export default function EscortForm() {
       let escortToSend = {
         esc_fullName: escort.esc_fullName,
         esc_id: escort.esc_id,
-        esc_dateOfBirth: fixDateForView(escort.esc_dateOfBirth),
+        esc_dateOfBirth: escort.esc_dateOfBirth,
         esc_cell: escort.esc_cell,
         esc_city: escort.esc_city,
         esc_street: escort.esc_street,
         esc_homeNum: escort.esc_homeNum,
       };
 
-      navigate('/escorts', { state: escortToSend });
+      let res=await addEscort(escortToSend);
+      if (res && res==1) //check if res so the code doesn't glitch 
+      {
+        navigate('/escorts');
+      }
+      else console.log("error");//add swal
 
     } else {
       // Show error message

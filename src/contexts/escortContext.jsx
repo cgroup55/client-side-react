@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { create, read, update } from "../tools/api";
-import { fixDateForView } from "../tools/validations";
+import { convertDate, fixDateForView } from "../tools/validations";
 export const EscortContext = createContext();
 
 export default function EscortContextProvider(props) {
@@ -14,6 +14,7 @@ export default function EscortContextProvider(props) {
             return;
         }
         //local update
+        escortToInsert.esc_dateOfBirth=convertDate(escortToInsert.esc_dateOfBirth, true);
         setEscortsList([...escortsList, escortToInsert]);
         return res;
     }
@@ -31,7 +32,7 @@ export default function EscortContextProvider(props) {
 
         setEscortsList(() => res.map(escort => ({
             ...escort,
-            esc_dateOfBirth: fixDateForView(escort.esc_dateOfBirth)
+            esc_dateOfBirth: convertDate(escort.esc_dateOfBirth,true)
         })));
     }
 

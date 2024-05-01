@@ -133,10 +133,19 @@ export const fixDateForForm = (input) => {
         console.log("date after form", fixedDate);
         return fixedDate;
     }
-   
 
+}
 
-    return dateWithoutTime;
+export const convertDate = (value, forView) => {
+    let dateParts, seperator='-';
+    if(forView){
+        dateParts = value.split('T')[0].split('-');
+        seperator = '/';
+    }
+    else{
+        dateParts = value.split('/');
+    }
 
+    return dateParts.reverse().join(seperator);
 }
 

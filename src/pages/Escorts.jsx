@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useLocation, useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
-import { fixDateForForm,fixDateForView } from '../tools/validations.js';
+import { convertDate, fixDateForForm,fixDateForView } from '../tools/validations.js';
 import { EscortContext } from '../contexts/escortContext.jsx';
 
 
@@ -14,12 +14,9 @@ export default function Escorts() {
   //stam();
   
   //escorts list from context
- const { escortsList,getEscort} = useContext(EscortContext);
+  const { escortsList} = useContext(EscortContext);
   console.log("escortsList",escortsList);
   const navigate = useNavigate();
-
-  const { state } = useLocation();
-
 
   const [showModal, setShowModal] = useState(false);
   const [rowData, setRowData] = useState(null);
@@ -91,7 +88,7 @@ export default function Escorts() {
     let currentEscort = {
       esc_fullName: row.esc_fullName,
       esc_id: row.esc_id,
-      esc_dateOfBirth: fixDateForForm(row.esc_dateOfBirth),
+      esc_dateOfBirth: convertDate(row.esc_dateOfBirth,false),
       esc_cell: row.esc_cell,
       esc_city: row.esc_city,
       esc_street: row.esc_street,
