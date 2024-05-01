@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { create ,read ,update } from "../tools/api";
+import { fixDateForView } from "../tools/validations";
 export const EscortContext = createContext();
 
 export default function EscortContextProvider(props) {
@@ -21,13 +22,21 @@ export default function EscortContextProvider(props) {
 
     const getEscort = async () => {
         let res = await read(url);
-        if (res == undefined || res == null) {
+        if (!res || res.length === 0) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
-        setEscortsList(res);
-        console.log("Escort GET:",res);
+        
+        // Fix the date format for each escort object
+        const fixedEscorts = res.map(escort => ({
+            ...escort,
+            esc_dateOfBirth: fixDateForView(escort.esc_dateOfBirth) // Assuming fixDateForView is a valid function
+        }));
+        
+        setEscortsList(fixedEscorts);
+        console.log("Escort GET:", fixedEscorts);
     }
+    
 
     //
     const value = {

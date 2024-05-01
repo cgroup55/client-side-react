@@ -61,7 +61,7 @@ console.log("escortsList",escortsList);
     },
     {
       name: "תאריך לידה",
-      selector: (row) => fixDateForView(row.esc_dateOfBirth),
+      selector: (row) => row.esc_dateOfBirth,
       sortable: true,
     },
   ];
