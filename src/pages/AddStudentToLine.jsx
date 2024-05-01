@@ -14,7 +14,7 @@ export default function AddStudentToLine() {
     const StudentsList = [
         {
             stu_fullName: 'שושי שרון',
-            stu_id: "024519875",
+            stu_id: "024519877",
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ט'",
             stu_school: "טשרני",
@@ -30,7 +30,7 @@ export default function AddStudentToLine() {
         },
         {
             stu_fullName: 'שלום אולי',
-            stu_id: "024519875",
+            stu_id: "024519866",
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ט'",
             stu_school: "טשרני",
@@ -46,7 +46,7 @@ export default function AddStudentToLine() {
         },
         {
             stu_fullName: 'בני גברא',
-            stu_id: "024519875",
+            stu_id: "024519878",
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ט'",
             stu_school: "טשרני",
@@ -62,7 +62,7 @@ export default function AddStudentToLine() {
         },
         {
             stu_fullName: 'מיכאל לוי',
-            stu_id: "024519875",
+            stu_id: "024519885",
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ט'",
             stu_school: "טשרני",
@@ -78,7 +78,7 @@ export default function AddStudentToLine() {
         },
         {
             stu_fullName: 'אבשלום ידידיה',
-            stu_id: "024519875",
+            stu_id: "024522875",
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ה'",
             stu_school: "אורט",
@@ -100,7 +100,7 @@ export default function AddStudentToLine() {
         },
         {
             stu_fullName: 'שלומי שרון',
-            stu_id: "024519875",
+            stu_id: "024519871",
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ט'",
             stu_school: "אלון",
@@ -122,7 +122,7 @@ export default function AddStudentToLine() {
         },
         {
             stu_fullName: 'אבי אהרון',
-            stu_id: "024519875",
+            stu_id: "024519876",
             stu_dateofbirth: '10/02/2015',
             stu_grade: "ה'",
             stu_school: "טשרני",
@@ -144,7 +144,7 @@ export default function AddStudentToLine() {
         },
         {
             stu_fullName: 'אהובה לוי',
-            stu_id: "024519875",
+            stu_id: "024515875",
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ה'",
             stu_school: "אורט",
@@ -166,7 +166,7 @@ export default function AddStudentToLine() {
         },
         {
             stu_fullName: 'שירה יהלום',
-            stu_id: "024519875",
+            stu_id: "024519175",
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ה'",
             stu_school: "אורט",
@@ -188,7 +188,7 @@ export default function AddStudentToLine() {
         },
         {
             stu_fullName: 'אלון בן יגאל',
-            stu_id: "024519875",
+            stu_id: "024513375",
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ט'",
             stu_school: "טשרני",
@@ -223,13 +223,11 @@ export default function AddStudentToLine() {
 
     //Management student assigned to the line
     const handleStudentSelection = (student) => {
-        //student hold all the student obj selected
-        console.log("student :", student);
-
-        const isSelected = selectedStudents.some(s => s.stu_id === student.stu_id);
-        console.log('isSelected:',isSelected);
+        //student holds all the student obj selected
+        const isSelected = selectedStudents.some(s => s.stu_id == student.stu_id);
+        console.log('isSelected:', isSelected);
         if (isSelected) {
-            setSelectedStudents(selectedStudents.filter(s => s.stu_id !== student.stu_id));
+            setSelectedStudents(selectedStudents.filter(s => s.stu_id != student.stu_id));
         } else {
             setSelectedStudents([...selectedStudents, student]);
         }
@@ -304,8 +302,8 @@ export default function AddStudentToLine() {
                             </tr>
                         </thead>
                         <tbody>
-                            {sortedStudents.map((student, index) => (
-                                <tr key={index}>
+                            {sortedStudents.map((student) => (
+                                <tr key={student.stu_id}>
                                     <td><input type="checkbox" onChange={() => handleStudentSelection(student)} /></td>
                                     <td>{student.stu_fullName}</td>
                                     <td>{student.stu_grade}</td>
