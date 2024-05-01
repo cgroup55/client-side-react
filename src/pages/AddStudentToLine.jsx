@@ -226,8 +226,6 @@ export default function AddStudentToLine() {
         //student hold all the student obj selected
         console.log("student :", student);
 
-
-        
         const isSelected = selectedStudents.some(s => s.stu_id === student.stu_id);
         console.log('isSelected:',isSelected);
         if (isSelected) {

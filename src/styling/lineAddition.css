@@ -17,9 +17,7 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* .students_detailsDiv{
 
-} */
 /* rgba(179, 223, 192, 0.55) */
 
 .school_detailsDiv{
@@ -39,5 +37,13 @@
 
 .table th {
   background-color: #f2f2f2;
+}
+
+@media (max-width: 570px) {
+  .assocStu_detailsDiv{
+    margin-top: 20px;
+    margin-right: 0px;
+    min-width: fit-content;
+  }
 }
 
