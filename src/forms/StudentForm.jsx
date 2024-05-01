@@ -6,7 +6,7 @@ import { MdCancel } from "react-icons/md";
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect, fixDate } from '../tools/validations';
+import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect, fixDateForForm,fixDateForView } from '../tools/validations';
 
 
 export default function StudentForm() {
@@ -78,10 +78,10 @@ export default function StudentForm() {
             let studentToSend = {
                 stu_fullName: student.stu_fullName,
                 stu_id: student.stu_id,
-                stu_dateofbirth: fixDate(student.stu_dateofbirth),
+                stu_dateofbirth: fixDateForView(student.stu_dateofbirth),
                 stu_grade: student.stu_grade,
                 stu_school: student.stu_school,
-                stu_dateOfPlacement: fixDate(student.stu_dateOfPlacement),
+                stu_dateOfPlacement: fixDateForView(student.stu_dateOfPlacement),
                 stu_disability: student.stu_disability,
                 stu_comments: student.stu_comments,
 

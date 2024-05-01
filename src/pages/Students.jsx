@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useLocation, useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
-import { fixDate } from '../tools/validations.js';
+import { fixDateForForm,fixDateForView } from '../tools/validations.js';
 
 export default function Students() {
 
@@ -147,10 +147,10 @@ export default function Students() {
         let currentStudent = {
             stu_fullName: row.stu_fullName,
             stu_id: row.stu_id,
-            stu_dateofbirth: fixDate(row.stu_dateofbirth),
+            stu_dateofbirth: fixDateForForm(row.stu_dateofbirth),
             stu_grade: row.stu_grade,
             stu_school: row.stu_school,
-            stu_dateOfPlacement: fixDate(row.stu_dateOfPlacement),
+            stu_dateOfPlacement: fixDateForForm(row.stu_dateOfPlacement),
             stu_disability: row.stu_disability,
             stu_comments: row.stu_comments,
 

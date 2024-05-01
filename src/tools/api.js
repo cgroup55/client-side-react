@@ -1,13 +1,34 @@
-const BASE_URL = "https://localhost:7039";
+const BASE_URL = "https://localhost:7058"; //change to ruppin server
 
-//crud יהיו לנו כאן את 4 פונ ה-
-//עדכון ומחיקה בגנון של יצירה
-//אם יהיו פונ מיוחדות שאין ב4 האלה הן ישבו בתוך הקונטקסט עצמו..
+//basic functions that take care of CRUD actions and will be used all over contexts
+
+//other specific functions that will request special data from DBS -
+// will be in the required context
 export async function create(url, data) {
     try {
         let res = await fetch(`${BASE_URL}/${url}`,
             {
                 method: 'POST',
+                body: data ? JSON.stringify(data) : "",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json;',
+                }
+            });
+        if (res.ok) {
+            return await res.json();//what shoud i return ?
+        }
+        else {
+            return null;
+        }
+    } catch (err) { console.log(err) }
+}
+
+export async function update(url, data) {
+    try {
+        let res = await fetch(`${BASE_URL}/${url}`,
+            {
+                method: 'PUT',
                 body: data ? JSON.stringify(data) : "",
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,6 +43,7 @@ export async function create(url, data) {
         }
     } catch (err) { console.log(err) }
 }
+
 
 export async function read(url) {
     try {
@@ -41,3 +63,6 @@ export async function read(url) {
         }
     } catch (err) { console.log(err) }
 }
+
+
+//add delete?

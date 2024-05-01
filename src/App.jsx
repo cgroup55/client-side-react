@@ -34,6 +34,7 @@ function App() {
     <>
       <EscortContextProvider>
         <BrowserRouter>
+        {/* change to hash */}
 
           {(location.pathname != "/") ? <NavBar /> : null}
           <Routes>

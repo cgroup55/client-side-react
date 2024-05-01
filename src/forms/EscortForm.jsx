@@ -5,7 +5,7 @@ import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, fixDate } from '../tools/validations';
+import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, fixDateForView, fixDateForForm} from '../tools/validations';
 import { MdCancel } from 'react-icons/md';
 
 export default function EscortForm() {
@@ -39,7 +39,7 @@ export default function EscortForm() {
       let escortToSend = {
         esc_fullName: escort.esc_fullName,
         esc_id: escort.esc_id,
-        esc_dateofbirth: fixDate(escort.esc_dateofbirth),
+        esc_dateOfBirth: fixDateForView(escort.esc_dateOfBirth),
         esc_cell: escort.esc_cell,
         esc_city: escort.esc_city,
         esc_street: escort.esc_street,
@@ -59,7 +59,7 @@ export default function EscortForm() {
     let newErrors = {};
     newErrors.esc_fullName = validateHebrewletters(escort.esc_fullName);
     newErrors.esc_id = ValidateId(escort.esc_id);
-    newErrors.esc_dateofbirth = validateDateOfBirth(escort.esc_dateofbirth);
+    newErrors.esc_dateOfBirth = validateDateOfBirth(escort.esc_dateOfBirth);
     newErrors.esc_cell = ValidCellPhoneNum(escort.esc_cell);
     newErrors.esc_city = validateCity(escort.esc_city, cities);
     newErrors.esc_street = validateStreet(escort.esc_street, streets);
@@ -136,16 +136,16 @@ export default function EscortForm() {
 
 
 
-            <Form.Group controlId="esc_dateofbirth">
+            <Form.Group controlId="esc_dateOfBirth">
               <Form.Label>תאריך לידה</Form.Label>
-              <Form.Control type="date" name="esc_dateofbirth"
-                value={escort.esc_dateofbirth}
-                onChange={(e) => setEscort({ ...escort, esc_dateofbirth: e.target.value })}
-                isInvalid={!!errors.esc_dateofbirth}
+              <Form.Control type="date" name="esc_dateOfBirth"
+                value={escort.esc_dateOfBirth}
+                onChange={(e) => setEscort({ ...escort, esc_dateOfBirth: e.target.value })}
+                isInvalid={!!errors.esc_dateOfBirth}
                 required
               />
               <Form.Control.Feedback type="invalid">
-                {errors.esc_dateofbirth}
+                {errors.esc_dateOfBirth}
               </Form.Control.Feedback>
             </Form.Group>
 

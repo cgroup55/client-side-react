@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useLocation, useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
-import { fixDate } from '../tools/validations.js';
+import { fixDateForForm,fixDateForView } from '../tools/validations.js';
 import { EscortContext } from '../contexts/escortContext.jsx';
 
 
@@ -14,12 +14,12 @@ export default function Escorts() {
   //stam();
   
   //escorts list from context
- // const { escortsList } = useContext(EscortContext);
-
+ const { escortsList } = useContext(EscortContext);
+console.log("escortsList",escortsList);
   const navigate = useNavigate();
 
   const { state } = useLocation();
-  let addedEscort = state;
+
 
   const [showModal, setShowModal] = useState(false);
   const [rowData, setRowData] = useState(null);
@@ -31,7 +31,7 @@ export default function Escorts() {
     let newEscort = {
       esc_fullName: '',
       esc_id: '',
-      esc_dateofbirth: '',
+      esc_dateOfBirth: '',
       esc_cell: '',
       esc_city: '',
       esc_street: '',
@@ -61,52 +61,18 @@ export default function Escorts() {
     },
     {
       name: "תאריך לידה",
-      selector: (row) => row.esc_dateofbirth,
+      selector: (row) => fixDateForView(row.esc_dateOfBirth),
       sortable: true,
     },
   ];
 
-  const escortRows = [
-    //GET
-    {
-      esc_fullName: "אלי כהן",
-      esc_id: "218675984",
-      esc_dateofbirth: "12/04/1998",
-      esc_cell: '0527458899',
-      esc_city: 'כפר סבא',
-      esc_street: 'ברנר',
-      esc_homeNum: 5
-    },
-    {
-      esc_fullName: 14,
-      esc_id: "218675333",
-      esc_dateofbirth: "12/04/1998",
-      esc_cell: '0527458899',
-      esc_city: 'כפר סבא',
-      esc_street: 'ברנר',
-      esc_homeNum: 8
-    },
-    {
-      esc_fullName: 14,
-      esc_id: "218678888",
-      esc_dateofbirth: "12/04/1998",
-      esc_cell: '0527458888',
-      esc_city: 'כפר סבא',
-      esc_street: 'ברנר',
-      esc_homeNum: 5
-    },
 
-
-  ];
-
-  //זמני- למחוק
-  const updatedEscortRows = addedEscort ? [...escortRows, addedEscort] : escortRows;
 
    //field names for the model
   const ColumnNamesByIdentifier = {
     esc_fullName: "שם מלא",
     esc_id: "תעודת זהות",
-    esc_dateofbirth: "תאריך לידה",
+    esc_dateOfBirth: "תאריך לידה",
     esc_cell: 'טלפון נייד',
     esc_city: 'עיר',
     esc_street: 'רחוב',
@@ -125,7 +91,7 @@ export default function Escorts() {
     let currentEscort = {
       esc_fullName: row.esc_fullName,
       esc_id: row.esc_id,
-      esc_dateofbirth: fixDate(row.esc_dateofbirth),
+      esc_dateOfBirth: fixDateForForm(row.esc_dateOfBirth),
       esc_cell: row.esc_cell,
       esc_city: row.esc_city,
       esc_street: row.esc_street,
@@ -144,8 +110,7 @@ export default function Escorts() {
   return (
     <div className='container mt-5' >
       <h3 className="bold" style={{ textAlign: 'center' }}>נתוני מלווים</h3>
-      <Table columns={escortColumns} rows={updatedEscortRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
-      {/* escortsList להחליף בrows*/}
+      <Table columns={escortColumns} rows={escortsList} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addNewEscort}>הוסף מלווה חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>

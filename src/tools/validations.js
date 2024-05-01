@@ -107,21 +107,36 @@ export const isRadioButtonChecked = (input) => {
     else return "";
 };
 
-export const fixDate = (input) => {
+export const fixDateForView = (input) => {
 
-    let date = input;
-    let delim = "-";
-    console.log("date before", date);
-    let dateParts = (input).split(/[/-]/);
-    console.log("dateParts", dateParts);
+    let dateWithoutTime=input.split('T');
+    let dateParts = dateWithoutTime[0].split('-');
 
-    if (dateParts[0].length == 4) {
-        delim = "/";
-    }
-    let fixedDate = dateParts[2] + delim + dateParts[1] + delim + dateParts[0];
-    console.log("date after", fixedDate);
+    let fixedDate = dateParts[2] + "/" + dateParts[1] + "/"  + dateParts[0];
+    console.log("date after view", fixedDate);
 
     return fixedDate;
+
+}
+
+export const fixDateForForm = (input) => {
+
+    let date = input;
+    let dateWithoutTime=date.split('T');
+    if(dateWithoutTime.length>1){
+        console.log("date after form T", dateWithoutTime[0]);
+        return dateWithoutTime[0];
+    }
+    else{
+        let dateParts=dateWithoutTime[0].split("/");
+        let fixedDate = dateParts[2] + "-" + dateParts[1] + "-"  + dateParts[0];
+        console.log("date after form", fixedDate);
+        return fixedDate;
+    }
+   
+
+
+    return dateWithoutTime;
 
 }
 
