@@ -223,11 +223,15 @@ export default function AddStudentToLine() {
 
     //Management student assigned to the line
     const handleStudentSelection = (student) => {
-        //tudent hold all the student obj selected
+        //student hold all the student obj selected
         console.log("student :", student);
-        const isSelected = selectedStudents.some(selStudent => selStudent.stu_fullName === student.stu_fullName);
+
+
+        
+        const isSelected = selectedStudents.some(s => s.stu_id === student.stu_id);
+        console.log('isSelected:',isSelected);
         if (isSelected) {
-            setSelectedStudents(selectedStudents.filter(selStudent => selStudent.stu_fullName !== student.stu_fullName));
+            setSelectedStudents(selectedStudents.filter(s => s.stu_id !== student.stu_id));
         } else {
             setSelectedStudents([...selectedStudents, student]);
         }
