@@ -17,13 +17,6 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-
-/* rgba(179, 223, 192, 0.55) */
-
-.school_detailsDiv{
-  max-width: fit-content; 
-}
-
 .table {
   width: 100%;
   border-collapse: collapse;

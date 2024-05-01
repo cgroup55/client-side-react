@@ -6,8 +6,7 @@ export default function AddStudentToLine() {
     const navigate = useNavigate();
     const { state } = useLocation();
     let line = state;
-
-    const [anotherSchool, setAnotherSchool] = useState('');
+    
     const [selectedStudents, setSelectedStudents] = useState([]);
 
     //Get 1. stu list 2. school list from DB
@@ -215,12 +214,6 @@ export default function AddStudentToLine() {
     { institutionId: 2, name: "אלון", city: "רעננה", street: "ברנר", houseNumber: "7" },
     { institutionId: 3, name: "אורט", city: "חדרה", street: "הרצל", houseNumber: "5" }];
 
-    //Render also students from this school
-    const handleSchoolSelection = (selectedInstitutionId) => {
-        console.log("Selected institutionId:", selectedInstitutionId);
-        setAnotherSchool(selectedInstitutionId);
-    };
-
     //Management student assigned to the line
     const handleStudentSelection = (student) => {
         //student holds all the student obj selected
@@ -235,9 +228,7 @@ export default function AddStudentToLine() {
 
     //************/
     //לשים לב שכרגע זה לפי *שם* בית ספר- זמני וצריך להתאים לשדות שיהיו לקו (-קוד בצפר)??  
-    const filteredStudents = anotherSchool
-        ? StudentsList.filter(student => student.stu_school === anotherSchool || student.stu_school === line.school_of_line)
-        : StudentsList.filter(student => student.stu_school === line.school_of_line);
+    const filteredStudents = StudentsList.filter(student => student.stu_school === line.school_of_line);
 
     // Sort filteredStudents array by 'stu_school' and then by 'stu_fullName'
     const sortedStudents = filteredStudents.sort((a, b) => {
@@ -246,9 +237,7 @@ export default function AddStudentToLine() {
         }
         return a.stu_school.localeCompare(b.stu_school);
     });
-
-    //צריך לאפשר להוסיף תחנת עצירה נוספת שהיא כתובת בית ספר
-    //if anotherSchool - then set its address to the station before last one / or the second one based on 'מוצא'/,יעד'
+   
     return (
 
         <div className='container mt-5'>
@@ -273,18 +262,6 @@ export default function AddStudentToLine() {
                 </div>
             </div>
 
-            <div className='row school_detailsDiv' style={{ marginTop: '18px' }}>
-                <label htmlFor="schoolsSelect" style={{ fontWeight: 'bold' }}>בחר מוסד לימודים נוסף</label>
-                <select id="schoolsSelect" className="form-select" onChange={(e) => handleSchoolSelection(e.target.value)}>
-                    <option value="">בחר</option>
-                    {schoolsList.map((school) => (
-                        <option key={school.institutionId} value={school.name}>
-                            {school.name}
-                        </option>
-                    ))}
-                </select>
-
-            </div>
 
             <div className='row students_detailsDiv' style={{ marginTop: '18px' }}>
                 <h4>תלמידים לשיוך לקו</h4>
