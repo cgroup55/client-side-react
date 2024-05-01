@@ -9,7 +9,7 @@ export default function AddStudentToLine() {
     
     const [selectedStudents, setSelectedStudents] = useState([]);
 
-    //Get 1. stu list 2. school list from DB
+    //Get 1. stu list 
     const StudentsList = [
         {
             stu_fullName: 'שושי שרון',
@@ -209,10 +209,6 @@ export default function AddStudentToLine() {
         },
 
     ];
-
-    const schoolsList = [{ institutionId: 1, name: "טשרני", city: "נתניה", street: "הגרא", houseNumber: "3" },
-    { institutionId: 2, name: "אלון", city: "רעננה", street: "ברנר", houseNumber: "7" },
-    { institutionId: 3, name: "אורט", city: "חדרה", street: "הרצל", houseNumber: "5" }];
 
     //Management student assigned to the line
     const handleStudentSelection = (student) => {
