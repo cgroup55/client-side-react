@@ -16,7 +16,7 @@ export async function create(url, data) {
                 }
             });
         if (res.ok) {
-            return await res.json();//what shoud i return ?
+            return await res.json();
         }
         else {
             return null;

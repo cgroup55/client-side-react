@@ -1,11 +1,11 @@
 import { createContext, useState, useEffect } from "react";
-import { create ,read ,update } from "../tools/api";
+import { create, read, update } from "../tools/api";
 import { fixDateForView } from "../tools/validations";
 export const EscortContext = createContext();
 
 export default function EscortContextProvider(props) {
 
-    const url='api/Escort';
+    const url = 'api/Escort';
     const addEscort = async (escortToInsert) => {
         //DB update
         let res = await create(url, escortToInsert);
@@ -26,27 +26,25 @@ export default function EscortContextProvider(props) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
-        
+
         // Fix the date format for each escort object
-        const fixedEscorts = res.map(escort => ({
+
+        setEscortsList(() => res.map(escort => ({
             ...escort,
-            esc_dateOfBirth: fixDateForView(escort.esc_dateOfBirth) // Assuming fixDateForView is a valid function
-        }));
-        
-        setEscortsList(fixedEscorts);
-        console.log("Escort GET:", fixedEscorts);
+            esc_dateOfBirth: fixDateForView(escort.esc_dateOfBirth)
+        })));
     }
-    
+
 
     //
     const value = {
-        addEscort, escortsList,
+        addEscort, escortsList, getEscort
         //שם הפוקציה,
     }
 
     //get all escorts on first render
     useEffect(() => {
-       getEscort();
+        getEscort();
     }, []);
 
     return (

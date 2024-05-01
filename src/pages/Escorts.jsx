@@ -14,8 +14,8 @@ export default function Escorts() {
   //stam();
   
   //escorts list from context
- const { escortsList } = useContext(EscortContext);
-console.log("escortsList",escortsList);
+ const { escortsList,getEscort} = useContext(EscortContext);
+  console.log("escortsList",escortsList);
   const navigate = useNavigate();
 
   const { state } = useLocation();
@@ -106,6 +106,14 @@ console.log("escortsList",escortsList);
     // Add your delete logic here
   };
 
+
+
+  if(!escortsList || escortsList.length==0)
+  return(
+    <div className='container mt-5' >
+      <h3 className="bold" style={{ textAlign: 'center' }}>נתוני מלווים</h3>
+    </div>
+  )
 
   return (
     <div className='container mt-5' >
