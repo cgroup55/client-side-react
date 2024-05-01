@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import '../styling/lineAddition.css';
+import { FaCheck } from 'react-icons/fa';
+import { Button } from 'react-bootstrap';
 
 export default function AddStudentToLine() {
     const navigate = useNavigate();
     const { state } = useLocation();
     let line = state;
-    
+
     const [selectedStudents, setSelectedStudents] = useState([]);
 
     //Get 1. stu list 
@@ -226,14 +228,19 @@ export default function AddStudentToLine() {
     //לשים לב שכרגע זה לפי *שם* בית ספר- זמני וצריך להתאים לשדות שיהיו לקו (-קוד בצפר)??  
     const filteredStudents = StudentsList.filter(student => student.stu_school === line.school_of_line);
 
-    // Sort filteredStudents array by 'stu_school' and then by 'stu_fullName'
+    //Sort filteredStudents array by 'stu_school' and then by 'stu_fullName'
     const sortedStudents = filteredStudents.sort((a, b) => {
         if (a.stu_school === b.stu_school) {
             return a.stu_fullName.localeCompare(b.stu_fullName);
         }
         return a.stu_school.localeCompare(b.stu_school);
     });
-   
+
+    //Hanle save changes
+    const hanleSaving = () => {
+        console.log('save');
+    }
+
     return (
 
         <div className='container mt-5'>
@@ -289,6 +296,11 @@ export default function AddStudentToLine() {
                         </tbody>
                     </table>
                 </div>
+
+                <div className='text-center' style={{ paddingTop: '20px' }}>
+                    <Button type="button" onClick={hanleSaving}>שמירה <FaCheck style={{ paddingBottom: '2px' }} /></Button>
+                </div>
+
             </div>
 
         </div>
