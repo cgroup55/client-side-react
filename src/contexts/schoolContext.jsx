@@ -21,15 +21,19 @@ export default function SchoolContextProvider(props) {
     }
 
 
-    const updateSchool = async (escortToUpdate) => {
+    const updateSchool = async (schoolToUpdate) => {
         //DB update
-        let res = await update(url, escortToUpdate);
+        let res = await update(url, schoolToUpdate);
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
 
-        getSchools();
+        setSchoolsList(() => schoolsList.map(school => {
+            if (school.institutionId != schoolToUpdate.institutionId)
+                return school;
+            return { ...schoolToUpdate}
+        }));
      
     }
 
