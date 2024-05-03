@@ -69,6 +69,7 @@ export default function LineForm() {
     return valid;
   };
 
+  //updates the school info 
   useEffect(() => {
     const chosenSchool = schoolsList.find(school => school.name === line.school_of_line);
     if (chosenSchool) {
