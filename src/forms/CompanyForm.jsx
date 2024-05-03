@@ -1,12 +1,13 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect, useContext, } from 'react';
 import "../styling/Form.css";
 import Swal from 'sweetalert2';
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateCity, validateStreet } from '../tools/cities&streets';
-import { ValidPositiveNumber, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail, ValidateId } from '../tools/validations';
+import { ValidPositiveNumber, validateHebrewletters, ValidCellOrHomePhoneNum, validateEmail, ValidateId } from '../tools/validations';
 import { MdCancel } from 'react-icons/md';
+import { CompanyContext } from '../contexts/companyContext';
 
 export default function CompanyForm() {
 
@@ -14,24 +15,14 @@ export default function CompanyForm() {
   const { state } = useLocation();
   let originCompany = state;
 
+  const { addCompany, updateCompany } = useContext(CompanyContext)
+
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
-
   const [company, setCompany] = useState({ ...originCompany });
   const [errors, setErrors] = useState({});
 
-
-  //render the cities on-load
-  useEffect(() => {
-    fetchCities().then(cities => setCities(cities));
-  }, []);
-
-  useEffect(() => {
-    if (originCompany.company_city != '') {
-      fetchStreetsByCity(originCompany.company_city).then(streets => setStreets(streets));
-    }
-  }, []);
 
   //filterout cities that dont match the search
   const handleInputChange = (event) => {
@@ -44,25 +35,51 @@ export default function CompanyForm() {
     setCompany({ ...company, company_city: inputValue });
   };
 
-
-  const handleSubmit = (event) => {
+//form subbmision
+  const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
-    let isValid = validateForm();
-    console.log('isValid:', isValid);
-    if (isValid) {      
-      navigate('/transportComps', company);
-      Swal.fire({
-        icon: "success",
-        title: "הנתונים נשמרו בהצלחה",
-        confirmButtonText: 'סגור',
-        customClass: {
-          confirmButton: 'close-button'
+    let isValid = validateForm();    
+    if (isValid) {
+      let companyToExport = {
+        company_code: company.company_code,
+        company_name: company.company_name,
+        company_email: company.company_email,
+        company_phone: company.company_phone,
+        manager_name: company.manager_name,
+        manager_phone: company.manager_phone,
+        company_comments: company.company_comments,
+        company_city: company.company_city,
+        company_street: company.company_street,
+        company_homeNum: company.company_homeNum
+      };
+      if (originCompany.company_code == '')//add or update?
+      {
+        res = await addCompany(companyToExport);
+        if (res && res == 1) //check if res returns a valid response for 
+        {
+          navigate('/transportComps');
         }
-       
-      });
-    } else {
-      // Show error message
+        else console.log("error");//add swal
+      }
+      else {
+        await updateCompany(companyToExport);
+        navigate('/transportComps');
+      }
+
+
     }
+    else {
+      console.log("invalid details");
+    }   
+      // Swal.fire({
+      //   icon: "success",
+      //   title: "הנתונים נשמרו בהצלחה",
+      //   confirmButtonText: 'סגור',
+      //   customClass: {
+      //     confirmButton: 'close-button'
+      //   }
+
+      // });
   };
 
   const validateForm = () => {
@@ -95,175 +112,186 @@ export default function CompanyForm() {
     return valid;
   };
 
-  //continue comments+ send obj
+  //Render the cities on-load
+  useEffect(() => {
+    fetchCities().then(cities => setCities(cities));
+  }, []);
+
+  //Render the streets in a specific city on-load
+  useEffect(() => {
+    if (originCompany.company_city != '') {
+      fetchStreetsByCity(originCompany.company_city).then(streets => setStreets(streets));
+    }
+  }, []);
+
   return (
     <div className='container mt-5 form-container'>
 
       <div className='row justify-content-between align-items-center'>
-      <div className='col-10'>
+        <div className='col-10'>
           <h2>{originCompany.company_code !== "" ? "עריכת" : "הוספת"} חברת הסעה</h2>
         </div>
-        <div className='col-2' style={{textAlign: 'left'}}>
-          <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px'}} onClick={() => { navigate('/transportComps') }}>
+        <div className='col-2' style={{ textAlign: 'left' }}>
+          <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/transportComps') }}>
             <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
         </div>
         <div className='row'>
-        <Form className='col-9 label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
-          <Form.Group controlId="company_code">
-            <Form.Label>ח"פ חברה</Form.Label>
-            {originCompany.company_code != "" ?  //  if in edit mode
-              (<Form.Control type="text" value={company.company_code} readOnly /> // Render as plain text
-              ) : (
-                <Form.Control // Render as input field if not in edit mode
-                  type="text"
-                  value={company.company_code}
-                  onChange={(e) => setCompany({ ...company, company_code: e.target.value })}
-                  isInvalid={!!errors.company_code}
-                  required
-                />
-              )}
-            <Form.Control.Feedback type="invalid">
-              {errors.company_code}
-            </Form.Control.Feedback>
-          </Form.Group>
+          <Form className='col-9 label-input col-form-label-sm' style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
+            <Form.Group controlId="company_code">
+              <Form.Label>ח"פ חברה</Form.Label>
+              {originCompany.company_code != "" ?  //  if in edit mode
+                (<Form.Control type="text" value={company.company_code} readOnly /> // Render as plain text
+                ) : (
+                  <Form.Control // Render as input field if not in edit mode
+                    type="text"
+                    value={company.company_code}
+                    onChange={(e) => setCompany({ ...company, company_code: e.target.value })}
+                    isInvalid={!!errors.company_code}
+                    required
+                  />
+                )}
+              <Form.Control.Feedback type="invalid">
+                {errors.company_code}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-          <Form.Group controlId="company_name">
-            <Form.Label>שם חברה</Form.Label>
-            <Form.Control type="text" name="company_name"
-              value={company.company_name}
-              onChange={(e) => setCompany({ ...company, company_name: e.target.value })}
-              isInvalid={!!errors.company_name}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.company_name}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-
-          <Form.Group controlId="company_email">
-            <Form.Label>מייל חברה</Form.Label>
-            <Form.Control type="text" name="company_email"
-              value={company.company_email}
-              onChange={(e) => setCompany({ ...company, company_email: e.target.value })}
-              isInvalid={!!errors.company_email}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.company_email}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group controlId="company_phone">
-            <Form.Label>טלפון חברה</Form.Label>
-
-            <Form.Control type="text" name="company_phone"
-              value={company.company_phone}
-              onChange={(e) => setCompany({ ...company, company_phone: e.target.value })}
-              isInvalid={!!errors.company_phone}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.company_phone}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group controlId="manager_name">
-            <Form.Label>שם מנהל</Form.Label>
-            <Form.Control type="text" name="manager_name"
-              value={company.manager_name}
-              onChange={(e) => setCompany({ ...company, manager_name: e.target.value })}
-              isInvalid={!!errors.manager_name}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.manager_name}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group controlId="manager_phone">
-            <Form.Label>טלפון מנהל</Form.Label>
-            <Form.Control type="text" name="manager_phone"
-              value={company.manager_phone}
-              onChange={(e) => setCompany({ ...company, manager_phone: e.target.value })}
-              isInvalid={!!errors.manager_phone}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.manager_phone}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group controlId="company_comments">
-            <Form.Label>הערות</Form.Label>
-            <Form.Control className='comment' as="textarea" rows={1} name="company_comments"
-              value={company.company_comments}
-              onChange={(e) => setCompany({ ...company, company_comments: e.target.value })}
-            />
-
-          </Form.Group>
+            <Form.Group controlId="company_name">
+              <Form.Label>שם חברה</Form.Label>
+              <Form.Control type="text" name="company_name"
+                value={company.company_name}
+                onChange={(e) => setCompany({ ...company, company_name: e.target.value })}
+                isInvalid={!!errors.company_name}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.company_name}
+              </Form.Control.Feedback>
+            </Form.Group>
 
 
-          <Form.Group controlId="company_city">
-            <Form.Label>עיר</Form.Label>
-            <Form.Control list="cities-data" name="company_city"
-              value={company.company_city}
-              onChange={handleInputChange}
-              onInput={handleInputChange}
-              isInvalid={!!errors.company_city}
-              required
-            />
+            <Form.Group controlId="company_email">
+              <Form.Label>מייל חברה</Form.Label>
+              <Form.Control type="text" name="company_email"
+                value={company.company_email}
+                onChange={(e) => setCompany({ ...company, company_email: e.target.value })}
+                isInvalid={!!errors.company_email}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.company_email}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-            <datalist id="cities-data">
-              {filteredCities.map((city, index) => (
-                <option key={index} value={city} />
-              ))}
-            </datalist>
+            <Form.Group controlId="company_phone">
+              <Form.Label>טלפון חברה</Form.Label>
 
-            <Form.Control.Feedback type="invalid">
-              {errors.company_city}
-            </Form.Control.Feedback>
+              <Form.Control type="text" name="company_phone"
+                value={company.company_phone}
+                onChange={(e) => setCompany({ ...company, company_phone: e.target.value })}
+                isInvalid={!!errors.company_phone}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.company_phone}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-          </Form.Group>
+            <Form.Group controlId="manager_name">
+              <Form.Label>שם מנהל</Form.Label>
+              <Form.Control type="text" name="manager_name"
+                value={company.manager_name}
+                onChange={(e) => setCompany({ ...company, manager_name: e.target.value })}
+                isInvalid={!!errors.manager_name}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.manager_name}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-          <Form.Group controlId="company_street">
-            <Form.Label>רחוב</Form.Label>
-            <Form.Control
-              as="select"
-              name="company_street"
-              value={company.company_street}
-              onChange={(e) => setCompany({ ...company, company_street: e.target.value })}
-              isInvalid={!!errors.company_street}
-              required
-              className="formSelect"
-            >
-              {<option value={-1}></option>}
-              {streets.map((street, index) => (
-                <option key={index} value={street}>{street}</option>
-              ))}
-            </Form.Control>
+            <Form.Group controlId="manager_phone">
+              <Form.Label>טלפון מנהל</Form.Label>
+              <Form.Control type="text" name="manager_phone"
+                value={company.manager_phone}
+                onChange={(e) => setCompany({ ...company, manager_phone: e.target.value })}
+                isInvalid={!!errors.manager_phone}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.manager_phone}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-            <Form.Control.Feedback type="invalid">
-              {errors.company_street}
-            </Form.Control.Feedback>
-          </Form.Group>
+            <Form.Group controlId="company_comments">
+              <Form.Label>הערות</Form.Label>
+              <Form.Control className='comment' as="textarea" rows={1} name="company_comments"
+                value={company.company_comments}
+                onChange={(e) => setCompany({ ...company, company_comments: e.target.value })}
+              />
 
-          <Form.Group controlId="company_homeNum">
-            <Form.Label>מספר</Form.Label>
-            <Form.Control type="text" name="company_homeNum"
-              value={company.company_homeNum}
-              onChange={(e) => setCompany({ ...company, company_homeNum: e.target.value })}
-              isInvalid={!!errors.company_homeNum}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.company_homeNum}
-            </Form.Control.Feedback>
-          </Form.Group>
+            </Form.Group>
 
-          <div className='text-center' style={{ paddingTop: '20px' }}>
-            <Button type="submit" >שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
-          </div>
-        </Form>
-      </div>
+
+            <Form.Group controlId="company_city">
+              <Form.Label>עיר</Form.Label>
+              <Form.Control list="cities-data" name="company_city"
+                value={company.company_city}
+                onChange={handleInputChange}
+                onInput={handleInputChange}
+                isInvalid={!!errors.company_city}
+                required
+              />
+
+              <datalist id="cities-data">
+                {filteredCities.map((city, index) => (
+                  <option key={index} value={city} />
+                ))}
+              </datalist>
+
+              <Form.Control.Feedback type="invalid">
+                {errors.company_city}
+              </Form.Control.Feedback>
+
+            </Form.Group>
+
+            <Form.Group controlId="company_street">
+              <Form.Label>רחוב</Form.Label>
+              <Form.Control
+                as="select"
+                name="company_street"
+                value={company.company_street}
+                onChange={(e) => setCompany({ ...company, company_street: e.target.value })}
+                isInvalid={!!errors.company_street}
+                required
+                className="formSelect"
+              >
+                {<option value={-1}></option>}
+                {streets.map((street, index) => (
+                  <option key={index} value={street}>{street}</option>
+                ))}
+              </Form.Control>
+
+              <Form.Control.Feedback type="invalid">
+                {errors.company_street}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group controlId="company_homeNum">
+              <Form.Label>מספר</Form.Label>
+              <Form.Control type="text" name="company_homeNum"
+                value={company.company_homeNum}
+                onChange={(e) => setCompany({ ...company, company_homeNum: e.target.value })}
+                isInvalid={!!errors.company_homeNum}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.company_homeNum}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <div className='text-center' style={{ paddingTop: '20px' }}>
+              <Button type="submit" >שמור <FaCheck style={{ paddingBottom: '2px' }} /></Button>
+            </div>
+          </Form>
+        </div>
       </div>
     </div>
   )

@@ -1,6 +1,5 @@
-import { useState } from 'react'
-import React from 'react'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
@@ -25,6 +24,7 @@ import CompanyForm from './forms/CompanyForm.jsx';
 import EscortContextProvider from './contexts/escortContext.jsx';
 import AddStudentToLine from './pages/AddStudentToLine.jsx';
 import SchoolContextProvider from './contexts/schoolContext.jsx';
+import CompanyContextProvider from './contexts/companyContext.jsx';
 
 
 
@@ -35,6 +35,7 @@ function App() {
     <>
       <EscortContextProvider>
         <SchoolContextProvider>
+          <CompanyContextProvider>
           <BrowserRouter>
             {/* change to hash */}
 
@@ -58,6 +59,7 @@ function App() {
             </Routes>
 
           </BrowserRouter>
+          </CompanyContextProvider>
         </SchoolContextProvider>
       </EscortContextProvider>
     </>

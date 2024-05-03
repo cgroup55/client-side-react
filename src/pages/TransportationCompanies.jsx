@@ -1,17 +1,69 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate, useLocation } from 'react-router-dom';
 import MyModal from '../components/MyModal';
+import { CompanyContext } from '../contexts/companyContext';
 
 
 export default function TransportationCompanies() {
 
+  //companies list from context
+  const { companiesList } = useContext(CompanyContext);
+  console.log("companiesList", companiesList);
   const navigate = useNavigate();
+
   const [showModal, setShowModal] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
+
+
+  // const Companyrows = [
+  //   {
+  //     company_code: "1",
+  //     company_name: "אא' הסעים",
+  //     company_email: "bararad@gmail.com",
+  //     company_phone: "0549506905",
+  //     manager_name: "בר ארד",
+  //     manager_phone: "0547896541",
+  //     company_city: "תל אביב - יפו",
+  //     company_street: "אבן גבירול",
+  //     company_homeNum: "3",
+  //     company_comments: "נסה לכתוב הערה ממש ארוכה ולראות האם רואים הכל כולל הכלללללל ",
+
+  //   },
+  //   {
+  //     company_code: "1",
+  //     company_name: "בב' הסעות",
+  //     company_email: "bararad@gmail.com",
+  //     company_phone: "0549506905",
+  //     manager_name: "בר ארד",
+  //     manager_phone: "0547896541",
+  //     company_city: "תל אביב - יפו",
+  //     company_street: "אבן גבירול",
+  //     company_homeNum: "3",
+  //     company_comments: "גבגב"
+  //   },
+  // ];
+
+
+
+  const addNewCompany = () => {
+    let newCompany = {
+      company_code: "",
+      company_name: "",
+      company_email: "",
+      company_phone: "",
+      manager_name: "",
+      manager_phone: "",
+      company_comments: "",
+      company_city: "",
+      company_street: "",
+      company_homeNum: ""
+    }
+    navigate('/CompanyForm', { state: newCompany });
+  }
 
   const Companycolumns = [
     {
@@ -41,38 +93,9 @@ export default function TransportationCompanies() {
       name: "הערות",
       selector: (row) => row.company_comments
     },
-
-
   ];
 
-  const Companyrows = [
-    {
-      company_code: "1",
-      company_name: "אא' הסעים",
-      company_email: "bararad@gmail.com",
-      company_phone: "0549506905",
-      manager_name: "בר ארד",
-      manager_phone: "0547896541",
-      company_city: "תל אביב - יפו",
-      company_street: "אבן גבירול",
-      company_homeNum: "3",
-      company_comments: "נסה לכתוב הערה ממש ארוכה ולראות האם רואים הכל כולל הכלללללל ",
-
-    },
-    {
-      company_code: "1",
-      company_name: "בב' הסעות",
-      company_email: "bararad@gmail.com",
-      company_phone: "0549506905",
-      manager_name: "בר ארד",
-      manager_phone: "0547896541",
-      company_city: "תל אביב - יפו",
-      company_street: "אבן גבירול",
-      company_homeNum: "3",
-      company_comments: "גבגב"
-    },
-  ];
-
+  //field names for the model
   const ColumnNamesByIdentifier =
   {
     company_code: "ח.פ",
@@ -87,22 +110,6 @@ export default function TransportationCompanies() {
     company_comments: "הערות"
   }
 
-  const addNewCompany = () => {
-    let newCompany = {
-      company_code: "",
-      company_name: "",
-      company_email: "",
-      company_phone: "",
-      manager_name: "",
-      manager_phone: "",
-      company_comments: "",
-      company_city: "",
-      company_street: "",
-      company_homeNum: ""
-    }
-    navigate('/CompanyForm', { state: newCompany });
-  }
-
   //3 functions that handle viewing, editing and deleting a row
   const handleView = (row) => {
     setColData(ColumnNamesByIdentifier);
@@ -111,20 +118,18 @@ export default function TransportationCompanies() {
   };
 
   const handleEdit = (row) => {
-    console.log('Edit:', row);
-    // Add your edit logic here
-
+    console.log('company-row', row);
     let currentCompany = {
-      company_code: "1",
-      company_name: "אא' הסעים",
-      company_email: "bararad@gmail.com",
-      company_phone: "0549506905",
-      manager_name: "בר ארד",
-      manager_phone: "0547896541",
-      company_comments: "נגכע",
-      company_city: "תל אביב",
-      company_street: "אבן גבירול",
-      company_homeNum: "3"
+      company_code: row.company_code,
+      company_name: row.company_name,
+      company_email: row.company_email,
+      company_phone: row.company_phone,
+      manager_name: row.manager_name,
+      manager_phone: row.manager_phone,
+      company_comments: row.company_comments,
+      company_city: row.company_city,
+      company_street: row.company_street,
+      company_homeNum: row.company_homeNum
     }
     navigate('/CompanyForm', { state: currentCompany });
 
@@ -135,12 +140,17 @@ export default function TransportationCompanies() {
     // Add your delete logic here
   };
 
-
+  if(!companiesList || companiesList.length==0)
+  return(
+    <div className='container mt-5' >
+      <h3 className="bold" style={{ textAlign: 'center' }}>חברות הסעה</h3>
+    </div>
+  )
 
   return (
     <div className='container mt-5' >
       <h3 className="bold" style={{ textAlign: 'center' }}>חברות הסעה</h3>
-      <Table columns={Companycolumns} rows={Companyrows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
+      <Table columns={Companycolumns} rows={companiesList} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addNewCompany}>הוסף חברת הסעה <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
