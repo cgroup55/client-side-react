@@ -1,11 +1,13 @@
-import { createContext, useState, useEffect } from "react";
+import { React,createContext, useState, useEffect } from "react";
 import { create, read, update } from "../tools/api";
-import { convertDate, fixDateForView } from "../tools/validations";
+import { convertDate } from "../tools/validations";
 export const EscortContext = createContext();
 
 export default function EscortContextProvider(props) {
 
     const url = 'api/Escort';
+    const [escortsList, setEscortsList] = useState([]);
+
     const addEscort = async (escortToInsert) => {
         //DB update
         let res = await create(url, escortToInsert);
@@ -13,13 +15,26 @@ export default function EscortContextProvider(props) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
-        //local update
+        //local update + date fix
         escortToInsert.esc_dateOfBirth=convertDate(escortToInsert.esc_dateOfBirth, true);
         setEscortsList([...escortsList, escortToInsert]);
         return res;
     }
 
-    const [escortsList, setEscortsList] = useState([]);
+    //update takes a re-render to apply.........
+    const updateEscort = async (escortToUpdate) => {
+        //DB update
+        let res = await update(url, escortToUpdate);
+        if (res == undefined || res == null) {
+            console.log('שגיאה- ריק מתוכן');
+            return;
+        }
+        //local update
+        escortToUpdate.esc_dateOfBirth=convertDate(escortToUpdate.esc_dateOfBirth, true);
+        getEscort();
+        
+    }
+
 
     const getEscort = async () => {
         let res = await read(url);
@@ -37,10 +52,9 @@ export default function EscortContextProvider(props) {
     }
 
 
-    //
+    //props functions to use in pages
     const value = {
-        addEscort, escortsList, getEscort
-        //שם הפוקציה,
+        addEscort, escortsList, getEscort,updateEscort
     }
 
     //get all escorts on first render

@@ -5,7 +5,7 @@ import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, fixDateForView, fixDateForForm} from '../tools/validations';
+import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum } from '../tools/validations';
 import { MdCancel } from 'react-icons/md';
 import { EscortContext } from '../contexts/escortContext';
 
@@ -13,7 +13,7 @@ export default function EscortForm() {
 
   const navigate = useNavigate();
   const { state } = useLocation();
-  const {addEscort} = useContext(EscortContext);
+  const { addEscort, updateEscort } = useContext(EscortContext);
 
   let originEscort = state;
   const [cities, setCities] = useState([]);
@@ -38,9 +38,9 @@ export default function EscortForm() {
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
-
+    let res;
     if (isValid) {
-      let escortToSend = {
+      let escortToExport = {
         esc_fullName: escort.esc_fullName,
         esc_id: escort.esc_id,
         esc_dateOfBirth: escort.esc_dateOfBirth,
@@ -49,16 +49,24 @@ export default function EscortForm() {
         esc_street: escort.esc_street,
         esc_homeNum: escort.esc_homeNum,
       };
+      if (originEscort.esc_id == '')//add or update?
+      {
+        res = await addEscort(escortToExport);
+      }
+      else {
+        await updateEscort(escortToExport);
+        navigate('/escorts');
+      }
 
-      let res=await addEscort(escortToSend);
-      if (res && res==1) //check if res so the code doesn't glitch 
+      if (res && res == 1) //check if res returns a valid response for 
       {
         navigate('/escorts');
       }
       else console.log("error");//add swal
 
-    } else {
-      // Show error message
+    } 
+    else {
+      console.log("invalid details");
     }
   };
 
@@ -103,7 +111,7 @@ export default function EscortForm() {
         <div className='col-10'>
           <h2>{originEscort.esc_id != "" ? "עריכת" : "הוספת"} מלווה</h2>
         </div>
-        <div className='col-2' style={{textAlign: 'left'}}>
+        <div className='col-2' style={{ textAlign: 'left' }}>
           <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/escorts') }}>
             <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
         </div>

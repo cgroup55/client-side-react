@@ -67,7 +67,6 @@ export default function Schools() {
         },
     ];
 
-    //console.log('schoolRows=', schoolRows);
     const schoolRows =
         [
             //     //GET        
@@ -110,7 +109,6 @@ export default function Schools() {
 
     //edit mode- pass obj with relevante data
     const handleEdit = (row) => {
-        console.log('Edit:', row);
         let currentSchool = {
             institutionId: row.institutionId,
             name: row.name,

@@ -49,7 +49,6 @@ export default function SchoolForm() {
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
-    console.log('isValid:', isValid);
     if (isValid) {
       // Logic to inser new school
       navigate('/schools', school);
@@ -62,7 +61,6 @@ export default function SchoolForm() {
   const validateForm = () => {
     let valid = true;
     let newErrors = {};
-    console.log('school=', school);
     newErrors.institutionId = ValidPositiveNumber(school.institutionId);
     newErrors.name = validateHebrewletters(school.name);
     newErrors.city = validateCity(school.city, cities);
@@ -94,7 +92,6 @@ export default function SchoolForm() {
     return valid;
   };
 
-  console.log('school state=', school);
   return (
 
     <div className='container mt-5 form-container'>

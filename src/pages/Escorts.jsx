@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useLocation, useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
-import { convertDate, fixDateForForm,fixDateForView } from '../tools/validations.js';
+import { convertDate} from '../tools/validations.js';
 import { EscortContext } from '../contexts/escortContext.jsx';
 
 
