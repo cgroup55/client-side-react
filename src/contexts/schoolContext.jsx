@@ -10,6 +10,7 @@ export default function SchoolContextProvider(props) {
     const addSchool = async (schoolToInsert) => {
         //DB update
         let res = await create(url, schoolToInsert);
+        console.log("res",res);
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
             return;

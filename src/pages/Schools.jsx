@@ -9,7 +9,8 @@ import { SchoolContext } from '../contexts/schoolContext.jsx';
 
 export default function Schools() {
 
-    const {schoolsList}=useContext(SchoolContext);
+    const { schoolsList } = useContext(SchoolContext);
+    console.log("schoolsList", schoolsList);
 
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
@@ -67,23 +68,6 @@ export default function Schools() {
         },
     ];
 
-    const schoolRows =
-        [
-            //     //GET        
-            {
-                institutionId: 14,
-                name: "אורט",
-                street: 'ברנר',
-                houseNumber: 5,
-                city: 'כפר סבא',
-                secretariatPhone: '097755669',
-                secretariatMail: 'ell2@gmail.com',
-                anotherContact: 'מתנאל כהן',
-                contactPhone: '0527896633',
-                principal: 'שרון מימון',
-                principalCellphone: '0528889955'
-            },
-        ];
 
     const ColumnNamesByIdentifier =
     {
@@ -131,11 +115,17 @@ export default function Schools() {
         // Add your delete logic here
     };
 
+    if (!schoolsList || schoolsList.length == 0)
+        return (
+            <div className='container mt-5' >
+                <h3 className="bold" style={{ textAlign: 'center' }}>נתוני מלווים</h3>
+            </div>
+        )
+
     return (
         <div className='container mt-5' >
             <h3 className="bold" style={{ textAlign: 'center' }}>מוסדות לימוד</h3>
-            {schoolRows && (
-                <Table columns={Schoolcolumns} rows={schoolRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />)}
+            <Table columns={Schoolcolumns} rows={schoolsList} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
             <div className='text-center'
                 style={{ padding: '20px' }}>
                 <Button onClick={addNewSchool}>הוסף מוסד לימודים <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>

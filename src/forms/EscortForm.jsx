@@ -13,9 +13,10 @@ export default function EscortForm() {
 
   const navigate = useNavigate();
   const { state } = useLocation();
+  let originEscort = state;
   const { addEscort, updateEscort } = useContext(EscortContext);
 
-  let originEscort = state;
+ 
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
@@ -38,7 +39,7 @@ export default function EscortForm() {
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
-    let res;
+ 
     if (isValid) {
       let escortToExport = {
         esc_fullName: escort.esc_fullName,
@@ -51,7 +52,7 @@ export default function EscortForm() {
       };
       if (originEscort.esc_id == '')//add or update?
       {
-        res = await addEscort(escortToExport);
+        let res = await addEscort(escortToExport);
         if (res && res == 1) //check if res returns a valid response for 
         {
           navigate('/escorts');
