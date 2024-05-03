@@ -21,7 +21,6 @@ export default function EscortContextProvider(props) {
         return res;
     }
 
-    //update takes a re-render to apply.........
     const updateEscort = async (escortToUpdate) => {
         //DB update
         let res = await update(url, escortToUpdate);
@@ -29,8 +28,8 @@ export default function EscortContextProvider(props) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
-        //local update
-        escortToUpdate.esc_dateOfBirth=convertDate(escortToUpdate.esc_dateOfBirth, true);
+        //re-fetch the data from DBS
+        setEscortsList([]);
         getEscort();
         
     }
@@ -49,6 +48,7 @@ export default function EscortContextProvider(props) {
             ...escort,
             esc_dateOfBirth: convertDate(escort.esc_dateOfBirth,true)
         })));
+        
     }
 
 
