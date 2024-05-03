@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
+import { SchoolContext } from '../contexts/schoolContext.jsx';
 
 
-const apiUrl1 = 'https://localhost:7039/api/Educational';
-//add bar's url
 export default function Schools() {
+
+    const {schoolsList}=useContext(SchoolContext);
 
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);
-    //const [schoolRows, setSchoolRows] = useState([]);
 
     const addNewSchool = () => {
         let newSchool = {

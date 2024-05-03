@@ -19,6 +19,7 @@ export default function SchoolContextProvider(props) {
         return res;
     }
 
+
     const updateSchool = async (escortToUpdate) => {
         //DB update
         let res = await update(url, escortToUpdate);
@@ -26,13 +27,12 @@ export default function SchoolContextProvider(props) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
-        //local update
-        setSchoolsList([...schoolsList]);
-        return res;
+
+        getSchools();
+     
     }
 
    
-
     const getSchools = async () => {
         let res = await read(url);
         if (!res || res.length === 0) {
@@ -54,8 +54,8 @@ export default function SchoolContextProvider(props) {
     }, []);
 
     return (
-        <EscortContext.Provider value={value}>
+        <SchoolContext.Provider value={value}>
             {props.children}
-        </EscortContext.Provider>
+        </SchoolContext.Provider>
     )
 }

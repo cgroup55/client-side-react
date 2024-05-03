@@ -29,7 +29,7 @@ export default function EscortContextProvider(props) {
             return;
         }
         //re-fetch the data from DBS
-        setEscortsList([]);
+        setEscortsList([]);//what to do if not that?????????
         getEscort();
         
     }
@@ -43,7 +43,6 @@ export default function EscortContextProvider(props) {
         }
 
         // Fix the date format for each escort object
-
         setEscortsList(() => res.map(escort => ({
             ...escort,
             esc_dateOfBirth: convertDate(escort.esc_dateOfBirth,true)

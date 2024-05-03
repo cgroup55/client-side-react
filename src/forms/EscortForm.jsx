@@ -52,19 +52,19 @@ export default function EscortForm() {
       if (originEscort.esc_id == '')//add or update?
       {
         res = await addEscort(escortToExport);
+        if (res && res == 1) //check if res returns a valid response for 
+        {
+          navigate('/escorts');
+        }
+        else console.log("error");//add swal
       }
       else {
         await updateEscort(escortToExport);
         navigate('/escorts');
       }
 
-      if (res && res == 1) //check if res returns a valid response for 
-      {
-        navigate('/escorts');
-      }
-      else console.log("error");//add swal
 
-    } 
+    }
     else {
       console.log("invalid details");
     }
