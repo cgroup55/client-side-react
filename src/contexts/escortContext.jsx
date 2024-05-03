@@ -1,4 +1,4 @@
-import { React,createContext, useState, useEffect } from "react";
+import { React, createContext, useState, useEffect } from "react";
 import { create, read, update } from "../tools/api";
 import { convertDate } from "../tools/validations";
 export const EscortContext = createContext();
@@ -16,7 +16,7 @@ export default function EscortContextProvider(props) {
             return;
         }
         //local update + date fix
-        escortToInsert.esc_dateOfBirth=convertDate(escortToInsert.esc_dateOfBirth, true);
+        escortToInsert.esc_dateOfBirth = convertDate(escortToInsert.esc_dateOfBirth, true);
         setEscortsList([...escortsList, escortToInsert]);
         return res;
     }
@@ -29,9 +29,23 @@ export default function EscortContextProvider(props) {
             return;
         }
         //re-fetch the data from DBS
-        setEscortsList([]);//what to do if not that?????????
-        getEscort();
-        
+        // setEscortsList([]);//what to do if not that?????????
+        // getEscort();
+        // Fix the date format for each escort object
+        setEscortsList(() => escortsList.map(escort => {
+            if (escort.esc_id != escortToUpdate.esc_id)
+                return escort;
+            return { ...escortToUpdate, esc_dateOfBirth: convertDate(escort.esc_dateOfBirth, true) }
+        }));
+
+        // let newArr = [];
+        // escortsList.forEach(escort => {
+        //     if(escort.esc_id == escortToUpdate.esc_id){
+        //         let obj =  { ...escortToUpdate, esc_dateOfBirth: convertDate(escort.esc_dateOfBirth, true) }
+        //         newArr.push(obj);
+        //     }
+        //     else newArr.push(escort)
+        // })
     }
 
 
@@ -45,15 +59,15 @@ export default function EscortContextProvider(props) {
         // Fix the date format for each escort object
         setEscortsList(() => res.map(escort => ({
             ...escort,
-            esc_dateOfBirth: convertDate(escort.esc_dateOfBirth,true)
+            esc_dateOfBirth: convertDate(escort.esc_dateOfBirth, true)
         })));
-        
+
     }
 
 
     //props functions to use in pages
     const value = {
-        addEscort, escortsList, getEscort,updateEscort
+        addEscort, escortsList, getEscort, updateEscort
     }
 
     //get all escorts on first render
