@@ -19,48 +19,19 @@ export default function TransportationCompanies() {
   const [colData, setColData] = useState(null);
 
 
-  // const Companyrows = [
-  //   {
-  //     company_code: "1",
-  //     company_name: "אא' הסעים",
-  //     company_email: "bararad@gmail.com",
-  //     company_phone: "0549506905",
-  //     manager_name: "בר ארד",
-  //     manager_phone: "0547896541",
-  //     company_city: "תל אביב - יפו",
-  //     company_street: "אבן גבירול",
-  //     company_homeNum: "3",
-  //     company_comments: "נסה לכתוב הערה ממש ארוכה ולראות האם רואים הכל כולל הכלללללל ",
-
-  //   },
-  //   {
-  //     company_code: "1",
-  //     company_name: "בב' הסעות",
-  //     company_email: "bararad@gmail.com",
-  //     company_phone: "0549506905",
-  //     manager_name: "בר ארד",
-  //     manager_phone: "0547896541",
-  //     company_city: "תל אביב - יפו",
-  //     company_street: "אבן גבירול",
-  //     company_homeNum: "3",
-  //     company_comments: "גבגב"
-  //   },
-  // ];
-
-
 
   const addNewCompany = () => {
     let newCompany = {
-      company_code: "",
-      company_name: "",
-      company_email: "",
-      company_phone: "",
-      manager_name: "",
-      manager_phone: "",
-      company_comments: "",
-      company_city: "",
-      company_street: "",
-      company_homeNum: ""
+      company_Code: "",
+      company_Name: "",
+      company_Email: "",
+      company_Phone: "",
+      manager_Name: "",
+      manager_Phone: "",
+      company_Comments: "",
+      company_City: "",
+      company_Street: "",
+      company_HomeNum: ""
     }
     navigate('/CompanyForm', { state: newCompany });
   }
@@ -68,46 +39,46 @@ export default function TransportationCompanies() {
   const Companycolumns = [
     {
       name: "ח.פ",
-      selector: (row) => row.company_code,
+      selector: (row) => row.company_Code,
     },
     {
       name: "שם חברה",
-      selector: (row) => row.company_name,
+      selector: (row) => row.company_Name,
       sortable: true,
     },
     {
       name: "מייל",
-      selector: (row) => row.company_email,
+      selector: (row) => row.company_Email,
     },
     {
       name: "מנהל",
-      selector: (row) => row.manager_name,
+      selector: (row) => row.manager_Name,
       sortable: true,
     },
     {
       name: "נייד מנהל",
-      selector: (row) => row.manager_phone,
+      selector: (row) => row.manager_Phone,
       sortable: true,
     },
     {
       name: "הערות",
-      selector: (row) => row.company_comments
+      selector: (row) => row.company_Comments
     },
   ];
 
   //field names for the model
   const ColumnNamesByIdentifier =
   {
-    company_code: "ח.פ",
-    company_name: "שם חברה",
-    company_email: "מייל",
-    company_phone: "טלפון",
-    manager_name: "שם מנהל",
-    manager_phone: "טלפון מנהל",
-    company_city: "עיר",
-    company_street: "רחוב",
-    company_homeNum: "מספר",
-    company_comments: "הערות"
+    company_Code: "ח.פ",
+    company_Name: "שם חברה",
+    company_Email: "מייל",
+    company_Phone: "טלפון",
+    manager_Name: "שם מנהל",
+    manager_Phone: "טלפון מנהל",
+    company_City: "עיר",
+    company_Street: "רחוב",
+    company_HomeNum: "מספר",
+    company_Comments: "הערות"
   }
 
   //3 functions that handle viewing, editing and deleting a row
@@ -120,16 +91,16 @@ export default function TransportationCompanies() {
   const handleEdit = (row) => {
     console.log('company-row', row);
     let currentCompany = {
-      company_code: row.company_code,
-      company_name: row.company_name,
-      company_email: row.company_email,
-      company_phone: row.company_phone,
-      manager_name: row.manager_name,
-      manager_phone: row.manager_phone,
-      company_comments: row.company_comments,
-      company_city: row.company_city,
-      company_street: row.company_street,
-      company_homeNum: row.company_homeNum
+      company_Code: row.company_Code,
+      company_Name: row.company_Name,
+      company_Email: row.company_Email,
+      company_Phone: row.company_Phone,
+      manager_Name: row.manager_Name,
+      manager_Phone: row.manager_Phone,
+      company_Comments: row.company_Comments,
+      company_City: row.company_City,
+      company_Street: row.company_Street,
+      company_HomeNum: row.company_HomeNum
     }
     navigate('/CompanyForm', { state: currentCompany });
 
