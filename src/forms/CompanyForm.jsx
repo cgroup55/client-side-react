@@ -46,15 +46,16 @@ export default function CompanyForm() {
         company_Email: company.company_Email,
         company_Phone: company.company_Phone,
         manager_Name: company.manager_Name,
-        company_Phone: company.company_Phone,
+        manager_Phone: company.manager_Phone,
         company_Comments: company.company_Comments,
         company_City: company.company_City,
         company_Street: company.company_Street,
         company_HomeNum: company.company_HomeNum
       };
+      console.log("companyToExport",companyToExport);
       if (originCompany.company_Code == '')//add or update?
       {
-        res = await addCompany(companyToExport);
+        let res = await addCompany(companyToExport);
         if (res && res == 1) //check if res returns a valid response for 
         {
           navigate('/transportComps');
@@ -92,8 +93,8 @@ export default function CompanyForm() {
     if (company.manager_Name != "") {
       newErrors.manager_Name = validateHebrewletters(company.manager_Name);
     }
-    if (company.company_Phone != "") {
-      newErrors.company_Phone = ValidCellOrHomePhoneNum(company.company_Phone);
+    if (company.manager_Phone!= "") {
+      newErrors.manager_Phone = ValidCellOrHomePhoneNum(company.manager_Phone);
     }
 
     newErrors.company_City = validateCity(company.company_City, cities);
@@ -206,15 +207,15 @@ export default function CompanyForm() {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group controlId="company_Phone">
+            <Form.Group controlId="manager_Phone">
               <Form.Label>טלפון מנהל</Form.Label>
-              <Form.Control type="text" name="company_Phone"
-                value={company.company_Phone}
-                onChange={(e) => setCompany({ ...company, company_Phone: e.target.value })}
-                isInvalid={!!errors.company_Phone}
+              <Form.Control type="text" name="manager_Phone"
+                value={company.manager_Phone}
+                onChange={(e) => setCompany({ ...company, manager_Phone: e.target.value })}
+                isInvalid={!!errors.manager_Phone}
               />
               <Form.Control.Feedback type="invalid">
-                {errors.company_Phone}
+                {errors.manager_Phone}
               </Form.Control.Feedback>
             </Form.Group>
 
