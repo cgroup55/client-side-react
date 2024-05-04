@@ -10,7 +10,7 @@ export default function SchoolContextProvider(props) {
     const addSchool = async (schoolToInsert) => {
         //DB update
         let res = await create(url, schoolToInsert);
-        console.log("res",res);
+        console.log("res", res);
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
             return;
@@ -29,15 +29,15 @@ export default function SchoolContextProvider(props) {
             return;
         }
 
+        //Local update
         setSchoolsList(() => schoolsList.map(school => {
             if (school.institutionId != schoolToUpdate.institutionId)
                 return school;
-            return { ...schoolToUpdate}
+            return { ...schoolToUpdate }
         }));
-     
     }
 
-   
+
     const getSchools = async () => {
         let res = await read(url);
         if (!res || res.length === 0) {
@@ -50,7 +50,7 @@ export default function SchoolContextProvider(props) {
 
     //props functions to use in pages
     const value = {
-        addSchool, schoolsList, getSchools,updateSchool
+        addSchool, schoolsList, getSchools, updateSchool
     }
 
     //get all escorts on first render

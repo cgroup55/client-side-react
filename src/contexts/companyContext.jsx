@@ -19,16 +19,21 @@ export default function CompanyContextProvider(props) {
         return res;
     }
 
-    const updateCompany = async (companyToUpdate) => {
+    const updateCompany = async (companyToUpdate) => {       
         //DB update
         let res = await update(url, companyToUpdate);
+        console.log('company update res:',res);
         if (res == undefined || res == null) {
             console.log('שגיאה- אובייקט חברה ריק מתוכן');
             return;
         }
-        //re-fetch the data from DB
-        //setCompaniesList([]);
-        getCompany();
+   
+        //Local update
+        setCompaniesList(() => companiesList.map(company => {
+            if (company.company_Code != companyToUpdate.company_Code)
+                return company;
+            return { ...companyToUpdate }
+        }));
     }
 
 

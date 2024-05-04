@@ -81,13 +81,14 @@ export default function TransportationCompanies() {
     company_Comments: "הערות"
   }
 
-  //3 functions that handle viewing, editing and deleting a row
+  //modal view for specific row
   const handleView = (row) => {
     setColData(ColumnNamesByIdentifier);
     setRowData(row);
     setShowModal(true);
   };
 
+//edit mode- pass obj with relevante data
   const handleEdit = (row) => {
     console.log('company-row', row);
     let currentCompany = {
@@ -103,7 +104,6 @@ export default function TransportationCompanies() {
       company_HomeNum: row.company_HomeNum
     }
     navigate('/CompanyForm', { state: currentCompany });
-
   };
 
   const handleDelete = (row) => {

@@ -15,7 +15,7 @@ export default function EscortContextProvider(props) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
-        //local update + date fix
+        //Local update + date fix
         escortToInsert.esc_dateOfBirth = convertDate(escortToInsert.esc_dateOfBirth, true);
         setEscortsList([...escortsList, escortToInsert]);
         return res;
@@ -28,10 +28,8 @@ export default function EscortContextProvider(props) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
-        //re-fetch the data from DBS
-        // setEscortsList([]);//what to do if not that?????????
-        // getEscort();
-        // Fix the date format for each escort object
+
+        //Local update + fix the date format for each escort object
         setEscortsList(() => escortsList.map(escort => {
             if (escort.esc_id != escortToUpdate.esc_id)
                 return escort;
@@ -56,7 +54,7 @@ export default function EscortContextProvider(props) {
             return;
         }
 
-        // Fix the date format for each escort object
+        //Fix the date format for each escort object
         setEscortsList(() => res.map(escort => ({
             ...escort,
             esc_dateOfBirth: convertDate(escort.esc_dateOfBirth, true)

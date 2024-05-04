@@ -68,7 +68,7 @@ export default function Schools() {
         },
     ];
 
-
+    //field names for the model
     const ColumnNamesByIdentifier =
     {
         institutionId: 'קוד מוסד',

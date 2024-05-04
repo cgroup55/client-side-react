@@ -65,8 +65,6 @@ export default function CompanyForm() {
         await updateCompany(companyToExport);
         navigate('/transportComps');
       }
-
-
     }
     else {
       console.log("invalid details");
