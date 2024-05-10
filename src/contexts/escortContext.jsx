@@ -36,14 +36,6 @@ export default function EscortContextProvider(props) {
             return { ...escortToUpdate, esc_dateOfBirth: convertDate(escort.esc_dateOfBirth, true) }
         }));
 
-        // let newArr = [];
-        // escortsList.forEach(escort => {
-        //     if(escort.esc_id == escortToUpdate.esc_id){
-        //         let obj =  { ...escortToUpdate, esc_dateOfBirth: convertDate(escort.esc_dateOfBirth, true) }
-        //         newArr.push(obj);
-        //     }
-        //     else newArr.push(escort)
-        // })
     }
 
 

@@ -25,6 +25,7 @@ import EscortContextProvider from './contexts/escortContext.jsx';
 import AddStudentToLine from './pages/AddStudentToLine.jsx';
 import SchoolContextProvider from './contexts/schoolContext.jsx';
 import CompanyContextProvider from './contexts/companyContext.jsx';
+import StudentContextProvider from './contexts/studentContext.jsx';
 
 
 
@@ -35,31 +36,34 @@ function App() {
     <>
       <EscortContextProvider>
         <SchoolContextProvider>
-          <CompanyContextProvider>
-          <BrowserRouter>
-            {/* change to hash */}
+          <StudentContextProvider>
+            <CompanyContextProvider>
+              <BrowserRouter>
+                {/* change to hash */}
 
-            {(location.pathname != "/") ? <NavBar /> : null}
-            <Routes>
-              <Route path='/' element={<Login />} />
-              <Route path="/homepage" element={<HomePage />} />
-              <Route path='/realtimelines' element={<RealTimeLines />} />
-              <Route path='/lines' element={<Lines />} />
-              <Route path='/AddStudentToLine' element={<AddStudentToLine />} />
-              <Route path='/transportComps' element={<TransportationCompanies />} />
-              <Route path='/students' element={<Students />} />
-              <Route path='/schools' element={<Schools />} />
-              <Route path='/escorts' element={<Escorts />} />
-              <Route path='/reports' element={<Reports />} />
-              <Route path='/StudentForm' element={<StudentForm />} />
-              <Route path='/SchoolForm' element={<SchoolForm />} />
-              <Route path='/LineForm' element={<LineForm />} />
-              <Route path='/EscortForm' element={<EscortForm />} />
-              <Route path='/CompanyForm' element={<CompanyForm />} />
-            </Routes>
+                {(location.pathname != "/") ? <NavBar /> : null}
+                <Routes>
+                  <Route path='/' element={<Login />} />
+                  <Route path="/homepage" element={<HomePage />} />
+                  <Route path='/realtimelines' element={<RealTimeLines />} />
+                  <Route path='/lines' element={<Lines />} />
+                  <Route path='/AddStudentToLine' element={<AddStudentToLine />} />
+                  <Route path='/transportComps' element={<TransportationCompanies />} />
+                  <Route path='/students' element={<Students />} />
+                  <Route path='/schools' element={<Schools />} />
+                  <Route path='/escorts' element={<Escorts />} />
+                  <Route path='/reports' element={<Reports />} />
+                  <Route path='/StudentForm' element={<StudentForm />} />
+                  <Route path='/SchoolForm' element={<SchoolForm />} />
+                  <Route path='/LineForm' element={<LineForm />} />
+                  <Route path='/EscortForm' element={<EscortForm />} />
+                  <Route path='/CompanyForm' element={<CompanyForm />} />
+                </Routes>
 
-          </BrowserRouter>
-          </CompanyContextProvider>
+              </BrowserRouter>
+            </CompanyContextProvider>
+          </StudentContextProvider>
+
         </SchoolContextProvider>
       </EscortContextProvider>
     </>

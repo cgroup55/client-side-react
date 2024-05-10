@@ -91,7 +91,7 @@ export default function StudentForm() {
                 stu_parentStreet: student.stu_parentStreet,
                 stu_parentHomeNum: student.stu_parentHomeNum,
 
-                stu_contaceName: student.stu_contaceName,
+                stu_contactName: student.stu_contactName,
                 stu_contactCell: student.stu_contactCell,
                 stu_contactCity: student.stu_contactCity,
                 stu_contactStreet: student.stu_contactStreet,
@@ -124,7 +124,7 @@ export default function StudentForm() {
 
         //Another contact validation
         if (addContact) {
-            newErrors.stu_contaceName = validateHebrewletters(student.stu_contaceName);
+            newErrors.stu_contactName = validateHebrewletters(student.stu_contactName);
             newErrors.stu_contactCell = ValidCellPhoneNum(student.stu_contactCell);
             newErrors.stu_contactCity = validateCity(student.stu_contactCity, cities2);
             newErrors.stu_contactStreet = validateStreet(student.stu_contactStreet, streets2);
@@ -406,16 +406,16 @@ export default function StudentForm() {
                         addContact && (
                             <div className='col-12 col-sm-6 col-md-4 col-lg-3 label-input col-form-label-sm'>
                                 <h5>איש קשר</h5>
-                                <Form.Group controlId="stu_contaceName">
+                                <Form.Group controlId="stu_contactName">
                                     <Form.Label>שם איש קשר</Form.Label>
-                                    <Form.Control type="text" name="stu_contaceName"
-                                        value={student.stu_contaceName}
-                                        onChange={(e) => setStudent({ ...student, stu_contaceName: e.target.value })}
-                                        isInvalid={!!errors.stu_contaceName}
+                                    <Form.Control type="text" name="stu_contactName"
+                                        value={student.stu_contactName}
+                                        onChange={(e) => setStudent({ ...student, stu_contactName: e.target.value })}
+                                        isInvalid={!!errors.stu_contactName}
                                         required={addContact}
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                        {errors.stu_contaceName}
+                                        {errors.stu_contactName}
                                     </Form.Control.Feedback>
                                 </Form.Group>
 

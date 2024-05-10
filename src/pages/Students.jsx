@@ -6,20 +6,20 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
 import { fixDateForForm } from '../tools/validations.js';
 import { SchoolContext } from '../contexts/schoolContext.jsx';
+import { StudentContext } from '../contexts/studentContext.jsx';
 
 export default function Students() {
 
     const { keyValSchool } = useContext(SchoolContext);
-
+    const {disabilities} = useContext(StudentContext);
     const navigate = useNavigate();
-
+    console.log(disabilities);
     const { state } = useLocation();
     let addedStudent = state;
 
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);
-    console.log(keyValSchool[111]);
 
     const addNewStudent = () => {
         let newStudent = {
@@ -36,7 +36,7 @@ export default function Students() {
             stu_parentCity: '',
             stu_parentStreet: '',
             stu_parentHomeNum: '',
-            stu_contaceName: '',
+            stu_contactName: '',
             stu_contactCell: '',
             stu_contactCity: '',
             stu_contactStreet: '',
@@ -69,7 +69,7 @@ export default function Students() {
         },
         {
             name: "לקות",
-            selector: (row) => row.stu_disability,
+            selector: (row) => disabilities[row.stu_disability],
             sortable: true,
         },
         {
@@ -87,7 +87,7 @@ export default function Students() {
             stu_grade: "ה'",
             stu_school: "96",
             stu_dateOfPlacement:'01/05/2022',            
-            stu_disability: "אוטיזם",
+            stu_disability: "55",
             stu_comments: "בלה בלה בלה בלה 4545",
 
             stu_parentName:'שולה ידידיה',
@@ -96,7 +96,7 @@ export default function Students() {
             stu_parentStreet: 'תל חי',
             stu_parentHomeNum: 20,
 
-            stu_contaceName: 'שימי ידידיה',
+            stu_contactName: 'שימי ידידיה',
             stu_contactCell: '0527458877',
             stu_contactCity: 'כפר סבא',
             stu_contactStreet: 'ויצמן',
@@ -110,7 +110,7 @@ export default function Students() {
             stu_grade: '',
             stu_school: "1",
             stu_dateOfPlacement:'01/06/2023', 
-            stu_disability: "פיגור",
+            stu_disability: "62",
             stu_comments: "אאא אאא אא אא 3333"
         },
     ];
@@ -133,7 +133,7 @@ export default function Students() {
         stu_parentCity: 'עיר',
         stu_parentStreet: 'רחוב',
         stu_parentHomeNum: 'מספר',
-        stu_contaceName: 'שם איש קשר',
+        stu_contactName: 'שם איש קשר',
         stu_contactCell: 'נייד איש קשר',
         stu_contactCity: 'עיר',
         stu_contactStreet: 'רחוב',
@@ -165,7 +165,7 @@ export default function Students() {
             stu_parentStreet: row.stu_parentStreet,
             stu_parentHomeNum: row.stu_parentHomeNum,
 
-            stu_contaceName: row.stu_contaceName,
+            stu_contactName: row.stu_contactName,
             stu_contactCell: row.stu_contactCell,
             stu_contactCity: row.stu_contactCity,
             stu_contactStreet: row.stu_contactStreet,
