@@ -7,13 +7,13 @@
 
 @font-face {
   font-family: 'Fredoka';
-  src: url('../fonts/Fredoka-Regular.ttf') format('truetype');
+  src: url('fonts/Fredoka-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Fredoka';
-  src: url('../fonts/Fredoka-SemiBold.ttf') format('truetype');
+  src: url('fonts/Fredoka-SemiBold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
