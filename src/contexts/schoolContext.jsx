@@ -6,6 +6,8 @@ export default function SchoolContextProvider(props) {
 
     const url = 'api/Educational';
     const [schoolsList, setSchoolsList] = useState([]);
+    const [keyValSchool, setKeyValSchool] = useState({});
+
 
     const addSchool = async (schoolToInsert) => {
         //DB update
@@ -45,12 +47,12 @@ export default function SchoolContextProvider(props) {
             return;
         }
         setSchoolsList(res);
+    
     }
-
 
     //props functions to use in pages
     const value = {
-        addSchool, schoolsList, getSchools, updateSchool
+        addSchool, schoolsList, getSchools, updateSchool,keyValSchool
     }
 
     //get all escorts on first render
@@ -58,6 +60,16 @@ export default function SchoolContextProvider(props) {
         getSchools();
     }, []);
 
+    useEffect(() => {
+        setKeyValSchool(() =>
+            schoolsList.reduce((index,school) => {
+                index[school.institutionId] = school.name;
+                return index;
+            }, {})
+        );
+    }, [schoolsList]);
+    
+    
     return (
         <SchoolContext.Provider value={value}>
             {props.children}

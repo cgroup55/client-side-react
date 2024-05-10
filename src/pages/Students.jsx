@@ -4,9 +4,12 @@ import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useLocation, useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
-import { fixDateForForm,fixDateForView } from '../tools/validations.js';
+import { fixDateForForm } from '../tools/validations.js';
+import { SchoolContext } from '../contexts/schoolContext.jsx';
 
 export default function Students() {
+
+    const { keyValSchool } = useContext(SchoolContext);
 
     const navigate = useNavigate();
 
@@ -16,6 +19,7 @@ export default function Students() {
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);
+    console.log(keyValSchool[111]);
 
     const addNewStudent = () => {
         let newStudent = {
@@ -41,6 +45,7 @@ export default function Students() {
         navigate('/StudentForm', { state: newStudent });
     }
 
+    
 
     const StudentCols = [
         {
@@ -54,7 +59,7 @@ export default function Students() {
         },
         {
             name: "מוסד לימודי",
-            selector: (row) => row.stu_school,
+            selector: (row) => keyValSchool[row.stu_school],
             sortable: true,
         },
         {
@@ -80,7 +85,7 @@ export default function Students() {
             stu_id: "024519875",
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ה'",
-            stu_school: "אורט",
+            stu_school: "96",
             stu_dateOfPlacement:'01/05/2022',            
             stu_disability: "אוטיזם",
             stu_comments: "בלה בלה בלה בלה 4545",
@@ -103,7 +108,7 @@ export default function Students() {
             stu_id: "023339833",
             stu_dateofbirth: '01/01/2020',
             stu_grade: '',
-            stu_school: "אורט",
+            stu_school: "1",
             stu_dateOfPlacement:'01/06/2023', 
             stu_disability: "פיגור",
             stu_comments: "אאא אאא אא אא 3333"

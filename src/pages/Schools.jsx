@@ -9,9 +9,9 @@ import { SchoolContext } from '../contexts/schoolContext.jsx';
 
 export default function Schools() {
 
-    const { schoolsList } = useContext(SchoolContext);
+    const { schoolsList,keyValSchool } = useContext(SchoolContext);
     console.log("schoolsList", schoolsList);
-
+    console.log("Key Val",keyValSchool );
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
