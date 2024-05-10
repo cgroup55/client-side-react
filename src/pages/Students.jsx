@@ -11,9 +11,8 @@ import { StudentContext } from '../contexts/studentContext.jsx';
 export default function Students() {
 
     const { keyValSchool } = useContext(SchoolContext);
-    const {disabilities} = useContext(StudentContext);
+    const {disKeyVal} = useContext(StudentContext);
     const navigate = useNavigate();
-    console.log(disabilities);
     const { state } = useLocation();
     let addedStudent = state;
 
@@ -69,7 +68,7 @@ export default function Students() {
         },
         {
             name: "לקות",
-            selector: (row) => disabilities[row.stu_disability],
+            selector: (row) => disKeyVal[row.stu_disability],
             sortable: true,
         },
         {

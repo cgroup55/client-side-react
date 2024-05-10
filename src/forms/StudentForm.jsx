@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import "../styling/Form.css";
 import Swal from 'sweetalert2';
 import { FaCheck, FaPlus } from 'react-icons/fa';
@@ -6,14 +6,19 @@ import { MdCancel } from "react-icons/md";
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect, fixDateForForm,fixDateForView } from '../tools/validations';
-
+import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect, fixDateForForm, fixDateForView } from '../tools/validations';
+import { StudentContext } from '../contexts/studentContext.jsx';
+import { SchoolContext } from '../contexts/schoolContext.jsx';
 
 export default function StudentForm() {
 
     const navigate = useNavigate();
     const { state } = useLocation();
     let originStudent = state;
+
+    //inporting from contexts
+    const { schoolsList } = useContext(SchoolContext);
+    const { disabilities } = useContext(StudentContext);
 
     //States for handling the addresses
     const [cities, setCities] = useState([]);
@@ -41,9 +46,7 @@ export default function StudentForm() {
         setAddContactDisabled(false);
     };
 
-    //צריך לחבר לנתונים שיגיעו מהDB
-    const schools = [{ schoolname: "טשרני" }, { schoolname: "אורט" }];
-    const disabilities = [{ disabname: "אוטיזם" }, { disabname: "פיגור" }];
+
 
     //filterout cities that dont match the search for parent address
     const handleInputChange = (event) => {
@@ -157,6 +160,23 @@ export default function StudentForm() {
         }
     }, []);
 
+    if (!schoolsList || schoolsList.length == 0 || !disabilities || disabilities.length == 0)
+        return (
+            <div className='container mt-5 form-container '>
+
+                <div className='row justify-content-between align-items-center'>
+                    <div className='col-10'>
+                        <h2>{originStudent.stu_id != "" ? "עריכת" : "הוספת"} תלמיד</h2>
+                    </div>
+                    <div className='col-2' style={{ textAlign: 'left' }}>
+                        <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/students') }}>
+                            <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
+                    </div>
+                </div>
+            </div>
+        )
+
+
     return (
         <div className='container mt-5 form-container '>
 
@@ -164,7 +184,7 @@ export default function StudentForm() {
                 <div className='col-10'>
                     <h2>{originStudent.stu_id != "" ? "עריכת" : "הוספת"} תלמיד</h2>
                 </div>
-                <div className='col-2' style={{textAlign: 'left'}}>
+                <div className='col-2' style={{ textAlign: 'left' }}>
                     <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/students') }}>
                         <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
                 </div>
@@ -233,7 +253,6 @@ export default function StudentForm() {
                             </Form.Control.Feedback>
                         </Form.Group>
 
-                        מהDB צריך להיות  ***
                         <Form.Group controlId="stu_school">
                             <Form.Label>מוסד לימודים </Form.Label>
                             <Form.Control
@@ -246,9 +265,9 @@ export default function StudentForm() {
                                 required
                             >
                                 <option value={"-1"}> </option>
-                                {schools.map((school, index) => (
-                                    <option key={index} value={school.schoolname}>
-                                        {school.schoolname}
+                                {schoolsList.map((school, index) => (
+                                    <option key={index} value={school.institutionId}>
+                                        {school.name}
                                     </option>
                                 ))}
                             </Form.Control>
@@ -274,7 +293,6 @@ export default function StudentForm() {
                             </Form.Control.Feedback>
                         </Form.Group>
 
-                        מהDB צריך להיות  ***
                         <Form.Group controlId="stu_disability">
                             <Form.Label>סוג לקות</Form.Label>
                             <Form.Control
@@ -287,9 +305,9 @@ export default function StudentForm() {
                                 required
                             >
                                 <option value={"-1"}></option>
-                                {disabilities.map((disab, index) => (
-                                    <option key={index} value={disab.disabname}>
-                                        {disab.disabname}
+                                {disabilities.map((dis, index) => (
+                                    <option key={index} value={dis.typeCode}>
+                                        {dis.typeDescription}
                                     </option>
                                 ))}
                             </Form.Control>

@@ -9,6 +9,7 @@ export default function StudentContextProvider(props) {
     const dis_url = 'api/Student_disabilities_type';
     const [studentsList, setStudentsList] = useState([]);
     const [disabilities, setDisabilities] = useState([]);
+    const [disKeyVal,setDisKeyVal]=useState({});
 
     const addStudent = async (studentToInsert) => {
         //DB update
@@ -68,7 +69,7 @@ export default function StudentContextProvider(props) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
-
+        setDisabilities(res);
         
         let disKeyVal= () =>
             res.reduce((index,disability) => {
@@ -76,13 +77,13 @@ export default function StudentContextProvider(props) {
                 return index;
             });
 
-        setDisabilities(disKeyVal);
+        setDisKeyVal(disKeyVal);
     }
 
 
     //props functions to use in pages
     const value = {
-        addStudent, studentsList, getStudent, updateStudent,disabilities 
+        addStudent, studentsList, getStudent, updateStudent,disabilities,disKeyVal
     }
 
     //get all escorts on first render
