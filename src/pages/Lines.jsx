@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
-import { useNavigate,useLocation} from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import MyModal from '../components/MyModal';
 
 
@@ -16,9 +16,8 @@ export default function Lines() {
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
 
-
+  //initialize empty object for adding new
   const addNewLine = () => {
-
     let newLine = {
       line_code: "",
       line_car: "",
@@ -30,13 +29,14 @@ export default function Lines() {
       line_street: "",
       line_Homenumber: "",
       time_of_line: "00:00",
-      definition_date:"",
-      transportaion_company:"",
-      comments:""
+      definition_date: "",
+      transportaion_company: "",
+      comments: ""
     }
     navigate('/LineForm', { state: newLine });
   }
 
+  //columns name and connection to data in table
   const Linecolumns = [
     {
       name: "קוד קו",
@@ -67,6 +67,7 @@ export default function Lines() {
 
   ];
 
+  //יימחק
   const Linerows = [
 
     {
@@ -81,8 +82,8 @@ export default function Lines() {
       line_street: "שד' בנימין",
       line_Homenumber: "3",
       definition_date: "12/04/2021",
-      transportaion_company:"בב הסעות",
-      comments:"הערההההההה"
+      transportaion_company: "בב הסעות",
+      comments: "הערההההההה"
 
     },
     {
@@ -96,12 +97,13 @@ export default function Lines() {
       line_city: "כפר סבא",
       line_street: "עליה",
       line_Homenumber: "8",
-      transportaion_company:"אא הסעים",
+      transportaion_company: "אא הסעים",
     },
   ];
 
   const updatedLineRows = addedLine ? [...Linerows, addedLine] : Linerows;
-  //define the hebrew names of each field
+
+  //field names for the model
   const ColumnNamesByIdentifier =
   {
     line_code: "קוד קו",
@@ -115,8 +117,8 @@ export default function Lines() {
     line_Homenumber: "מספר",
     time_of_line: "שעת התחנה",
     definition_date: "תאריך הגדרת קו",
-    transportaion_company:"חברת הסעה",
-    comments:"הערות"
+    transportaion_company: "חברת הסעה",
+    comments: "הערות"
   }
 
   //modal view for specific row
@@ -140,8 +142,8 @@ export default function Lines() {
       line_city: row.line_city,
       line_street: row.line_street,
       line_Homenumber: row.line_Homenumber,
-      transportaion_company:row.transportaion_company,
-      comments:row.comments
+      transportaion_company: row.transportaion_company,
+      comments: row.comments
 
     }
     navigate('/LineForm', { state: currentLine });
@@ -153,16 +155,24 @@ export default function Lines() {
   };
 
   //dd students- pass line obj with relevante data
-  const handleAdd=(row) => {
+  const handleAdd = (row) => {
     console.log('Add:', row);
-    navigate('/AddStudentToLine',{state:row});
+    navigate('/AddStudentToLine', { state: row });
 
   }
+
+  //renders the table after the data was loaded
+  // if (! || .length == 0)
+  //   return (
+  //       <div className='container mt-5' >
+  //           <h3 className="bold" style={{ textAlign: 'center' }}>קווי הסעה</h3>
+  //       </div>
+  //   )
 
   return (
     <div className='container mt-5' >
       <h3 className="bold" style={{ textAlign: 'center' }}>קווי הסעה</h3>
-      <Table columns={Linecolumns} rows={updatedLineRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} handleAdd={handleAdd}/>
+      <Table columns={Linecolumns} rows={updatedLineRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} handleAdd={handleAdd} />
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addNewLine}>הוסף קו חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>

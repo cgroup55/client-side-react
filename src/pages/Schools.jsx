@@ -9,14 +9,15 @@ import { SchoolContext } from '../contexts/schoolContext.jsx';
 
 export default function Schools() {
 
-    const { schoolsList,keyValSchool } = useContext(SchoolContext);
+    const { schoolsList, keyValSchool } = useContext(SchoolContext);
     console.log("schoolsList", schoolsList);
-    console.log("Key Val",keyValSchool );
+    console.log("Key Val", keyValSchool);
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);
 
+    //initialize empty object for adding new
     const addNewSchool = () => {
         let newSchool = {
             institutionId: '',
@@ -34,6 +35,7 @@ export default function Schools() {
         navigate('/SchoolForm', { state: newSchool });
     }
 
+    //columns name and connection to data in table
     const Schoolcolumns = [
         {
             name: "סמל מוסד",
@@ -115,6 +117,8 @@ export default function Schools() {
         // Add your delete logic here
     };
 
+
+    //renders the table after the data was loaded
     if (!schoolsList || schoolsList.length == 0)
         return (
             <div className='container mt-5' >

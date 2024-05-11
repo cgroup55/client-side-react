@@ -55,7 +55,7 @@ export default function EscortForm() {
       if (originEscort.esc_id == '')//add or update?
       {
         let res = await addEscort(escortToExport);
-        if (res && res == 1) //check if res returns a valid response for 
+        if (res && res == 1) //check if res returns a valid response  
         {
           navigate('/escorts');
         }

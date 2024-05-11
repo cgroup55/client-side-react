@@ -14,13 +14,13 @@ export default function Students() {
     //schools and disabilities lists in a format of key:value & students list in form format
     const { keyValSchool } = useContext(SchoolContext);
     const { disKeyVal, studentsListFormFormat } = useContext(StudentContext);
-    console.log('studentsListFormFormat', studentsListFormFormat);
+    console.log('studentsListFormFormat in page-', studentsListFormFormat);
 
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);
 
-    //intialize 
+    //initialize empty object for adding new
     const addNewStudent = () => {
         let newStudent = {
             stu_fullName: '',
@@ -77,48 +77,6 @@ export default function Students() {
             selector: (row) => row.stu_comments,
         },
     ];
-
-    //לכאן תשפך רשימת התלמידים שתתקבל מהשרת גם למחוק
-    const StudentRows = [
-        {
-            stu_fullName: 'אבשלום ידידיה',
-            stu_id: "024519875",
-            stu_dateofbirth: '12/01/2011',
-            stu_grade: "ה'",
-            stu_school: "96",
-            stu_dateOfPlacement: '01/05/2022',
-            stu_disability: "55",
-            stu_comments: "בלה בלה בלה בלה 4545",
-
-            stu_parentName: 'שולה ידידיה',
-            stu_parentCell: '0527465588',
-            stu_parentCity: 'כפר סבא',
-            stu_parentStreet: 'תל חי',
-            stu_parentHomeNum: 20,
-
-            stu_contactName: 'שימי ידידיה',
-            stu_contactCell: '0527458877',
-            stu_contactCity: 'כפר סבא',
-            stu_contactStreet: 'ויצמן',
-            stu_contactHomeNum: 55,
-            // כאן צריכים להיות כל השדות של האובייקט גם אלה שלא בטבלה
-        },
-        {
-            stu_fullName: 'שלום אהרון',
-            stu_id: "023339833",
-            stu_dateofbirth: '01/01/2020',
-            stu_grade: '',
-            stu_school: "1",
-            stu_dateOfPlacement: '01/06/2023',
-            stu_disability: "62",
-            stu_comments: "אאא אאא אא אא 3333"
-        },
-    ];
-
-    //זמני- למחוק ***************************
-    //const { state } = useLocation();
-    //let addedStudent = state;
-    //const updatedStudentRows = addedStudent ? [...StudentRows, addedStudent] : StudentRows;
 
     //field names for the model
     const ColumnNamesByIdentifier = {
@@ -182,19 +140,18 @@ export default function Students() {
         //delete logic 
     };
 
-
-    //כשהכל יעבוד- להוציא את זה מהערה
-    // if (!studentsListFormFormat || studentsListFormFormat.length == 0)
-    //     return (
-    //         <div className='container mt-5' >
-    //             <h3 className="bold" style={{ textAlign: 'center' }}>נתוני תלמידים</h3>
-    //         </div>
-    //     )
+    //renders the table after the data was loaded
+    if (!studentsListFormFormat || studentsListFormFormat.length == 0)
+        return (
+            <div className='container mt-5' >
+                <h3 className="bold" style={{ textAlign: 'center' }}>נתוני תלמידים</h3>
+            </div>
+        )
 
     return (
         <div className='container mt-5' >
             <h3 className="bold" style={{ textAlign: 'center' }}>נתוני תלמידים</h3>
-            <Table rows={StudentRows} columns={StudentCols} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
+            <Table rows={studentsListFormFormat} columns={StudentCols} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
             {/* rows will be exchanged to studentsListFormFormat */}
             <div className='text-center'
                 style={{ padding: '20px' }}>

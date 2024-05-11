@@ -19,6 +19,7 @@ export default function Escorts() {
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
 
+  //initialize empty object for adding new
   const addNewEscort = () => {
     let newEscort = {
       esc_fullName: '',
@@ -100,6 +101,7 @@ export default function Escorts() {
 
 
 
+  //renders the table after the data was loaded
   if (!escortsList || escortsList.length == 0)
     return (
       <div className='container mt-5' >

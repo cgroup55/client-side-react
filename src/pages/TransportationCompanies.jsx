@@ -18,8 +18,7 @@ export default function TransportationCompanies() {
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
 
-
-
+  //initialize empty object for adding new
   const addNewCompany = () => {
     let newCompany = {
       company_Code: "",
@@ -36,6 +35,7 @@ export default function TransportationCompanies() {
     navigate('/CompanyForm', { state: newCompany });
   }
 
+  //columns name and connection to data in table
   const Companycolumns = [
     {
       name: "ח.פ",
@@ -88,7 +88,7 @@ export default function TransportationCompanies() {
     setShowModal(true);
   };
 
-//edit mode- pass obj with relevante data
+  //edit mode- pass obj with relevante data
   const handleEdit = (row) => {
     console.log('company-row', row);
     let currentCompany = {
@@ -111,12 +111,13 @@ export default function TransportationCompanies() {
     // Add your delete logic here
   };
 
-  if(!companiesList || companiesList.length==0)
-  return(
-    <div className='container mt-5' >
-      <h3 className="bold" style={{ textAlign: 'center' }}>חברות הסעה</h3>
-    </div>
-  )
+  //renders the table after the data was loaded
+  if (!companiesList || companiesList.length == 0)
+    return (
+      <div className='container mt-5' >
+        <h3 className="bold" style={{ textAlign: 'center' }}>חברות הסעה</h3>
+      </div>
+    )
 
   return (
     <div className='container mt-5' >
