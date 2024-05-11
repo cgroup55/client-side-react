@@ -14,11 +14,12 @@ export default function StudentForm() {
 
     const navigate = useNavigate();
     const { state } = useLocation();
+    //originStudent indicates whether need to add new or edit existing
     let originStudent = state;
 
     //inporting from contexts
     const { schoolsList } = useContext(SchoolContext);
-    const { disabilities } = useContext(StudentContext);
+    const { disabilities, addStudent, updateStudent } = useContext(StudentContext);
 
     //States for handling the addresses
     const [cities, setCities] = useState([]);
@@ -46,8 +47,6 @@ export default function StudentForm() {
         setAddContactDisabled(false);
     };
 
-
-
     //filterout cities that dont match the search for parent address
     const handleInputChange = (event) => {
         const inputValue = event.target.value;
@@ -70,21 +69,21 @@ export default function StudentForm() {
     };
 
 
-    //Function to handle form submission
-    const handleSubmit = (e) => {
+    //form submission
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('stu_school=', student.stu_school);
         let isValid = validateForm();
-        console.log('isValid:', isValid);
+        console.log('isValid stud:', isValid);
 
         if (isValid) {
-            let studentToSend = {
+            let studentToExport = {
                 stu_fullName: student.stu_fullName,
                 stu_id: student.stu_id,
-                stu_dateofbirth: fixDateForView(student.stu_dateofbirth),
+                stu_dateofbirth: student.stu_dateofbirth,
                 stu_grade: student.stu_grade,
                 stu_school: student.stu_school,
-                stu_dateOfPlacement: fixDateForView(student.stu_dateOfPlacement),
+                stu_dateOfPlacement: student.stu_dateOfPlacement,
                 stu_disability: student.stu_disability,
                 stu_comments: student.stu_comments,
 
@@ -99,11 +98,22 @@ export default function StudentForm() {
                 stu_contactCity: student.stu_contactCity,
                 stu_contactStreet: student.stu_contactStreet,
                 stu_contactHomeNum: student.stu_contactHomeNum,
+            };
+            if (originStudent.stu_id == '') //add or update?
+            {
+                let res = await addStudent(studentToExport);
+                if (res && res == 1) {
+                    navigate('/students');
+                }
+                else console.log("error");//add swal
             }
-            navigate('/students', { state: studentToSend });
+            else {
+                await updateEscort(studentToExport);
+                navigate('/students');
+            }
 
         } else {
-            // Show error message
+            console.log("invalid details");
         }
     };
 

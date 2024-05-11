@@ -13,13 +13,15 @@ export default function EscortForm() {
 
   const navigate = useNavigate();
   const { state } = useLocation();
+  //originEscort indicates whether need to add new or edit existing
   let originEscort = state;
   const { addEscort, updateEscort } = useContext(EscortContext);
 
- 
+ //States for handling the addresse
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
+
   const [escort, setEscort] = useState({ ...originEscort });
   const [errors, setErrors] = useState({});
 
@@ -63,7 +65,6 @@ export default function EscortForm() {
         await updateEscort(escortToExport);
         navigate('/escorts');
       }
-
 
     }
     else {

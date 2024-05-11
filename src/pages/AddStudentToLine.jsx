@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import '../styling/lineAddition.css';
 import { FaCheck } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
+import { StudentContext } from '../contexts/studentContext';
 
 export default function AddStudentToLine() {
     const navigate = useNavigate();
@@ -211,6 +212,8 @@ export default function AddStudentToLine() {
         },
 
     ];
+    //will use it instead-
+    //const { studentsList } = useContext(StudentContext);
 
     //Management student assigned to the line
     const handleStudentSelection = (student) => {
@@ -239,6 +242,8 @@ export default function AddStudentToLine() {
     //Hanle save changes
     const hanleSaving = () => {
         console.log('save');
+        //Add swal
+        navigate('/lines');
     }
 
     return (

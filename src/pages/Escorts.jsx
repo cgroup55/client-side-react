@@ -4,25 +4,20 @@ import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useLocation, useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
-import { convertDate} from '../tools/validations.js';
+import { convertDate } from '../tools/validations.js';
 import { EscortContext } from '../contexts/escortContext.jsx';
 
 
 export default function Escorts() {
-  //מאפשר שימוש בפונקציות/סטייטים שיש בפרוביידר
-  //const { stam } = useContext(EscortContext);
-  //stam();
-  
-  //escorts list from context
-  const { escortsList} = useContext(EscortContext);
-  console.log("escortsList",escortsList);
   const navigate = useNavigate();
+
+  //escorts list from context
+  const { escortsList } = useContext(EscortContext);
+  console.log('escortsList:', escortsList);
 
   const [showModal, setShowModal] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
-
-
 
   const addNewEscort = () => {
     let newEscort = {
@@ -37,6 +32,7 @@ export default function Escorts() {
     navigate('/EscortForm', { state: newEscort });
   }
 
+  //columns name and connection to data in table
   const escortColumns = [
     {
       name: "שם מלא",
@@ -64,8 +60,7 @@ export default function Escorts() {
   ];
 
 
-
-   //field names for the model
+  //field names for the model
   const ColumnNamesByIdentifier = {
     esc_fullName: "שם מלא",
     esc_id: "תעודת זהות",
@@ -84,11 +79,11 @@ export default function Escorts() {
   };
 
   //edit mode- pass obj with relevante data
-  const handleEdit = (row) => { 
+  const handleEdit = (row) => {
     let currentEscort = {
       esc_fullName: row.esc_fullName,
       esc_id: row.esc_id,
-      esc_dateOfBirth: convertDate(row.esc_dateOfBirth,false),
+      esc_dateOfBirth: convertDate(row.esc_dateOfBirth, false),
       esc_cell: row.esc_cell,
       esc_city: row.esc_city,
       esc_street: row.esc_street,
@@ -100,17 +95,17 @@ export default function Escorts() {
 
   const handleDelete = (row) => {
     console.log('Delete:', row);
-    // Add your delete logic here
+    //delete logic 
   };
 
 
 
-  if(!escortsList || escortsList.length==0)
-  return(
-    <div className='container mt-5' >
-      <h3 className="bold" style={{ textAlign: 'center' }}>נתוני מלווים</h3>
-    </div>
-  )
+  if (!escortsList || escortsList.length == 0)
+    return (
+      <div className='container mt-5' >
+        <h3 className="bold" style={{ textAlign: 'center' }}>נתוני מלווים</h3>
+      </div>
+    )
 
   return (
     <div className='container mt-5' >

@@ -9,7 +9,7 @@ export default function StudentContextProvider(props) {
     const dis_url = 'api/Student_disabilities_type';
     const [studentsList, setStudentsList] = useState([]);
     const [disabilities, setDisabilities] = useState([]);
-    const [disKeyVal,setDisKeyVal]=useState({});
+    const [disKeyVal, setDisKeyVal] = useState({});
 
     const addStudent = async (studentToInsert) => {
         //DB update
@@ -59,6 +59,10 @@ export default function StudentContextProvider(props) {
             stu_dateofbirth: convertDate(student.stu_dateofbirth, true),
             stu_dateOfPlacement: convertDate(student.stu_dateOfPlacement, true)
         })));
+        console.log('studentsList context:', studentsList);
+
+        //fix the list to form format
+        //studentsListFormFormat
 
     }
 
@@ -70,9 +74,9 @@ export default function StudentContextProvider(props) {
             return;
         }
         setDisabilities(res);
-        
-        let disKeyVal= () =>
-            res.reduce((index,disability) => {
+
+        let disKeyVal = () =>
+            res.reduce((index, disability) => {
                 index[disability.typeCode] = disability.typeDescription;
                 return index;
             });
@@ -83,7 +87,8 @@ export default function StudentContextProvider(props) {
 
     //props functions to use in pages
     const value = {
-        addStudent, studentsList, getStudent, updateStudent,disabilities,disKeyVal
+        addStudent, getStudent, updateStudent, disabilities, disKeyVal
+        //,studentsListFormFormat
     }
 
     //get all escorts on first render
@@ -91,7 +96,7 @@ export default function StudentContextProvider(props) {
         getStudent();
         getDisabilities();
     }, []);
-    
+
     return (
         <StudentContext.Provider value={value}>
             {props.children}

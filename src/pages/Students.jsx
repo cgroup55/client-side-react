@@ -4,22 +4,23 @@ import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useLocation, useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
-import { fixDateForForm } from '../tools/validations.js';
+import { convertDate } from '../tools/validations.js';
 import { SchoolContext } from '../contexts/schoolContext.jsx';
 import { StudentContext } from '../contexts/studentContext.jsx';
 
 export default function Students() {
-
-    const { keyValSchool } = useContext(SchoolContext);
-    const {disKeyVal} = useContext(StudentContext);
     const navigate = useNavigate();
-    const { state } = useLocation();
-    let addedStudent = state;
+
+    //schools and disabilities lists in a format of key:value & students list in form format
+    const { keyValSchool } = useContext(SchoolContext);
+    const { disKeyVal, studentsListFormFormat } = useContext(StudentContext);
+    console.log('studentsListFormFormat', studentsListFormFormat);
 
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);
 
+    //intialize 
     const addNewStudent = () => {
         let newStudent = {
             stu_fullName: '',
@@ -44,8 +45,8 @@ export default function Students() {
         navigate('/StudentForm', { state: newStudent });
     }
 
-    
 
+    //columns name and connection to data in table
     const StudentCols = [
         {
             name: "שם מלא",
@@ -77,7 +78,7 @@ export default function Students() {
         },
     ];
 
-//לכאן תשפך רשימת התלמידים שתתקבל מהשרת 
+    //לכאן תשפך רשימת התלמידים שתתקבל מהשרת גם למחוק
     const StudentRows = [
         {
             stu_fullName: 'אבשלום ידידיה',
@@ -85,11 +86,11 @@ export default function Students() {
             stu_dateofbirth: '12/01/2011',
             stu_grade: "ה'",
             stu_school: "96",
-            stu_dateOfPlacement:'01/05/2022',            
+            stu_dateOfPlacement: '01/05/2022',
             stu_disability: "55",
             stu_comments: "בלה בלה בלה בלה 4545",
 
-            stu_parentName:'שולה ידידיה',
+            stu_parentName: 'שולה ידידיה',
             stu_parentCell: '0527465588',
             stu_parentCity: 'כפר סבא',
             stu_parentStreet: 'תל חי',
@@ -108,14 +109,16 @@ export default function Students() {
             stu_dateofbirth: '01/01/2020',
             stu_grade: '',
             stu_school: "1",
-            stu_dateOfPlacement:'01/06/2023', 
+            stu_dateOfPlacement: '01/06/2023',
             stu_disability: "62",
             stu_comments: "אאא אאא אא אא 3333"
         },
     ];
 
     //זמני- למחוק ***************************
-    const updatedStudentRows = addedStudent ? [...StudentRows, addedStudent] : StudentRows;
+    //const { state } = useLocation();
+    //let addedStudent = state;
+    //const updatedStudentRows = addedStudent ? [...StudentRows, addedStudent] : StudentRows;
 
     //field names for the model
     const ColumnNamesByIdentifier = {
@@ -151,10 +154,10 @@ export default function Students() {
         let currentStudent = {
             stu_fullName: row.stu_fullName,
             stu_id: row.stu_id,
-            stu_dateofbirth: fixDateForForm(row.stu_dateofbirth),
+            stu_dateofbirth: convertDate(row.stu_dateofbirth, false),
             stu_grade: row.stu_grade,
             stu_school: row.stu_school,
-            stu_dateOfPlacement: fixDateForForm(row.stu_dateOfPlacement),
+            stu_dateOfPlacement: convertDate(row.stu_dateOfPlacement, false),
             stu_disability: row.stu_disability,
             stu_comments: row.stu_comments,
 
@@ -176,15 +179,23 @@ export default function Students() {
 
     const handleDelete = (row) => {
         console.log('Delete:', row);
-        // Add your delete logic here
+        //delete logic 
     };
 
 
+    //כשהכל יעבוד- להוציא את זה מהערה
+    // if (!studentsListFormFormat || studentsListFormFormat.length == 0)
+    //     return (
+    //         <div className='container mt-5' >
+    //             <h3 className="bold" style={{ textAlign: 'center' }}>נתוני תלמידים</h3>
+    //         </div>
+    //     )
 
     return (
         <div className='container mt-5' >
             <h3 className="bold" style={{ textAlign: 'center' }}>נתוני תלמידים</h3>
-            <Table rows={updatedStudentRows} columns={StudentCols} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
+            <Table rows={StudentRows} columns={StudentCols} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
+            {/* rows will be exchanged to studentsListFormFormat */}
             <div className='text-center'
                 style={{ padding: '20px' }}>
                 <Button onClick={addNewStudent} >הוסף תלמיד חדש<FaPlus style={{ paddingBottom: '2px' }} /></Button></div>
