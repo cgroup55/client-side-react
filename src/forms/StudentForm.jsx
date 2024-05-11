@@ -108,7 +108,7 @@ export default function StudentForm() {
                 else console.log("error");//add swal
             }
             else {
-                await updateEscort(studentToExport);
+                await updateStudent(studentToExport);
                 navigate('/students');
             }
 
