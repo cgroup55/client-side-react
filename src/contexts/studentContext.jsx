@@ -13,6 +13,8 @@ export default function StudentContextProvider(props) {
     const [studentsListFormFormat, setStudentsListFormFormat] = useState([]);
 
     const addStudent = async (studentToInsert) => {
+        let [lat, lng] = await getStudentGeocodeAddress(studentToInsert.address);
+
         //DB update
         let res = await create(url, studentToInsert);
         if (res == undefined || res == null) {
@@ -60,6 +62,10 @@ export default function StudentContextProvider(props) {
             stu_dateOfPlacement: convertDate(student.stu_dateOfPlacement, true)
         })));
         console.log('studentsList context:', studentsList);
+    }
+
+    const getStudentGeocodeAddress = async (address)=> {
+        //fetch to tomtom geocode api
     }
 
 
