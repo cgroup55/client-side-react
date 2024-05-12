@@ -3,17 +3,17 @@ import tt from '@tomtom-international/web-sdk-maps';
 
 export default function Map() {
 
-    let times=0;
-   let cent=[34.90899,32.17828];
-    useEffect(() => { 
+    let times = 0;
+    let cent = [34.90899, 32.17828];
+    useEffect(() => {
         console.log(++times);///how many times does the page re-render?
         const map = tt.map({
             key: 'VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI',
             container: 'map',
-            center:cent,
+            center:  [34.90899, 32.17828],
             zoom: 12
         });
-        
+
 
         //component unmount
         return () => {
@@ -24,8 +24,8 @@ export default function Map() {
 
     return (
         <>
-        
-            <div id="map" style={{width:'80vw',height:'350px'}}></div>
+
+            <div id="map" style={{ width: '80vw', height: '350px' }}></div>
         </>
     )
 }

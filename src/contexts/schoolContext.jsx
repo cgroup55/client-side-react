@@ -60,6 +60,8 @@ export default function SchoolContextProvider(props) {
         getSchools();
     }, []);
 
+
+    //
     useEffect(() => {
         setKeyValSchool(() =>
             schoolsList.reduce((index,school) => {
