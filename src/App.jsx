@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
@@ -38,8 +38,7 @@ function App() {
         <SchoolContextProvider>
           <StudentContextProvider>
             <CompanyContextProvider>
-              <BrowserRouter>
-                {/* change to hash */}
+              <HashRouter>
 
                 {(location.pathname != "/") ? <NavBar /> : null}
                 <Routes>
@@ -60,7 +59,7 @@ function App() {
                   <Route path='/CompanyForm' element={<CompanyForm />} />
                 </Routes>
 
-              </BrowserRouter>
+              </HashRouter>
             </CompanyContextProvider>
           </StudentContextProvider>
 
