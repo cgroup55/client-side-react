@@ -15,20 +15,20 @@ export default function NavBar() {
 
                         <Nav navbarScroll style={{ backgroundColor: "white", width: '100%', top: '10px' }}>
                             <NavDropdown title="הסעות">
-                                <NavDropdown.Item href="/realtimeLines">הסעות בזמן אמת</NavDropdown.Item>
-                                <NavDropdown.Item href="/lines">קווי הסעה </NavDropdown.Item>
-                                <NavDropdown.Item href="/transportComps">חברות הסעה </NavDropdown.Item>
+                                <NavDropdown.Item href="#/realtimeLines">הסעות בזמן אמת</NavDropdown.Item>
+                                <NavDropdown.Item href="#/lines">קווי הסעה </NavDropdown.Item>
+                                <NavDropdown.Item href="#/transportComps">חברות הסעה </NavDropdown.Item>
                             </NavDropdown>
                             <NavDropdown title="תלמידים" >
-                                <NavDropdown.Item href="/students">נתוני תלמידים</NavDropdown.Item>
-                                <NavDropdown.Item href="/schools">מוסדות לימוד</NavDropdown.Item>
+                                <NavDropdown.Item href="#/students">נתוני תלמידים</NavDropdown.Item>
+                                <NavDropdown.Item href="#/schools">מוסדות לימוד</NavDropdown.Item>
                             </NavDropdown>
-                            <Nav.Link href="/escorts">מלווים</Nav.Link>
-                            <Nav.Link href="/reports">דוחות</Nav.Link>
+                            <Nav.Link href="#/escorts">מלווים</Nav.Link>
+                            <Nav.Link href="#/reports">דוחות</Nav.Link>
                         </Nav>
 
                     </Navbar.Collapse>
-                    <Navbar.Brand href="/homepage"  >
+                    <Navbar.Brand href="#/homepage"  >
                         <img style={{ position: 'absolute', left: '40px', top: '10px', maxHeight: '52px', maxWidth: '100%' }} src="../src/images/clearlogo.png" alt="#" />
                     </Navbar.Brand>
                 </Container>

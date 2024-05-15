@@ -38,9 +38,9 @@ function App() {
         <SchoolContextProvider>
           <StudentContextProvider>
             <CompanyContextProvider>
-              <HashRouter>
+              <HashRouter >
 
-                {(location.pathname != "/") ? <NavBar /> : null}
+                {(location.pathname != "") ? <NavBar /> : null}
                 <Routes>
                   <Route path='/' element={<Login />} />
                   <Route path="/homepage" element={<HomePage />} />
