@@ -15,7 +15,12 @@ export default function StudentContextProvider(props) {
     const addStudent = async (studentToInsert) => {
 
         let studentAdress = studentToInsert.stu_parentStreet + " " + studentToInsert.stu_parentHomeNum + " " + studentToInsert.stu_parentCity;
+
         let geoRes = await getStudentGeocodeAddress(studentAdress);
+        if (!geoRes) {
+            studentToInsert.lat = lat;
+            studentToInsert.lng = lng;
+        }
 
         //DB update
         let res = await create(url, fixObjectForServer(studentToInsert));
@@ -40,7 +45,6 @@ export default function StudentContextProvider(props) {
         }
 
         //Local update + fix the dates formats for each student object
-        console.log("before update", studentToUpdate);
         setStudentsListFormFormat(() => studentsListFormFormat.map(student => {
             if (student.stu_id != studentToUpdate.stu_id)
                 return student;
@@ -69,12 +73,27 @@ export default function StudentContextProvider(props) {
     }
 
     const getStudentGeocodeAddress = async (address) => {
-
         const geoUrl = createGeocodeUrl(address);
-        console.log('geoUrl', geoUrl);
-
-
+        try {
+            const response = await fetch(geoUrl);
+            const data = await response.json();
+            if (data && data.results && data.results.length > 0) {
+                const location = data.results[0].position;
+                const { lat, lon } = location;
+                console.log('Latitude:', lat);
+                console.log('Longitude:', lon);
+                return { lat, lon };
+            } else {
+                console.log('No results found for the provided address.');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error fetching geocode data:', error);
+            return null;
+        }
     }
+
+
 
     //creates the proper url to sync to Tomtom geocode service
     function createGeocodeUrl(address) {
@@ -84,8 +103,6 @@ export default function StudentContextProvider(props) {
         const url = `${baseUrl}${encodedAddress}.json?key=${apiKey}`;
         return url;
     }
-
-
 
 
     //changes the format from the server to the desired format in the form
