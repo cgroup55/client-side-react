@@ -129,7 +129,7 @@ export default function Students() {
             stu_contactCell: row.stu_contactCell,
             stu_contactCity: row.stu_contactCity,
             stu_contactStreet: row.stu_contactStreet,
-            stu_contactHomeNum: row.stu_contactHomeNum,
+            stu_contactHomeNum: row.stu_contactHomeNum
         };
         console.log('currentStudent:', currentStudent);
         navigate('/studentform', { state: currentStudent });
@@ -152,7 +152,6 @@ export default function Students() {
         <div className='container mt-5' >
             <h3 className="bold" style={{ textAlign: 'center' }}>נתוני תלמידים</h3>
             <Table rows={studentsListFormFormat} columns={StudentCols} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} />
-            {/* rows will be exchanged to studentsListFormFormat */}
             <div className='text-center'
                 style={{ padding: '20px' }}>
                 <Button onClick={addNewStudent} >הוסף תלמיד חדש<FaPlus style={{ paddingBottom: '2px' }} /></Button></div>

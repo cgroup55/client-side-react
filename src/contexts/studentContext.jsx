@@ -13,10 +13,12 @@ export default function StudentContextProvider(props) {
     const [studentsListFormFormat, setStudentsListFormFormat] = useState([]);
 
     const addStudent = async (studentToInsert) => {
-        let [lat, lng] = await getStudentGeocodeAddress(studentToInsert.address);
+
+        let studentAdress = studentToInsert.stu_parentStreet + " " + studentToInsert.stu_parentHomeNum + " " + studentToInsert.stu_parentCity;
+        let geoRes = await getStudentGeocodeAddress(studentAdress);
 
         //DB update
-        let res = await create(url, studentToInsert);
+        let res = await create(url, fixObjectForServer(studentToInsert));
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
             return;
@@ -24,7 +26,8 @@ export default function StudentContextProvider(props) {
         //Local update + date fix
         studentToInsert.stu_dateofbirth = convertDate(studentToInsert.stu_dateofbirth, true);
         studentToInsert.stu_dateOfPlacement = convertDate(studentToInsert.stu_dateOfPlacement, true);
-        setStudentsList([...studentsList, studentToInsert]);
+        
+        setStudentsListFormFormat([...studentsListFormFormat, studentToInsert]);
         return res;
     }
 
@@ -64,9 +67,24 @@ export default function StudentContextProvider(props) {
         console.log('studentsList context:', studentsList);
     }
 
-    const getStudentGeocodeAddress = async (address)=> {
-        //fetch to tomtom geocode api
+    const getStudentGeocodeAddress = async (address) => {
+
+        const geoUrl = createGeocodeUrl(address);
+        console.log('geoUrl', geoUrl);
+
+
     }
+
+    //creates the proper url to sync to Tomtom geocode service
+    function createGeocodeUrl(address) {
+        const apiKey = 'VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI'; // Your API key
+        const baseUrl = 'https://api.tomtom.com/search/2/geocode/';
+        const encodedAddress = encodeURIComponent(address);
+        const url = `${baseUrl}${encodedAddress}.json?key=${apiKey}`;
+        return url;
+    }
+
+
 
 
     //changes the format from the server to the desired format in the form
@@ -106,6 +124,42 @@ export default function StudentContextProvider(props) {
             return newObj;
         });
     }
+
+    const fixObjectForServer = (obj) => {
+        let formattedObj = {
+            stu_fullName: obj.stu_fullName,
+            stu_id: obj.stu_id,
+            stu_dateofbirth: obj.stu_dateofbirth,
+            stu_grade: obj.stu_grade,
+            stu_school: obj.stu_school,
+            stu_dateOfPlacement: obj.stu_dateOfPlacement,
+            stu_disability: obj.stu_disability,
+            stu_comments: obj.stu_comments,
+            parents: [
+                {
+                    stu_parentName: obj.stu_parentName,
+                    stu_parentCell: obj.stu_parentCell,
+                    stu_parentCity: obj.stu_parentCity,
+                    stu_parentStreet: obj.stu_parentStreet,
+                    stu_parentHomeNum: obj.stu_parentHomeNum
+                }
+            ]
+        };
+
+        // Check if additional contact fields are not empty
+        if (obj.stu_contactCell) {
+            formattedObj.parents.push({
+                stu_parentName: obj.stu_contactName,
+                stu_parentCell: obj.stu_contactCell,
+                stu_parentCity: obj.stu_contactCity,
+                stu_parentStreet: obj.stu_contactStreet,
+                stu_parentHomeNum: obj.stu_contactHomeNum
+            });
+        }
+
+        return formattedObj;
+    };
+
 
     //gets the getDisabilities list from the DB
     const getDisabilities = async () => {

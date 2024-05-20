@@ -102,7 +102,7 @@ export default function StudentForm() {
             if (originStudent.stu_id == '') //add or update?
             {
                 let res = await addStudent(studentToExport);
-                if (res && res == 1) //check if res returns a valid response  
+                if (res && res >=1) //check if res returns a valid response  
                 {
                     navigate('/students');
                 }
