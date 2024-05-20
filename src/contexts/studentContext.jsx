@@ -26,22 +26,23 @@ export default function StudentContextProvider(props) {
         //Local update + date fix
         studentToInsert.stu_dateofbirth = convertDate(studentToInsert.stu_dateofbirth, true);
         studentToInsert.stu_dateOfPlacement = convertDate(studentToInsert.stu_dateOfPlacement, true);
-        
+
         setStudentsListFormFormat([...studentsListFormFormat, studentToInsert]);
         return res;
     }
 
     const updateStudent = async (studentToUpdate) => {
         //DB update
-        let res = await update(url, studentToUpdate);
+        let res = await update(url, fixObjectForServer(studentToUpdate));
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
 
         //Local update + fix the dates formats for each student object
-        setStudentsList(() => studentsList.map(student => {
-            if (student.esc_id != studentToUpdate.esc_id)
+        console.log("before update", studentToUpdate);
+        setStudentsListFormFormat(() => studentsListFormFormat.map(student => {
+            if (student.stu_id != studentToUpdate.stu_id)
                 return student;
             return {
                 ...studentToUpdate, stu_dateofbirth: convertDate(student.stu_dateofbirth, true),
@@ -109,6 +110,11 @@ export default function StudentContextProvider(props) {
                 newObj.stu_parentCity = parent.stu_parentCity;
                 newObj.stu_parentStreet = parent.stu_parentStreet;
                 newObj.stu_parentHomeNum = parent.stu_parentHomeNum;
+                newObj.stu_contactName = '';
+                newObj.stu_contactCell = '';
+                newObj.stu_contactCity = '';
+                newObj.stu_contactStreet = '';
+                newObj.stu_contactHomeNum = '';
             }
 
             // If there is a second parent, add their details to the new object

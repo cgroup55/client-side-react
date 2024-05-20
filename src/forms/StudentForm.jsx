@@ -19,7 +19,7 @@ export default function StudentForm() {
 
     //inporting from contexts
     const { schoolsList } = useContext(SchoolContext);
-    const { disabilities, addStudent, updateStudent } = useContext(StudentContext);
+    const { disabilities, addStudent, updateStudent} = useContext(StudentContext);
 
     //States for handling the addresses
     const [cities, setCities] = useState([]);

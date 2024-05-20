@@ -4,8 +4,8 @@ import '../styling/App.css';
 
 export default function MyModal({ show, handleClose, rowData, colData, pageName }) {
 
-    
-    if (!rowData) {
+
+    if (!rowData || rowData==undefined) {
         return null; // Return null if rowData is null or undefined
     }
     //filter out empty columns

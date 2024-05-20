@@ -28,7 +28,7 @@ export default function EscortContextProvider(props) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
-
+        console.log(escortToUpdate);
         //Local update + fix the date format for each escort object
         setEscortsList(() => escortsList.map(escort => {
             if (escort.esc_id != escortToUpdate.esc_id)
