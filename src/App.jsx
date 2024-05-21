@@ -21,11 +21,12 @@ import SchoolForm from './forms/SchoolForm.jsx';
 import LineForm from './forms/LineForm.jsx';
 import EscortForm from './forms/EscortForm.jsx';
 import CompanyForm from './forms/CompanyForm.jsx';
-import EscortContextProvider from './contexts/escortContext.jsx';
 import AddStudentToLine from './pages/AddStudentToLine.jsx';
+import EscortContextProvider from './contexts/escortContext.jsx';
 import SchoolContextProvider from './contexts/schoolContext.jsx';
 import CompanyContextProvider from './contexts/companyContext.jsx';
 import StudentContextProvider from './contexts/studentContext.jsx';
+import LineContextProvider from './contexts/lineContext.jsx';
 
 
 
@@ -34,37 +35,36 @@ function App() {
 
   return (
     <>
-      <EscortContextProvider>
-        <SchoolContextProvider>
-          <StudentContextProvider>
-            <CompanyContextProvider>
-              <HashRouter >
-
-                {(location.pathname != "") ? <NavBar /> : null}
-                <Routes>
-                  <Route path='/' element={<Login />} />
-                  <Route path="/homepage" element={<HomePage />} />
-                  <Route path='/realtimelines' element={<RealTimeLines />} />
-                  <Route path='/lines' element={<Lines />} />
-                  <Route path='/AddStudentToLine' element={<AddStudentToLine />} />
-                  <Route path='/transportComps' element={<TransportationCompanies />} />
-                  <Route path='/students' element={<Students />} />
-                  <Route path='/schools' element={<Schools />} />
-                  <Route path='/escorts' element={<Escorts />} />
-                  <Route path='/reports' element={<Reports />} />
-                  <Route path='/StudentForm' element={<StudentForm />} />
-                  <Route path='/SchoolForm' element={<SchoolForm />} />
-                  <Route path='/LineForm' element={<LineForm />} />
-                  <Route path='/EscortForm' element={<EscortForm />} />
-                  <Route path='/CompanyForm' element={<CompanyForm />} />
-                </Routes>
-
-              </HashRouter>
-            </CompanyContextProvider>
-          </StudentContextProvider>
-
-        </SchoolContextProvider>
-      </EscortContextProvider>
+      <LineContextProvider>
+        <EscortContextProvider>
+          <SchoolContextProvider>
+            <StudentContextProvider>
+              <CompanyContextProvider>
+                <HashRouter >
+                  {(location.pathname != "") ? <NavBar /> : null}
+                  <Routes>
+                    <Route path='/' element={<Login />} />
+                    <Route path="/homepage" element={<HomePage />} />
+                    <Route path='/realtimelines' element={<RealTimeLines />} />
+                    <Route path='/lines' element={<Lines />} />
+                    <Route path='/AddStudentToLine' element={<AddStudentToLine />} />
+                    <Route path='/transportComps' element={<TransportationCompanies />} />
+                    <Route path='/students' element={<Students />} />
+                    <Route path='/schools' element={<Schools />} />
+                    <Route path='/escorts' element={<Escorts />} />
+                    <Route path='/reports' element={<Reports />} />
+                    <Route path='/StudentForm' element={<StudentForm />} />
+                    <Route path='/SchoolForm' element={<SchoolForm />} />
+                    <Route path='/LineForm' element={<LineForm />} />
+                    <Route path='/EscortForm' element={<EscortForm />} />
+                    <Route path='/CompanyForm' element={<CompanyForm />} />
+                  </Routes>
+                </HashRouter>
+              </CompanyContextProvider>
+            </StudentContextProvider>
+          </SchoolContextProvider>
+        </EscortContextProvider>
+      </LineContextProvider>
     </>
   )
 }

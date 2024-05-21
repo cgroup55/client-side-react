@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import "../styling/Form.css";
 import Swal from 'sweetalert2';
 import { FaCheck, FaPlus } from 'react-icons/fa';
@@ -6,6 +6,9 @@ import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ValidPositiveNumber, isRadioButtonChecked, Validateselect } from '../tools/validations';
 import { MdCancel } from 'react-icons/md';
+import { SchoolContext } from '../contexts/schoolContext.jsx';
+import { EscortContext } from '../contexts/escortContext.jsx';
+import { CompanyContext } from '../contexts/companyContext.jsx';
 
 export default function LineForm() {
 
@@ -14,16 +17,15 @@ export default function LineForm() {
 
   const { state } = useLocation();
   let originLine = state;
+
+  const { schoolsList } = useContext(SchoolContext);
+  const { escortsList } = useContext(EscortContext);
+  const { companiesList } = useContext(CompanyContext);
   
   let giventime = originLine.time_of_line.split(':')
   const [line, setLine] = useState({ ...originLine, definition_date: today });
   const [errors, setErrors] = useState({});
-  const [time, setTime] = useState({ hours: giventime[0], minutes: giventime[1],error:'' });
-
-  //צריך לחבר לנתונים שיגיעו מהDB
-  const schoolsList = [{ name: "טשרני", city: "נתניה", street: "הגרא", houseNumber: "3" }, { name: "אורט", city: "חדרה", street: "הרצל", houseNumber: "5" }];//need to fetch from database
-  const escorts = ["אבי לוי", "בני בוי"];//need to fetch from database
-
+  const [time, setTime] = useState({ hours: giventime[0], minutes: giventime[1], error: '' });
 
 
   const handleSubmit = (event) => {
@@ -35,14 +37,14 @@ export default function LineForm() {
       let timeLine = time.hours + ":" + time.minutes;
 
       console.log("timeLine:", timeLine);
-      
+
       console.log("time:", time.hours);
       if (time.hours == "00") {
         console.log("inside");
-        setTime({...time,error:"שעת יציאת הקו לא יכולה להיות 00"});
+        setTime({ ...time, error: "שעת יציאת הקו לא יכולה להיות 00" });
         return;
       }
-      setTime({...time,error:""});
+      setTime({ ...time, error: "" });
       navigate('/Lines', { state: { ...line, time_of_line: timeLine } });
     } else {
       // Show error message
@@ -143,9 +145,11 @@ export default function LineForm() {
                 className="formSelect"
               >
                 <option value={"-1"}></option>
-                <option value={"אא הסעים"}>אא הסעים</option>
-                <option value={"בב הסעות"}>בב הסעות</option>
-                <option value={"א אוטובוס"}>א אוטובוס</option>
+                {companiesList.map((company, index) => (
+                  <option key={index} value={company.company_Code}>
+                    {company.company_Name}
+                  </option>
+                ))}
               </Form.Control>
               <Form.Control.Feedback type="invalid">
                 {errors.transportaion_company}
@@ -191,7 +195,6 @@ export default function LineForm() {
               </Form.Control.Feedback>
             </Form.Group>
 
-            מהDB צריך להיות  ***
             <Form.Group controlId="escort_incharge">
               <Form.Label>מלווה אחראי </Form.Label>
               <Form.Control
@@ -207,9 +210,9 @@ export default function LineForm() {
                 className="formSelect"
               >
                 <option value={"-1"}></option>
-                {escorts.map((escort, index) => (
-                  <option key={index} value={escort}>
-                    {escort}
+                {escortsList.map((escort, index) => (
+                  <option key={index} value={escort.esc_id}>
+                    {escort.esc_fullName}
                   </option>
                 ))}
               </Form.Control>
@@ -218,7 +221,6 @@ export default function LineForm() {
               </Form.Control.Feedback>
             </Form.Group>
 
-            מהDB צריך להיות  ***
             <Form.Group controlId="school_of_line">
               <Form.Label>מוסד לימודים </Form.Label>
               <Form.Control
