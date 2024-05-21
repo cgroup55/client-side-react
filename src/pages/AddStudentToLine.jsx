@@ -52,9 +52,10 @@ export default function AddStudentToLine() {
     });
 
     //Hanle save changes
-    const hanleSaving = () => {
-        console.log('save');
-        //Add swal
+    const handleSaving = () => {
+
+        const studentofLine = selectedStudents.map(student => student.id).join(',');
+
         navigate('/lines');
     }
 
@@ -115,7 +116,7 @@ export default function AddStudentToLine() {
                 </div>
 
                 <div className='text-center' style={{ paddingTop: '20px' }}>
-                    <Button type="button" onClick={hanleSaving}>שמירה <FaCheck style={{ paddingBottom: '2px' }} /></Button>
+                    <Button type="button" onClick={handleSaving}>שמירה <FaCheck style={{ paddingBottom: '2px' }} /></Button>
                 </div>
 
             </div>
