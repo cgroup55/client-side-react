@@ -61,11 +61,11 @@ export default function SchoolContextProvider(props) {
     }, []);
 
 
-    //
+    //for conversions in client- KeyValue array
     useEffect(() => {
         setKeyValSchool(() =>
             schoolsList.reduce((index,school) => {
-                index[school.institutionId] = school.name;
+                index[school.institutionId] = school;
                 return index;
             }, {})
         );

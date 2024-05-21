@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate, useLocation } from 'react-router-dom';
 import MyModal from '../components/MyModal';
+import { SchoolContext } from '../contexts/schoolContext.jsx';
+import { EscortContext } from '../contexts/escortContext.jsx';
+import { CompanyContext } from '../contexts/companyContext.jsx';
 
 
 export default function Lines() {
@@ -16,6 +19,14 @@ export default function Lines() {
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
 
+  const { schoolsList, keyValSchool} = useContext(SchoolContext);
+  const { keyValEscort } = useContext(EscortContext);
+  const { keyValCompany } = useContext(CompanyContext);
+
+
+
+  console.log("schools list",schoolsList);
+  console.log("keyValEscort",keyValEscort);
   //initialize empty object for adding new
   const addNewLine = () => {
     let newLine = {
@@ -74,15 +85,15 @@ export default function Lines() {
       line_code: 1,
       line_car: "אוטובוס",
       number_of_seats: 3,
-      escort_incharge: "אבי לוי",
-      school_of_line: "טשרני",
+      escort_incharge: "314649344",
+      school_of_line: "1",
       station_definition: "מוצא",
       time_of_line: "19:17",
       line_city: "נתניה",
       line_street: "שד' בנימין",
       line_Homenumber: "3",
       definition_date: "12/04/2021",
-      transportaion_company: "בב הסעות",
+      transportaion_company: "12",
       comments: "הערההההההה"
 
     },
@@ -156,8 +167,11 @@ export default function Lines() {
 
   //dd students- pass line obj with relevante data
   const handleAdd = (row) => {
-    console.log('Add:', row);
-    navigate('/AddStudentToLine', { state: row });
+    console.log("row",row);
+    console.log("row school",row.school_of_line);
+    let school=keyValSchool[row.school_of_line];
+    console.log("school",school);
+    navigate('/AddStudentToLine', { state: {row,school} });
 
   }
 

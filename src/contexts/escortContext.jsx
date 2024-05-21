@@ -7,6 +7,7 @@ export default function EscortContextProvider(props) {
 
     const url = 'api/Escort';
     const [escortsList, setEscortsList] = useState([]);
+    const [keyValEscort, setKeyValEscort] = useState({});
 
     const addEscort = async (escortToInsert) => {
         //DB update
@@ -54,10 +55,20 @@ export default function EscortContextProvider(props) {
 
     }
 
+    //for conversions in client- KeyValue array
+    useEffect(() => {
+        setKeyValEscort(() =>
+            escortsList.reduce((index,escort) => {
+                index[escort.esc_id] = escort;
+                return index;
+            }, {})
+        );
+    }, [escortsList]);
+
 
     //props functions to use in pages
     const value = {
-        addEscort, escortsList, getEscort, updateEscort
+        addEscort, escortsList, getEscort, updateEscort,keyValEscort
     }
 
     //get all escorts on first render

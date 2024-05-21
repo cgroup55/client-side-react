@@ -6,6 +6,8 @@ export default function CompanyContextProvider(props) {
 
     const url = 'api/TransportationCompany';
     const [companiesList, setCompaniesList] = useState([]);
+    const [keyValCompany, setKeyValCompany] = useState([]);
+
 
     const addCompany = async (companyToInsert) => {
         //DB update
@@ -19,15 +21,15 @@ export default function CompanyContextProvider(props) {
         return res;
     }
 
-    const updateCompany = async (companyToUpdate) => {       
+    const updateCompany = async (companyToUpdate) => {
         //DB update
         let res = await update(url, companyToUpdate);
-        console.log('company update res:',res);
+        console.log('company update res:', res);
         if (res == undefined || res == null) {
             console.log('שגיאה- אובייקט חברה ריק מתוכן');
             return;
         }
-   
+
         //Local update
         setCompaniesList(() => companiesList.map(company => {
             if (company.company_Code != companyToUpdate.company_Code)
@@ -46,10 +48,19 @@ export default function CompanyContextProvider(props) {
         setCompaniesList(res);
     }
 
+    //for conversions in client- KeyValue array
+    useEffect(() => {
+        setKeyValCompany(() =>
+            companiesList.reduce((index, company) => {
+                index[company.company_Code] = company;
+                return index;
+            }, {})
+        );
+    }, [companiesList]);
 
     //props functions to use in pages
     const value = {
-        addCompany, companiesList, getCompany, updateCompany
+        addCompany, companiesList, getCompany, updateCompany,keyValCompany
     }
 
     //get all companies on first render
