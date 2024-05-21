@@ -1,6 +1,7 @@
 import { React, createContext, useState, useEffect } from "react";
 import { create, read, update } from "../tools/api";
 import { convertDate } from "../tools/validations";
+import {getGeocodeAddress} from "../tools/geocode";
 export const StudentContext = createContext();
 
 export default function StudentContextProvider(props) {
@@ -16,7 +17,7 @@ export default function StudentContextProvider(props) {
 
         let studentAdress = studentToInsert.stu_parentStreet + " " + studentToInsert.stu_parentHomeNum + " " + studentToInsert.stu_parentCity;
 
-        let geoRes = await getStudentGeocodeAddress(studentAdress);
+        let geoRes = await getGeocodeAddress(studentAdress);
         if (!geoRes) {
             studentToInsert.lat = lat;
             studentToInsert.lng = lng;
@@ -72,37 +73,7 @@ export default function StudentContextProvider(props) {
         console.log('studentsList context:', studentsList);
     }
 
-    const getStudentGeocodeAddress = async (address) => {
-        const geoUrl = createGeocodeUrl(address);
-        try {
-            const response = await fetch(geoUrl);
-            const data = await response.json();
-            if (data && data.results && data.results.length > 0) {
-                const location = data.results[0].position;
-                const { lat, lon } = location;
-                console.log('Latitude:', lat);
-                console.log('Longitude:', lon);
-                return { lat, lon };
-            } else {
-                console.log('No results found for the provided address.');
-                return null;
-            }
-        } catch (error) {
-            console.error('Error fetching geocode data:', error);
-            return null;
-        }
-    }
-
-
-
-    //creates the proper url to sync to Tomtom geocode service
-    function createGeocodeUrl(address) {
-        const apiKey = 'VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI'; // Your API key
-        const baseUrl = 'https://api.tomtom.com/search/2/geocode/';
-        const encodedAddress = encodeURIComponent(address);
-        const url = `${baseUrl}${encodedAddress}.json?key=${apiKey}`;
-        return url;
-    }
+   
 
 
     //changes the format from the server to the desired format in the form

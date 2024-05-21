@@ -23,7 +23,7 @@ export default function Lines() {
       line_car: "",
       number_of_seats: "",
       escort_incharge: "",
-      school_of_line: "",
+      school_of_line: {},
       station_definition: "",
       line_city: "",
       line_street: "",
