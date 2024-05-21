@@ -141,6 +141,7 @@ export default function Lines() {
 
   //edit mode- pass line obj with relevante data
   const handleEdit = (row) => {
+    console.log("row",row);
     let currentLine = {
       line_code: row.line_code,
       line_car: row.line_car,

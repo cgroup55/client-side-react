@@ -234,7 +234,7 @@ export default function LineForm() {
               >
                 <option value={"-1"}></option>
                 {schoolsList.map((school, index) => (
-                  <option key={index} value={school.name}>
+                  <option key={index} value={school.institutionId}>
                     {school.name}
                   </option>
                 ))}
