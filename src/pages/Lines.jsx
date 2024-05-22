@@ -20,14 +20,15 @@ export default function Lines() {
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
 
-  const { schoolsList, keyValSchool } = useContext(SchoolContext);
+  const { keyValSchool } = useContext(SchoolContext);
   const { keyValEscort } = useContext(EscortContext);
   const { keyValCompany } = useContext(CompanyContext);
 
-
-
-  console.log("schools list line page-", schoolsList);
+console.log('linesList-',linesList);
+  console.log("keyValSchool line page-", keyValSchool);
   console.log("keyValEscort line page-", keyValEscort);
+  console.log("keyValCompany line page-", keyValCompany);
+
   //initialize empty object for adding new
   const addNewLine = () => {
     let newLine = {
@@ -35,24 +36,30 @@ export default function Lines() {
       line_car: "",
       number_of_seats: "",
       escort_incharge: "",
-      school_of_line: {},
+      school_of_line: "",
       station_definition: "",
       line_city: "",
       line_street: "",
       line_Homenumber: "",
       time_of_line: "00:00",
       definition_date: "",
-      transportaion_company: "",
+      transportation_company: "",
       comments: ""
     }
     navigate('/LineForm', { state: newLine });
   }
+
 
   //columns name and connection to data in table
   const Linecolumns = [
     {
       name: "קוד קו",
       selector: (row) => row.line_code,
+      sortable: true,
+    },
+    {
+      name: "חברת הסעה",
+      selector: (row) => keyValCompany[row.transportation_company].company_Name,                        
       sortable: true,
     },
     {
@@ -65,7 +72,7 @@ export default function Lines() {
     },
     {
       name: "מוסד לימודי",
-      selector: (row) => row.school_of_line,
+      selector: (row) => keyValSchool[row.school_of_line].name,
     },
     {
       name: "איסוף/פיזור",
@@ -74,46 +81,11 @@ export default function Lines() {
     },
     {
       name: "מלווה",
-      selector: (row) => row.escort_incharge,
+      selector: (row) => keyValEscort[row.escort_incharge].esc_fullName,
     },
 
   ];
 
-  //יימחק
-  // const Linerows = [
-
-  //   {
-  //     line_code: 1,
-  //     line_car: "אוטובוס",
-  //     number_of_seats: 3,
-  //     escort_incharge: "123321123",
-  //     school_of_line: "1",
-  //     station_definition: "מוצא",
-  //     time_of_line: "19:17",
-  //     line_city: "נתניה",
-  //     line_street: "שד' בנימין",
-  //     line_Homenumber: "3",
-  //     definition_date: "12/04/2021",
-  //     transportaion_company: "12",
-  //     comments: "הערההההההה"
-
-  //   },
-  //   {
-  //     line_code: "2",
-  //     line_car: "מיניבוס",
-  //     number_of_seats: "5",
-  //     escort_incharge: "בני בוי",
-  //     school_of_line: "טשרני",
-  //     station_definition: "יעד",
-  //     time_of_line: "20:21",
-  //     line_city: "כפר סבא",
-  //     line_street: "עליה",
-  //     line_Homenumber: "8",
-  //     transportaion_company: "אא הסעים",
-  //   },
-  // ];
-
-  // const updatedLineRows = addedLine ? [...Linerows, addedLine] : Linerows;
 
   //field names for the model
   const ColumnNamesByIdentifier =
@@ -129,7 +101,7 @@ export default function Lines() {
     line_Homenumber: "מספר",
     time_of_line: "שעת התחנה",
     definition_date: "תאריך הגדרת קו",
-    transportaion_company: "חברת הסעה",
+    transportation_company: "חברת הסעה",
     comments: "הערות"
   }
 
@@ -146,7 +118,7 @@ export default function Lines() {
     let currentLine = {
       line_code: row.line_code,
       line_car: row.line_car,
-      definition_date: convertDate(row.definition_date),
+      definition_date: convertDate(row.definition_date, false),
       number_of_seats: row.number_of_seats,
       escort_incharge: row.escort_incharge,
       school_of_line: row.school_of_line,
@@ -155,10 +127,10 @@ export default function Lines() {
       line_city: row.line_city,
       line_street: row.line_street,
       line_Homenumber: row.line_Homenumber,
-      transportaion_company: row.transportaion_company,
+      transportation_company: row.transportation_company,
       comments: row.comments
-
     }
+    console.log('currentLine:', currentLine);
     navigate('/LineForm', { state: currentLine });
   };
 
@@ -169,7 +141,7 @@ export default function Lines() {
 
   //dd students- pass line obj with relevante data
   const handleAdd = (row) => {
-    console.log("row-line", row);
+    console.log("row-line page", row);
 
     navigate('/AddStudentToLine', { state: row });
 

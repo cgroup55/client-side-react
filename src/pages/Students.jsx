@@ -15,6 +15,8 @@ export default function Students() {
     const { keyValSchool } = useContext(SchoolContext);
     const { disKeyVal, studentsListFormFormat } = useContext(StudentContext);
 
+    console.log("keyValSchool students page-", keyValSchool);
+
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
     const [colData, setColData] = useState(null);

@@ -60,7 +60,7 @@ export default function LineForm() {
     newErrors.number_of_seats = ValidPositiveNumber(line.number_of_seats);
     newErrors.school_of_line = Validateselect(line.school_of_line);
     newErrors.station_definition = isRadioButtonChecked(line.station_definition);
-    newErrors.transportaion_company = Validateselect(line.transportaion_company);
+    newErrors.transportation_company = Validateselect(line.transportation_company);
 
     setErrors(newErrors);
     Object.values(newErrors).forEach(error => {
@@ -130,14 +130,14 @@ export default function LineForm() {
 
             </Form.Group>
 
-            <Form.Group controlId="transportaion_company">
+            <Form.Group controlId="transportation_company">
               <Form.Label>חברת הסעה</Form.Label>
               <Form.Control
                 as="select"
-                name="transportaion_company"
-                value={line.transportaion_company}
-                onChange={(e) => setLine({ ...line, transportaion_company: e.target.value })}
-                isInvalid={!!errors.transportaion_company}
+                name="transportation_company"
+                value={line.transportation_company}
+                onChange={(e) => setLine({ ...line, transportation_company: e.target.value })}
+                isInvalid={!!errors.transportation_company}
                 required
                 className="formSelect"
               >
@@ -149,7 +149,7 @@ export default function LineForm() {
                 ))}
               </Form.Control>
               <Form.Control.Feedback type="invalid">
-                {errors.transportaion_company}
+                {errors.transportation_company}
               </Form.Control.Feedback>
             </Form.Group>
 
