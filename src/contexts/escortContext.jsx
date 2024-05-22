@@ -29,14 +29,14 @@ export default function EscortContextProvider(props) {
             console.log('שגיאה- ריק מתוכן');
             return;
         }
-        console.log(escortToUpdate);
-        //Local update + fix the date format for each escort object
-        setEscortsList(() => escortsList.map(escort => {
-            if (escort.esc_id != escortToUpdate.esc_id)
-                return escort;
-            return { ...escortToUpdate, esc_dateOfBirth: convertDate(escort.esc_dateOfBirth, true) }
-        }));
-
+        console.log('escortToUpdate', escortToUpdate);
+ 
+        // Convert date before updating state
+        escortToUpdate.esc_dateOfBirth = convertDate(escortToUpdate.esc_dateOfBirth, true);
+        // Local update
+        setEscortsList(escortsList.map(escort =>
+            escort.esc_id !== escortToUpdate.esc_id ? escort : escortToUpdate
+        ));
     }
 
 
@@ -58,7 +58,7 @@ export default function EscortContextProvider(props) {
     //for conversions in client- KeyValue array
     useEffect(() => {
         setKeyValEscort(() =>
-            escortsList.reduce((index,escort) => {
+            escortsList.reduce((index, escort) => {
                 index[escort.esc_id] = escort;
                 return index;
             }, {})
@@ -68,7 +68,7 @@ export default function EscortContextProvider(props) {
 
     //props functions to use in pages
     const value = {
-        addEscort, escortsList, getEscort, updateEscort,keyValEscort
+        addEscort, escortsList, getEscort, updateEscort, keyValEscort
     }
 
     //get all escorts on first render
