@@ -62,7 +62,7 @@ export default function LineContextProvider(props) {
 
     //get all lines on first render
     useEffect(() => {
-        //getLines();
+        getLines();
     }, []);
 
     return (

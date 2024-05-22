@@ -4,29 +4,30 @@ import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate, useLocation } from 'react-router-dom';
 import MyModal from '../components/MyModal';
+import { convertDate } from '../tools/validations.js';
 import { SchoolContext } from '../contexts/schoolContext.jsx';
 import { EscortContext } from '../contexts/escortContext.jsx';
 import { CompanyContext } from '../contexts/companyContext.jsx';
+import { LineContext } from '../contexts/lineContext.jsx';
 
 
 export default function Lines() {
 
   const navigate = useNavigate();
-  const { state } = useLocation();
-  let addedLine = state;
+  const { linesList } = useContext(LineContext);
 
   const [showModal, setShowModal] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
 
-  const { schoolsList, keyValSchool} = useContext(SchoolContext);
+  const { schoolsList, keyValSchool } = useContext(SchoolContext);
   const { keyValEscort } = useContext(EscortContext);
   const { keyValCompany } = useContext(CompanyContext);
 
 
 
-  console.log("schools list",schoolsList);
-  console.log("keyValEscort",keyValEscort);
+  console.log("schools list line page-", schoolsList);
+  console.log("keyValEscort line page-", keyValEscort);
   //initialize empty object for adding new
   const addNewLine = () => {
     let newLine = {
@@ -79,40 +80,40 @@ export default function Lines() {
   ];
 
   //יימחק
-  const Linerows = [
+  // const Linerows = [
 
-    {
-      line_code: 1,
-      line_car: "אוטובוס",
-      number_of_seats: 3,
-      escort_incharge: "123321123",
-      school_of_line: "1",
-      station_definition: "מוצא",
-      time_of_line: "19:17",
-      line_city: "נתניה",
-      line_street: "שד' בנימין",
-      line_Homenumber: "3",
-      definition_date: "12/04/2021",
-      transportaion_company: "12",
-      comments: "הערההההההה"
+  //   {
+  //     line_code: 1,
+  //     line_car: "אוטובוס",
+  //     number_of_seats: 3,
+  //     escort_incharge: "123321123",
+  //     school_of_line: "1",
+  //     station_definition: "מוצא",
+  //     time_of_line: "19:17",
+  //     line_city: "נתניה",
+  //     line_street: "שד' בנימין",
+  //     line_Homenumber: "3",
+  //     definition_date: "12/04/2021",
+  //     transportaion_company: "12",
+  //     comments: "הערההההההה"
 
-    },
-    {
-      line_code: "2",
-      line_car: "מיניבוס",
-      number_of_seats: "5",
-      escort_incharge: "בני בוי",
-      school_of_line: "טשרני",
-      station_definition: "יעד",
-      time_of_line: "20:21",
-      line_city: "כפר סבא",
-      line_street: "עליה",
-      line_Homenumber: "8",
-      transportaion_company: "אא הסעים",
-    },
-  ];
+  //   },
+  //   {
+  //     line_code: "2",
+  //     line_car: "מיניבוס",
+  //     number_of_seats: "5",
+  //     escort_incharge: "בני בוי",
+  //     school_of_line: "טשרני",
+  //     station_definition: "יעד",
+  //     time_of_line: "20:21",
+  //     line_city: "כפר סבא",
+  //     line_street: "עליה",
+  //     line_Homenumber: "8",
+  //     transportaion_company: "אא הסעים",
+  //   },
+  // ];
 
-  const updatedLineRows = addedLine ? [...Linerows, addedLine] : Linerows;
+  // const updatedLineRows = addedLine ? [...Linerows, addedLine] : Linerows;
 
   //field names for the model
   const ColumnNamesByIdentifier =
@@ -141,11 +142,11 @@ export default function Lines() {
 
   //edit mode- pass line obj with relevante data
   const handleEdit = (row) => {
-    console.log("row",row);
+    console.log("row", row);
     let currentLine = {
       line_code: row.line_code,
       line_car: row.line_car,
-      definition_date: row.definition_date,
+      definition_date: convertDate(row.definition_date),
       number_of_seats: row.number_of_seats,
       escort_incharge: row.escort_incharge,
       school_of_line: row.school_of_line,
@@ -163,31 +164,29 @@ export default function Lines() {
 
   const handleDelete = (row) => {
     console.log('Delete:', row);
-    // Add your delete logic here
+    // delete logic 
   };
 
   //dd students- pass line obj with relevante data
   const handleAdd = (row) => {
-    console.log("row",row);
-    console.log("row school",row.school_of_line);
-    let school=keyValSchool[row.school_of_line];
-    console.log("school",school);
+    console.log("row", row);
+    console.log("row school", row.school_of_line);
     navigate('/AddStudentToLine', { state: row });
 
   }
 
-  //renders the table after the data was loaded
-  // if (! || .length == 0)
-  //   return (
-  //       <div className='container mt-5' >
-  //           <h3 className="bold" style={{ textAlign: 'center' }}>קווי הסעה</h3>
-  //       </div>
-  //   )
+  // renders the table after the data was loaded
+  if (!linesList || linesList.length == 0)
+    return (
+      <div className='container mt-5' >
+        <h3 className="bold" style={{ textAlign: 'center' }}>קווי הסעה</h3>
+      </div>
+    )
 
   return (
     <div className='container mt-5' >
       <h3 className="bold" style={{ textAlign: 'center' }}>קווי הסעה</h3>
-      <Table columns={Linecolumns} rows={updatedLineRows} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} handleAdd={handleAdd} />
+      <Table columns={Linecolumns} rows={linesList} handleView={handleView} handleEdit={handleEdit} handleDelete={handleDelete} handleAdd={handleAdd} />
       <div className='text-center'
         style={{ padding: '20px' }}>
         <Button onClick={addNewLine}>הוסף קו חדש <FaPlus style={{ paddingBottom: '2px' }} /></Button></div>

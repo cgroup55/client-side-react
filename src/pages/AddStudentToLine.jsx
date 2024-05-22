@@ -15,6 +15,8 @@ export default function AddStudentToLine() {
     const [school, setSchool] = useState({});
     const [company, setCompany] = useState({});
     const [escort, setEscort] = useState({});
+    const [line, setLine] = useState(state);
+
     const { keyValSchool } = useContext(SchoolContext);
     const { disabilities, studentsListFormFormat } = useContext(StudentContext);
     const { keyValEscort } = useContext(EscortContext);
@@ -22,21 +24,21 @@ export default function AddStudentToLine() {
 
     const [loading, setLoading] = useState(true);
 
-    //relevant forigen keys 
-    let line = state;
+ 
 
+    console.log(line);
     useEffect(() => {
         setSchool(keyValSchool[line.school_of_line]);
         setEscort(keyValEscort[line.escort_incharge]);
         setCompany(keyValCompany[line.transportaion_company]);
-        console.log("keyValEscort",keyValEscort);
-        console.log("company",school,"escort",escort,"company",company);
+        console.log("keyValEscort", keyValEscort);
+        console.log("company", school, "escort", escort, "company", company);
         if (school && escort && company) {
             setLoading(false);
         }
     }, [keyValSchool, keyValEscort, keyValCompany, line]);
-    
-   
+
+
     const [selectedStudents, setSelectedStudents] = useState([]);
 
 
@@ -70,7 +72,7 @@ export default function AddStudentToLine() {
         navigate('/lines');
     }
 
-    if (loading || line==undefined || school==undefined  || escort==undefined  || company==undefined ) {
+    if (loading || line == undefined || school == undefined || escort == undefined || company == undefined) {
         return <div>Loading...</div>; // Or a more sophisticated loading indicator
     }
 
