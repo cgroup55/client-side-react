@@ -29,13 +29,13 @@ export default function LineContextProvider(props) {
             return;
         }
         console.log(lineToUpdate);
-        //Local update + fix the date format for each line object
-        setLinesList(() => lineToUpdate.map(line => {
-            if (line.line_code != lineToUpdate.line_code)
-                return line;
-            return { ...lineToUpdate, definition_date: convertDate(lineToUpdate.definition_date, true) }
-        }));
+        // Convert the date before updating state
+        lineToUpdate.definition_date = convertDate(lineToUpdate.definition_date, true);
 
+        // Local update
+        setLinesList(linesList.map(line =>
+            line.line_code !== lineToUpdate.line_code ? line : lineToUpdate
+        ));
     }
 
 
