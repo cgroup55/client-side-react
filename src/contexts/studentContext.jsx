@@ -1,7 +1,7 @@
 import { React, createContext, useState, useEffect } from "react";
 import { create, read, update } from "../tools/api";
 import { convertDate } from "../tools/validations";
-import {getGeocodeAddress} from "../tools/geocode";
+import { getGeocodeAddress } from "../tools/geocode";
 export const StudentContext = createContext();
 
 export default function StudentContextProvider(props) {
@@ -45,16 +45,14 @@ export default function StudentContextProvider(props) {
             return;
         }
 
-        //Local update + fix the dates formats for each student object
-        setStudentsListFormFormat(() => studentsListFormFormat.map(student => {
-            if (student.stu_id != studentToUpdate.stu_id)
-                return student;
-            return {
-                ...studentToUpdate, stu_dateofbirth: convertDate(student.stu_dateofbirth, true),
-                stu_dateOfPlacement: convertDate(student.stu_dateOfPlacement, true)
-            }
-        }));
 
+        // Convert the dates before updating state
+        studentToUpdate.stu_dateofbirth = convertDate(studentToUpdate.stu_dateofbirth, true);
+        studentToUpdate.stu_dateOfPlacement = convertDate(studentToUpdate.stu_dateOfPlacement, true);
+        // Local update
+        setStudentsListFormFormat(studentsListFormFormat.map(student =>
+            student.stu_id !== studentToUpdate.stu_id ? student : studentToUpdate
+        ));
     }
 
     const getStudent = async () => {
@@ -73,7 +71,7 @@ export default function StudentContextProvider(props) {
         console.log('studentsList context:', studentsList);
     }
 
-   
+
 
 
     //changes the format from the server to the desired format in the form
