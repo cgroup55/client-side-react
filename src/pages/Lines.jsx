@@ -85,7 +85,7 @@ export default function Lines() {
       line_code: 1,
       line_car: "אוטובוס",
       number_of_seats: 3,
-      escort_incharge: "314649344",
+      escort_incharge: "123321123",
       school_of_line: "1",
       station_definition: "מוצא",
       time_of_line: "19:17",
@@ -172,7 +172,7 @@ export default function Lines() {
     console.log("row school",row.school_of_line);
     let school=keyValSchool[row.school_of_line];
     console.log("school",school);
-    navigate('/AddStudentToLine', { state: {row,school} });
+    navigate('/AddStudentToLine', { state: row });
 
   }
 

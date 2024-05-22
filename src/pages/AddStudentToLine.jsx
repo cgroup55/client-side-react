@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import '../styling/lineAddition.css';
 import { FaCheck } from 'react-icons/fa';
@@ -12,22 +12,33 @@ export default function AddStudentToLine() {
     const navigate = useNavigate();
     const { state } = useLocation();
 
+    const [school, setSchool] = useState({});
+    const [company, setCompany] = useState({});
+    const [escort, setEscort] = useState({});
     const { keyValSchool } = useContext(SchoolContext);
-    const { disabilities,studentsListFormFormat} = useContext(StudentContext);
+    const { disabilities, studentsListFormFormat } = useContext(StudentContext);
     const { keyValEscort } = useContext(EscortContext);
     const { keyValCompany } = useContext(CompanyContext);
 
+    const [loading, setLoading] = useState(true);
+
     //relevant forigen keys 
-    let line = state.row;
-    let school=keyValSchool[line.school_of_line];
-    let escort=keyValEscort[line.escort_incharge];
-    let company=keyValCompany[line.transportaion_company];
+    let line = state;
 
-    console.log("line",line,"school",school,"escort",escort,"company",company);
-    const [selectedStudents, setSelectedStudents] = useState([]);
-   
-
+    useEffect(() => {
+        setSchool(keyValSchool[line.school_of_line]);
+        setEscort(keyValEscort[line.escort_incharge]);
+        setCompany(keyValCompany[line.transportaion_company]);
+        console.log("keyValEscort",keyValEscort);
+        console.log("company",school,"escort",escort,"company",company);
+        if (school && escort && company) {
+            setLoading(false);
+        }
+    }, [keyValSchool, keyValEscort, keyValCompany, line]);
     
+   
+    const [selectedStudents, setSelectedStudents] = useState([]);
+
 
     //Management student assigned to the line
     const handleStudentSelection = (student) => {
@@ -54,9 +65,13 @@ export default function AddStudentToLine() {
     //Hanle save changes
     const handleSaving = () => {
 
-        const studentofLine = selectedStudents.map(student => student.id).join(',');
+        const studentofLine = selectedStudents.map(student => student.stu_id).join(',');
 
         navigate('/lines');
+    }
+
+    if (loading || line==undefined || school==undefined  || escort==undefined  || company==undefined ) {
+        return <div>Loading...</div>; // Or a more sophisticated loading indicator
     }
 
     return (
@@ -70,9 +85,10 @@ export default function AddStudentToLine() {
                     קוד קו: {line.line_code} <br />
                     מלווה: {line.escort_incharge ? (escort.esc_fullName) : ("טרם הוגדר מלווה")} <br />
                     חברת הסעה: {company.company_Name} <br />
-                    מוסד לימודי: {school.name}<br />
-                    כתובת המוסד: {school.street + " " + school.houseNumber + " , " + school.city} <br />
+                    מוסד לימודי: {school ? school.name : ''}<br />
+                    כתובת המוסד: {school ? `${school.street} ${school.houseNumber}, ${school.city}` : ''} <br />
                 </div>
+
                 <div className='col-8 col-sm-12 assocStu_detailsDiv'>
                     <h4>תלמידים משויכים לקו</h4>
                     <ul>

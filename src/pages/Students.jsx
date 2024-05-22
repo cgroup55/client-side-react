@@ -14,7 +14,6 @@ export default function Students() {
     //schools and disabilities lists in a format of key:value & students list in form format
     const { keyValSchool } = useContext(SchoolContext);
     const { disKeyVal, studentsListFormFormat } = useContext(StudentContext);
-    console.log('studentsListFormFormat in page-', studentsListFormFormat);
 
     const [showModal, setShowModal] = useState(false);
     const [rowData, setRowData] = useState(null);
@@ -59,7 +58,7 @@ export default function Students() {
         },
         {
             name: "מוסד לימודי",
-            selector: (row) => keyValSchool[row.stu_school],
+            selector: (row) => keyValSchool[row.stu_school].name,
             sortable: true,
         },
         {
