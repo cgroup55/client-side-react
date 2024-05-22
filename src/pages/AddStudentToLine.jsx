@@ -75,9 +75,11 @@ export default function AddStudentToLine() {
         if (line && keyValSchool && keyValEscort && keyValCompany) {
             setSchool(keyValSchool[line.school_of_line]);
             setEscort(keyValEscort[line.escort_incharge]);
-            setCompany(keyValCompany[line.transportaion_company]);
-
-            if (keyValSchool[line.school_of_line] && keyValEscort[line.escort_incharge] && keyValCompany[line.transportaion_company]) {
+            setCompany(keyValCompany[line.transportation_company]);
+            console.log('keyValSchool[line.school_of_line]',keyValSchool[line.school_of_line]);
+            console.log('keyValEscort[line.escort_incharge]',keyValEscort[line.escort_incharge]);
+            console.log('keyValCompany[line.transportation_company]',keyValCompany[line.transportation_company]);
+            if (keyValSchool[line.school_of_line] && keyValEscort[line.escort_incharge] && keyValCompany[line.transportation_company]) {
                 setLoading(false);
             }
         }
