@@ -9,6 +9,7 @@ import { MdCancel } from 'react-icons/md';
 import { SchoolContext } from '../contexts/schoolContext.jsx';
 import { EscortContext } from '../contexts/escortContext.jsx';
 import { CompanyContext } from '../contexts/companyContext.jsx';
+import { LineContext } from '../contexts/lineContext.jsx';
 
 export default function LineForm() {
 
@@ -21,33 +22,62 @@ export default function LineForm() {
   const { schoolsList } = useContext(SchoolContext);
   const { escortsList } = useContext(EscortContext);
   const { companiesList } = useContext(CompanyContext);
-  
+  const { addLine, updateLine } = useContext(LineContext);
+
   let giventime = originLine.time_of_line.split(':')
   const [line, setLine] = useState({ ...originLine, definition_date: today });
   const [errors, setErrors] = useState({});
   const [time, setTime] = useState({ hours: giventime[0], minutes: giventime[1], error: '' });
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
 
-
     if (isValid) {
       let timeLine = time.hours + ":" + time.minutes;
-
-      console.log("timeLine:", timeLine);
-
-      console.log("time:", time.hours);
       if (time.hours == "00") {
         console.log("inside");
         setTime({ ...time, error: "שעת יציאת הקו לא יכולה להיות 00" });
         return;
       }
       setTime({ ...time, error: "" });
-      navigate('/Lines', { state: { ...line, time_of_line: timeLine } });
+
+      //ELIOR changed from here-
+      let LinetoExport = {
+        line_code: line.line_code,
+        line_car: line.line_car,
+        number_of_seats: line.number_of_seats,
+        escort_incharge: line.escort_incharge,
+        school_of_line: line.school_of_line,
+        station_definition: line.station_definition,
+        line_city: line.line_city,
+        line_street: line.line_street,
+        line_Homenumber: line.line_Homenumber,
+        time_of_line: timeLine,
+        definition_date: line.definition_date,
+        transportation_company: line.transportation_company,
+        comments: line.comments,
+        studentsId: []
+      };
+      if (originLine.line_code == '') //add or update?
+      {
+        console.log('LinetoExport-',LinetoExport);
+        let res = await addLine(LinetoExport);
+        if (res && res >= 1) //check if res returns a valid response  
+        {
+          navigate('/Lines');
+        }
+        else console.log("error");//add swal
+      }
+      else {
+        await updateLine(LinetoExport);
+        navigate('/Lines');
+        //what was before ELIOR chng: navigate('/Lines', { state: { ...line, time_of_line: timeLine } });
+    }      
     } else {
       // Show error message
+      console.log("invalid details");
     }
   };
 
@@ -84,6 +114,21 @@ export default function LineForm() {
     }
   }, [line.school_of_line]);
 
+  if (!schoolsList || schoolsList.length == 0 || !escortsList || escortsList.length == 0 || !companiesList || companiesList.length == 0)
+    return (
+        <div className='container mt-5 form-container '>
+
+            <div className='row justify-content-between align-items-center'>
+                <div className='col-10'>
+                    <h2>{originLine.line_code != "" ? "עריכת" : "הוספת"} קו הסעה</h2>
+                </div>
+                <div className='col-2' style={{ textAlign: 'left' }}>
+                    <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/Lines') }}>
+                        <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
+                </div>
+            </div>
+        </div>
+    )
 
   return (
     <div className='container mt-5 form-container'>

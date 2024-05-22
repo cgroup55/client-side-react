@@ -72,9 +72,7 @@ export default function StudentForm() {
     //form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('stu_school=', student.stu_school);
         let isValid = validateForm();
-        console.log('isValid stud:', isValid);
 
         if (isValid) {
             let studentToExport = {
