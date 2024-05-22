@@ -73,7 +73,7 @@ export default function LineForm() {
 
   //updates the school info 
   useEffect(() => {
-    const chosenSchool = schoolsList.find(school => school.name === line.school_of_line);
+    const chosenSchool = schoolsList.find(school => school.institutionId === line.school_of_line);
     if (chosenSchool) {
       setLine(prevLine => ({
         ...prevLine,
@@ -136,10 +136,7 @@ export default function LineForm() {
                 as="select"
                 name="transportaion_company"
                 value={line.transportaion_company}
-                onChange={(e) => {
-                  const selectedOptionText = e.target.options[e.target.selectedIndex].text;
-                  setLine({ ...line, transportaion_company: selectedOptionText });
-                }}
+                onChange={(e) => setLine({ ...line, transportaion_company: e.target.value })}
                 isInvalid={!!errors.transportaion_company}
                 required
                 className="formSelect"
@@ -201,11 +198,7 @@ export default function LineForm() {
                 as="select"
                 name="escort_incharge"
                 value={line.escort_incharge}
-                onChange={(e) => {
-                  const selectedIndex = e.target.selectedIndex;
-                  const selectedOptionText = e.target.options[selectedIndex].text;
-                  setLine({ ...line, escort_incharge: selectedOptionText });
-                }}
+                onChange={(e) => setLine({ ...line, escort_incharge: e.target.value })}
                 isInvalid={!!errors.escort_incharge}
                 className="formSelect"
               >

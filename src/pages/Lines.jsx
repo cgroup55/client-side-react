@@ -169,8 +169,8 @@ export default function Lines() {
 
   //dd students- pass line obj with relevante data
   const handleAdd = (row) => {
-    console.log("row", row);
-    console.log("row school", row.school_of_line);
+    console.log("row-line", row);
+
     navigate('/AddStudentToLine', { state: row });
 
   }

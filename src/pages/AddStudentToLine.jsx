@@ -12,10 +12,13 @@ export default function AddStudentToLine() {
     const navigate = useNavigate();
     const { state } = useLocation();
 
+    let tempLine = state;
     const [school, setSchool] = useState({});
     const [company, setCompany] = useState({});
     const [escort, setEscort] = useState({});
-    const [line, setLine] = useState(state);
+    const [line, setLine] = useState(tempLine);
+
+    //console.log('line', line);
 
     const { keyValSchool } = useContext(SchoolContext);
     const { disabilities, studentsListFormFormat } = useContext(StudentContext);
@@ -23,24 +26,7 @@ export default function AddStudentToLine() {
     const { keyValCompany } = useContext(CompanyContext);
 
     const [loading, setLoading] = useState(true);
-
- 
-
-    console.log(line);
-    useEffect(() => {
-        setSchool(keyValSchool[line.school_of_line]);
-        setEscort(keyValEscort[line.escort_incharge]);
-        setCompany(keyValCompany[line.transportaion_company]);
-        console.log("keyValEscort", keyValEscort);
-        console.log("company", school, "escort", escort, "company", company);
-        if (school && escort && company) {
-            setLoading(false);
-        }
-    }, [keyValSchool, keyValEscort, keyValCompany, line]);
-
-
     const [selectedStudents, setSelectedStudents] = useState([]);
-
 
     //Management student assigned to the line
     const handleStudentSelection = (student) => {
@@ -72,12 +58,40 @@ export default function AddStudentToLine() {
         navigate('/lines');
     }
 
-    if (loading || line == undefined || school == undefined || escort == undefined || company == undefined) {
-        return <div>Loading...</div>; // Or a more sophisticated loading indicator
-    }
+    // useEffect(() => {
+    //     if (line) {
+    //         setSchool(keyValSchool[line.school_of_line]);
+    //         setEscort(keyValEscort[line.escort_incharge]);
+    //         setCompany(keyValCompany[line.transportaion_company]);
+    //         console.log("keyValEscort", keyValEscort);
+    //         console.log("school", school, "escort", escort, "company", company);
+    //         if (school  && escort && company) {
+    //             setLoading(false);
+    //         }
+    //     }
+    // }, []);
+
+    useEffect(() => {
+        if (line && keyValSchool && keyValEscort && keyValCompany) {
+            setSchool(keyValSchool[line.school_of_line]);
+            setEscort(keyValEscort[line.escort_incharge]);
+            setCompany(keyValCompany[line.transportaion_company]);
+
+            if (keyValSchool[line.school_of_line] && keyValEscort[line.escort_incharge] && keyValCompany[line.transportaion_company]) {
+                setLoading(false);
+            }
+        }
+    }, [line, keyValSchool, keyValEscort, keyValCompany]);
+
+    //|| line == undefined || school == undefined || escort == undefined || company == undefined || !line || !school || !escort || !company
+    if (loading)
+        return (
+            <div className='container mt-5' >
+                <h3 className="bold" style={{ textAlign: 'center' }}>Loading...</h3>
+            </div>
+        )
 
     return (
-
         <div className='container mt-5'>
             <h3 className="bold" style={{ textAlign: 'center' }}> שיבוץ תלמידים לקו הסעה</h3>
             <br />
