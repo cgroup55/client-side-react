@@ -52,7 +52,7 @@ export default function Map() {
     }, []); // Empty dependency array ensures this effect runs only once after the component is mounted
 
     return (
-        <div id="map" ref={mapElement} className="mapDiv" style={{ width: '80vw', height: '350px' }}></div>
+        <div id="map" ref={mapElement} className="mapDiv" style={{ width: '80vw', height: '550px' }}></div>
     )
 
 
