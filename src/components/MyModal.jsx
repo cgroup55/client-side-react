@@ -5,12 +5,12 @@ import '../styling/App.css';
 export default function MyModal({ show, handleClose, rowData, colData, pageName }) {
 
 
-    if (!rowData || rowData==undefined) {
+    if (!rowData || rowData == undefined) {
         return null; // Return null if rowData is null or undefined
     }
     //filter out empty columns
     const filteredRowData = Object.fromEntries(
-        Object.entries(rowData).filter(([key, value]) => value !== '')
+        Object.entries(rowData).filter(([key, value]) => value !== '' && colData.hasOwnProperty(key))
     );
 
     return (

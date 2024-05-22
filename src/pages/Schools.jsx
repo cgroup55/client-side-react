@@ -88,6 +88,7 @@ export default function Schools() {
 
     //modal view for specific row
     const handleView = (row) => {
+        console.log('row school page', row);
         setColData(ColumnNamesByIdentifier);
         setRowData(row);
         setShowModal(true);
