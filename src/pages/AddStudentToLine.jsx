@@ -12,13 +12,15 @@ export default function AddStudentToLine() {
     const navigate = useNavigate();
     const { state } = useLocation();
 
-    let tempLine = state;
+    let tempLine = state.row;
+    // let studentsId = state.studentsId;
+
+    const [line, setLine] = useState(tempLine);
+    // const [students, setStudents] = useState(studentsId || []);
+
     const [school, setSchool] = useState({});
     const [company, setCompany] = useState({});
     const [escort, setEscort] = useState({});
-    const [line, setLine] = useState(tempLine);
-
-    //console.log('line', line);
 
     const { keyValSchool } = useContext(SchoolContext);
     const { disabilities, studentsListFormFormat } = useContext(StudentContext);
@@ -51,41 +53,45 @@ export default function AddStudentToLine() {
     });
 
     //Hanle save changes
-    const handleSaving = () => {
+    const  handleSaving = async () => {
+        //do we net an event obj inside the ()?
 
+        //creation of the object of the algo....
         const studentofLine = selectedStudents.map(student => student.stu_id).join(',');
+        let objForAlgorithm={
+            students:studentofLine,
+            linecode:line.line_code
+        };
 
+        //continue to connect the algorithm***********
+        // let res=await 
         navigate('/lines');
     }
 
-    // useEffect(() => {
-    //     if (line) {
-    //         setSchool(keyValSchool[line.school_of_line]);
-    //         setEscort(keyValEscort[line.escort_incharge]);
-    //         setCompany(keyValCompany[line.transportaion_company]);
-    //         console.log("keyValEscort", keyValEscort);
-    //         console.log("school", school, "escort", escort, "company", company);
-    //         if (school  && escort && company) {
-    //             setLoading(false);
-    //         }
-    //     }
-    // }, []);
+    //added by bar : i want to check the pre selected kids(that were selected before entering the page)
+    useEffect(() => {
+        if (line.studentsId && studentsListFormFormat) {
+        console.log("studentsId",line.studentsId);
+        const preSelectedStudents = studentsListFormFormat.filter(student => line.studentsId.includes(student.stu_id));
+        console.log("preSelectedStudents",preSelectedStudents);
+        setSelectedStudents(preSelectedStudents);}
+    }, [line,studentsListFormFormat]);
+
 
     useEffect(() => {
         if (line && keyValSchool && keyValEscort && keyValCompany) {
             setSchool(keyValSchool[line.school_of_line]);
             setEscort(keyValEscort[line.escort_incharge]);
             setCompany(keyValCompany[line.transportation_company]);
-            console.log('keyValSchool[line.school_of_line]',keyValSchool[line.school_of_line]);
-            console.log('keyValEscort[line.escort_incharge]',keyValEscort[line.escort_incharge]);
-            console.log('keyValCompany[line.transportation_company]',keyValCompany[line.transportation_company]);
+            // console.log('keyValSchool[line.school_of_line]', keyValSchool[line.school_of_line]);
+            // console.log('keyValEscort[line.escort_incharge]', keyValEscort[line.escort_incharge]);
+            // console.log('keyValCompany[line.transportation_company]', keyValCompany[line.transportation_company]);
             if (keyValSchool[line.school_of_line] && keyValEscort[line.escort_incharge] && keyValCompany[line.transportation_company]) {
                 setLoading(false);
             }
         }
     }, [line, keyValSchool, keyValEscort, keyValCompany]);
 
-    //|| line == undefined || school == undefined || escort == undefined || company == undefined || !line || !school || !escort || !company
     if (loading)
         return (
             <div className='container mt-5' >
@@ -136,7 +142,11 @@ export default function AddStudentToLine() {
                         <tbody>
                             {sortedStudents.map((student) => (
                                 <tr key={student.stu_id}>
-                                    <td><input type="checkbox" onChange={() => handleStudentSelection(student)} /></td>
+                                    <td>
+                                        <input type="checkbox"
+                                        onChange={() => handleStudentSelection(student)}
+                                        checked={selectedStudents.some(s => s.stu_id === student.stu_id)}/>
+                                    </td>
                                     <td>{student.stu_fullName}</td>
                                     <td>{student.stu_grade}</td>
                                     <td>{disabilities[student.stu_disability]}</td>

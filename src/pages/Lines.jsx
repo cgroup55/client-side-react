@@ -24,10 +24,10 @@ export default function Lines() {
   const { keyValEscort } = useContext(EscortContext);
   const { keyValCompany } = useContext(CompanyContext);
 
-console.log('linesList-',linesList);
-  console.log("keyValSchool line page-", keyValSchool);
-  console.log("keyValEscort line page-", keyValEscort);
-  console.log("keyValCompany line page-", keyValCompany);
+// console.log('linesList-',linesList);
+//   console.log("keyValSchool line page-", keyValSchool);
+//   console.log("keyValEscort line page-", keyValEscort);
+//   console.log("keyValCompany line page-", keyValCompany);
 
   //initialize empty object for adding new
   const addNewLine = () => {
@@ -145,8 +145,8 @@ console.log('linesList-',linesList);
   //dd students- pass line obj with relevante data
   const handleAdd = (row) => {
     console.log("row-line page", row);
-
-    navigate('/AddStudentToLine', { state: row });
+    let studentIds=row.studentsIdף
+    navigate('/AddStudentToLine', { state: {row,studentIds} });
 
   }
 
