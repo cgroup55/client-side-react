@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ValidPositiveNumber, isRadioButtonChecked, Validateselect } from '../tools/validations';
+import { ValidPositiveNumber, isRadioButtonChecked, Validateselect, convertDate } from '../tools/validations';
 import { MdCancel } from 'react-icons/md';
 import { SchoolContext } from '../contexts/schoolContext.jsx';
 import { EscortContext } from '../contexts/escortContext.jsx';
@@ -17,8 +17,9 @@ export default function LineForm() {
   const today = new Date().toLocaleDateString('en-GB');
 
   const { state } = useLocation();
-  let originLine = state;
-
+  let originLine = state.currentLine;
+  let studentsId=state.studentsId;
+  
   const { schoolsList } = useContext(SchoolContext);
   const { escortsList } = useContext(EscortContext);
   const { companiesList } = useContext(CompanyContext);
@@ -28,7 +29,8 @@ export default function LineForm() {
   const [line, setLine] = useState({ ...originLine, definition_date: today });
   const [errors, setErrors] = useState({});
   const [time, setTime] = useState({ hours: giventime[0], minutes: giventime[1], error: '' });
-
+ 
+ 
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
@@ -43,7 +45,8 @@ export default function LineForm() {
       }
       setTime({ ...time, error: "" });
 
-      //ELIOR changed from here-
+      
+      //a new line has an empty students list
       let LinetoExport = {
         line_code: line.line_code,
         line_car: line.line_car,
@@ -55,11 +58,13 @@ export default function LineForm() {
         line_street: line.line_street,
         line_Homenumber: line.line_Homenumber,
         time_of_line: timeLine,
-        definition_date: line.definition_date,
+        definition_date: convertDate(line.definition_date,false),
         transportation_company: line.transportation_company,
         comments: line.comments,
-        studentsId: []
+        studentsId:[]
       };
+
+     
       if (originLine.line_code == '') //add or update?
       {
         console.log('LinetoExport-',LinetoExport);
@@ -71,10 +76,10 @@ export default function LineForm() {
         else console.log("error");//add swal
       }
       else {
-        await updateLine(LinetoExport);
+        //studentsId added to passing so line doesnt lose the array of student ids in update
+        await updateLine(LinetoExport,studentsId);
         navigate('/Lines');
-        //my chng till here
-        //what was before ELIOR chng: navigate('/Lines', { state: { ...line, time_of_line: timeLine } });
+       
     }      
     } else {
       // Show error message

@@ -12,7 +12,6 @@ export const validateHebrewletters = (input) => {
 };
 
 export const Validateselect = (input) => {
-    console.log("input", input);
     if (input == '' || input == "-1") {
         return 'חובה לבחור אחת מהאפשרויות';
     }
@@ -107,34 +106,34 @@ export const isRadioButtonChecked = (input) => {
     else return "";
 };
 
-export const fixDateForView = (input) => {
+// export const fixDateForView = (input) => {
 
-    let dateWithoutTime=input.split('T');
-    let dateParts = dateWithoutTime[0].split('-');
+//     let dateWithoutTime=input.split('T');
+//     let dateParts = dateWithoutTime[0].split('-');
 
-    let fixedDate = dateParts[2] + "/" + dateParts[1] + "/"  + dateParts[0];
-    console.log("date after view", fixedDate);
+//     let fixedDate = dateParts[2] + "/" + dateParts[1] + "/"  + dateParts[0];
+//     console.log("date after view", fixedDate);
 
-    return fixedDate;
+//     return fixedDate;
 
-}
+// }
 
-export const fixDateForForm = (input) => {
+// export const fixDateForForm = (input) => {
 
-    let date = input;
-    let dateWithoutTime=date.split('T');
-    if(dateWithoutTime.length>1){
-        console.log("date after form T", dateWithoutTime[0]);
-        return dateWithoutTime[0];
-    }
-    else{
-        let dateParts=dateWithoutTime[0].split("/");
-        let fixedDate = dateParts[2] + "-" + dateParts[1] + "-"  + dateParts[0];
-        console.log("date after form", fixedDate);
-        return fixedDate;
-    }
+//     let date = input;
+//     let dateWithoutTime=date.split('T');
+//     if(dateWithoutTime.length>1){
+//         console.log("date after form T", dateWithoutTime[0]);
+//         return dateWithoutTime[0];
+//     }
+//     else{
+//         let dateParts=dateWithoutTime[0].split("/");
+//         let fixedDate = dateParts[2] + "-" + dateParts[1] + "-"  + dateParts[0];
+//         console.log("date after form", fixedDate);
+//         return fixedDate;
+//     }
 
-}
+// }
 
 export const convertDate = (value, forView) => {
     let dateParts, seperator='-';

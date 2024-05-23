@@ -6,7 +6,7 @@ import { MdCancel } from "react-icons/md";
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect, fixDateForForm, fixDateForView } from '../tools/validations';
+import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect} from '../tools/validations';
 import { StudentContext } from '../contexts/studentContext.jsx';
 import { SchoolContext } from '../contexts/schoolContext.jsx';
 

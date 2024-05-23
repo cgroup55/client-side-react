@@ -130,8 +130,11 @@ console.log('linesList-',linesList);
       transportation_company: row.transportation_company,
       comments: row.comments
     }
-    console.log('currentLine:', currentLine);
-    navigate('/LineForm', { state: currentLine });
+
+    let studentsId=row.studentsId;
+
+    navigate('/LineForm', { state: { currentLine, studentsId } });
+
   };
 
   const handleDelete = (row) => {
