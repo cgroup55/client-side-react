@@ -32,15 +32,12 @@ export default function Login() {
         //POST user to pass on to dbs
         //check if the user that we got is a listed user
         //return from fetch
-        //fetch("POST",user....)
-        //return()
+
         event.preventDefault();
-
-
         let userFromDB = await checkUser(user);
         console.log('userFromDB:', userFromDB);
         if (userFromDB.role == 1) {
-            //need to add check if user exists+take user login info***
+            //need to take user login info***
             Swal.fire({
                 title: "התחברת בהצלחה",
                 text: "שלום משרד!",
@@ -48,7 +45,7 @@ export default function Login() {
             });
             navigate('/homepage');
         }
-        //need to change the logic for role 2 or 3מ 
+        //need to change the logic for role 2 & 3
         else {
             Swal.fire({
                 title: "לא נמצא משתמש עם פרטים אלה במערכת",

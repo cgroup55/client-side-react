@@ -7,8 +7,10 @@ import { StudentContext } from '../contexts/studentContext';
 import { SchoolContext } from '../contexts/schoolContext';
 import { EscortContext } from '../contexts/escortContext';
 import { CompanyContext } from '../contexts/companyContext';
+import { create } from '../tools/api';
 
 export default function AddStudentToLine() {
+    const url = 'api/Transportation_Line/CreateRoute';
     const navigate = useNavigate();
     const { state } = useLocation();
 
@@ -52,30 +54,54 @@ export default function AddStudentToLine() {
         return a.stu_school.localeCompare(b.stu_school);
     });
 
+    const updateStudentsInLine = async (studentsIdsString) => {
+        console.log('studentsIdsString:', studentsIdsString);
+        let res = await create(url, studentsIdsString);
+        if (res == undefined || res == null) {
+            console.log('server error- students in line');
+            // Swal.fire({
+            //     title: "קיימת תקלה",
+            //     text: "אנא נסה שנית במועד מאוחר יותר",
+            //     icon: "error"
+            // });
+            return;
+        }
+        return res;
+    }
+
     //Hanle save changes
-    const  handleSaving = async () => {
+    const handleSaving = async () => {
         //do we net an event obj inside the ()?
 
-        //creation of the object of the algo....
+        //creation of the object to send for updating students in line
         const studentofLine = selectedStudents.map(student => student.stu_id).join(',');
-        let objForAlgorithm={
-            students:studentofLine,
-            linecode:line.line_code
-        };
+        let studentsIdsString = {
+            students: studentofLine,
+            linecode: line.line_code
+        };        
+        if (studentsIdsString.students == [] || studentsIdsString.students == "") {
+            navigate('/lines');
+        }
+        let res = await updateStudentsInLine(studentsIdsString);
+        console.log('res:', res);
+        if (res) {
+            navigate('/lines');
+        }
+        else {
+            console.log('server error- students in line');
+        }
 
-        //continue to connect the algorithm***********
-        // let res=await 
-        navigate('/lines');
     }
 
     //added by bar : i want to check the pre selected kids(that were selected before entering the page)
     useEffect(() => {
         if (line.studentsId && studentsListFormFormat) {
-        console.log("studentsId",line.studentsId);
-        const preSelectedStudents = studentsListFormFormat.filter(student => line.studentsId.includes(student.stu_id));
-        console.log("preSelectedStudents",preSelectedStudents);
-        setSelectedStudents(preSelectedStudents);}
-    }, [line,studentsListFormFormat]);
+            console.log("studentsId", line.studentsId);
+            const preSelectedStudents = studentsListFormFormat.filter(student => line.studentsId.includes(student.stu_id));
+            console.log("preSelectedStudents", preSelectedStudents);
+            setSelectedStudents(preSelectedStudents);
+        }
+    }, [line, studentsListFormFormat]);
 
 
     useEffect(() => {
@@ -144,8 +170,8 @@ export default function AddStudentToLine() {
                                 <tr key={student.stu_id}>
                                     <td>
                                         <input type="checkbox"
-                                        onChange={() => handleStudentSelection(student)}
-                                        checked={selectedStudents.some(s => s.stu_id === student.stu_id)}/>
+                                            onChange={() => handleStudentSelection(student)}
+                                            checked={selectedStudents.some(s => s.stu_id === student.stu_id)} />
                                     </td>
                                     <td>{student.stu_fullName}</td>
                                     <td>{student.stu_grade}</td>
