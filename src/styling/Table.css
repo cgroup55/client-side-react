@@ -2,21 +2,21 @@
     white-space: normal !important;
 }
 
-span.sc-bZHSRq.sc-kMzELR.czCoqD.iOgnCO {
-    direction: ltr;
+.rdt_Pagination span {
+    direction: ltr !important;
 }
 
-.sc-iKOmoZ.hVPalX.rdt_Pagination {
+.rdt_Pagination {
     justify-content: center;
 }
 
-.sc-dmyCSP.mHisf.rdt_TableHeadRow {
-    background-color: #4B8443;
+.rdt_TableHeadRow {
+    background-color: #4B8443 !important;
     color: white;
 }
 
-select.sc-cyZbeP.kUwhdZ {
-    padding-right: 10px;
+.rdt_Pagination select {
+    padding-right: 10px !important;
 }
 
 .custom-table .rdt_TableRow:nth-child(even) {
@@ -71,7 +71,3 @@ div#cell-7-undefined {
         justify-content: right;
     }
 }
-
-
-
-  
