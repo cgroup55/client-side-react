@@ -18,8 +18,8 @@ export default function LineForm() {
 
   const { state } = useLocation();
   let originLine = state.currentLine;
-  let studentsId=state.studentsId;
-  
+  let studentsId = state.studentsId;
+
   const { schoolsList } = useContext(SchoolContext);
   const { escortsList } = useContext(EscortContext);
   const { companiesList } = useContext(CompanyContext);
@@ -29,8 +29,8 @@ export default function LineForm() {
   const [line, setLine] = useState({ ...originLine, definition_date: today });
   const [errors, setErrors] = useState({});
   const [time, setTime] = useState({ hours: giventime[0], minutes: giventime[1], error: '' });
- 
- 
+
+
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
@@ -45,7 +45,7 @@ export default function LineForm() {
       }
       setTime({ ...time, error: "" });
 
-      
+
       //a new line has an empty students list
       let LinetoExport = {
         line_code: line.line_code,
@@ -58,16 +58,16 @@ export default function LineForm() {
         line_street: line.line_street,
         line_Homenumber: line.line_Homenumber,
         time_of_line: timeLine,
-        definition_date: convertDate(line.definition_date,false),
+        definition_date: convertDate(line.definition_date, false),
         transportation_company: line.transportation_company,
         comments: line.comments,
-        studentsId:[]
+        studentsId: []
       };
 
-     
+
       if (originLine.line_code == '') //add or update?
       {
-        console.log('LinetoExport-',LinetoExport);
+        console.log('LinetoExport-', LinetoExport);
         let res = await addLine(LinetoExport);
         if (res && res >= 1) //check if res returns a valid response  
         {
@@ -77,10 +77,11 @@ export default function LineForm() {
       }
       else {
         //studentsId added to passing so line doesnt lose the array of student ids in update
-        await updateLine(LinetoExport,studentsId);
+        //let dbUpdate =  true;
+        //await updateLine(LinetoExport, studentsId, dbUpdate);
         navigate('/Lines');
-       
-    }      
+
+      }
     } else {
       // Show error message
       console.log("invalid details");
@@ -122,18 +123,18 @@ export default function LineForm() {
 
   if (!schoolsList || schoolsList.length == 0 || !escortsList || escortsList.length == 0 || !companiesList || companiesList.length == 0)
     return (
-        <div className='container mt-5 form-container '>
+      <div className='container mt-5 form-container '>
 
-            <div className='row justify-content-between align-items-center'>
-                <div className='col-10'>
-                    <h2>{originLine.line_code != "" ? "עריכת" : "הוספת"} קו הסעה</h2>
-                </div>
-                <div className='col-2' style={{ textAlign: 'left' }}>
-                    <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/Lines') }}>
-                        <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
-                </div>
-            </div>
+        <div className='row justify-content-between align-items-center'>
+          <div className='col-10'>
+            <h2>{originLine.line_code != "" ? "עריכת" : "הוספת"} קו הסעה</h2>
+          </div>
+          <div className='col-2' style={{ textAlign: 'left' }}>
+            <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/Lines') }}>
+              <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
+          </div>
         </div>
+      </div>
     )
 
   return (

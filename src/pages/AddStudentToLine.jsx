@@ -7,9 +7,11 @@ import { StudentContext } from '../contexts/studentContext';
 import { SchoolContext } from '../contexts/schoolContext';
 import { EscortContext } from '../contexts/escortContext';
 import { CompanyContext } from '../contexts/companyContext';
+import { LineContext } from '../contexts/lineContext.jsx';
 import { create } from '../tools/api';
 
 export default function AddStudentToLine() {
+    const { updateLine } = useContext(LineContext);
     const url = 'api/Transportation_Line/CreateRoute';
     const navigate = useNavigate();
     const { state } = useLocation();
@@ -78,17 +80,22 @@ export default function AddStudentToLine() {
         let studentsIdsString = {
             students: studentofLine,
             linecode: line.line_code
-        };        
+        };
         if (studentsIdsString.students == [] || studentsIdsString.students == "") {
             navigate('/lines');
         }
-        let res = await updateStudentsInLine(studentsIdsString);
-        console.log('res:', res);
-        if (res) {
-            navigate('/lines');
-        }
         else {
-            console.log('server error- students in line');
+            console.log('selectedStudents:',selectedStudents);
+            let res = await updateStudentsInLine(studentsIdsString);
+            //let dbUpdate = false;
+            //await updateLine(line, selectedStudents, dbUpdate);
+            console.log('res:', res);
+            if (res) {
+                navigate('/lines');
+            }
+            else {
+                console.log('server error- students in line');
+            }
         }
 
     }

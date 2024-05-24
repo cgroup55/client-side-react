@@ -21,13 +21,16 @@ export default function LineContextProvider(props) {
         return res;
     }
 
-    const updateLine = async (lineToUpdate,studentsId) => {
+    const updateLine = async (lineToUpdate,studentsId,dbUpdate ) => {
         //DB update
-        let res = await update(url, lineToUpdate);
-        if (res == undefined || res == null) {
-            console.log('שגיאה- ריק מתוכן');
-            return;
-        }
+        console.log('dbUpdate',dbUpdate);
+        if (dbUpdate) {
+            let res = await update(url, lineToUpdate);
+            if (res == undefined || res == null) {
+                console.log('שגיאה- ריק מתוכן');
+                return;
+            }
+        }       
         console.log("in context",studentsId);
         // Convert the date before updating state and re-attach the student ids
         lineToUpdate.definition_date = convertDate(lineToUpdate.definition_date, true);

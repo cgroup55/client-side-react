@@ -15,7 +15,7 @@ export default function Lines() {
 
   const navigate = useNavigate();
   const { linesList } = useContext(LineContext);
-
+  console.log('line list in lines page', linesList);
   const [showModal, setShowModal] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
@@ -24,10 +24,10 @@ export default function Lines() {
   const { keyValEscort } = useContext(EscortContext);
   const { keyValCompany } = useContext(CompanyContext);
 
-// console.log('linesList-',linesList);
-//   console.log("keyValSchool line page-", keyValSchool);
-//   console.log("keyValEscort line page-", keyValEscort);
-//   console.log("keyValCompany line page-", keyValCompany);
+  // console.log('linesList-',linesList);
+  //   console.log("keyValSchool line page-", keyValSchool);
+  //   console.log("keyValEscort line page-", keyValEscort);
+  //   console.log("keyValCompany line page-", keyValCompany);
 
   //initialize empty object for adding new
   const addNewLine = () => {
@@ -59,7 +59,7 @@ export default function Lines() {
     },
     {
       name: "חברת הסעה",
-      selector: (row) => keyValCompany[row.transportation_company].company_Name,                        
+      selector: (row) => keyValCompany[row.transportation_company].company_Name,
       sortable: true,
     },
     {
@@ -131,8 +131,8 @@ export default function Lines() {
       comments: row.comments
     }
 
-    let studentsId=row.studentsId;
-
+    let studentsId = row.studentsId;
+    console.log('studentsId-line page:', studentsId);
     navigate('/LineForm', { state: { currentLine, studentsId } });
 
   };
@@ -145,8 +145,8 @@ export default function Lines() {
   //dd students- pass line obj with relevante data
   const handleAdd = (row) => {
     console.log("row-line page", row);
-    let studentIds=row.studentsIdף
-    navigate('/AddStudentToLine', { state: {row,studentIds} });
+    let studentIds = row.studentsId;
+    navigate('/AddStudentToLine', { state: { row, studentIds } });
 
   }
 
