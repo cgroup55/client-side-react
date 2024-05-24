@@ -3,11 +3,21 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useLocation } from 'react-router-dom';
 
 export default function NavBar() {
+
+    let location = useLocation();
+    let { pathname } = location;
+    
+    //show navBar only after login
+    if (pathname == '/') {
+        return null;
+    }
     return (
         <>
-            <Navbar sticky='top' expand="sm" fixed="top" style={{ backgroundColor: 'white', height: '70px', fontSize: '20px', position: "absolute"}}>
+
+            <Navbar sticky='top' expand="sm" fixed="top" style={{ backgroundColor: 'white', height: '70px', fontSize: '20px', position: "absolute" }}>
                 <Container>
 
                     <Navbar.Toggle aria-controls="navbarScroll" />

@@ -41,7 +41,7 @@ function App() {
             <StudentContextProvider>
               <CompanyContextProvider>
                 <HashRouter>
-                  {(location.pathname != "") ? <NavBar /> : null}
+                   <NavBar /> 
                   <Routes>
                     <Route path='/' element={<Login />} />
                     <Route path="/homepage" element={<HomePage />} />
