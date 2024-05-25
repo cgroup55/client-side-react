@@ -1,6 +1,6 @@
 import React, { useState, useEffect,useContext } from 'react';
 import "../styling/Form.css";
-import Swal from 'sweetalert2';
+import { showSuccessMessage } from '../tools/swalUtils';
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -73,12 +73,14 @@ export default function SchoolForm() {
         let res = await addSchool(schooltoExport);
         if (res && res == 1) //check if res returns a valid response for adding
         {
+          showSuccessMessage(); //show successfuly saved message
           navigate('/schools');        
         }
         else console.log("error");//add swal
       }
       else {
         await updateSchool(schooltoExport);
+        showSuccessMessage(); //show successfuly saved message
         navigate('/schools');
       }
     } else {

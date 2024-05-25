@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import "../styling/Form.css";
-import Swal from 'sweetalert2';
+import { showSuccessMessage } from '../tools/swalUtils';
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '.
 import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum } from '../tools/validations';
 import { MdCancel } from 'react-icons/md';
 import { EscortContext } from '../contexts/escortContext';
+
 
 export default function EscortForm() {
 
@@ -17,7 +18,7 @@ export default function EscortForm() {
   let originEscort = state;
   const { addEscort, updateEscort } = useContext(EscortContext);
 
- //States for handling the addresse
+  //States for handling the addresse
   const [cities, setCities] = useState([]);
   const [streets, setStreets] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
@@ -41,7 +42,7 @@ export default function EscortForm() {
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
- 
+
     if (isValid) {
       let escortToExport = {
         esc_fullName: escort.esc_fullName,
@@ -55,14 +56,16 @@ export default function EscortForm() {
       if (originEscort.esc_id == '')//add or update?
       {
         let res = await addEscort(escortToExport);
-        if (res && res>1) //check if res returns a valid response  
+        if (res && res > 1) //check if res returns a valid response  
         {
+          showSuccessMessage(); //show successfuly saved message
           navigate('/escorts');
         }
         else console.log("error");//add swal
       }
       else {
         await updateEscort(escortToExport);
+        showSuccessMessage(); //show successfuly saved message
         navigate('/escorts');
       }
 

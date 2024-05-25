@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import "../styling/Form.css";
-import Swal from 'sweetalert2';
+import { showSuccessMessage } from '../tools/swalUtils';
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -71,6 +71,7 @@ export default function LineForm() {
         let res = await addLine(LinetoExport);
         if (res && res >= 1) //check if res returns a valid response  
         {
+          showSuccessMessage(); //show successfuly saved message
           navigate('/Lines');
         }
         else console.log("error");//add swal

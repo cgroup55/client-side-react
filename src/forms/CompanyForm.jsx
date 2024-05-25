@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, } from 'react';
 import "../styling/Form.css";
-import Swal from 'sweetalert2';
+import { showSuccessMessage } from '../tools/swalUtils';
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -35,10 +35,10 @@ export default function CompanyForm() {
     setCompany({ ...company, company_City: inputValue });
   };
 
-//form subbmision
+  //form subbmision
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
-    let isValid = validateForm();    
+    let isValid = validateForm();
     if (isValid) {
       let companyToExport = {
         company_Code: company.company_Code,
@@ -52,33 +52,35 @@ export default function CompanyForm() {
         company_Street: company.company_Street,
         company_HomeNum: company.company_HomeNum
       };
-      console.log("companyToExport",companyToExport);
+      console.log("companyToExport", companyToExport);
       if (originCompany.company_Code == '')//add or update?
       {
         let res = await addCompany(companyToExport);
         if (res && res == 1) //check if res returns a valid response for 
         {
+          showSuccessMessage(); //show successfuly saved message
           navigate('/transportComps');
         }
         else console.log("error");//add swal
       }
       else {
         await updateCompany(companyToExport);
+        showSuccessMessage(); //show successfuly saved message
         navigate('/transportComps');
       }
     }
     else {
       console.log("invalid details");
-    }   
-      // Swal.fire({
-      //   icon: "success",
-      //   title: "הנתונים נשמרו בהצלחה",
-      //   confirmButtonText: 'סגור',
-      //   customClass: {
-      //     confirmButton: 'close-button'
-      //   }
+    }
+    // Swal.fire({
+    //   icon: "success",
+    //   title: "הנתונים נשמרו בהצלחה",
+    //   confirmButtonText: 'סגור',
+    //   customClass: {
+    //     confirmButton: 'close-button'
+    //   }
 
-      // });
+    // });
   };
 
   const validateForm = () => {
@@ -93,7 +95,7 @@ export default function CompanyForm() {
     if (company.manager_Name != "") {
       newErrors.manager_Name = validateHebrewletters(company.manager_Name);
     }
-    if (company.manager_Phone!= "") {
+    if (company.manager_Phone != "") {
       newErrors.manager_Phone = ValidCellOrHomePhoneNum(company.manager_Phone);
     }
 

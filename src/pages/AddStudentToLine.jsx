@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import '../styling/lineAddition.css';
 import Swal from 'sweetalert2';
+import { showSuccessMessage } from '../tools/swalUtils';
 import { FaCheck } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
 import { MdCancel } from 'react-icons/md';
@@ -103,6 +104,7 @@ export default function AddStudentToLine() {
         await updateLine(line, studentsIdArr, dbUpdate);
         console.log('res:', res);
         if (res) {
+            showSuccessMessage(); //show successfuly saved message
             navigate('/lines');
         }
         else {
