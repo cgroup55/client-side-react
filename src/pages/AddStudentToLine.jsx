@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import '../styling/lineAddition.css';
+import Swal from 'sweetalert2';
 import { FaCheck } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
+import { MdCancel } from 'react-icons/md';
 import { StudentContext } from '../contexts/studentContext';
 import { SchoolContext } from '../contexts/schoolContext';
 import { EscortContext } from '../contexts/escortContext';
@@ -61,11 +63,11 @@ export default function AddStudentToLine() {
         let res = await create(url, studentsIdsString);
         if (res == undefined || res == null) {
             console.log('server error- students in line');
-            // Swal.fire({
-            //     title: "קיימת תקלה",
-            //     text: "אנא נסה שנית במועד מאוחר יותר",
-            //     icon: "error"
-            // });
+            Swal.fire({
+                title: "קיימת תקלה בשרת",
+                text: "אנא נסה שנית במועד מאוחר יותר",
+                icon: "error"
+            });
             return;
         }
         return res;
@@ -80,6 +82,16 @@ export default function AddStudentToLine() {
             linecode: line.line_code
         };
         console.log('selectedStudents:', selectedStudents);
+        if (selectedStudents.length < 2) {
+            // If less than 2 students are selected, show message
+            Swal.fire({
+                icon: 'warning',
+                title: 'לא ניתן לבצע שמירה',
+                text: 'כמות תלמידים מינימלית בקו היא 2',
+                confirmButtonText: 'המשך'
+            });
+            return;
+        }
         //update students in line in DB
         let res = await updateStudentsInLine(studentsIdsString);
 
@@ -129,7 +141,14 @@ export default function AddStudentToLine() {
 
     return (
         <div className='container mt-5'>
-            <h3 className="bold" style={{ textAlign: 'center' }}> שיבוץ תלמידים לקו הסעה</h3>
+            <div className='row'>
+                <div className='col-12'>
+                    <h3 className="bold" style={{ textAlign: 'center', display: 'inline-block' }}> שיבוץ תלמידים לקו הסעה</h3>
+                    <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px', float: 'left' }} onClick={() => { navigate('/lines') }}>
+                        <MdCancel style={{ fontSize: "1.3rem" }} />
+                    </Button>
+                </div>
+            </div>
             <br />
             <div className='row'>
                 <div className='col-4 col-sm-12 line_detailsDiv'>
