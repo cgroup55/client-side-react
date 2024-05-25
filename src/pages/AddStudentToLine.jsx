@@ -73,31 +73,29 @@ export default function AddStudentToLine() {
 
     //Hanle save changes
     const handleSaving = async () => {
-        //do we net an event obj inside the ()?
-
-        //creation of the object to send for updating students in line
+        //create object of line code and string of students id for updating students array in line
         const studentofLine = selectedStudents.map(student => student.stu_id).join(',');
         let studentsIdsString = {
             students: studentofLine,
             linecode: line.line_code
         };
-        if (studentsIdsString.students == [] || studentsIdsString.students == "") {
+        console.log('selectedStudents:', selectedStudents);
+        //update students in line in DB
+        let res = await updateStudentsInLine(studentsIdsString);
+
+        //create students ids array for local update
+        const studentsIdArr = selectedStudents.map(student => student.stu_id);
+        console.log('studentsIdArr for local update', studentsIdArr);
+        //update line with updatede students array locally
+        let dbUpdate = false;
+        await updateLine(line, studentsIdArr, dbUpdate);
+        console.log('res:', res);
+        if (res) {
             navigate('/lines');
         }
         else {
-            console.log('selectedStudents:',selectedStudents);
-            let res = await updateStudentsInLine(studentsIdsString);
-            //let dbUpdate = false;
-            //await updateLine(line, selectedStudents, dbUpdate);
-            console.log('res:', res);
-            if (res) {
-                navigate('/lines');
-            }
-            else {
-                console.log('server error- students in line');
-            }
+            console.log('server error- students in line');
         }
-
     }
 
     //added by bar : i want to check the pre selected kids(that were selected before entering the page)
@@ -116,9 +114,6 @@ export default function AddStudentToLine() {
             setSchool(keyValSchool[line.school_of_line]);
             setEscort(keyValEscort[line.escort_incharge]);
             setCompany(keyValCompany[line.transportation_company]);
-            // console.log('keyValSchool[line.school_of_line]', keyValSchool[line.school_of_line]);
-            // console.log('keyValEscort[line.escort_incharge]', keyValEscort[line.escort_incharge]);
-            // console.log('keyValCompany[line.transportation_company]', keyValCompany[line.transportation_company]);
             if (keyValSchool[line.school_of_line] && keyValEscort[line.escort_incharge] && keyValCompany[line.transportation_company]) {
                 setLoading(false);
             }

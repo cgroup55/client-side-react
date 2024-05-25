@@ -15,7 +15,7 @@ export default function Lines() {
 
   const navigate = useNavigate();
   const { linesList } = useContext(LineContext);
-  console.log('line list in lines page', linesList);
+  console.log('line list in lines page-', linesList);
   const [showModal, setShowModal] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [colData, setColData] = useState(null);
