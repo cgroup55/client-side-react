@@ -64,7 +64,6 @@ export default function LineForm() {
         studentsId: []
       };
 
-
       if (originLine.line_code == '') //add or update?
       {
         console.log('LinetoExport-', LinetoExport);
@@ -78,8 +77,8 @@ export default function LineForm() {
       }
       else {
         //studentsId added to passing so line doesnt lose the array of student ids in update
-        //let dbUpdate =  true;
-        //await updateLine(LinetoExport, studentsId, dbUpdate);
+        let dbUpdate =  true;
+        await updateLine(LinetoExport, studentsId, dbUpdate);
         navigate('/Lines');
 
       }
