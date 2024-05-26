@@ -15,14 +15,6 @@ export default function StudentContextProvider(props) {
 
     const addStudent = async (studentToInsert) => {
 
-        // let studentAdress = studentToInsert.stu_parentStreet + " " + studentToInsert.stu_parentHomeNum + " " + studentToInsert.stu_parentCity;
-
-        // let geoRes = await getGeocodeAddress(studentAdress);
-        // if (!geoRes) {
-        //     studentToInsert.lat = lat;
-        //     studentToInsert.lng = lng;
-        // }
-
         //DB update
         let res = await create(url, fixObjectForServer(studentToInsert));
         if (res == undefined || res == null) {

@@ -102,7 +102,7 @@ export default function Escorts() {
 
 
   //renders the table after the data was loaded
-  if (!escortsList || escortsList.length == 0)
+  if (!escortsList)
     return (
       <div className='container mt-5' >
         <h3 className="bold" style={{ textAlign: 'center' }}>נתוני מלווים</h3>

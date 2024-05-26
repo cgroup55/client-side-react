@@ -8,6 +8,7 @@ import { fetchCities, fetchStreetsByCity, validateCity, validateStreet } from '.
 import { ValidPositiveNumber, validateHebrewletters, ValidCellPhoneNum, ValidCellOrHomePhoneNum, validateEmail } from '../tools/validations';
 import { MdCancel } from 'react-icons/md';
 import { SchoolContext } from '../contexts/schoolContext';
+import { getGeocodeAddress } from '../tools/geocode';
 
 
 export default function SchoolForm() {
@@ -51,6 +52,8 @@ export default function SchoolForm() {
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
+    let schoolAdress = school.street + " " + school.houseNumber + " " + school.city;
+    let geoRes = await getGeocodeAddress(schoolAdress);
 
     if (isValid) {
       //create a temp obj
@@ -65,8 +68,11 @@ export default function SchoolForm() {
         secretariatPhone: school.secretariatPhone,
         secretariatMail: school.secretariatMail,
         anotherContact: school.anotherContact,
-        contactPhone: school.contactPhone
+        contactPhone: school.contactPhone,
+        lat:geoRes.lat,
+        lng:geoRes.lon
       }
+
       console.log("schooltoExport", schooltoExport);
       if (originSchool.institutionId == '')//add or update?
       {
