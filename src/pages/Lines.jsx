@@ -31,7 +31,7 @@ export default function Lines() {
 
   //initialize empty object for adding new
   const addNewLine = () => {
-    let newLine = {
+    let currentLine = {
       line_code: "",
       line_car: "",
       number_of_seats: "",
@@ -47,7 +47,7 @@ export default function Lines() {
       comments: ""
     }
     let studentsId=[];
-    navigate('/LineForm', { state: {newLine , studentsId}});
+    navigate('/LineForm', { state: {currentLine , studentsId}});
   }
 
 

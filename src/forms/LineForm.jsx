@@ -18,6 +18,7 @@ export default function LineForm() {
 
   const { state } = useLocation();
   let originLine = state.currentLine;
+  console.log("originLine",originLine);
   let studentsId = state.studentsId;
 
   const { schoolsList } = useContext(SchoolContext);
