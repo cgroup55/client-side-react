@@ -162,7 +162,7 @@ export default function Lines() {
   }
 
   // renders the table after the data was loaded
-  if (!linesList || linesList.length == 0)
+  if (!linesList)
     return (
       <div className='container mt-5' >
         <h3 className="bold" style={{ textAlign: 'center' }}>קווי הסעה</h3>

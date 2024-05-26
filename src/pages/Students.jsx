@@ -153,7 +153,7 @@ export default function Students() {
     };
 
     //renders the table after the data was loaded
-    if (!studentsListFormFormat || studentsListFormFormat.length == 0)
+    if (!studentsListFormFormat)
         return (
             <div className='container mt-5' >
                 <h3 className="bold" style={{ textAlign: 'center' }}>נתוני תלמידים</h3>

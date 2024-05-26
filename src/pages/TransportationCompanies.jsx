@@ -112,7 +112,7 @@ export default function TransportationCompanies() {
   };
 
   //renders the table after the data was loaded
-  if (!companiesList || companiesList.length == 0)
+  if (!companiesList)
     return (
       <div className='container mt-5' >
         <h3 className="bold" style={{ textAlign: 'center' }}>חברות הסעה</h3>
