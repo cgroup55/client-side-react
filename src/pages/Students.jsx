@@ -101,12 +101,23 @@ export default function Students() {
         stu_contactHomeNum: 'מספר',
     }
 
+    //fetching the data of the foreign keys that sends to the modal 
+    const mapRowData = (row) => {
+        return {
+            ...row,
+            stu_school: keyValSchool[row.stu_school]?.name,
+            stu_disability: disKeyVal[row.stu_disability],
+        };
+    };
+
     //modal view for specific row
     const handleView = (row) => {
+        const mappedRowData = mapRowData(row);
         setColData(ColumnNamesByIdentifier);
-        setRowData(row);
+        setRowData(mappedRowData);
         setShowModal(true);
     };
+
 
     //edit mode- pass obj with relevante data
     const handleEdit = (row) => {

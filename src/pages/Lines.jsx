@@ -105,10 +105,21 @@ export default function Lines() {
     comments: "הערות"
   }
 
+  //fetching the data of the foreign keys that sends to the modal 
+  const mapRowData = (row) => {
+    return {
+      ...row,
+      escort_incharge: keyValEscort[row.escort_incharge]?.esc_fullName,
+      school_of_line: keyValSchool[row.school_of_line]?.name,
+      transportation_company: keyValCompany[row.transportation_company]?.company_Name,
+    };
+  };
+
   //modal view for specific row
   const handleView = (row) => {
+    const mappedRowData = mapRowData(row);
     setColData(ColumnNamesByIdentifier);
-    setRowData(row);
+    setRowData(mappedRowData);
     setShowModal(true);
   };
 
