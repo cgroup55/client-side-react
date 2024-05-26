@@ -1,6 +1,6 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import "../styling/Form.css";
-import { showSuccessMessage } from '../tools/swalUtils';
+import { showSuccessMessage, showErrorMessage, showInvalidDetailsMessage } from '../tools/swalUtils';
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -48,10 +48,10 @@ export default function SchoolForm() {
   };
 
   //form subbmision
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     let isValid = validateForm();
-    
+
     if (isValid) {
       //create a temp obj
       let schooltoExport = {
@@ -67,24 +67,28 @@ export default function SchoolForm() {
         anotherContact: school.anotherContact,
         contactPhone: school.contactPhone
       }
-      console.log("schooltoExport",schooltoExport);
+      console.log("schooltoExport", schooltoExport);
       if (originSchool.institutionId == '')//add or update?
       {
         let res = await addSchool(schooltoExport);
         if (res && res == 1) //check if res returns a valid response for adding
         {
           showSuccessMessage(); //show successfuly saved message
-          navigate('/schools');        
+          navigate('/schools');
         }
-        else console.log("error");//add swal
+        else showErrorMessage();
       }
       else {
-        await updateSchool(schooltoExport);
-        showSuccessMessage(); //show successfuly saved message
-        navigate('/schools');
+        let result = await updateSchool(schooltoExport);
+        if (result && result > 0) {
+          showSuccessMessage(); //show successfuly saved message
+          navigate('/schools');
+        }
+        else showErrorMessage();
       }
     } else {
-      console.log("invalid details");    }
+      showInvalidDetailsMessage()
+    }
   };
 
   //Validation for all inputs

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import "../styling/Form.css";
-import { showSuccessMessage } from '../tools/swalUtils';
+import { showSuccessMessage, showErrorMessage, showInvalidDetailsMessage } from '../tools/swalUtils';
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -73,18 +73,20 @@ export default function LineForm() {
           showSuccessMessage(); //show successfuly saved message
           navigate('/Lines');
         }
-        else console.log("error");//add swal
+        else showErrorMessage();
       }
       else {
         //studentsId added to passing so line doesnt lose the array of student ids in update
-        let dbUpdate =  true;
-        await updateLine(LinetoExport, studentsId, dbUpdate);
-        navigate('/Lines');
-
+        let dbUpdate = true;
+        let result = await updateLine(LinetoExport, studentsId, dbUpdate);
+        if (result && result > 0) {
+          showSuccessMessage(); //show successfuly saved message
+          navigate('/Lines');
+        }
+        else showErrorMessage();
       }
     } else {
-      // Show error message
-      console.log("invalid details");
+      showInvalidDetailsMessage()
     }
   };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, } from 'react';
 import "../styling/Form.css";
-import { showSuccessMessage } from '../tools/swalUtils';
+import { showSuccessMessage, showErrorMessage, showInvalidDetailsMessage } from '../tools/swalUtils';
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -61,27 +61,22 @@ export default function CompanyForm() {
           showSuccessMessage(); //show successfuly saved message
           navigate('/transportComps');
         }
-        else console.log("error");//add swal
+        else showErrorMessage();
       }
       else {
-        await updateCompany(companyToExport);
-        showSuccessMessage(); //show successfuly saved message
-        navigate('/transportComps');
+        let result = await updateCompany(companyToExport);
+        if (result && result > 0) {
+          showSuccessMessage(); //show successfuly saved message
+          navigate('/transportComps');
+        }
+        else showErrorMessage();
       }
+    } else {
+      showInvalidDetailsMessage()
     }
-    else {
-      console.log("invalid details");
-    }
-    // Swal.fire({
-    //   icon: "success",
-    //   title: "הנתונים נשמרו בהצלחה",
-    //   confirmButtonText: 'סגור',
-    //   customClass: {
-    //     confirmButton: 'close-button'
-    //   }
-
-    // });
   };
+
+
 
   const validateForm = () => {
     let valid = true;

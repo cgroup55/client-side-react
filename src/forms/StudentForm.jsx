@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import "../styling/Form.css";
-import { showSuccessMessage } from '../tools/swalUtils';
+import { showSuccessMessage, showErrorMessage, showInvalidDetailsMessage } from '../tools/swalUtils';
 import { FaCheck, FaPlus } from 'react-icons/fa';
 import { MdCancel } from "react-icons/md";
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '../tools/cities&streets';
-import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect} from '../tools/validations';
+import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect } from '../tools/validations';
 import { StudentContext } from '../contexts/studentContext.jsx';
 import { SchoolContext } from '../contexts/schoolContext.jsx';
 
@@ -19,7 +19,7 @@ export default function StudentForm() {
 
     //inporting from contexts
     const { schoolsList } = useContext(SchoolContext);
-    const { disabilities, addStudent, updateStudent} = useContext(StudentContext);
+    const { disabilities, addStudent, updateStudent } = useContext(StudentContext);
 
     //States for handling the addresses
     const [cities, setCities] = useState([]);
@@ -100,21 +100,23 @@ export default function StudentForm() {
             if (originStudent.stu_id == '') //add or update?
             {
                 let res = await addStudent(studentToExport);
-                if (res && res >=1) //check if res returns a valid response  
+                if (res && res > 1) //check if res returns a valid response  
                 {
                     showSuccessMessage(); //show successfuly saved message
                     navigate('/students');
                 }
-                else console.log("error");//add swal
+                else showErrorMessage();
             }
             else {
-                await updateStudent(studentToExport);
-                showSuccessMessage(); //show successfuly saved message
-                navigate('/students');
+                let result = await updateStudent(studentToExport);
+                if (result && result > 0) {
+                    showSuccessMessage(); //show successfuly saved message
+                    navigate('/students');
+                }
+                else showErrorMessage();
             }
-
         } else {
-            console.log("invalid details");
+            showInvalidDetailsMessage()
         }
     };
 

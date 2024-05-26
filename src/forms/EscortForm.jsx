@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import "../styling/Form.css";
-import { showSuccessMessage } from '../tools/swalUtils';
+import { showSuccessMessage, showErrorMessage, showInvalidDetailsMessage } from '../tools/swalUtils';
 import { FaCheck } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
