@@ -7,7 +7,7 @@
 }
 
 .rdt_Pagination {
-    justify-content: center;
+    justify-content: center !important ;
 }
 
 .rdt_TableHeadRow {
