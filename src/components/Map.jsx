@@ -1,44 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import tt from '@tomtom-international/web-sdk-maps';
+import * as ttServices from '@tomtom-international/web-sdk-services';
 
 export default function Map() {
-
-    // let times = 0;
-    // let cent = [34.90899, 32.17828];
-    // useEffect(() => {
-    //     console.log(++times);///how many times does the page re-render?
-    //     const map = tt.map({
-    //         key: 'VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI',
-    //         container: 'map',
-    //         center:  [34.90899, 32.17828],
-    //         zoom: 12
-    //     });
-
-
-    //     //component unmount
-    //     return () => {
-    //         map.remove();
-    //     };
-    // }, []); // Empty dependency array ensures this effect runs only once after the component is mounted
-
-
-    // return (
-    //     <>
-
-    //         <div id="map" style={{ width: '80vw', height: '350px' }}></div>
-    //     </>
-    // )
-
-
     const mapElement = useRef();
-
     const [mapLongitude, setMapLongitude] = useState(34.90899);
     const [mapLatitude, setMapLatitude] = useState(32.17828);
     const [mapZoom, setMapZoom] = useState(13);
-    const [map, setMap] = useState({});
+    const [map, setMap] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        let map = tt.map({
+        const map = tt.map({
             key: "VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI",
             container: mapElement.current,
             center: [mapLongitude, mapLatitude],
@@ -46,15 +19,66 @@ export default function Map() {
         });
         setMap(map);
 
-        //component unmount
+        // Clean up on component unmount
         return () => map.remove();
-        
-    }, []); // Empty dependency array ensures this effect runs only once after the component is mounted
+    }, []);
+
+    const handleSearch = () => {
+        ttServices.services.fuzzySearch({
+            key: "VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI",
+            query: searchQuery,
+            limit: 1
+        })
+        .then(response => {
+            const result = response.results[0];
+            if (result) {
+                const { position } = result;
+                map.setCenter([position.lng, position.lat]);
+                setMapLongitude(position.lng);
+                setMapLatitude(position.lat);
+
+                // Add a marker to the map
+                new tt.Marker().setLngLat([position.lng, position.lat]).addTo(map);
+            }
+        })
+        .catch(error => {
+            console.error('Error performing search:', error);
+        });
+    };
 
     return (
-        <div id="map" ref={mapElement} className="mapDiv" style={{ width: '80vw', height: '550px' }}></div>
-    )
-
-
-
+        <div style={{ position: 'relative', width: '80vw', height: '600px' }}>
+            <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="הזן כתובת"
+                style={{
+                    position: 'absolute',
+                    top: '10px',
+                    right: '10px',
+                    zIndex: 1000,
+                    padding: '10px',
+                    width: '300px',
+                    borderRadius: '5px',
+                    direction: 'rtl' // Right-to-left text direction
+                }}
+            />
+            <button
+                onClick={handleSearch}
+                style={{
+                    position: 'absolute',
+                    top: '10px',
+                    right: '320px',
+                    zIndex: 1000,
+                    padding: '10px',
+                    borderRadius: '5px',
+                    direction: 'rtl' // Right-to-left text direction
+                }}
+            >
+                חיפוש
+            </button>
+            <div id="map" ref={mapElement} className="mapDiv" style={{ width: '100%', height: '100%' }}></div>
+        </div>
+    );
 }
