@@ -9,6 +9,9 @@ import { fetchCities, fetchStreetsByCity, validateStreet, validateCity } from '.
 import { ValidPositiveNumber, ValidateId, validateHebrewletters, validateDateOfBirth, ValidCellPhoneNum, Validateselect } from '../tools/validations';
 import { StudentContext } from '../contexts/studentContext.jsx';
 import { SchoolContext } from '../contexts/schoolContext.jsx';
+import { getGeocodeAddress } from "../tools/geocode";
+
+
 
 export default function StudentForm() {
 
@@ -73,7 +76,9 @@ export default function StudentForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         let isValid = validateForm();
-
+        let studentAdress = student.stu_parentStreet + " " + student.stu_parentHomeNum + " " + student.stu_parentCity;
+        let geoRes = await getGeocodeAddress(studentAdress);
+       
         if (isValid) {
             let studentToExport = {
                 stu_fullName: student.stu_fullName,
@@ -90,6 +95,8 @@ export default function StudentForm() {
                 stu_parentCity: student.stu_parentCity,
                 stu_parentStreet: student.stu_parentStreet,
                 stu_parentHomeNum: student.stu_parentHomeNum,
+                lat_parent:geoRes.lat,
+                lng_parent:geoRes.lon,
 
                 stu_contactName: student.stu_contactName,
                 stu_contactCell: student.stu_contactCell,

@@ -1,7 +1,7 @@
 import { React, createContext, useState, useEffect } from "react";
 import { create, read, update } from "../tools/api";
 import { convertDate } from "../tools/validations";
-import { getGeocodeAddress } from "../tools/geocode";
+// import { getGeocodeAddress } from "../tools/geocode";
 export const StudentContext = createContext();
 
 export default function StudentContextProvider(props) {
@@ -15,19 +15,19 @@ export default function StudentContextProvider(props) {
 
     const addStudent = async (studentToInsert) => {
 
-        let studentAdress = studentToInsert.stu_parentStreet + " " + studentToInsert.stu_parentHomeNum + " " + studentToInsert.stu_parentCity;
+        // let studentAdress = studentToInsert.stu_parentStreet + " " + studentToInsert.stu_parentHomeNum + " " + studentToInsert.stu_parentCity;
 
-        let geoRes = await getGeocodeAddress(studentAdress);
-        if (!geoRes) {
-            studentToInsert.lat = lat;
-            studentToInsert.lng = lng;
-        }
+        // let geoRes = await getGeocodeAddress(studentAdress);
+        // if (!geoRes) {
+        //     studentToInsert.lat = lat;
+        //     studentToInsert.lng = lng;
+        // }
 
         //DB update
         let res = await create(url, fixObjectForServer(studentToInsert));
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
-            return;
+            return res;
         }
         //Local update + date fix
         studentToInsert.stu_dateofbirth = convertDate(studentToInsert.stu_dateofbirth, true);
@@ -42,7 +42,7 @@ export default function StudentContextProvider(props) {
         let res = await update(url, fixObjectForServer(studentToUpdate));
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
-            return;
+            return res;
         }
 
 
@@ -53,6 +53,7 @@ export default function StudentContextProvider(props) {
         setStudentsListFormFormat(studentsListFormFormat.map(student =>
             student.stu_id !== studentToUpdate.stu_id ? student : studentToUpdate
         ));
+        return res;
     }
 
     const getStudent = async () => {
@@ -133,7 +134,9 @@ export default function StudentContextProvider(props) {
                     stu_parentCell: obj.stu_parentCell,
                     stu_parentCity: obj.stu_parentCity,
                     stu_parentStreet: obj.stu_parentStreet,
-                    stu_parentHomeNum: obj.stu_parentHomeNum
+                    stu_parentHomeNum: obj.stu_parentHomeNum,
+                    lat:obj.lat_parent,
+                    lng:obj.lng_parent
                 }
             ]
         };
