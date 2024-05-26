@@ -61,17 +61,19 @@ export default function EscortForm() {
           showSuccessMessage(); //show successfuly saved message
           navigate('/escorts');
         }
-        else console.log("error");//add swal
+        else showErrorMessage();
       }
       else {
-        await updateEscort(escortToExport);
-        showSuccessMessage(); //show successfuly saved message
-        navigate('/escorts');
+        let result = await updateEscort(escortToExport);
+        if (result && result > 0) {
+          showSuccessMessage(); //show successfuly saved message
+          navigate('/escorts');
+        }
+        else showErrorMessage();
       }
-
     }
     else {
-      console.log("invalid details");
+      showInvalidDetailsMessage()
     }
   };
 
