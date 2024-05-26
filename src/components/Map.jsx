@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import tt from '@tomtom-international/web-sdk-maps';
 import * as ttServices from '@tomtom-international/web-sdk-services';
+import { Button } from 'react-bootstrap';
 
 export default function Map() {
     const mapElement = useRef();
@@ -47,16 +48,17 @@ export default function Map() {
     };
 
     return (
-        <div style={{ position: 'relative', width: '80vw', height: '600px' }}>
+        
+        <div style={{ position: 'relative',top:"0px", width: '80vw', height: '600px' }}>
+            <div style={{position: 'relative',top:"0px"}}>
             <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="הזן כתובת"
+                className='text-start'
                 style={{
                     position: 'absolute',
-                    top: '10px',
-                    right: '10px',
                     zIndex: 1000,
                     padding: '10px',
                     width: '300px',
@@ -64,21 +66,24 @@ export default function Map() {
                     direction: 'rtl' // Right-to-left text direction
                 }}
             />
-            <button
+            <Button
                 onClick={handleSearch}
+                className='primary'
                 style={{
-                    position: 'absolute',
-                    top: '10px',
-                    right: '320px',
+                    position: 'relative',
+                    top: '1px',
+                    right: '310px',
                     zIndex: 1000,
                     padding: '10px',
                     borderRadius: '5px',
                     direction: 'rtl' // Right-to-left text direction
                 }}
-            >
+             >
                 חיפוש
-            </button>
-            <div id="map" ref={mapElement} className="mapDiv" style={{ width: '100%', height: '100%' }}></div>
+                </Button>
+            </div>
+            <div id="map" ref={mapElement} className="mapDiv" style={{ position:"relative",top:"10px", width: '100%', height: '90%' }}></div>
+            
         </div>
     );
 }

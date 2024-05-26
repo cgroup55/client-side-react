@@ -46,7 +46,8 @@ export default function Lines() {
       transportation_company: "",
       comments: ""
     }
-    navigate('/LineForm', { state: newLine });
+    let studentsId=[];
+    navigate('/LineForm', { state: {newLine , studentsId}});
   }
 
 

@@ -8,8 +8,10 @@ export default function HomePage() {
     <>
       {(location.pathname != "/") ? <NavBar /> : null}
 
-      <div className='container mt-5'>נוסיף חיפוש?</div>
-      <Map/>
+      <div className='container mt-5'>
+        <Map/>
+      </div>
+      
     </>
   )
 }
