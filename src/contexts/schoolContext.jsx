@@ -15,7 +15,7 @@ export default function SchoolContextProvider(props) {
         console.log("res", res);
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
-            return;
+            return res;
         }
         //local update
         setSchoolsList([...schoolsList, schoolToInsert]);
@@ -28,15 +28,15 @@ export default function SchoolContextProvider(props) {
         let res = await update(url, schoolToUpdate);
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
-            return;
+            return res;
         }
-
         //Local update
         setSchoolsList(() => schoolsList.map(school => {
             if (school.institutionId != schoolToUpdate.institutionId)
                 return school;
             return { ...schoolToUpdate }
         }));
+        return res;
     }
 
 
@@ -47,12 +47,11 @@ export default function SchoolContextProvider(props) {
             return;
         }
         setSchoolsList(res);
-    
     }
 
     //props functions to use in pages
     const value = {
-        addSchool, schoolsList, getSchools, updateSchool,keyValSchool
+        addSchool, schoolsList, getSchools, updateSchool, keyValSchool
     }
 
     //get all escorts on first render
@@ -64,14 +63,14 @@ export default function SchoolContextProvider(props) {
     //for conversions in client- KeyValue array
     useEffect(() => {
         setKeyValSchool(() =>
-            schoolsList.reduce((index,school) => {
+            schoolsList.reduce((index, school) => {
                 index[school.institutionId] = school;
                 return index;
             }, {})
         );
     }, [schoolsList]);
-    
-    
+
+
     return (
         <SchoolContext.Provider value={value}>
             {props.children}

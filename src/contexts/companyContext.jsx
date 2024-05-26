@@ -14,7 +14,7 @@ export default function CompanyContextProvider(props) {
         let res = await create(url, companyToInsert);
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
-            return;
+            return res;
         }
         //local update        
         setCompaniesList([...companiesList, companyToInsert]);
@@ -27,7 +27,7 @@ export default function CompanyContextProvider(props) {
         console.log('company update res:', res);
         if (res == undefined || res == null) {
             console.log('שגיאה- אובייקט חברה ריק מתוכן');
-            return;
+            return res;
         }
 
         //Local update
@@ -36,6 +36,7 @@ export default function CompanyContextProvider(props) {
                 return company;
             return { ...companyToUpdate }
         }));
+        return res;
     }
 
 
@@ -60,7 +61,7 @@ export default function CompanyContextProvider(props) {
 
     //props functions to use in pages
     const value = {
-        addCompany, companiesList, getCompany, updateCompany,keyValCompany
+        addCompany, companiesList, getCompany, updateCompany, keyValCompany
     }
 
     //get all companies on first render

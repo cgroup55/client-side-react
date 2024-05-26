@@ -13,7 +13,7 @@ export default function LineContextProvider(props) {
         let res = await create(url, lineToInsert);
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
-            return;
+            return res;
         }
         //Local update + date fix
         lineToInsert.definition_date = convertDate(lineToInsert.definition_date, true);
@@ -28,7 +28,7 @@ export default function LineContextProvider(props) {
             let res = await update(url, lineToUpdate);
             if (res == undefined || res == null) {
                 console.log('שגיאה- ריק מתוכן');
-                return;
+                return res;
             }
         }       
         console.log("in context",studentsId);
@@ -40,6 +40,7 @@ export default function LineContextProvider(props) {
         setLinesList(linesList.map(line =>
             line.line_code !== lineToUpdate.line_code ? line : lineToUpdate
         ));
+        return res;
     }
 
 

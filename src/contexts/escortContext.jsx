@@ -14,7 +14,7 @@ export default function EscortContextProvider(props) {
         let res = await create(url, escortToInsert);
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
-            return;
+            return res;
         }
         //Local update + date fix
         escortToInsert.esc_dateOfBirth = convertDate(escortToInsert.esc_dateOfBirth, true);
@@ -27,16 +27,17 @@ export default function EscortContextProvider(props) {
         let res = await update(url, escortToUpdate);
         if (res == undefined || res == null) {
             console.log('שגיאה- ריק מתוכן');
-            return;
+            return res;
         }
         console.log('escortToUpdate', escortToUpdate);
- 
+
         // Convert date before updating state
         escortToUpdate.esc_dateOfBirth = convertDate(escortToUpdate.esc_dateOfBirth, true);
         // Local update
         setEscortsList(escortsList.map(escort =>
             escort.esc_id !== escortToUpdate.esc_id ? escort : escortToUpdate
         ));
+        return res;
     }
 
 
