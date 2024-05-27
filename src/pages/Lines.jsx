@@ -84,6 +84,15 @@ export default function Lines() {
       name: "מלווה",
       selector: (row) => keyValEscort[row.escort_incharge].esc_fullName,
     },
+    {
+      name: "מסלול",
+      cell: (row) => (
+        <a href="/RouteVizualization" onClick={(e) => handleLinkClick(e, row.line_code)}>
+          הצג 
+        </a>
+      ),
+    }
+   
 
   ];
 
@@ -116,6 +125,10 @@ export default function Lines() {
     };
   };
 
+  const handleLinkClick=(e, code)=>{
+    e.preventd
+
+  }
   //modal view for specific row
   const handleView = (row) => {
     const mappedRowData = mapRowData(row);
@@ -163,7 +176,7 @@ export default function Lines() {
   }
 
   // renders the table after the data was loaded
-  if (!linesList)
+  if (!linesList||linesList.length==0)
     return (
       <div className='container mt-5' >
         <h3 className="bold" style={{ textAlign: 'center' }}>קווי הסעה</h3>

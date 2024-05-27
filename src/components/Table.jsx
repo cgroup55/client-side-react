@@ -45,7 +45,7 @@ export default function Table({ rows, columns, handleView, handleEdit, handleDel
     
     
     return (
-        <div className='container '>
+        <div className='container'>
             <div className='text-start'>
                 <input className="searchInput" type="text" placeholder='חפש' onChange={handleFilter}
                     style={{ marginBottom: '10px', padding: '5px', borderRadius: '0.5rem', borderColor: 'lightgrey' }} />

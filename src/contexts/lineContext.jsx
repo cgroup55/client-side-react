@@ -23,9 +23,10 @@ export default function LineContextProvider(props) {
 
     const updateLine = async (lineToUpdate,studentsId,dbUpdate ) => {
         //DB update
+        let res;
         console.log('dbUpdate',dbUpdate);
         if (dbUpdate) {
-            let res = await update(url, lineToUpdate);
+            res = await update(url, lineToUpdate);
             if (res == undefined || res == null) {
                 console.log('שגיאה- ריק מתוכן');
                 return res;

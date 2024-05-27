@@ -120,7 +120,7 @@ export default function Schools() {
 
 
     //renders the table after the data was loaded
-    if (!schoolsList)
+    if (!schoolsList ||schoolsList.length==0)
         return (
             <div className='container mt-5' >
                 <h3 className="bold" style={{ textAlign: 'center' }}>נתוני מלווים</h3>
