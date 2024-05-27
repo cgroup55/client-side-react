@@ -9,7 +9,7 @@ export default function HomePage() {
       {(location.pathname != "/") ? <NavBar /> : null}
 
       <div className='container mt-5'>
-        <Map/>
+        <Map mode={'map'}/>
       </div>
       
     </>

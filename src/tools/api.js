@@ -68,4 +68,26 @@ export async function read(url) {
     } catch (err) { console.log(err) }
 }
 
-
+export async function readById(url,par,id) {
+    try {
+        let x=`${BASE_URL}/${url}/${id}`;
+        console.log("url",x);
+        let res = await fetch(`${BASE_URL}/${url}?${par}=${id}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json;',
+                }
+            });
+        if (res.ok) {
+            return await res.json();
+        }
+        else {
+            return null;
+        }
+    } catch (err) { 
+        console.log(err);
+        return null; 
+    }
+}

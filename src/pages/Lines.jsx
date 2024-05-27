@@ -87,12 +87,12 @@ export default function Lines() {
     {
       name: "מסלול",
       cell: (row) => (
-        <a href="/RouteVizualization" onClick={(e) => handleLinkClick(e, row.line_code)}>
+        <a href="/"onClick={(e) => handleLinkClick(e, row.line_code)}>
           הצג 
         </a>
       ),
     }
-   
+  
 
   ];
 
@@ -125,10 +125,11 @@ export default function Lines() {
     };
   };
 
-  const handleLinkClick=(e, code)=>{
-    e.preventd
-
+  const handleLinkClick = (e, line_code) => {
+    e.preventDefault();
+    navigate('/RouteVizualization', { state: { line_code } });
   }
+
   //modal view for specific row
   const handleView = (row) => {
     const mappedRowData = mapRowData(row);

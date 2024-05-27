@@ -27,6 +27,7 @@ import SchoolContextProvider from './contexts/schoolContext.jsx';
 import CompanyContextProvider from './contexts/companyContext.jsx';
 import StudentContextProvider from './contexts/studentContext.jsx';
 import LineContextProvider from './contexts/lineContext.jsx';
+import RouteVizualization from './components/RouteVizualization.jsx';
 
 
 
@@ -58,6 +59,7 @@ function App() {
                     <Route path='/LineForm' element={<LineForm />} />
                     <Route path='/EscortForm' element={<EscortForm />} />
                     <Route path='/CompanyForm' element={<CompanyForm />} />
+                    <Route path='/RouteVizualization' element={<RouteVizualization/>}/>
                   </Routes>
                 </HashRouter>
               </CompanyContextProvider>
