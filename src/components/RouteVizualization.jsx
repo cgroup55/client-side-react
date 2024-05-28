@@ -8,37 +8,33 @@ const RouteVizualization = () => {
     const linenumber = location.state.line_code;
     const url = 'api/Transportation_Line/LineRouteInfo';
 
-    const [routePoints, setRoutePoints] = useState([]);
+    const [routeDetails, setRouteDetails] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchRoutePoints = async () => {
+        const fetchRouteDetails = async () => {
             if (linenumber !== undefined) {
                 try {
                     console.log("linenumber in useEffect", linenumber);
                     const res = await readById(url, 'linecod', linenumber);
                     console.log('res from db:', res);
                     if (res) {
-                        console.log("points from server", res);
-                        const points = res.map(point => ({
-                            latitude: point.latitude,
-                            longitude: point.longitude
-                        }));
-                        setRoutePoints(points);
+                        console.log("details from server", res);
+                        setRouteDetails(res);
                     } else {
-                        console.error('No route points found for the given line number');
+                        console.error('No route details found for the given line number');
                     }
                 } catch (error) {
-                    console.error('Error fetching route points:', error);
-                    setError('Error fetching route points');
+                    console.error('Error fetching route details:', error);
+                    setError('Error fetching route details');
                 } finally {
                     setLoading(false);
                 }
             }
         };
 
-        fetchRoutePoints();
+        fetchRouteDetails();
     }, [linenumber]);
 
     if (loading) {
@@ -54,7 +50,7 @@ const RouteVizualization = () => {
             <h3 className="bold" style={{ textAlign: 'center' }}>תצוגת מסלול אופטימלי </h3>
             <div className='row'>
                 <div className='col-8'>
-                <Map routePoints={routePoints} mode="route" />
+                <Map routeDetails={routeDetails} mode="route" />
                 </div>  
                 <div className='col-4' style={{}}>
                     
