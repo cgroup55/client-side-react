@@ -34,6 +34,10 @@ export default function Map({ mode, routePoints = [] }) {
                     .addTo(map);
             });
 
+            // Add a popup to the marker
+            const popup = new tt.Popup({ offset: 35 }).setText(`Latitude: ${point.latitude}, Longitude: ${point.longitude}`);
+            marker.setPopup(popup);
+
             drawRoute(routePoints);
         }
     }, [map, routePoints]);
