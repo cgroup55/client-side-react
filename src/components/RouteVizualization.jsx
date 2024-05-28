@@ -52,7 +52,14 @@ const RouteVizualization = () => {
     return (
         <div className="container mt-5">
             <h3 className="bold" style={{ textAlign: 'center' }}>תצוגת מסלול אופטימלי </h3>
-            <Map routePoints={routePoints} mode="route" />
+            <div className='row'>
+                <div className='col-8'>
+                <Map routePoints={routePoints} mode="route" />
+                </div>  
+                <div className='col-4' style={{}}>
+                    
+                </div>  
+            </div>
         </div>
     );
 };
