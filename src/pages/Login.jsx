@@ -4,11 +4,12 @@ import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { create } from "../tools/api";
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function Login() {
-
     const url = 'api/User/Login';
     const [user, setUser] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -29,35 +30,31 @@ export default function Login() {
     }
 
     const redirectTo = async (event) => {
-        //POST user to pass on to dbs
-        //check if the user that we got is a listed user
-        //return from fetch
-
         event.preventDefault();
-        let userFromDB = await checkUser(user);
-        console.log('userFromDB:', userFromDB);
-        if (userFromDB.role == 1) {
-            //need to take user login info***
-            Swal.fire({
-                title: "התחברת בהצלחה",
-                text: "שלום משרד!",
-                icon: "success"
-            });
-            navigate('/homepage');
+        setLoading(true);
+        try {
+            let userFromDB = await checkUser(user);
+            console.log('userFromDB:', userFromDB);
+            if (userFromDB.role == 1) {
+                Swal.fire({
+                    title: "התחברת בהצלחה",
+                    text: "שלום משרד!",
+                    icon: "success"
+                });
+                navigate('/homepage');
+            } else {
+                Swal.fire({
+                    title: "לא נמצא משתמש עם פרטים אלה במערכת",
+                    text: "נסה להזין שנית",
+                    icon: "error"
+                });
+            }
+        } catch (error) {
+            console.error("Error during login:", error);
+        } finally {
+            setLoading(false);
         }
-        //need to change the logic for role 2 & 3
-        else {
-            Swal.fire({
-                title: "לא נמצא משתמש עם פרטים אלה במערכת",
-                text: "נסה להזין שנית",
-                icon: "error"
-            });
-        }
-
-
     }
-
-
 
     return (
         <>
@@ -90,8 +87,8 @@ export default function Login() {
                     </Form.Group>
 
                     <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}>
-                        <Button type='submit'>
-                            התחבר
+                        <Button type='submit' disabled={loading}>
+                            {loading ? <Spinner animation="border" size="sm" /> : 'התחבר'}
                         </Button>
                     </div>
                 </Form>
@@ -99,4 +96,3 @@ export default function Login() {
         </>
     )
 }
-
