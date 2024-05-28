@@ -5,7 +5,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css';
 import { Button } from 'react-bootstrap';
 
-export default function Map({ mode, routePoints = [] }) {
+export default function Map({ mode, routeDetails = [] }) {
     const mapElement = useRef();
     const [map, setMap] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
@@ -24,30 +24,37 @@ export default function Map({ mode, routePoints = [] }) {
         return () => map.remove();
     }, []);
 
-    //add markers to map
     useEffect(() => {
-        if (map && routePoints.length > 0) {
+        if (map && routeDetails.length > 0) {
             // Add markers for each route point
-            routePoints.forEach(point => {
-                new tt.Marker()
+            routeDetails.forEach((point) => {
+                const marker = new tt.Marker()
                     .setLngLat([point.longitude, point.latitude])
                     .addTo(map);
+    
+                // Add a popup to the marker
+                const popup = new tt.Popup({ offset: 35 }).setHTML(`
+                    <div class="custom-popup">
+                        <b>${point.studentFullName}</b><br>
+                        כתובת: ${point.street} ${point.houseNumber}, ${point.city}
+                    </div>
+                `);
+    
+                marker.setPopup(popup);
+                popup.addTo(map);
+
             });
-
-            // Add a popup to the marker
-            const popup = new tt.Popup({ offset: 35 }).setText(`Latitude: ${point.latitude}, Longitude: ${point.longitude}`);
-            marker.setPopup(popup);
-
-            drawRoute(routePoints);
+            console.log("routeDetails",routeDetails);
+            drawRoute(routeDetails);
         }
-    }, [map, routePoints]);
-
+    }, [map, routeDetails]);
+    
 
     //gets routePoints and draws map
-    const drawRoute = (routePoints) => {
+    const drawRoute = (routeDetails) => {
         const routeOptions = {
             key: myKey,
-            locations: routePoints.map(point => ({
+            locations: routeDetails.map(point => ({
                 latitude: point.latitude,
                 longitude: point.longitude
 
@@ -78,7 +85,7 @@ export default function Map({ mode, routePoints = [] }) {
                 }
 
                 const bounds = new tt.LngLatBounds();
-                routePoints.forEach(point => {
+                routeDetails.forEach(point => {
                     bounds.extend([point.longitude, point.latitude]);
                 });
                 map.fitBounds(bounds, { padding: 20 });
@@ -112,7 +119,7 @@ export default function Map({ mode, routePoints = [] }) {
     return (
         <div style={{ position: 'relative', top: "0px", width: '80vw', height: '600px' }}>
             {mode === 'map' && (
-                <div style={{ position: 'relative', top: "0px" }}>
+                <div style={{ position: 'relative', top: "0px"}}>
                     <input
                         type="text"
                         value={searchQuery}
