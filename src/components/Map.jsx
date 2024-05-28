@@ -11,6 +11,7 @@ export default function Map({ mode, routePoints = [] }) {
     const [searchQuery, setSearchQuery] = useState('');
     const myKey = "VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI";
 
+    //set map to default center
     useEffect(() => {
         const map = tt.map({
             key: myKey,
@@ -23,6 +24,7 @@ export default function Map({ mode, routePoints = [] }) {
         return () => map.remove();
     }, []);
 
+    //add markers to map
     useEffect(() => {
         if (map && routePoints.length > 0) {
             // Add markers for each route point
@@ -36,27 +38,26 @@ export default function Map({ mode, routePoints = [] }) {
         }
     }, [map, routePoints]);
 
-    
 
+    //gets routePoints and draws map
     const drawRoute = (routePoints) => {
         const routeOptions = {
             key: myKey,
             locations: routePoints.map(point => ({
-                
-                    latitude: point.latitude,
-                    longitude: point.longitude
-                
+                latitude: point.latitude,
+                longitude: point.longitude
+
             }))
         };
 
 
-
-        console.log("routeOptions",routeOptions);
+        //calculate the route on map
+        console.log("routeOptions", routeOptions);
         ttServices.services.calculateRoute(routeOptions)
             .then(response => {
-                console.log("response",response);
+                console.log("response", response);
                 const geojson = response.toGeoJson();
-                console.log("geojson",geojson);
+                console.log("geojson", geojson);
                 if (map.getSource('route')) {
                     map.getSource('route').setData(geojson);
                 } else {
@@ -83,24 +84,25 @@ export default function Map({ mode, routePoints = [] }) {
             });
     };
 
+    //add marker to a spesific point from search
     const handleSearch = () => {
         ttServices.services.fuzzySearch({
             key: myKey,
             query: searchQuery,
             limit: 1
         })
-        .then(response => {
-            const result = response.results[0];
-            if (result) {
-                const { position } = result;
-                map.setCenter([position.lng, position.lat]);
+            .then(response => {
+                const result = response.results[0];
+                if (result) {
+                    const { position } = result;
+                    map.setCenter([position.lng, position.lat]);
 
-                new tt.Marker().setLngLat([position.lng, position.lat]).addTo(map);
-            }
-        })
-        .catch(error => {
-            console.error('Error performing search:', error);
-        });
+                    new tt.Marker().setLngLat([position.lng, position.lat]).addTo(map);
+                }
+            })
+            .catch(error => {
+                console.error('Error performing search:', error);
+            });
     };
 
     return (
@@ -119,7 +121,7 @@ export default function Map({ mode, routePoints = [] }) {
                             padding: '10px',
                             width: '300px',
                             borderRadius: '5px',
-                            direction: 'rtl' // Right-to-left text direction
+                            direction: 'rtl'
                         }}
                     />
                     <Button
@@ -132,7 +134,7 @@ export default function Map({ mode, routePoints = [] }) {
                             zIndex: 1000,
                             padding: '10px',
                             borderRadius: '5px',
-                            direction: 'rtl' // Right-to-left text direction
+                            direction: 'rtl'
                         }}
                     >
                         חיפוש
