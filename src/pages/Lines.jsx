@@ -122,7 +122,13 @@ export default function Lines() {
 
   const handleLinkClick = (e, line) => {
     e.preventDefault();
-    navigate('/RouteVizualization', { state: { line } });
+    let fixedLine={
+      ...line,
+      escort_incharge: keyValEscort[line.escort_incharge]?.esc_fullName,
+      school_of_line: keyValSchool[line.school_of_line]?.name,
+      transportation_company: keyValCompany[line.transportation_company]?.company_Name,
+    };
+    navigate('/RouteVizualization', { state: { fixedLine } });
   }
 
   //modal view for specific row
