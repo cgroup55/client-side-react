@@ -5,9 +5,9 @@ import { readById } from '../tools/api.js';
 
 const RouteVizualization = () => {
     const location = useLocation();
-    const linenumber = location.state.line_code; 
+    const linenumber = location.state.line_code;
     const url = 'api/Transportation_Line/LineRouteInfo';
-    
+
     const [routePoints, setRoutePoints] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -18,6 +18,7 @@ const RouteVizualization = () => {
                 try {
                     console.log("linenumber in useEffect", linenumber);
                     const res = await readById(url, 'linecod', linenumber);
+                    console.log('res from db:', res);
                     if (res) {
                         console.log("points from server", res);
                         const points = res.map(point => ({
