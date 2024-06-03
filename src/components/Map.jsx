@@ -5,10 +5,11 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css';
 import { Button } from 'react-bootstrap';
 
-export default function Map({ mode, routeDetails = [] }) {
+export default function Map({ mode, routeDetails = [], linewithPoints}) {
     const mapElement = useRef();
     const [map, setMap] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [updatedListofPoints, setUpdatedListofPoints] = useState(routeDetails);
     const myKey = "VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI";
 
     //set map to default center
@@ -25,30 +26,49 @@ export default function Map({ mode, routeDetails = [] }) {
     }, []);
 
     useEffect(() => {
-        if (map && routeDetails.length > 0) {
+        console.log(linewithPoints);
+        AddSchoolToRoute();
+    }, [linewithPoints]);
+
+    useEffect(() => {
+        if (map && updatedListofPoints.length > routeDetails.length ) {
+            console.log("updatedListofPoints",updatedListofPoints);
+            console.log("updatedListofPoints[0]",updatedListofPoints[0].studentFullName);
             // Add markers for each route point
-            routeDetails.forEach((point) => {
+            updatedListofPoints.forEach((point) => {
                 const marker = new tt.Marker()
                     .setLngLat([point.longitude, point.latitude])
                     .addTo(map);
-    
+
                 // Add a popup to the marker
-                const popup = new tt.Popup({ offset: 35 }).setHTML(`
+                const popup = new tt.Popup({ offset: 35 });
+                if (point.studentFullName != undefined) {
+                    popup.setHTML(`
                     <div class="custom-popup">
                         <b>${point.studentFullName}</b><br>
                         כתובת: ${point.street} ${point.houseNumber}, ${point.city}
-                    </div>
-                `);
-    
-                marker.setPopup(popup);
+                    </div>`
+                );
+                }
+                else{
+                    popup.setHTML(`
+                    <div class="custom-popup">
+                        <b>תחנת ${linewithPoints.line.station_definition}:</b><br>
+                        בית ספר ${linewithPoints.line.school_of_line}
+                        
+                    </div>`);
+                }
+                 marker.setPopup(popup);
                 popup.addTo(map);
 
+               
+
             });
-            console.log("routeDetails",routeDetails);
-            drawRoute(routeDetails);
+            console.log("routeDetails", routeDetails);
+            drawRoute(updatedListofPoints);
         }
-    }, [map, routeDetails]);
-    
+    }, [map, updatedListofPoints]);
+
 
     //gets routePoints and draws map
     const drawRoute = (routeDetails) => {
@@ -95,6 +115,27 @@ export default function Map({ mode, routeDetails = [] }) {
             });
     };
 
+    const AddSchoolToRoute= ()=>{
+    console.log("in AddSchoolToRoute",linewithPoints);
+        let schoolStation={
+            latitude:linewithPoints.latitude,
+            longitude:linewithPoints.longitude,
+            comment:"" 
+        };
+
+        if(linewithPoints.line.station_definition=="מוצא")
+        {
+            schoolStation.comment="נקודת המוצא:";
+            setUpdatedListofPoints(prevList => [schoolStation, ...prevList]);
+
+        }
+        else{
+            schoolStation.comment="נקודת היעד:";
+            setUpdatedListofPoints(prevList => [...prevList, schoolStation]);
+        }
+    }
+
+
     //add marker to a spesific point from search
     const handleSearch = () => {
         ttServices.services.fuzzySearch({
@@ -107,7 +148,6 @@ export default function Map({ mode, routeDetails = [] }) {
                 if (result) {
                     const { position } = result;
                     map.setCenter([position.lng, position.lat]);
-
                     new tt.Marker().setLngLat([position.lng, position.lat]).addTo(map);
                 }
             })
@@ -119,7 +159,7 @@ export default function Map({ mode, routeDetails = [] }) {
     return (
         <div style={{ position: 'relative', top: "0px", width: '80vw', height: '600px' }}>
             {mode === 'map' && (
-                <div style={{ position: 'relative', top: "0px"}}>
+                <div style={{ position: 'relative', top: "0px" }}>
                     <input
                         type="text"
                         value={searchQuery}

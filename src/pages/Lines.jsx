@@ -128,7 +128,12 @@ export default function Lines() {
       school_of_line: keyValSchool[line.school_of_line]?.name,
       transportation_company: keyValCompany[line.transportation_company]?.company_Name,
     };
-    navigate('/RouteVizualization', { state: { fixedLine } });
+    let linePoints={
+      longitude:keyValSchool[line.school_of_line].lng,
+      latitude:keyValSchool[line.school_of_line].lat
+    };
+    console.log("linePoints",linePoints);
+    navigate('/RouteVizualization', { state: { fixedLine,linePoints } });
   }
 
   //modal view for specific row

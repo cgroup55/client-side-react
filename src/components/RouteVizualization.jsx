@@ -6,15 +6,27 @@ import { readById } from '../tools/api.js';
 const RouteVizualization = () => {
     const location = useLocation();
     const line = location.state.fixedLine;
+    const lineschoolPoints = location.state.linePoints;
     console.log('line in Route page:', line);
 
     const linenumber = line.line_code;
     const url = 'api/Transportation_Line/LineRouteInfo';
 
     const [routeDetails, setRouteDetails] = useState([]);
+    const [linewithPoints, setLinewithPoints] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
+    useEffect(() => {
+        if (line!=undefined && lineschoolPoints!={}) {
+            setLinewithPoints({
+                line: line,
+                latitude: lineschoolPoints.latitude,
+                longitude: lineschoolPoints.longitude
+            })
+        }
+    }, [lineschoolPoints,line])
 
     useEffect(() => {
         const fetchRouteDetails = async () => {
@@ -51,22 +63,22 @@ const RouteVizualization = () => {
 
     return (
         <div className="container mt-5">
-        <h3 className="bold" style={{ textAlign: 'center' }}>תצוגת מסלול אופטימלי </h3>
-        <div className='row'style={{justifyContent:'center'}}>
-        <div className='col-12 line_details' >
-            <span>קו מספר: {line.line_code}</span>
-            <span style={{marginRight: '70px' }}>מלווה: {line.escort_incharge}</span>
-            <span style={{ marginRight: '70px' }}>חברת הסעה: {line.transportation_company}</span>
-            <span style={{marginRight: '70px'}}>מוסד לימודי: {line.school_of_line}</span>
-        </div>
-        </div>
-        <div className='row'>
-            <div className='col-12'>
-                <Map routeDetails={routeDetails} mode="route" />
+            <h3 className="bold" style={{ textAlign: 'center' }}>תצוגת מסלול אופטימלי </h3>
+            <div className='row' style={{ justifyContent: 'center' }}>
+                <div className='col-12 line_details' >
+                    <span>קו מספר: {line.line_code}</span>
+                    <span style={{ marginRight: '70px' }}>מלווה: {line.escort_incharge}</span>
+                    <span style={{ marginRight: '70px' }}>חברת הסעה: {line.transportation_company}</span>
+                    <span style={{ marginRight: '70px' }}>מוסד לימודי: {line.school_of_line}</span>
+                </div>
+            </div>
+            <div className='row'>
+                <div className='col-12'>
+                    <Map routeDetails={routeDetails} linewithPoints={linewithPoints} mode="route" />
+                </div>
             </div>
         </div>
-    </div>
-    
+
     );
 };
 
