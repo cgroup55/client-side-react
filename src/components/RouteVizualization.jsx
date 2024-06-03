@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Map from './Map';
 import { readById } from '../tools/api.js';
+import { Button } from 'react-bootstrap';
+import { MdCancel } from 'react-icons/md';
 
 const RouteVizualization = () => {
+
+    const navigate = useNavigate();
     const location = useLocation();
     const line = location.state.fixedLine;
     const lineschoolPoints = location.state.linePoints;
@@ -19,14 +23,14 @@ const RouteVizualization = () => {
 
 
     useEffect(() => {
-        if (line!=undefined && lineschoolPoints!={}) {
+        if (line != undefined && lineschoolPoints != {}) {
             setLinewithPoints({
                 line: line,
                 latitude: lineschoolPoints.latitude,
                 longitude: lineschoolPoints.longitude
             })
         }
-    }, [lineschoolPoints,line])
+    }, [lineschoolPoints, line])
 
     useEffect(() => {
         const fetchRouteDetails = async () => {
@@ -63,6 +67,10 @@ const RouteVizualization = () => {
 
     return (
         <div className="container mt-5">
+            <div className='col-12' style={{ textAlign: 'left' }}>
+                <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/lines') }}>
+                    <MdCancel style={{ fontSize: "1.3rem" }} /></Button>
+            </div>
             <h3 className="bold" style={{ textAlign: 'center' }}>תצוגת מסלול אופטימלי </h3>
             <div className='row' style={{ justifyContent: 'center' }}>
                 <div className='col-12 line_details' >
