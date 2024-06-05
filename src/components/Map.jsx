@@ -116,6 +116,7 @@ export default function Map({ mode, routeDetails = [], linewithPoints}) {
     };
 
     const AddSchoolToRoute= ()=>{
+    if(mode=='route'){
     console.log("in AddSchoolToRoute",linewithPoints);
         let schoolStation={
             latitude:linewithPoints.latitude,
@@ -133,7 +134,7 @@ export default function Map({ mode, routeDetails = [], linewithPoints}) {
             schoolStation.comment="נקודת היעד:";
             setUpdatedListofPoints(prevList => [...prevList, schoolStation]);
         }
-    }
+    }}
 
 
     //add marker to a spesific point from search
