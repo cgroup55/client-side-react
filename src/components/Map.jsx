@@ -5,11 +5,11 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css';
 import { Button } from 'react-bootstrap';
 
-export default function Map({ mode, routeDetails = [], linewithPoints}) {
+export default function Map({ mode, routeDetails = []}) {
     const mapElement = useRef();
     const [map, setMap] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [updatedListofPoints, setUpdatedListofPoints] = useState(routeDetails);
+    //const [updatedListofPoints, setUpdatedListofPoints] = useState(routeDetails);
     const myKey = "VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI";
 
     //set map to default center
@@ -25,17 +25,16 @@ export default function Map({ mode, routeDetails = [], linewithPoints}) {
         return () => map.remove();
     }, []);
 
-    useEffect(() => {
-        console.log(linewithPoints);
-        AddSchoolToRoute();
-    }, [linewithPoints]);
+    // useEffect(() => {
+    //     console.log(linewithPoints);
+    //     AddSchoolToRoute();
+    // }, [linewithPoints]);
 
     useEffect(() => {
-        if (map && updatedListofPoints.length > routeDetails.length ) {
-            console.log("updatedListofPoints",updatedListofPoints);
-            console.log("updatedListofPoints[0]",updatedListofPoints[0].studentFullName);
+        //if (map && updatedListofPoints.length > routeDetails.length ) {
+            if (map && routeDetails.length > 0) {
             // Add markers for each route point
-            updatedListofPoints.forEach((point) => {
+            routeDetails.forEach((point) => {
                 const marker = new tt.Marker()
                     .setLngLat([point.longitude, point.latitude])
                     .addTo(map);
@@ -49,25 +48,26 @@ export default function Map({ mode, routeDetails = [], linewithPoints}) {
                         כתובת: ${point.street} ${point.houseNumber}, ${point.city}
                     </div>`
                 );
+                marker.setPopup(popup);
                 }
-                else{
-                    popup.setHTML(`
-                    <div class="custom-popup">
-                        <b>תחנת ${linewithPoints.line.station_definition}:</b><br>
-                        בית ספר ${linewithPoints.line.school_of_line}
+                // else{
+                //     popup.setHTML(`
+                //     <div class="custom-popup">
+                //         <b>תחנת ${linewithPoints.line.station_definition}:</b><br>
+                //         בית ספר ${linewithPoints.line.school_of_line}
                         
-                    </div>`);
-                }
-                 marker.setPopup(popup);
+                //     </div>`);
+                // }
+                //  marker.setPopup(popup);
                 popup.addTo(map);
 
                
 
             });
             console.log("routeDetails", routeDetails);
-            drawRoute(updatedListofPoints);
+            drawRoute(routeDetails);
         }
-    }, [map, updatedListofPoints]);
+    }, [map, routeDetails]);
 
 
     //gets routePoints and draws map
@@ -115,26 +115,26 @@ export default function Map({ mode, routeDetails = [], linewithPoints}) {
             });
     };
 
-    const AddSchoolToRoute= ()=>{
-    if(mode=='route'){
-    console.log("in AddSchoolToRoute",linewithPoints);
-        let schoolStation={
-            latitude:linewithPoints.latitude,
-            longitude:linewithPoints.longitude,
-            comment:"" 
-        };
+    // const AddSchoolToRoute= ()=>{
+    // if(mode=='route'){
+    // console.log("in AddSchoolToRoute",linewithPoints);
+    //     let schoolStation={
+    //         latitude:linewithPoints.latitude,
+    //         longitude:linewithPoints.longitude,
+    //         comment:"" 
+    //     };
 
-        if(linewithPoints.line.station_definition=="מוצא")
-        {
-            schoolStation.comment="נקודת המוצא:";
-            setUpdatedListofPoints(prevList => [schoolStation, ...prevList]);
+    //     if(linewithPoints.line.station_definition=="מוצא")
+    //     {
+    //         schoolStation.comment="נקודת המוצא:";
+    //         setUpdatedListofPoints(prevList => [schoolStation, ...prevList]);
 
-        }
-        else{
-            schoolStation.comment="נקודת היעד:";
-            setUpdatedListofPoints(prevList => [...prevList, schoolStation]);
-        }
-    }}
+    //     }
+    //     else{
+    //         schoolStation.comment="נקודת היעד:";
+    //         setUpdatedListofPoints(prevList => [...prevList, schoolStation]);
+    //     }
+    // }}
 
 
     //add marker to a spesific point from search

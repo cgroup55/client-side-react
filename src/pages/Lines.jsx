@@ -104,7 +104,7 @@ export default function Lines() {
     line_city: "עיר",
     line_street: "רחוב",
     line_Homenumber: "מספר",
-    time_of_line: "שעת התחנה",
+    time_of_line: "שעת יציאת הקו",
     definition_date: "תאריך הגדרת קו",
     transportation_company: "חברת הסעה",
     comments: "הערות"
@@ -128,12 +128,12 @@ export default function Lines() {
       school_of_line: keyValSchool[line.school_of_line]?.name,
       transportation_company: keyValCompany[line.transportation_company]?.company_Name,
     };
-    let linePoints={
-      longitude:keyValSchool[line.school_of_line].lng,
-      latitude:keyValSchool[line.school_of_line].lat
-    };
-    console.log("linePoints",linePoints);
-    navigate('/RouteVizualization', { state: { fixedLine,linePoints } });
+    // let linePoints={
+    //   longitude:keyValSchool[line.school_of_line].lng,
+    //   latitude:keyValSchool[line.school_of_line].lat
+    // };
+    // console.log("linePoints",linePoints);
+    navigate('/RouteVizualization', { state: { fixedLine } });
   }
 
   //modal view for specific row

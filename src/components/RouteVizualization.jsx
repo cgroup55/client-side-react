@@ -10,27 +10,27 @@ const RouteVizualization = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const line = location.state.fixedLine;
-    const lineschoolPoints = location.state.linePoints;
+    //const lineschoolPoints = location.state.linePoints;
     console.log('line in Route page:', line);
 
     const linenumber = line.line_code;
     const url = 'api/Transportation_Line/LineRouteInfo';
 
     const [routeDetails, setRouteDetails] = useState([]);
-    const [linewithPoints, setLinewithPoints] = useState({});
+    //const [linewithPoints, setLinewithPoints] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
 
-    useEffect(() => {
-        if (line != undefined && lineschoolPoints != {}) {
-            setLinewithPoints({
-                line: line,
-                latitude: lineschoolPoints.latitude,
-                longitude: lineschoolPoints.longitude
-            })
-        }
-    }, [lineschoolPoints, line])
+    // useEffect(() => {
+    //     if (line != undefined && lineschoolPoints != {}) {
+    //         setLinewithPoints({
+    //             line: line,
+    //             latitude: lineschoolPoints.latitude,
+    //             longitude: lineschoolPoints.longitude
+    //         })
+    //     }
+    // }, [lineschoolPoints, line])
 
     useEffect(() => {
         const fetchRouteDetails = async () => {
@@ -82,7 +82,7 @@ const RouteVizualization = () => {
             </div>
             <div className='row'>
                 <div className='col-12'>
-                    <Map routeDetails={routeDetails} linewithPoints={linewithPoints} mode="route" />
+                    <Map routeDetails={routeDetails} mode="route" />
                 </div>
             </div>
         </div>
