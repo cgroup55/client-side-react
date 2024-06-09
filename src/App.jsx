@@ -28,6 +28,7 @@ import CompanyContextProvider from './contexts/companyContext.jsx';
 import StudentContextProvider from './contexts/studentContext.jsx';
 import LineContextProvider from './contexts/lineContext.jsx';
 import RouteVizualization from './components/RouteVizualization.jsx';
+import EscortHomePage from './pages/EscortHomePage.jsx';
 
 
 
@@ -60,6 +61,7 @@ function App() {
                     <Route path='/EscortForm' element={<EscortForm />} />
                     <Route path='/CompanyForm' element={<CompanyForm />} />
                     <Route path='/RouteVizualization' element={<RouteVizualization/>}/>
+                    <Route path='/EscortHomePage' element={<EscortHomePage/>}/>
                   </Routes>
                 </HashRouter>
               </CompanyContextProvider>

@@ -42,7 +42,15 @@ export default function Login() {
                     icon: "success"
                 });
                 navigate('/homepage');
-            } else {
+            }
+            else if (userFromDB.role == 2) {
+                console.log('role2');
+                navigate('/EscortHomePage');
+            }
+            else if (userFromDB.role == 3) {
+               // navigate('/EscortHomePage');
+            }
+            else {
                 Swal.fire({
                     title: "לא נמצא משתמש עם פרטים אלה במערכת",
                     text: "נסה להזין שנית",

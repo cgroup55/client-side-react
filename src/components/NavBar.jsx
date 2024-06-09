@@ -11,7 +11,7 @@ export default function NavBar() {
     let { pathname } = location;
     
     //show navBar only after login
-    if (pathname == '/') {
+    if (pathname == '/' || pathname == '/EscortHomePage') {
         return null;
     }
     return (
