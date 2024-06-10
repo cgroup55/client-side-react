@@ -10,8 +10,8 @@ const RouteVizualization = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const line = location.state.fixedLine;
-    //const lineschoolPoints = location.state.linePoints;
-    console.log('line in Route page:', line);
+    const schoolOfLine=location.state.fixedLine.school_of_line
+    console.log('school in Route page:', schoolOfLine);
 
     const linenumber = line.line_code;
     const url = 'api/Transportation_Line/LineRouteInfo';
@@ -82,7 +82,7 @@ const RouteVizualization = () => {
             </div>
             <div className='row'>
                 <div className='col-12'>
-                    <Map routeDetails={routeDetails} mode="route" />
+                    <Map routeDetails={routeDetails} mode="route" school={schoolOfLine} />
                 </div>
             </div>
         </div>

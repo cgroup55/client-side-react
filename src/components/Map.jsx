@@ -5,12 +5,13 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css';
 import { Button } from 'react-bootstrap';
 
-export default function Map({ mode, routeDetails = []}) {
+export default function Map({ mode, routeDetails = [], school }) {
     const mapElement = useRef();
     const [map, setMap] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     //const [updatedListofPoints, setUpdatedListofPoints] = useState(routeDetails);
     const myKey = "VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI";
+
 
     //set map to default center
     useEffect(() => {
@@ -25,43 +26,44 @@ export default function Map({ mode, routeDetails = []}) {
         return () => map.remove();
     }, []);
 
-    // useEffect(() => {
-    //     console.log(linewithPoints);
-    //     AddSchoolToRoute();
-    // }, [linewithPoints]);
+
 
     useEffect(() => {
         //if (map && updatedListofPoints.length > routeDetails.length ) {
-            if (map && routeDetails.length > 0) {
+        if (map && routeDetails.length > 0) {
+
             // Add markers for each route point
-            routeDetails.forEach((point) => {
+            routeDetails.forEach((point, index) => {
                 const marker = new tt.Marker()
                     .setLngLat([point.longitude, point.latitude])
                     .addTo(map);
 
                 // Add a popup to the marker
                 const popup = new tt.Popup({ offset: 35 });
-                if (point.studentFullName != undefined) {
+                if (point.studentFullName != 0) {
                     popup.setHTML(`
                     <div class="custom-popup">
                         <b>${point.studentFullName}</b><br>
                         כתובת: ${point.street} ${point.houseNumber}, ${point.city}
                     </div>`
-                );
-                marker.setPopup(popup);
-                }
-                // else{
-                //     popup.setHTML(`
-                //     <div class="custom-popup">
-                //         <b>תחנת ${linewithPoints.line.station_definition}:</b><br>
-                //         בית ספר ${linewithPoints.line.school_of_line}
-                        
-                //     </div>`);
-                // }
-                //  marker.setPopup(popup);
-                popup.addTo(map);
+                    );
 
-               
+                }
+                else {
+                    let def="מוצא"
+                    if (index!=0){
+                        def="יעד"
+                    }
+                        popup.setHTML(`
+                    <div class="custom-popup">
+                        <b>תחנת ${def} - בית ספר ${school}:</b><br>
+                        כתובת: ${point.street} ${point.houseNumber}, ${point.city}
+                    </div>`);
+                }
+                marker.setPopup(popup);
+                popup.addTo(map);
+                index++;
+
 
             });
             console.log("routeDetails", routeDetails);
@@ -115,26 +117,6 @@ export default function Map({ mode, routeDetails = []}) {
             });
     };
 
-    // const AddSchoolToRoute= ()=>{
-    // if(mode=='route'){
-    // console.log("in AddSchoolToRoute",linewithPoints);
-    //     let schoolStation={
-    //         latitude:linewithPoints.latitude,
-    //         longitude:linewithPoints.longitude,
-    //         comment:"" 
-    //     };
-
-    //     if(linewithPoints.line.station_definition=="מוצא")
-    //     {
-    //         schoolStation.comment="נקודת המוצא:";
-    //         setUpdatedListofPoints(prevList => [schoolStation, ...prevList]);
-
-    //     }
-    //     else{
-    //         schoolStation.comment="נקודת היעד:";
-    //         setUpdatedListofPoints(prevList => [...prevList, schoolStation]);
-    //     }
-    // }}
 
 
     //add marker to a spesific point from search
