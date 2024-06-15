@@ -28,3 +28,13 @@ export const showInvalidDetailsMessage = () => {
         showConfirmButton: true
     });
 };
+
+export const loginSuccessMessage = (userName) =>{
+    Swal.fire({                    
+        title: `שלום ${userName}`,
+        text: "התחברת בהצלחה",
+        icon: "success",
+        timer: 1800,
+        showConfirmButton: false
+    });
+}

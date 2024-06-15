@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { loginSuccessMessage } from '../tools/swalUtils';
 import { create } from "../tools/api";
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -32,29 +33,18 @@ export default function Login() {
         setLoading(true);
         try {
             let userFromDB = await checkUser(user);
-            console.log('userFromDB-Role:', userFromDB[0].role);
+            console.log('userFromDB:', userFromDB);
             if (userFromDB[0].role == 1) {
-                Swal.fire({
-                    title: "התחברת בהצלחה",
-                    text: "שלום משרד!",
-                    icon: "success",
-                    timer: 1800,
-                    showConfirmButton: false
-                });
+                loginSuccessMessage('משרד');
                 navigate('/homepage');
             }
             else if (userFromDB[0].role == 2) {
-                Swal.fire({                    
-                    title: `שלום ${userFromDB[0].fullName}`,
-                    text: "התחברת בהצלחה",
-                    icon: "success",
-                    timer: 1800,
-                    showConfirmButton: false
-                });
+                loginSuccessMessage(userFromDB[0].fullName);
                 navigate('/EscortHomePage');
             }
             else if (userFromDB[0].role == 3) {
-                // navigate('/EscortHomePage');
+                //loginSuccessMessage(userFromDB[0].);
+                // navigate('/ParentHomePage');
             }
             else {
                 Swal.fire({

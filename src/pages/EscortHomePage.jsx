@@ -5,7 +5,7 @@ export default function EscortHomePage() {
 
     <div>EscortHomePage
 
-        
+
     </div>
   )
 }

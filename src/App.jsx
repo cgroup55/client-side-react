@@ -29,6 +29,7 @@ import StudentContextProvider from './contexts/studentContext.jsx';
 import LineContextProvider from './contexts/lineContext.jsx';
 import RouteVizualization from './components/RouteVizualization.jsx';
 import EscortHomePage from './pages/EscortHomePage.jsx';
+import ParentHomePage from './pages/ParentHomePage.jsx';
 
 
 
@@ -62,6 +63,7 @@ function App() {
                     <Route path='/CompanyForm' element={<CompanyForm />} />
                     <Route path='/RouteVizualization' element={<RouteVizualization/>}/>
                     <Route path='/EscortHomePage' element={<EscortHomePage/>}/>
+                    <Route path= '/ParentHomePage' element={<ParentHomePage/>}/>
                   </Routes>
                 </HashRouter>
               </CompanyContextProvider>

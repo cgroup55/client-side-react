@@ -9,9 +9,9 @@ export default function NavBar() {
 
     let location = useLocation();
     let { pathname } = location;
-    
+
     //show navBar only after login
-    if (pathname == '/' || pathname == '/EscortHomePage') {
+    if (pathname == '/' || pathname == '/EscortHomePage' || pathname == '/ParentHomePage') {
         return null;
     }
     return (
