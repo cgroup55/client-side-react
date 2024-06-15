@@ -40,7 +40,7 @@ export default function Login() {
             }
             else if (userFromDB[0].role == 2) {
                 loginSuccessMessage(userFromDB[0].fullName);
-                navigate('/EscortHomePage');
+                navigate('/EscortHomePage', { state: { userFromDB } });
             }
             else if (userFromDB[0].role == 3) {
                 //loginSuccessMessage(userFromDB[0].);
