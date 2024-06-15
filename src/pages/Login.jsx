@@ -17,7 +17,6 @@ export default function Login() {
         console.log('userToCheck:', userToCheck);
         let res = await create(url, userToCheck);
         if (res == undefined || res == null) {
-            console.log('שגיאה- יוזר לא קיים');
             Swal.fire({
                 title: "קיימת תקלה",
                 text: "אנא נסה שנית במועד מאוחר יותר",
@@ -26,7 +25,6 @@ export default function Login() {
             return;
         }
         return res;
-        //AD HOC from DB for Parent- all his children Escort- all his lines
     }
 
     const redirectTo = async (event) => {
@@ -34,21 +32,29 @@ export default function Login() {
         setLoading(true);
         try {
             let userFromDB = await checkUser(user);
-            console.log('userFromDB:', userFromDB);
-            if (userFromDB.role == 1) {
+            console.log('userFromDB-Role:', userFromDB[0].role);
+            if (userFromDB[0].role == 1) {
                 Swal.fire({
                     title: "התחברת בהצלחה",
                     text: "שלום משרד!",
-                    icon: "success"
+                    icon: "success",
+                    timer: 1800,
+                    showConfirmButton: false
                 });
                 navigate('/homepage');
             }
-            else if (userFromDB.role == 2) {
-                console.log('role2');
+            else if (userFromDB[0].role == 2) {
+                Swal.fire({                    
+                    title: `שלום ${userFromDB[0].fullName}`,
+                    text: "התחברת בהצלחה",
+                    icon: "success",
+                    timer: 1800,
+                    showConfirmButton: false
+                });
                 navigate('/EscortHomePage');
             }
-            else if (userFromDB.role == 3) {
-               // navigate('/EscortHomePage');
+            else if (userFromDB[0].role == 3) {
+                // navigate('/EscortHomePage');
             }
             else {
                 Swal.fire({
