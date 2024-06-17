@@ -1,6 +1,8 @@
 //adress a calling to tomtom geocode conversion method for translating an adress to geocode
 export const getGeocodeAddress = async (address) => {
-    const geoUrl = createGeocodeUrl(address);
+    console.log('before replace',address);
+    //remove " from string
+    const geoUrl = createGeocodeUrl(address.replaceAll('"','').replaceAll("'",''));
     try {
         const response = await fetch(geoUrl);
         const data = await response.json();
@@ -24,6 +26,7 @@ export const getGeocodeAddress = async (address) => {
 
 //creates the proper url to sync to Tomtom geocode service
 function createGeocodeUrl(address) {
+    console.log('after replace',address);
     const apiKey = 'VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI'; // API key for tomtom use
     const baseUrl = 'https://api.tomtom.com/search/2/geocode/';
     const encodedAddress = encodeURIComponent(address);
