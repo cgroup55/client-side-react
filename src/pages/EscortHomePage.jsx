@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../styling/User.css';
+import { readById } from "../tools/api";
+import { serverError } from '../tools/swalUtils';
+import Swal from 'sweetalert2';
 
 export default function EscortHomePage() {
+  const url = 'api/Transportation_Line/specificLineData';
   const location = useLocation();
   const escortData = location.state;
   console.log('escortData-', escortData);
@@ -14,9 +18,24 @@ export default function EscortHomePage() {
     }
   }, [escortData])
 
-  const handleRowClick = (info) => {
+  const handleRowClick = async (info) => {
     console.log('escort info-', info);
-    //navigate('/', { state: info });
+    const res = await readById(url, 'linecod', info.line_code);
+    console.log('res spec line info-', res);
+    if (res == undefined || res == null) {
+      serverError();
+    }
+    else if (res.studentid.length == 0) {
+      Swal.fire({
+        title: "אופס..",
+        text: "טרם שובצו תלמידים בקו זה, לא ניתן לצפות בקו ריק",
+        icon: "error",
+        confirmButtonText: 'חזור',
+      });
+    }
+    else {
+      //navigate('/', { state: info });
+    }
   };
 
   if (escortData.userFromDB[0].fullName)

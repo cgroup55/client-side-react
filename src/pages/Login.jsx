@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { loginSuccessMessage } from '../tools/swalUtils';
+import { loginSuccessMessage, serverError } from '../tools/swalUtils';
 import { create } from "../tools/api";
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -18,11 +18,7 @@ export default function Login() {
         console.log('userToCheck:', userToCheck);
         let res = await create(url, userToCheck);
         if (res == undefined || res == null) {
-            Swal.fire({
-                title: "קיימת תקלה",
-                text: "אנא נסה שנית במועד מאוחר יותר",
-                icon: "error"
-            });
+            serverError();
             return;
         }
         return res;

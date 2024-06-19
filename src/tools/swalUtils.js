@@ -38,3 +38,11 @@ export const loginSuccessMessage = (userName) =>{
         showConfirmButton: false
     });
 }
+
+export const serverError = () =>{
+    Swal.fire({
+        title: "קיימת תקלה",
+        text: "אנא נסה שנית במועד מאוחר יותר",
+        icon: "error"
+      });   
+}
