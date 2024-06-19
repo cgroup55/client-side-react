@@ -38,8 +38,12 @@ export default function Login() {
                 loginSuccessMessage('משרד');
                 navigate('/homepage');
             }
-            else if (userFromDB[0].role == 2) {
+            else if (userFromDB[0].role == 2 && userFromDB[0].fullName != undefined) {
                 loginSuccessMessage(userFromDB[0].fullName);
+                navigate('/EscortHomePage', { state: { userFromDB } });
+            }
+            else if (userFromDB[0].role == 2) {
+                loginSuccessMessage('לא נמצאו קווים פעילים');
                 navigate('/EscortHomePage', { state: { userFromDB } });
             }
             else if (userFromDB[0].role == 3) {

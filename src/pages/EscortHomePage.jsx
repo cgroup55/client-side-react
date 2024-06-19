@@ -19,23 +19,34 @@ export default function EscortHomePage() {
     //navigate('/', { state: info });
   };
 
+  if (escortData.userFromDB[0].fullName)
+    return (
+      <div className='container'>
+        <div className='col-12'>
+          <h3 className='header mt-3'>המסלולים שלי</h3>
+        </div>
+        <div className='col-12 mt-4'>
+          {escortInfo.map((info, index) => (
+            <div key={index} className='user-info' onClick={() => handleRowClick(info)}>
+              <span className='col-5' style={{ marginRight: '10px' }}><strong>מספר קו </strong>{info.line_code}</span>
+              <span className='col-7' style={{ marginRight: '10px' }}><strong>שם מוסד לימודי </strong>{info.nameschool}</span>
+            </div>
+          ))}
+        </div>
+        <div className='col-12'>
+          <h6 style={{ marginTop: '200px' }}>לצפייה במסלול ופרטי הקו לחץ על הקו המבוקש</h6>
+        </div>
+
+      </div>
+    )
+
   return (
     <div className='container'>
-      <div className='col-12'>
-        <h3 className='header mt-3'>המסלולים שלי</h3>
+      <div style={{ marginTop: '150px' }} className='col-12'>
+        <h3 className='header mt-3'>לא קיימים מסלולים משויכים במערכת</h3>
+        <br />
+        <h5>יש לפנות למשרד לצורך שיבוץ</h5>
       </div>
-      <div className='col-12 mt-4'>
-        {escortInfo.map((info, index) => (
-          <div key={index} className='user-info' onClick={() => handleRowClick(info)}>
-            <span className='col-5' style={{ marginRight: '10px' }}><strong>מספר קו </strong>{info.line_code}</span>
-            <span className='col-7' style={{ marginRight: '10px' }}><strong>שם מוסד לימודי </strong>{info.nameschool}</span>
-          </div>
-        ))}
-      </div>
-      <div className='col-12'>
-        <h6 style={{ marginTop: '200px' }}>לצפייה במסלול ופרטי הקו לחץ על הקו המבוקש</h6>
-      </div>
-
     </div>
-  );
+  )
 }
