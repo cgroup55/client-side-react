@@ -6,10 +6,10 @@ import { serverError } from '../tools/swalUtils';
 import Swal from 'sweetalert2';
 
 export default function EscortHomePage() {
-  const url = 'api/Transportation_Line/specificLineData';
+  const url = 'api/Transportation_Line/LineRouteInfo';
   const location = useLocation();
   const escortData = location.state;
-  console.log('escortData-', escortData);
+  //console.log('escortData-', escortData);
   const [escortInfo, setEscortInfo] = useState([]);
 
   useEffect(() => {
@@ -21,11 +21,11 @@ export default function EscortHomePage() {
   const handleRowClick = async (info) => {
     console.log('escort info-', info);
     const res = await readById(url, 'linecod', info.line_code);
-    console.log('res spec line info-', res);
+    console.log('res route info-', res);
     if (res == undefined || res == null) {
       serverError();
-    }
-    else if (res.studentid.length == 0) {
+    }    
+    else if (res.length <= 1) {
       Swal.fire({
         title: "אופס..",
         text: "טרם שובצו תלמידים בקו זה, לא ניתן לצפות בקו ריק",
@@ -34,7 +34,10 @@ export default function EscortHomePage() {
       });
     }
     else {
-      //navigate('/', { state: info });
+      //show route on map
+      
+      //navigate('/', { state: });
+      //<Map routeDetails={res} mode="route" school={} />
     }
   };
 
