@@ -52,7 +52,7 @@ export default function EscortHomePage() {
       {existRoute ? (
         <div className='col-12'>
           <h3 className='header mt-3'>המסלול שלי</h3>
-          <Map routeDetails={routeDetails} mode="route" school={schoolOfLine} />
+          <Map routeDetails={routeDetails} mode="escort" school={schoolOfLine} />
         </div>
       ) : (
         <>

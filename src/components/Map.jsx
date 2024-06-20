@@ -4,6 +4,7 @@ import ttServices from '@tomtom-international/web-sdk-services';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css';
 import { Button } from 'react-bootstrap';
+import  '../styling/Map.css';
 
 export default function Map({ mode, routeDetails = [], school }) {
     const mapElement = useRef();
@@ -28,49 +29,60 @@ export default function Map({ mode, routeDetails = [], school }) {
 
 
 
-    useEffect(() => {
-        //if (map && updatedListofPoints.length > routeDetails.length ) {
-        if (map && routeDetails.length > 0) {
+      // Function to create popup content
+      const createPopupContent = (point, index) => {
+        let popupContent = `
+            <div class="custom-popup">
+                <b>${point.studentFullName ? point.studentFullName : `תחנת ${index === 0 ? "מוצא" : "יעד"} - בית ספר ${school}`}</b><br>
+                כתובת: ${point.street} ${point.houseNumber}, ${point.city}
+            </div>`;
 
+        if (point.studentFullName && mode === "escort") {
+            popupContent += `
+                <div class="attendance-buttons">
+                נוכחות:
+                    <button class="attendance-btn v-btn" data-student-id="${point.studentId}" data-present="true">V</button>
+                    <button class="attendance-btn x-btn" data-student-id="${point.studentId}" data-present="false">X</button>
+                </div>`;
+        }
+
+        return popupContent;
+    };
+
+    useEffect(() => {
+        if (map && routeDetails.length > 0) {
             // Add markers for each route point
             routeDetails.forEach((point, index) => {
                 const marker = new tt.Marker()
                     .setLngLat([point.longitude, point.latitude])
                     .addTo(map);
 
-                // Add a popup to the marker
                 const popup = new tt.Popup({ offset: 35 });
-                if (point.studentFullName != 0) {
-                    popup.setHTML(`
-                    <div class="custom-popup">
-                        <b>${point.studentFullName}</b><br>
-                        כתובת: ${point.street} ${point.houseNumber}, ${point.city}
-                    </div>`
-                    );
-
-                }
-                else {
-                    let def="מוצא"
-                    if (index!=0){
-                        def="יעד"
-                    }
-                        popup.setHTML(`
-                    <div class="custom-popup">
-                        <b>תחנת ${def} - בית ספר ${school}:</b><br>
-                        כתובת: ${point.street} ${point.houseNumber}, ${point.city}
-                    </div>`);
-                }
+                const popupContent = createPopupContent(point, index);
+                popup.setHTML(popupContent);
                 marker.setPopup(popup);
                 popup.addTo(map);
-                index++;
-
-
             });
+
+            // Event delegation for dynamically added buttons
+            document.addEventListener('click', function (event) {
+                if (event.target.matches('.attendance-btn')) {
+                    const studentId = event.target.getAttribute('data-student-id');
+                    const isPresent = event.target.getAttribute('data-present') === 'true';
+                    updateAttendance(studentId, isPresent);
+                }
+            }, false);
+
             console.log("routeDetails", routeDetails);
             drawRoute(routeDetails);
         }
-    }, [map, routeDetails]);
+    }, [map, routeDetails, mode]);
 
+
+    // Function to update attendance - for later 
+    const updateAttendance = (point, isPresent) => {
+        console.log("point",point,"ispresent",isPresent);
+    };
 
     //gets routePoints and draws map
     const drawRoute = (routeDetails) => {
