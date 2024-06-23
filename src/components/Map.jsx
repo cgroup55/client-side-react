@@ -61,7 +61,7 @@ export default function Map({ mode, routeDetails = [], school }) {
                 const popupContent = createPopupContent(point, index);
                 popup.setHTML(popupContent);
                 marker.setPopup(popup);
-                popup.addTo(map);               
+                popup.addTo(map);
             });
 
             // Event delegation for dynamically added buttons
@@ -101,6 +101,14 @@ export default function Map({ mode, routeDetails = [], school }) {
         ttServices.services.calculateRoute(routeOptions)
             .then(response => {
                 console.log("response", response);
+
+                //תוספת סימולטר של בני
+                //response.routes[0].legs[0].points;
+                //console.log("response.routes", response.routes[0].legs[0].points);
+                const allPoints = extractLatLngPoints(response);
+                console.log('allPoints:', allPoints);
+                //
+
                 const geojson = response.toGeoJson();
                 console.log("geojson", geojson);
                 if (map.getSource('route')) {
@@ -129,7 +137,19 @@ export default function Map({ mode, routeDetails = [], school }) {
             });
     };
 
+    //Extract all lat-lng points from the response
+    const extractLatLngPoints = (response) => {
+        const latLngPoints = [];
 
+        response.routes.forEach(route => {
+            route.legs.forEach(leg => {
+                leg.points.forEach(point => {
+                    latLngPoints.push({ lat: point.lat, lng: point.lng });
+                });
+            });
+        });
+        return latLngPoints;
+    };
 
     //add marker to a spesific point from search
     const handleSearch = () => {

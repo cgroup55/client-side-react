@@ -69,14 +69,16 @@ export default function EscortHomePage() {
       }).then((result) => {
         if (result.isConfirmed) {
           setStartButtonDisabled(true);
-          setStartTime(new Date().toLocaleString());
+          setStartTime(new Date().toISOString());
+          console.log('startTime', new Date().toISOString());
           console.log('startTime', startTime);
         }
       });
     }
     else if (startOrEnd === 'end') {
       setComments("");
-      setEndTime(new Date().toLocaleString());
+      setEndTime(new Date().toISOString());
+      console.log('endTime', startTime);
       Swal.fire({
         title: 'האם ברצונך להוסיף הערות?',
         input: 'textarea',
@@ -101,13 +103,13 @@ export default function EscortHomePage() {
     //if all information exists create line history
     if (startTime != '' && endTime != '' && lineCode && comments != '') {
       lineHistory = {
-        linecode: lineCode,
-        timeofstart: startTime,
-        timeofend: endTime,
-        comments: comments
+        Line_code: lineCode,
+        Time_of_start: startTime,
+        Time_of_end: endTime,
+        Comments: comments
       }
 
-      console.log('lineHistory:', lineHistory);
+      //console.log('lineHistory:', lineHistory);
       saveHistoryLine(lineHistory);
     }
   }, [startTime, endTime, lineCode, comments])
@@ -115,6 +117,7 @@ export default function EscortHomePage() {
 
   const saveHistoryLine = async (line_history) => {
     console.log('line_history:', line_history);
+    
     let res = await create('api/TransportationLineHistory', line_history);
     if (res && res > 1) //check if res returns a valid response  
     {
