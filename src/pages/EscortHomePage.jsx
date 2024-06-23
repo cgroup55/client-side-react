@@ -12,11 +12,18 @@ export default function EscortHomePage() {
   const [existRoute, setExistRoute] = useState(false);
   const [schoolOfLine, setSchoolOfLine] = useState("");
   const [routeDetails, setRouteDetails] = useState("");
+  const [startButtonDisabled, setStartButtonDisabled] = useState(false);
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [comments, setComments] = useState('');
+  const [lineHistory, setlineHistory] = useState('');
 
   const location = useLocation();
   const escortData = location.state;
   //console.log('escortData-', escortData);
   const [escortInfo, setEscortInfo] = useState([]);
+  const [lineCode, setLineCode] = useState();
+
 
   useEffect(() => {
     if (escortData.userFromDB && Array.isArray(escortData.userFromDB)) {
@@ -24,7 +31,9 @@ export default function EscortHomePage() {
     }
   }, [escortData])
 
+  //Displays the data of the selected line
   const handleRowClick = async (info) => {
+    setLineCode(info.line_code);
     console.log('escort info-', info);
     const res = await readById(url, 'linecod', info.line_code);
     console.log('res route info-', res);
@@ -48,17 +57,71 @@ export default function EscortHomePage() {
     }
   };
 
+  //Saving historical line data
   const handleStartEndLine = (startOrEnd) => {
-    console.log(startOrEnd, new Date().toLocaleString());
+
+    if (startOrEnd === 'start') {
+      Swal.fire({
+        title: 'האם הנסיעה מתחילה?',
+        showCancelButton: true,
+        confirmButtonText: 'כן',
+        cancelButtonText: 'לא'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setStartButtonDisabled(true);
+          setStartTime(new Date().toLocaleString());
+          console.log('startTime', startTime);
+        }
+      });
+    }
+    else if (startOrEnd === 'end') {
+      setEndTime(new Date().toLocaleString());
+      Swal.fire({
+        title: 'האם ברצונך להוסיף הערות?',
+        input: 'textarea',
+        inputPlaceholder: 'הזן את ההערות שלך כאן...',
+        showCancelButton: true,
+        confirmButtonText: 'סיום הקו',
+        cancelButtonText: 'ביטול',
+        preConfirm: (userComments) => {
+          if (userComments) {
+            setComments(userComments);
+            console.log('Comments:', comments);
+          }
+          console.log('lineCode', lineCode);
+          if (startTime != '' && endTime != '' && lineCode) {
+            let newLineHistory = {
+              linecode: lineCode,
+              timeofstart: startTime,
+              timeofend: endTime,
+              comments: comments
+            }
+            setlineHistory(newLineHistory);
+
+          }
+        }
+      });
+    }
   };
 
+  useEffect(() => {
+    console.log('lineHistory:', lineHistory);
+    //saveHistoryLine(lineHistory);
+  }, [lineHistory])
+
+
+  const saveHistoryLine = async (lineHistory) => {
+    console.log('lineHistory:', lineHistory);
+  }
 
   return (
     <div className='container'>
       {existRoute ? (
         <div className='col-12'>
           <h3 className='header mt-3'>המסלול שלי</h3>
-          <Button style={{ marginBottom: '10px' }} onClick={() => handleStartEndLine('start')}>התחל קו</Button>
+          <Button style={{ marginBottom: '10px' }}
+            onClick={() => handleStartEndLine('start')}
+            disabled={startButtonDisabled}>התחל קו</Button>
           <br />
           <Map routeDetails={routeDetails} mode="escort" school={schoolOfLine} />
           <Button onClick={() => handleStartEndLine('end')}>סיום קו</Button>
