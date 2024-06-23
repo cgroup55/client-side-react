@@ -5,6 +5,7 @@ import { readById } from "../tools/api";
 import { serverError } from '../tools/swalUtils';
 import Swal from 'sweetalert2';
 import Map from '../components/Map';
+import { Button } from 'react-bootstrap';
 
 export default function EscortHomePage() {
   const url = 'api/Transportation_Line/LineRouteInfo';
@@ -43,16 +44,24 @@ export default function EscortHomePage() {
       console.log('escort school info-', info.nameschool);
       setExistRoute(true);
       setSchoolOfLine(info.nameschool);
-      setRouteDetails(res);    
+      setRouteDetails(res);
     }
   };
+
+  const handleStartEndLine = (startOrEnd) => {
+    console.log(startOrEnd, new Date().toLocaleString());
+  };
+
 
   return (
     <div className='container'>
       {existRoute ? (
         <div className='col-12'>
           <h3 className='header mt-3'>המסלול שלי</h3>
+          <Button style={{ marginBottom: '10px' }} onClick={() => handleStartEndLine('start')}>התחל קו</Button>
+          <br />
           <Map routeDetails={routeDetails} mode="escort" school={schoolOfLine} />
+          <Button onClick={() => handleStartEndLine('end')}>סיום קו</Button>
         </div>
       ) : (
         <>

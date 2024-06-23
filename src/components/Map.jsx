@@ -4,7 +4,7 @@ import ttServices from '@tomtom-international/web-sdk-services';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css';
 import { Button } from 'react-bootstrap';
-import  '../styling/Map.css';
+import '../styling/Map.css';
 
 export default function Map({ mode, routeDetails = [], school }) {
     const mapElement = useRef();
@@ -29,8 +29,8 @@ export default function Map({ mode, routeDetails = [], school }) {
 
 
 
-      // Function to create popup content
-      const createPopupContent = (point, index) => {
+    // Function to create popup content
+    const createPopupContent = (point, index) => {
         let popupContent = `
             <div class="custom-popup">
                 <b>${point.studentFullName ? point.studentFullName : `תחנת ${index === 0 ? "מוצא" : "יעד"} - בית ספר ${school}`}</b><br>
@@ -61,7 +61,7 @@ export default function Map({ mode, routeDetails = [], school }) {
                 const popupContent = createPopupContent(point, index);
                 popup.setHTML(popupContent);
                 marker.setPopup(popup);
-                popup.addTo(map);
+                popup.addTo(map);               
             });
 
             // Event delegation for dynamically added buttons
@@ -81,7 +81,7 @@ export default function Map({ mode, routeDetails = [], school }) {
 
     // Function to update attendance - for later 
     const updateAttendance = (point, isPresent) => {
-        console.log("point",point,"ispresent",isPresent);
+        console.log("point", point, "ispresent", isPresent);
     };
 
     //gets routePoints and draws map
