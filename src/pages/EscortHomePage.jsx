@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../styling/User.css';
-import { readById } from "../tools/api";
+import { create, readById } from "../tools/api";
 import { serverError } from '../tools/swalUtils';
 import Swal from 'sweetalert2';
 import Map from '../components/Map';
@@ -16,7 +16,7 @@ export default function EscortHomePage() {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [comments, setComments] = useState('');
-  const [lineHistory, setlineHistory] = useState('');
+  //const [lineHistory, setlineHistory] = useState('');
 
   const location = useLocation();
   const escortData = location.state;
@@ -75,6 +75,7 @@ export default function EscortHomePage() {
       });
     }
     else if (startOrEnd === 'end') {
+      setComments("");
       setEndTime(new Date().toLocaleString());
       Swal.fire({
         title: 'האם ברצונך להוסיף הערות?',
@@ -84,34 +85,44 @@ export default function EscortHomePage() {
         confirmButtonText: 'סיום הקו',
         cancelButtonText: 'ביטול',
         preConfirm: (userComments) => {
-          if (userComments) {
+          if (!userComments) {
+            setComments('אין');
+          } else {
             setComments(userComments);
-            console.log('Comments:', comments);
           }
-          console.log('lineCode', lineCode);
-          if (startTime != '' && endTime != '' && lineCode) {
-            let newLineHistory = {
-              linecode: lineCode,
-              timeofstart: startTime,
-              timeofend: endTime,
-              comments: comments
-            }
-            setlineHistory(newLineHistory);
-
-          }
+          console.log('Comments:', comments);
         }
       });
     }
   };
 
   useEffect(() => {
-    console.log('lineHistory:', lineHistory);
-    //saveHistoryLine(lineHistory);
-  }, [lineHistory])
+    let lineHistory = '';
+    //if all information exists create line history
+    if (startTime != '' && endTime != '' && lineCode && comments != '') {
+      lineHistory = {
+        linecode: lineCode,
+        timeofstart: startTime,
+        timeofend: endTime,
+        comments: comments
+      }
+
+      console.log('lineHistory:', lineHistory);
+      saveHistoryLine(lineHistory);
+    }
+  }, [startTime, endTime, lineCode, comments])
 
 
-  const saveHistoryLine = async (lineHistory) => {
-    console.log('lineHistory:', lineHistory);
+  const saveHistoryLine = async (line_history) => {
+    console.log('line_history:', line_history);
+    let res = await create('api/TransportationLineHistory', line_history);
+    if (res && res > 1) //check if res returns a valid response  
+    {
+      console.log('succes', res);
+    }
+    else {
+      console.log('error', res);
+    }
   }
 
   return (
