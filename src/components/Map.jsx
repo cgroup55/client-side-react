@@ -5,11 +5,13 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css';
 import { Button } from 'react-bootstrap';
 import '../styling/Map.css';
+import { FaSchool } from 'react-icons/fa';
 
 export default function Map({ mode, routeDetails = [], school }) {
     const mapElement = useRef();
     const [map, setMap] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const schoolMarker = useRef();
     //const [updatedListofPoints, setUpdatedListofPoints] = useState(routeDetails);
     const myKey = "VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI";
 
@@ -51,18 +53,50 @@ export default function Map({ mode, routeDetails = [], school }) {
 
     useEffect(() => {
         if (map && routeDetails.length > 0) {
-            // Add markers for each route point
-            routeDetails.forEach((point, index) => {
-                const marker = new tt.Marker()
-                    .setLngLat([point.longitude, point.latitude])
-                    .addTo(map);
+            let marker, popup, popupContent;
 
-                const popup = new tt.Popup({ offset: 35 });
-                const popupContent = createPopupContent(point, index);
+            let schoolIsFirst = false; //flag
+            console.log('schoolMarker', schoolMarker);
+            if (routeDetails[0].studentId == '') {
+                marker = new tt.Marker({ element: schoolMarker.current })
+                    .setLngLat([routeDetails[0].longitude, routeDetails[0].latitude])
+                    .addTo(map);
+                popup = new tt.Popup({ offset: 35 });
+                popupContent = createPopupContent(routeDetails[0], 0);
                 popup.setHTML(popupContent);
                 marker.setPopup(popup);
                 popup.addTo(map);
-            });
+                schoolIsFirst = true;
+            }
+            else {
+                marker = new tt.Marker({ element: schoolMarker.current })
+                    .setLngLat([routeDetails[routeDetails.length - 1].longitude, routeDetails[routeDetails.length - 1].latitude])
+                    .addTo(map);
+                popup = new tt.Popup({ offset: 35 });
+                popupContent = createPopupContent(routeDetails[routeDetails.length - 1], routeDetails.length - 1);
+                popup.setHTML(popupContent);
+                marker.setPopup(popup);
+                popup.addTo(map);
+            }
+
+            //Add markers for each route point
+            for (let i = 0; i < routeDetails.length; i++) {
+                if (schoolIsFirst || (!schoolIsFirst && i + 1 == routeDetails.length)) {
+                    continue;
+                }
+                let point = routeDetails[i];
+                marker = new tt.Marker()
+                    .setLngLat([point.longitude, point.latitude])
+                    .addTo(map);
+
+                popup = new tt.Popup({ offset: 35 });
+                popupContent = createPopupContent(point, i);
+                popup.setHTML(popupContent);
+                marker.setPopup(popup);
+                popup.addTo(map);
+
+            }
+
 
             // Event delegation for dynamically added buttons
             document.addEventListener('click', function (event) {
@@ -207,7 +241,7 @@ export default function Map({ mode, routeDetails = [], school }) {
                     </Button>
                 </div>
             )}
-
+            <div id='schoolMarker' ref={schoolMarker}><FaSchool size={24} /></div>
             <div id="map" ref={mapElement} className="mapDiv" style={{ position: "relative", top: "10px", width: '100%', height: '90%' }}></div>
         </div>
     );

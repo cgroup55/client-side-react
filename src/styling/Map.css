@@ -1,12 +1,23 @@
-.v-btn{
- background-color: green;
- border-radius: 8px;
- color: white;
- border-color: white;
+.v-btn {
+    background-color: green;
+    border-radius: 8px;
+    color: white;
+    border-color: white;
 }
-.x-btn{
+
+.x-btn {
     background-color: red;
     border-radius: 8px;
     color: white;
     border-color: white;
+}
+
+#schoolMarker {
+    background-color: white;
+    width: 35px;
+    height: 35px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
 }

@@ -119,7 +119,7 @@ export default function EscortHomePage() {
     console.log('line_history:', line_history);
     
     let res = await create('api/TransportationLineHistory', line_history);
-    if (res && res > 1) //check if res returns a valid response  
+    if (res && res >= 1) //check if res returns a valid response  
     {
       console.log('succes', res);
     }
