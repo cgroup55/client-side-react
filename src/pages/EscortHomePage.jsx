@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styling/User.css';
 import { create, readById } from "../tools/api";
 import { serverError } from '../tools/swalUtils';
 import Swal from 'sweetalert2';
 import Map from '../components/Map';
 import { Button } from 'react-bootstrap';
+import Tooltip from '@mui/material/Tooltip';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function EscortHomePage() {
+  const navigate = useNavigate();
+
   const url = 'api/Transportation_Line/LineRouteInfo';
   const [existRoute, setExistRoute] = useState(false);
   const [schoolOfLine, setSchoolOfLine] = useState("");
@@ -117,7 +121,7 @@ export default function EscortHomePage() {
 
   const saveHistoryLine = async (line_history) => {
     console.log('line_history:', line_history);
-    
+
     let res = await create('api/TransportationLineHistory', line_history);
     if (res && res >= 1) //check if res returns a valid response  
     {
@@ -143,27 +147,51 @@ export default function EscortHomePage() {
       ) : (
         <>
           {escortData.userFromDB[0].fullName ? (
-            <>
-              <div className='col-12'>
-                <h3 className='header mt-3'>המסלולים שלי</h3>
+            <div className='row'>
+              <div className='row'>
+                <div className='col-11'>
+                  <h3 className='header mt-3'>המסלולים שלי</h3>
+                </div>
+                <div className='col-1' style={{ textAlign: 'left' }}>
+                <Tooltip title="התנתק">
+                  <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/') }}>
+                    <LogoutIcon style={{ fontSize: "1.3rem" }} /></Button></Tooltip>
+                </div>
               </div>
-              <div className='col-12 mt-4'>
-                {escortInfo.map((info, index) => (
-                  <div key={index} className='user-info' onClick={() => handleRowClick(info)}>
-                    <span className='col-5' style={{ marginRight: '10px' }}><strong>מספר קו </strong>{info.line_code}</span>
-                    <span className='col-7' style={{ marginRight: '10px' }}><strong>שם מוסד לימודי </strong>{info.nameschool}</span>
-                  </div>
-                ))}
+              <div className='row'>
+                <div className='col-12 mt-4'>
+                  {escortInfo.map((info, index) => (
+                    <div key={index} className='user-info' onClick={() => handleRowClick(info)}>
+                      <span className='col-5' style={{ marginRight: '10px' }}><strong>מספר קו </strong>{info.line_code}</span>
+                      <span className='col-7' style={{ marginRight: '10px' }}><strong>שם מוסד לימודי </strong>{info.nameschool}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className='col-12'>
+                  <h6 style={{ marginTop: '200px' }}>לצפייה במסלול ופרטי הקו לחץ על הקו המבוקש</h6>
+                </div>
               </div>
-              <div className='col-12'>
-                <h6 style={{ marginTop: '200px' }}>לצפייה במסלול ופרטי הקו לחץ על הקו המבוקש</h6>
-              </div>
-            </>
+            </div>
           ) : (
-            <div style={{ marginTop: '150px' }} className='col-12'>
-              <h3 className='header mt-3'>לא קיימים מסלולים משויכים במערכת</h3>
-              <br />
-              <h5>יש לפנות למשרד לצורך שיבוץ</h5>
+            <div className='row'>
+              <div className='row' style={{ marginTop: '40px' }}>
+                <div className='col-5'>
+                  <h4 style={{marginRight:'60px'}}> התנתק</h4>
+                </div>
+                <div className='col-7' style={{ textAlign: 'left' }}>
+                  <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", padding: '0px', marginLeft:'60px' }} onClick={() => { navigate('/') }}>
+                    <LogoutIcon style={{ fontSize: "1.3rem" }} /></Button>
+                </div>
+              </div>
+
+              <div className='row'>
+                <div style={{ marginTop: '80px' }} className='col-12'>
+                  <h3 className='header mt-3'>לא קיימים מסלולים משויכים במערכת</h3>
+                  <br />
+                  <h5 style={{ marginTop: '20px' }}>יש לפנות למשרד לצורך שיבוץ</h5>
+                </div>
+              </div>
+
             </div>
           )}
         </>

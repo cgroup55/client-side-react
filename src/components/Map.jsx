@@ -84,7 +84,6 @@ export default function Map({ mode, routeDetails = [], school }) {
                 marker.setPopup(popup);
                 popup.addTo(map);
             }
-
             //Add markers for each route point
             for (let i = 0; i < routeDetails.length; i++) {
                 if (schoolIsFirst || (!schoolIsFirst && i + 1 == routeDetails.length)) {
@@ -102,9 +101,7 @@ export default function Map({ mode, routeDetails = [], school }) {
                 popup.addTo(map);
 
             }
-
-
-            // Event delegation for dynamically added buttons
+            //Event delegation for dynamically added buttons
             document.addEventListener('click', function (event) {
                 if (event.target.matches('.attendance-btn')) {
                     const studentId = event.target.getAttribute('data-student-id');
