@@ -21,7 +21,6 @@ export default function EscortHomePage() {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [comments, setComments] = useState('');
-  //const [lineHistory, setlineHistory] = useState('');
 
   const location = useLocation();
   const escortData = location.state;

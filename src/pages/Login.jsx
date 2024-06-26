@@ -44,7 +44,7 @@ export default function Login() {
             }
             else if (userFromDB[0].role == 3) {
                 //loginSuccessMessage(userFromDB[0].);
-                // navigate('/ParentHomePage');
+                // navigate('/ParentHomePage', { state: { userFromDB } });
             }
             else {
                 Swal.fire({
