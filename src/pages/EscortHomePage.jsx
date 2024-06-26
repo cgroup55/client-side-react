@@ -17,6 +17,7 @@ export default function EscortHomePage() {
   const [schoolOfLine, setSchoolOfLine] = useState("");
   const [routeDetails, setRouteDetails] = useState("");
   const [startButtonDisabled, setStartButtonDisabled] = useState(false);
+  const [endButtonDisabled, setEndButtonDisabled] = useState(true);
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [comments, setComments] = useState('');
@@ -73,6 +74,7 @@ export default function EscortHomePage() {
       }).then((result) => {
         if (result.isConfirmed) {
           setStartButtonDisabled(true);
+          setEndButtonDisabled(false);
           setStartTime(new Date().toISOString());
           console.log('startTime', new Date().toISOString());
           console.log('startTime', startTime);
@@ -99,6 +101,9 @@ export default function EscortHomePage() {
           console.log('Comments:', comments);
         }
       });
+      setExistRoute(false);
+      setStartButtonDisabled(false);
+      setEndButtonDisabled(true);
     }
   };
 
@@ -142,7 +147,8 @@ export default function EscortHomePage() {
             disabled={startButtonDisabled}>התחל קו</Button>
           <br />
           <Map routeDetails={routeDetails} mode="escort" school={schoolOfLine} />
-          <Button onClick={() => handleStartEndLine('end')}>סיום קו</Button>
+          <Button onClick={() => handleStartEndLine('end')}
+            disabled={endButtonDisabled}>סיום קו</Button>
         </div>
       ) : (
         <>
@@ -153,9 +159,9 @@ export default function EscortHomePage() {
                   <h3 className='header mt-3'>המסלולים שלי</h3>
                 </div>
                 <div className='col-1' style={{ textAlign: 'left' }}>
-                <Tooltip title="התנתק">
-                  <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/') }}>
-                    <LogoutIcon style={{ fontSize: "1.3rem" }} /></Button></Tooltip>
+                  <Tooltip title="התנתק">
+                    <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/') }}>
+                      <LogoutIcon style={{ fontSize: "1.3rem" }} /></Button></Tooltip>
                 </div>
               </div>
               <div className='row'>
@@ -173,13 +179,14 @@ export default function EscortHomePage() {
               </div>
             </div>
           ) : (
+            //escort without lines in system
             <div className='row'>
               <div className='row' style={{ marginTop: '40px' }}>
                 <div className='col-5'>
-                  <h4 style={{marginRight:'60px'}}> התנתק</h4>
+                  <h4 style={{ marginRight: '60px' }}> התנתק</h4>
                 </div>
                 <div className='col-7' style={{ textAlign: 'left' }}>
-                  <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", padding: '0px', marginLeft:'60px' }} onClick={() => { navigate('/') }}>
+                  <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", padding: '0px', marginLeft: '60px' }} onClick={() => { navigate('/') }}>
                     <LogoutIcon style={{ fontSize: "1.3rem" }} /></Button>
                 </div>
               </div>
