@@ -6,12 +6,14 @@ import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css';
 import { Button } from 'react-bootstrap';
 import '../styling/Map.css';
 import { FaSchool } from 'react-icons/fa';
+import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
 
 export default function Map({ mode, routeDetails = [], school }) {
     const mapElement = useRef();
     const [map, setMap] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const schoolMarker = useRef();
+    const [modeFlag, setModeFlag] = useState(false);
     //const [updatedListofPoints, setUpdatedListofPoints] = useState(routeDetails);
     const myKey = "VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI";
 
@@ -25,7 +27,11 @@ export default function Map({ mode, routeDetails = [], school }) {
             zoom: 13
         });
         setMap(map);
-
+        console.log('mode in Map:', mode);
+        //mode - 'map' for home page, 'route' for office view, 'escort' for escort view
+        if (mode != 'map') {
+            setModeFlag(true);
+        }
         return () => map.remove();
     }, []);
 
@@ -241,7 +247,7 @@ export default function Map({ mode, routeDetails = [], school }) {
                     </Button>
                 </div>
             )}
-            <div id='schoolMarker' ref={schoolMarker}><FaSchool size={24} /></div>
+            {modeFlag && <div id='schoolMarker' ref={schoolMarker}><HomeWorkOutlinedIcon /></div>}
             <div id="map" ref={mapElement} className="mapDiv" style={{ position: "relative", top: "10px", width: '100%', height: '90%' }}></div>
         </div>
     );
