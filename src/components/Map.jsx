@@ -5,14 +5,17 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css';
 import { Button } from 'react-bootstrap';
 import '../styling/Map.css';
-import { FaSchool } from 'react-icons/fa';
 import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
+import AirportShuttleRoundedIcon from '@mui/icons-material/AirportShuttleRounded';
 
 export default function Map({ mode, routeDetails = [], school }) {
     const mapElement = useRef();
+    const schoolMarker = useRef();
+    const busMarker = useRef();
+
     const [map, setMap] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const schoolMarker = useRef();
+    //Indication whether to show the school on the map
     const [modeFlag, setModeFlag] = useState(false);
     //const [updatedListofPoints, setUpdatedListofPoints] = useState(routeDetails);
     const myKey = "VjHNmfvNkTdJy9uC06GGCO5vPjwSAzZI";
@@ -60,9 +63,11 @@ export default function Map({ mode, routeDetails = [], school }) {
     useEffect(() => {
         if (map && routeDetails.length > 0) {
             let marker, popup, popupContent;
-
             let schoolIsFirst = false; //flag
+
             console.log('schoolMarker', schoolMarker);
+            console.log('busMarker', busMarker);
+
             if (routeDetails[0].studentId == '') {
                 marker = new tt.Marker({ element: schoolMarker.current })
                     .setLngLat([routeDetails[0].longitude, routeDetails[0].latitude])
@@ -84,6 +89,13 @@ export default function Map({ mode, routeDetails = [], school }) {
                 marker.setPopup(popup);
                 popup.addTo(map);
             }
+            //Add bus marker at the route beginning
+            if (mode == 'escort' && busMarker.current && routeDetails.length > 0) {
+                const firstPoint = routeDetails[0]; // or allPoints[0] if you're using the extracted points
+                const busMarkerInstance = new tt.Marker({ element: busMarker.current, zIndexOffset: 1000 })
+                    .setLngLat([firstPoint.longitude, firstPoint.latitude])
+                    .addTo(map);
+            }
             //Add markers for each route point
             for (let i = 0; i < routeDetails.length; i++) {
                 if (schoolIsFirst || (!schoolIsFirst && i + 1 == routeDetails.length)) {
@@ -99,7 +111,6 @@ export default function Map({ mode, routeDetails = [], school }) {
                 popup.setHTML(popupContent);
                 marker.setPopup(popup);
                 popup.addTo(map);
-
             }
             //Event delegation for dynamically added buttons
             document.addEventListener('click', function (event) {
@@ -121,8 +132,9 @@ export default function Map({ mode, routeDetails = [], school }) {
         console.log("point", point, "ispresent", isPresent);
     };
 
-    //gets routePoints and draws map
+    //Gets routePoints and draws map
     const drawRoute = (routeDetails) => {
+        let allPoints = '';
         const routeOptions = {
             key: myKey,
             locations: routeDetails.map(point => ({
@@ -131,21 +143,15 @@ export default function Map({ mode, routeDetails = [], school }) {
 
             }))
         };
-
-
         //calculate the route on map
         console.log("routeOptions", routeOptions);
         ttServices.services.calculateRoute(routeOptions)
             .then(response => {
                 console.log("response", response);
-
-                //תוספת סימולטר של בני
-                //response.routes[0].legs[0].points;
-                //console.log("response.routes", response.routes[0].legs[0].points);
-                const allPoints = extractLatLngPoints(response);
+                //הכנה לסימולטור                
+                allPoints = extractLatLngPoints(response);
                 console.log('allPoints:', allPoints);
                 //
-
                 const geojson = response.toGeoJson();
                 console.log("geojson", geojson);
                 if (map.getSource('route')) {
@@ -172,6 +178,8 @@ export default function Map({ mode, routeDetails = [], school }) {
             .catch(err => {
                 console.error('Error calculating route:', err);
             });
+
+
     };
 
     //Extract all lat-lng points from the response
@@ -245,6 +253,7 @@ export default function Map({ mode, routeDetails = [], school }) {
                 </div>
             )}
             {modeFlag && <div id='schoolMarker' ref={schoolMarker}><HomeWorkOutlinedIcon /></div>}
+            {mode == 'escort' && <div id='busMarker' ref={busMarker}><AirportShuttleRoundedIcon style={{ fontSize: 40 }} /></div>}
             <div id="map" ref={mapElement} className="mapDiv" style={{ position: "relative", top: "10px", width: '100%', height: '90%' }}></div>
         </div>
     );
