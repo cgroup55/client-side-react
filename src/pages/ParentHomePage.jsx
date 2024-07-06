@@ -45,6 +45,18 @@ export default function ParentHomePage() {
   return (
     <div className='container'>
       <div className='row'>
+        <div className='row'>
+          <div className='col-11'>
+            <h3 className='header mt-3'>ההסעות שלי</h3>
+          </div>
+          <div className='col-1' style={{ textAlign: 'left' }}>
+            <Tooltip title="התנתק">
+              <Button variant='btn btn-outline-dark' style={{ maxWidth: "4rem", marginBottom: '7px' }} onClick={() => { navigate('/') }}>
+                <LogoutIcon style={{ fontSize: "1.3rem" }} /></Button></Tooltip>
+          </div>
+        </div>
+      </div>
+      <div className='row'>
         <div className='col-12 mt-4'>
           {parentInfo.map((info, index) => (
             <div key={index} className='user-info' onClick={() => handleRowClick(info)}>
