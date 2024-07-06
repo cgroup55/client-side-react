@@ -43,8 +43,8 @@ export default function Login() {
                 navigate('/EscortHomePage', { state: { userFromDB } });
             }
             else if (userFromDB[0].role == 3) {
-                //loginSuccessMessage(userFromDB[0].);
-                // navigate('/ParentHomePage', { state: { userFromDB } });
+                loginSuccessMessage(userFromDB[0].fullNameparent);
+                navigate('/ParentHomePage', { state: { userFromDB } });
             }
             else {
                 Swal.fire({
