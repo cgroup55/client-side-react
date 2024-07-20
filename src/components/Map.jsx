@@ -7,11 +7,13 @@ import { Button } from 'react-bootstrap';
 import '../styling/Map.css';
 import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
 import AirportShuttleRoundedIcon from '@mui/icons-material/AirportShuttleRounded';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
-export default function Map({ mode, routeDetails = [], school }) {
+export default function Map({ mode, routeDetails = [], school, homePoint }) {
     const mapElement = useRef();
     const schoolMarker = useRef();
     const busMarker = useRef();
+    const homeMarker = useRef();
 
     const [map, setMap] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
@@ -67,6 +69,7 @@ export default function Map({ mode, routeDetails = [], school }) {
 
             console.log('schoolMarker', schoolMarker);
             console.log('busMarker', busMarker);
+            console.log('homeMarker', homeMarker);
 
             if (routeDetails[0].studentId == '') {
                 marker = new tt.Marker({ element: schoolMarker.current })
@@ -88,6 +91,16 @@ export default function Map({ mode, routeDetails = [], school }) {
                 popup.setHTML(popupContent);
                 marker.setPopup(popup);
                 popup.addTo(map);
+            }
+            //Add house marker at the child's house
+            if (mode == 'parent' && homeMarker.current && routeDetails.length > 0) {                                
+                console.log('homePoint-', homePoint);
+                console.log('routeDetails[homePoint]-', routeDetails[homePoint]);
+                const Hpoint = routeDetails[homePoint];
+                console.log('Hpoint-', Hpoint);
+                const homeMarkerInstance = new tt.Marker({ element: homeMarker.current, zIndexOffset: 1000 })
+                    .setLngLat([Hpoint.longitude, Hpoint.latitude])
+                    .addTo(map);
             }
             //Add bus marker at the route beginning
             if ((mode == 'escort' || mode == 'parent') && busMarker.current && routeDetails.length > 0) {
@@ -254,6 +267,7 @@ export default function Map({ mode, routeDetails = [], school }) {
             )}
             {modeFlag && <div id='schoolMarker' ref={schoolMarker}><HomeWorkOutlinedIcon /></div>}
             {(mode == 'escort' || mode === 'parent') && <div id='busMarker' ref={busMarker}><AirportShuttleRoundedIcon style={{ fontSize: 40 }} /></div>}
+            {mode === 'parent' && <div id='homeMarker' ref={homeMarker}><HomeRoundedIcon /></div>}
             <div id="map" ref={mapElement} className="mapDiv" style={{ position: "relative", top: "10px", width: '100%', height: '90%' }}></div>
         </div>
     );

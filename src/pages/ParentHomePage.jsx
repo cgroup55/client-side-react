@@ -20,6 +20,7 @@ export default function ParentHomePage() {
   const [showRoute, setShowRoute] = useState(false);
   const [routeDetails, setRouteDetails] = useState("");
   const [schoolOfLine, setSchoolOfLine] = useState("");
+  const [Hpoint, setHpoint] = useState(null);
   console.log('parentData', parentData);
 
   //Displays the data of the selected line
@@ -36,6 +37,14 @@ export default function ParentHomePage() {
       setShowRoute(true);
       setSchoolOfLine(info.nameschool);
       setRouteDetails(res);
+      const homeIndex = res.findIndex(detail => detail.studentFullName === info.fullNamestudent);
+      console.log('homeIndex-', homeIndex);
+      // Set the home point index
+      if (homeIndex !== -1) {
+        setHpoint(homeIndex);
+      } else {
+        setHpoint(null);
+      }
     }
   };
 
@@ -49,10 +58,10 @@ export default function ParentHomePage() {
 
   return (
     <div className='container'>
-      {showRoute ? (
+      {(showRoute && Hpoint!=null) ? (
         <div className='col-12'>
           <h3 className='header mt-3'>צפייה במסלול</h3>
-          <Map routeDetails={routeDetails} mode="parent" school={schoolOfLine} />
+          <Map routeDetails={routeDetails} mode="parent" school={schoolOfLine} homePoint={Hpoint} />
         </div>
       ) : (
         <>

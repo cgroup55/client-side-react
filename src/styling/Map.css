@@ -12,7 +12,7 @@
     border-color: white;
 }
 
-#schoolMarker {
+#schoolMarker{
     background-color: rgb(66, 78, 63);
     color: white;
     width: 32px;
@@ -21,6 +21,18 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
+}
+
+#homeMarker{
+    background-color: rgb(220, 228, 173);
+    color: rgb(80, 85, 60);
+    width: 32px;
+    height: 36px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    z-index: 1000;
 }
 
 #busMarker {
