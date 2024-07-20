@@ -10,7 +10,7 @@ const RouteVizualization = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const line = location.state.fixedLine;
-    const schoolOfLine=location.state.fixedLine.school_of_line
+    const schoolOfLine = location.state.fixedLine.school_of_line
     console.log('school in Route page:', schoolOfLine);
 
     const linenumber = line.line_code;

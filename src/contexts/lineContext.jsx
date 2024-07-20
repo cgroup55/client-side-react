@@ -21,22 +21,22 @@ export default function LineContextProvider(props) {
         return res;
     }
 
-    const updateLine = async (lineToUpdate,studentsId,dbUpdate ) => {
+    const updateLine = async (lineToUpdate, studentsId, dbUpdate) => {
         //DB update
         let res;
-        console.log('dbUpdate',dbUpdate);
+        console.log('dbUpdate', dbUpdate);
         if (dbUpdate) {
             res = await update(url, lineToUpdate);
             if (res == undefined || res == null) {
                 console.log('שגיאה- ריק מתוכן');
                 return res;
             }
-        }       
-        console.log("in context",studentsId);
+        }
+        console.log("in context", studentsId);
         // Convert the date before updating state and re-attach the student ids
         lineToUpdate.definition_date = convertDate(lineToUpdate.definition_date, true);
-        lineToUpdate.studentsId=studentsId;
-        console.log("from update",lineToUpdate);
+        lineToUpdate.studentsId = studentsId;
+        console.log("from update", lineToUpdate);
         // Local update
         setLinesList(linesList.map(line =>
             line.line_code !== lineToUpdate.line_code ? line : lineToUpdate

@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import '../styling/User.css';
 import { readById } from "../tools/api";
 import { serverError } from '../tools/swalUtils';
-import Swal from 'sweetalert2';
 import Map from '../components/Map';
 import { Button } from 'react-bootstrap';
 import Tooltip from '@mui/material/Tooltip';

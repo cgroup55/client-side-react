@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
 import { convertDate } from '../tools/validations.js';
 import { SchoolContext } from '../contexts/schoolContext.jsx';
@@ -41,8 +41,8 @@ export default function Lines() {
       transportation_company: "",
       comments: ""
     }
-    let studentsId=[];
-    navigate('/LineForm', { state: {currentLine , studentsId}});
+    let studentsId = [];
+    navigate('/LineForm', { state: { currentLine, studentsId } });
   }
 
 
@@ -82,12 +82,12 @@ export default function Lines() {
     {
       name: "מסלול",
       cell: (row) => (
-        <a href="/"onClick={(e) => handleLinkClick(e, row)}>
-          הצג 
+        <a href="/" onClick={(e) => handleLinkClick(e, row)}>
+          הצג
         </a>
       ),
     }
-  
+
 
   ];
 
@@ -122,7 +122,7 @@ export default function Lines() {
 
   const handleLinkClick = (e, line) => {
     e.preventDefault();
-    let fixedLine={
+    let fixedLine = {
       ...line,
       escort_incharge: keyValEscort[line.escort_incharge]?.esc_fullName,
       school_of_line: keyValSchool[line.school_of_line]?.name,
@@ -183,7 +183,7 @@ export default function Lines() {
   }
 
   // renders the table after the data was loaded
-  if (!linesList||linesList.length==0)
+  if (!linesList || linesList.length == 0)
     return (
       <div className='container mt-5' >
         <h3 className="bold" style={{ textAlign: 'center' }}>קווי הסעה</h3>

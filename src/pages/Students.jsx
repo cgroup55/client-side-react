@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
 import { convertDate } from '../tools/validations.js';
 import { SchoolContext } from '../contexts/schoolContext.jsx';
@@ -153,7 +153,7 @@ export default function Students() {
     };
 
     //renders the table after the data was loaded
-    if (!studentsListFormFormat ||studentsListFormFormat.length==0)
+    if (!studentsListFormFormat || studentsListFormFormat.length == 0)
         return (
             <div className='container mt-5' >
                 <h3 className="bold" style={{ textAlign: 'center' }}>נתוני תלמידים</h3>

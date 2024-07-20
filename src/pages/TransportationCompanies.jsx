@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import Table from '../components/Table';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from "react-icons/fa6";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import MyModal from '../components/MyModal';
 import { CompanyContext } from '../contexts/companyContext';
 
@@ -112,7 +112,7 @@ export default function TransportationCompanies() {
   };
 
   //renders the table after the data was loaded
-  if (!companiesList ||companiesList.length==0)
+  if (!companiesList || companiesList.length == 0)
     return (
       <div className='container mt-5' >
         <h3 className="bold" style={{ textAlign: 'center' }}>חברות הסעה</h3>

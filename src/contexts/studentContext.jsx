@@ -127,8 +127,8 @@ export default function StudentContextProvider(props) {
                     stu_parentCity: obj.stu_parentCity,
                     stu_parentStreet: obj.stu_parentStreet,
                     stu_parentHomeNum: obj.stu_parentHomeNum,
-                    lat:obj.lat_parent,
-                    lng:obj.lng_parent
+                    lat: obj.lat_parent,
+                    lng: obj.lng_parent
                 }
             ]
         };

@@ -31,7 +31,7 @@ export default function Map({ mode, routeDetails = [], school }) {
         });
         setMap(map);
         console.log('mode in Map:', mode);
-        //mode - 'map' for home page, 'route' for office view, 'escort' for escort view
+        //mode - 'map' for home page, 'route'/'escort'/'parent' for each view
         if (mode != 'map') {
             setModeFlag(true);
         }
