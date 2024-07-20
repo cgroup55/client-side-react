@@ -7,6 +7,7 @@ import Map from '../components/Map';
 import { Button } from 'react-bootstrap';
 import Tooltip from '@mui/material/Tooltip';
 import LogoutIcon from '@mui/icons-material/Logout';
+import UndoOutlinedIcon from '@mui/icons-material/UndoOutlined';
 
 export default function ParentHomePage() {
 
@@ -58,9 +59,21 @@ export default function ParentHomePage() {
 
   return (
     <div className='container'>
-      {(showRoute && Hpoint!=null) ? (
-        <div className='col-12'>
-          <h3 className='header mt-3'>צפייה במסלול</h3>
+      {(showRoute && Hpoint != null) ? (
+        <div className='row'>
+          <div className='row'>
+            <div className='col-11'>
+              <h3 className='header mt-3'>צפייה במסלול</h3>
+            </div>
+
+            <div className='col-1' style={{ textAlign: 'left' }}>
+              <Tooltip title="חזור">
+                <Button variant='btn btn-outline-dark' onClick={() => { setShowRoute(false) }}>
+                  <UndoOutlinedIcon /></Button></Tooltip>
+            </div>
+
+          </div>
+
           <Map routeDetails={routeDetails} mode="parent" school={schoolOfLine} homePoint={Hpoint} />
         </div>
       ) : (
@@ -96,6 +109,6 @@ export default function ParentHomePage() {
 
       }
 
-    </div>
+    </div >
   )
 }

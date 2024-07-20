@@ -66,11 +66,6 @@ export default function Map({ mode, routeDetails = [], school, homePoint }) {
         if (map && routeDetails.length > 0) {
             let marker, popup, popupContent;
             let schoolIsFirst = false; //flag
-
-            console.log('schoolMarker', schoolMarker);
-            console.log('busMarker', busMarker);
-            console.log('homeMarker', homeMarker);
-
             if (routeDetails[0].studentId == '') {
                 marker = new tt.Marker({ element: schoolMarker.current })
                     .setLngLat([routeDetails[0].longitude, routeDetails[0].latitude])
@@ -93,9 +88,7 @@ export default function Map({ mode, routeDetails = [], school, homePoint }) {
                 popup.addTo(map);
             }
             //Add house marker at the child's house
-            if (mode == 'parent' && homeMarker.current && routeDetails.length > 0) {                                
-                console.log('homePoint-', homePoint);
-                console.log('routeDetails[homePoint]-', routeDetails[homePoint]);
+            if (mode == 'parent' && homeMarker.current && routeDetails.length > 0) {
                 const Hpoint = routeDetails[homePoint];
                 console.log('Hpoint-', Hpoint);
                 const homeMarkerInstance = new tt.Marker({ element: homeMarker.current, zIndexOffset: 1000 })
