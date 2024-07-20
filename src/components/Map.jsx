@@ -90,7 +90,7 @@ export default function Map({ mode, routeDetails = [], school }) {
                 popup.addTo(map);
             }
             //Add bus marker at the route beginning
-            if (mode == 'escort' && busMarker.current && routeDetails.length > 0) {
+            if ((mode == 'escort' || mode == 'parent') && busMarker.current && routeDetails.length > 0) {
                 const firstPoint = routeDetails[0]; // or allPoints[0] if you're using the extracted points
                 const busMarkerInstance = new tt.Marker({ element: busMarker.current, zIndexOffset: 1000 })
                     .setLngLat([firstPoint.longitude, firstPoint.latitude])
@@ -253,7 +253,7 @@ export default function Map({ mode, routeDetails = [], school }) {
                 </div>
             )}
             {modeFlag && <div id='schoolMarker' ref={schoolMarker}><HomeWorkOutlinedIcon /></div>}
-            {mode == 'escort' && <div id='busMarker' ref={busMarker}><AirportShuttleRoundedIcon style={{ fontSize: 40 }} /></div>}
+            {(mode == 'escort' || mode === 'parent') && <div id='busMarker' ref={busMarker}><AirportShuttleRoundedIcon style={{ fontSize: 40 }} /></div>}
             <div id="map" ref={mapElement} className="mapDiv" style={{ position: "relative", top: "10px", width: '100%', height: '90%' }}></div>
         </div>
     );

@@ -116,7 +116,6 @@ export default function EscortHomePage() {
         Time_of_end: endTime,
         Comments: comments
       }
-
       //console.log('lineHistory:', lineHistory);
       saveHistoryLine(lineHistory);
     }
