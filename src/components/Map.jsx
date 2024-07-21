@@ -9,13 +9,17 @@ import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
 import AirportShuttleRoundedIcon from '@mui/icons-material/AirportShuttleRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
-export default function Map({ mode, routeDetails = [], school, homePoint }) {
+export default function Map({ mode, routeDetails = [], school, homePoint, startRoute }) {
     const mapElement = useRef();
     const schoolMarker = useRef();
     const busMarker = useRef();
     const homeMarker = useRef();
 
+    let simulateInterval = null;
+    const jumps = 1;
     const [map, setMap] = useState(null);
+    const [allPointsList, setAllPointsList] = useState(null);
+    const [busMarkerInstance, setBusMarkerInstance] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     //Indication whether to show the school on the map
     const [modeFlag, setModeFlag] = useState(false);
@@ -98,9 +102,10 @@ export default function Map({ mode, routeDetails = [], school, homePoint }) {
             //Add bus marker at the route beginning
             if ((mode == 'escort' || mode == 'parent') && busMarker.current && routeDetails.length > 0) {
                 const firstPoint = routeDetails[0]; // or allPoints[0] if you're using the extracted points
-                const busMarkerInstance = new tt.Marker({ element: busMarker.current, zIndexOffset: 1000 })
+                const busPoint = new tt.Marker({ element: busMarker.current, zIndexOffset: 1000 })
                     .setLngLat([firstPoint.longitude, firstPoint.latitude])
                     .addTo(map);
+                setBusMarkerInstance(busPoint);
             }
             //Add markers for each route point
             for (let i = 0; i < routeDetails.length; i++) {
@@ -154,10 +159,11 @@ export default function Map({ mode, routeDetails = [], school, homePoint }) {
         ttServices.services.calculateRoute(routeOptions)
             .then(response => {
                 console.log("response", response);
-                //הכנה לסימולטור                
+                //simulation               
                 allPoints = extractLatLngPoints(response);
                 console.log('allPoints:', allPoints);
-                //
+                setAllPointsList(allPoints);
+
                 const geojson = response.toGeoJson();
                 console.log("geojson", geojson);
                 if (map.getSource('route')) {
@@ -221,6 +227,29 @@ export default function Map({ mode, routeDetails = [], school, homePoint }) {
                 console.error('Error performing search:', error);
             });
     };
+
+    const simulateRoute = () => {
+        let pose = 0;
+        let time = 1000 + allPointsList.length * 0.3;
+        simulateInterval = setInterval(() => {
+            if (pose > allPointsList.length - 3) {
+                clearInterval(simulateInterval);
+                return;
+            }
+            pose += jumps;
+            busMarkerInstance.setLngLat(allPointsList[pose]);           
+        }, time);
+    }
+
+    useEffect(() => {
+        if (startRoute) {
+            simulateRoute();
+        }
+        return () => {
+            clearInterval(simulateInterval);
+        }
+    }, [startRoute])
+
 
     return (
         <div style={{ position: 'relative', top: "0px", width: '80vw', height: '600px' }}>

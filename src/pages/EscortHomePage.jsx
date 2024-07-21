@@ -144,7 +144,7 @@ export default function EscortHomePage() {
             onClick={() => handleStartEndLine('start')}
             disabled={startButtonDisabled}>התחל קו</Button>
           <br />
-          <Map routeDetails={routeDetails} mode="escort" school={schoolOfLine} />
+          <Map routeDetails={routeDetails} mode="escort" school={schoolOfLine} startRoute={startButtonDisabled} />
           <Button onClick={() => handleStartEndLine('end')}
             disabled={endButtonDisabled}>סיום קו</Button>
         </div>
