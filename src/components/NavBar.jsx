@@ -34,7 +34,6 @@ export default function NavBar() {
                                 <NavDropdown.Item href="#/schools">מוסדות לימוד</NavDropdown.Item>
                             </NavDropdown>
                             <Nav.Link href="#/escorts">מלווים</Nav.Link>
-                            <Nav.Link href="#/reports">דוחות</Nav.Link>
                         </Nav>
 
                     </Navbar.Collapse>
