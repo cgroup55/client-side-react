@@ -230,7 +230,7 @@ export default function Map({ mode, routeDetails = [], school, homePoint, startR
 
     const simulateRoute = () => {
         let pose = 0;
-        let time = 1000 + allPointsList.length * 0.3;
+        let time = 1000 + allPointsList.length * 0.1;
         simulateInterval = setInterval(() => {
             if (pose > allPointsList.length - 3) {
                 clearInterval(simulateInterval);
